@@ -54,18 +54,20 @@ CREATE TABLE Institution (
 
 CREATE TABLE [Instrument] (
     [InstrumentID] int IDENTITY(1, 1) NOT NULL,
-    [DOI] varchar(255) NULL,
-	[MANUFACTURER] varchar(255) NULL,
-	[MODEL NUMBER] varchar(255) NULL,
-	[ACQUISITION DATE] date NULL,
-	[COMPLETION DATE] date NULL,
-	[STATUS] varchar(255) NOT NULL,
-	[DESCRIPTION] varchar(max) NOT NULL,
+    [Doi] varchar(255) NULL,
+	[Manufacturer] varchar(255) NULL,
+	[ModelNumber] varchar(255) NULL,
+	[SerialNumber] varchar(255) NULL,
+	[AcquistionDate] date NULL,
+	[CompleteionDate] date NULL,
+	[Status] varchar(255) NOT NULL,
+	[Description] varchar(max) NOT NULL,
     [LocationID] int not null,
     [RoomNumber] varchar(25) null,
     [InstitutionID] int not null,
     CONSTRAINT [PK_Instrument] PRIMARY KEY CLUSTERED (InstrumentID),
-    CONSTRAINT [FK_Instrument_LOCATION] PRIMARY KEY CLUSTERED (LocationID)
+    CONSTRAINT [FK_Instrument_Location] FOREIGN KEY (LocationID) REFERENCES Location (LocationID,)
+    CONSTRAINT [FK_Instrument_Institutiuon] FOREIGN KEY (InstitutionID) REFERENCES Institution (InstitutionID)
 )
 
 

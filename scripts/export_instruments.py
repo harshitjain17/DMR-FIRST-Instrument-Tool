@@ -1,26 +1,21 @@
-from asyncio.windows_events import NULL
-import pandas as pd
-#from sqlalchemy.engine import URL
-import sqlalchemy as sa
-import dbconf
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 import sys, getopt
 
-SelectInstrument = """
-    Select i.InstrumentID, i.DOI, i.MANUFACTURER, i.[COMPLETION DATE], o.Name as [Owner], i.DESCRIPTION, i.[MODEL NUMBER]
-    from Instrument i JOIN Institution o ON i.InstitutionID = o.InstitutionID 
-    WHERE i.instrumentID = ?;
-    """
-SelectTypes = "Select Name, Uri from InstrumentType t JOIN InstrumentInstrumentType it ON t.InstrumentTypeID=it.InstrumentTypeID where it.InstrumentID = ?"
+import db.dbconf as dbconf
+import db.db as db
+from db.entities import Instrument
 
 HelpMessage = "export_instrument.py -i instrumentId"
 
 def createExport(id):
-    connectionString = 'DRIVER={ODBC Driver 17 for SQL Server};SERVER='+dbconf.server+';DATABASE='+dbconf.database+';UID='+dbconf.username+';PWD='+ dbconf.password
-    connectionUrl = sa.engine.URL.create("mssql+pyodbc", query={"odbc_connect": connectionString})
-    engine = sa.create_engine(connectionUrl)
-    instrument = pd.read_sql(SelectInstrument, engine, params=[id])
-    types = pd.read_sql(SelectTypes, engine, params=[id])
+    engine = db.connect(dbconf)
 
+    Session = sessionmaker(bind = engine)
+    session = Session()
+
+    for i in session.query(Instrument).all():
+        print ("ID: {} Name: {}, Types: [{}] ".format(i.instrumentId, i.name, ", ".join(x.name for x in i.types)))
 
 
 
