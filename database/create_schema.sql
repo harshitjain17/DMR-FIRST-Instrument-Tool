@@ -54,11 +54,11 @@ CREATE TABLE Institution (
 
 CREATE TABLE [Instrument] (
     [InstrumentID] int IDENTITY(1, 1) NOT NULL,
-    [DOI] varchar(255) NOT NULL,
-	[MANUFACTURER] varchar(255) NOT NULL,
-	[MODEL NUMBER] varchar(255) NOT NULL,
-	[ACQUISITION DATE] date NOT NULL,
-	[COMPLETION DATE] date NOT NULL,
+    [DOI] varchar(255) NULL,
+	[MANUFACTURER] varchar(255) NULL,
+	[MODEL NUMBER] varchar(255) NULL,
+	[ACQUISITION DATE] date NULL,
+	[COMPLETION DATE] date NULL,
 	[STATUS] varchar(255) NOT NULL,
 	[DESCRIPTION] varchar(max) NOT NULL,
     [LocationID] int not null,
@@ -91,7 +91,6 @@ CREATE TABLE InstrumentType (
 CREATE TABLE InstrumentInstrumentType (
     [InstrumentTypeID] [int] NOT NULL,
     [InstrumentID] [int] NOT NULL,
-    [Role] varchar(1) not null,
     CONSTRAINT [PK_InstrumentInstrumentType] PRIMARY KEY CLUSTERED (InstrumentTypeID, InstrumentID),
     CONSTRAINT [FK_InstrumentInstrumentType_InstrumentType] FOREIGN KEY (InstrumentTypeID) REFERENCES InstrumentType (InstrumentTypeID),
     CONSTRAINT [FK_InstrumentInstrumentType_Instrument] FOREIGN KEY (InstrumentID) REFERENCES Instrument (InstrumentID)
