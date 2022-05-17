@@ -1,3 +1,5 @@
+//**** / NOTE: THIS PIECE OF CODE WILL BE USED LATER FOR HANDLING API REQUEST. FOR NOW, I AM COMMENTING IT *****
+
 // // WORKING WITH JSON (javaScript Object Notation)
 // let jsonObj = {
 //     name: 'Harshit Jain',
@@ -17,7 +19,7 @@
 
 
 
-
+//***** THIS PIECE OF CODE WILL BE USED FOR CREATE THE WEB SERVER TO TEST (NOT MUCH IMPORTANT)
 
 // //HTTP SERVER MODULE
 // var http = require('http'); // calling the http module
@@ -48,11 +50,11 @@ var configuration = {
         type: 'default',
         options: {
             userName: 'tu_hmj5262', //update it
-            password: 'my_password' //update it
+            password: 'my_password' //update it (this is not my password - put yours)
         }
     },
     options: {
-        encrypt: true,
+        encrypt: true, // only used when we are using MS Azure
         enableArithAbort: true,
         trustServerCertificate: true,
         database: 'instool'
@@ -61,7 +63,7 @@ var configuration = {
 
 var connection = new Connection(configuration);  
 connection.on('connect', function(err) {  
-    if (err) {
+    if (err) { // handling errors
         console.error(err.message);
     } else {
         executionOfQuery();
