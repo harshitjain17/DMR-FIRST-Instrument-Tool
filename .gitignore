@@ -1,2 +1,3 @@
 scripts/dbconf.py
 scripts/__pycache__/*
+config/config.development.json
