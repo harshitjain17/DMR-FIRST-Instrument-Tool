@@ -48,7 +48,7 @@ var configuration = {
     authentication: {
         type: 'default',
         options: {
-            userName: config.database.userName,
+            userName: config.database.user,
             password: config.database.password
         }
     },
