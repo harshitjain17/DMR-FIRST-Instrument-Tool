@@ -1,6 +1,6 @@
 from asyncio.windows_events import NULL
 import pyodbc
-import dbconf
+import db.dbconf as dbconf
 import csv
 
 cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+dbconf.server+';DATABASE='+dbconf.database+';UID='+dbconf.username+';PWD='+ dbconf.password)

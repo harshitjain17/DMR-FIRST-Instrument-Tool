@@ -42,7 +42,7 @@ CREATE TABLE [Location] (
     [Zip] varchar(255) not null,
     [Country] varchar(255) not null,
     [Latitude] float null,
-    [Longitue] float null,
+    [Longitude] float null,
     CONSTRAINT [PK_Location] PRIMARY KEY CLUSTERED (LocationID)
 );
 
@@ -55,6 +55,7 @@ CREATE TABLE Institution (
 CREATE TABLE [Instrument] (
     [InstrumentID] int IDENTITY(1, 1) NOT NULL,
     [Doi] varchar(255) NULL,
+    [Name] varchar(255) NOT NULL,
 	[Manufacturer] varchar(255) NULL,
 	[ModelNumber] varchar(255) NULL,
 	[SerialNumber] varchar(255) NULL,
@@ -65,9 +66,11 @@ CREATE TABLE [Instrument] (
     [LocationID] int not null,
     [RoomNumber] varchar(25) null,
     [InstitutionID] int not null,
+    [ReplacedByID] int not null,
     CONSTRAINT [PK_Instrument] PRIMARY KEY CLUSTERED (InstrumentID),
     CONSTRAINT [FK_Instrument_Location] FOREIGN KEY (LocationID) REFERENCES Location (LocationID,)
     CONSTRAINT [FK_Instrument_Institutiuon] FOREIGN KEY (InstitutionID) REFERENCES Institution (InstitutionID)
+    CONSTRAINT [FK_Instrument_Instrument] FOREIGN KEY (ReplacedByID) REFERENCES Instrument (InstrumentID)
 )
 
 
@@ -98,6 +101,13 @@ CREATE TABLE InstrumentInstrumentType (
     CONSTRAINT [FK_InstrumentInstrumentType_Instrument] FOREIGN KEY (InstrumentID) REFERENCES Instrument (InstrumentID)
 );
 
+CREATE TABLE InstrumentAward (
+    [InstrumentID] [int] NOT NULL,
+    [AwardID] [int] NOT NULL,
+    CONSTRAINT [PK_InstrumentAward] PRIMARY KEY CLUSTERED (InstrumentID, AwardID),
+    CONSTRAINT [FK_InstrumentAward_Instrument] FOREIGN KEY (InstrumentID) REFERENCES Instrument (InstrumentID),
+    CONSTRAINT [FK_InstrumentAward_Award] FOREIGN KEY (AwardID) REFERENCES Award (AwardID)
+);
 
 END TRY BEGIN CATCH IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
 THROW;
