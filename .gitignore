@@ -4,3 +4,4 @@ config/*
 node_modules/*
 data/Hybrid MBE (MBE2).json
 data/Hybrid MBE (MBE2).xml
+etc
