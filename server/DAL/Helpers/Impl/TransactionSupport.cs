@@ -1,4 +1,5 @@
 using System.Data;
+using Instool.DAL.Models;
 using Instool.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -10,7 +11,7 @@ namespace Instool.DAL.Helpers.Impl
         private readonly DbContext _context;
         private readonly ILogger _logger;
 
-        public TransactionSupport(DbContext context)
+        public TransactionSupport(InstoolContext context)
         {
             _logger = ApplicationLogging.CreateLogger<TransactionSupport>();
             this._context = context;

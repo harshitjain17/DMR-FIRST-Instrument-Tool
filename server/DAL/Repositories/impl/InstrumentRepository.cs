@@ -21,6 +21,7 @@ namespace Instool.DAL.Repositories.impl
                                .Include(i => i.InstrumentCapabilities)
                                .Include(i => i.InstrumentContacts)
                                .Include(i => i.Location)
+                               .AsSingleQuery()
                                .SingleOrDefaultAsync();
         }
     }

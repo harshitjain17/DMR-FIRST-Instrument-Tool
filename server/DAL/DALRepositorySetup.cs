@@ -10,11 +10,6 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Instool.DAL
 {
@@ -38,7 +33,6 @@ namespace Instool.DAL
                     dbConfig.FirstOrDefault(conf => conf.StartsWith("Server")) + ", " +
                     dbConfig.FirstOrDefault(conf => conf.StartsWith("Database")));
 
-                logger.LogInformation("Using sqlserver Database");
                 services.AddDbContext<InstoolContext>(options => options.UseSqlServer(section.GetConnectionString("database"))
                     .EnableSensitiveDataLogging(enableSensitiveDataLogging)
                     .ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))

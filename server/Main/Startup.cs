@@ -22,8 +22,6 @@ namespace Instool
     {
         public IConfiguration Configuration { get; }
 
-        private readonly ILogger _logger;
-
         public Startup(IConfiguration configuration, ILoggerFactory loggerFactory)
         {
             Configuration = configuration;
@@ -155,3 +153,4 @@ namespace Instool
         }
     }
 }
+        
