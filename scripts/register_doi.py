@@ -1,16 +1,19 @@
 import json
+import requests
+from requests.auth import HTTPBasicAuth
 from sqlalchemy.orm import sessionmaker, joinedload
 from sqlalchemy.ext.declarative import declarative_base
 import sys
 import getopt
 
 import config.db as dbconf
+import config.datacite as datacite
 import db.db as db
 from db.entities import Instrument, Award
 from export.data_cite import create_data_cite_json, write_json_file
 from export.pidinst import create_xml, write_xml_file
 
-help_message = "export_instrument.py -i instrumentId"
+help_message = "register_doi.py -i instrumentId"
 
 
 def get_instrument(id):
@@ -25,7 +28,7 @@ def get_instrument(id):
 def main(argv):
     instrument_id = 6
     try:
-        opts, args = getopt.getopt(argv, "hi:e:", ["instrument=", "export="])
+        opts, args = getopt.getopt(argv, "hi:", ["instrument="])
     except getopt.GetoptError:
         print(help_message)
         sys.exit(2)
@@ -38,15 +41,27 @@ def main(argv):
         if instrument_id == -1:
             print(help_message)
             sys.exit()
-        if (opt in ("-e", "--export")):
-            instrument = get_instrument(instrument_id)
-            if arg == "DataCite":
-                dict = create_data_cite_json(instrument)
-                write_json_file(dict, "data/" + instrument.name)
-            else:
-                xml = create_xml.pidinst(instrument)
-                write_xml_file(xml, "data/" + instrument.name)
-
+    instrument = get_instrument(instrument_id)
+    if (instrument.doi):
+        print(f"{instrument.name} already has DOI {instrument.doi}")
+        sys.exit()
+    data = {
+        "data": create_data_cite_json(instrument)
+    }
+    headers = {
+        "Content-Type": "application/vnd.api+json"
+    }
+    result = requests.post(datacite.url, json=data, headers=headers, auth = HTTPBasicAuth(datacite.user, datacite.password))
+    if result.status_code == 201:
+        try:
+            result = json.load(result)
+            doi = result.data.id
+            print(f"Sucessfully registered, doi is {doi}")
+            instrument.doi = doi
+        except:
+            print(result.text)
+    else: 
+            print(result.text)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

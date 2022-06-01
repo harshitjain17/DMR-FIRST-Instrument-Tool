@@ -1,0 +1,10 @@
+{
+    "python.linting.pylintPath": "~/.envs/myProject/bin/pylint",
+    "python.linting.pylintArgs": ["--load-plugins", "--max-line-length=120"],
+    "python.formatting.autopep8Args": [
+        "--max-line-length=120"
+    ],
+    "files.exclude": {
+        "**/__pycache__": true
+    },
+}

@@ -18,14 +18,14 @@
 // console.log(newJsonObj);
 
 
-
+var config = require("./config")()
 //***** THIS PIECE OF CODE WILL BE USED FOR CREATE THE WEB SERVER TO TEST (NOT MUCH IMPORTANT)
 
 // //HTTP SERVER MODULE
 // var http = require('http'); // calling the http module
 
-// const hostname = '127.0.0.1';
-// const port = 3000;
+// const hostname = config.hostname;
+// const port = config.port;
 
 // const server = http.createServer((request, response) => {
 //     response.writeHead(200, {'Content-Type': 'text/plain'});
@@ -41,23 +41,22 @@
 
 
 // CONNECTION WITH SQL SERVER
-
 var Connection = require('tedious').Connection;  // calling the tedious module
 
 var configuration = {
-    server: 'mri-db03.mri.psu.edu',
+    server: config.database.server,
     authentication: {
         type: 'default',
         options: {
-            userName: 'tu_hmj5262', //update it
-            password: 'my_password' //update it (this is not my password - put yours)
+            userName: config.database.user,
+            password: config.database.password
         }
     },
     options: {
         encrypt: true, // only used when we are using MS Azure
         enableArithAbort: true,
         trustServerCertificate: true,
-        database: 'instool'
+        database: config.database.schema
     }
 };  
 
