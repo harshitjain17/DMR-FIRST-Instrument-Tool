@@ -1,0 +1,6 @@
+.right-section {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    border: 3px solid green;
+} 

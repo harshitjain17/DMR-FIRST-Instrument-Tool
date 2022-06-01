@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.left-section {
+    width: 25%;
+    border: 3px solid blue;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    color: #333;
+}
+.collapsible {
+    cursor: pointer;
+    width: 100%;
+    color: #333;
+    display: block;
+}
+.active, .collapsible:hover {
+    background-color: #e9e9e9;
+}
+.content{
+    display: none;
+    overflow: hidden;
+}
+a {
+    text-decoration: none;
+    color: #333;
+}
+</style>
+</head>
+<body>
+
+    <div class = 'left-section'>
+        <div id = "tool_tree">
+            
+            <ul>
+                <li>
+                    <a class = "collapsible">Materials Characterization Lab</a>
+                    <ul class = "content">  
+                        <li>
+                            <a class = "collapsible">Commons</a>
+                            <ul class = "content"> 
+                                <li><a href="https://www.google.com">MCL Commons Imaging Workstation</a></li>
+                            </ul>
+                        </li>
+                        
+                        <li>
+                            <a class = "collapsible">Electrical Characterization</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">ECL: 4294A Precision Impedance Analyzer</a></li>
+                                <li><a href="https://www.google.com">ECL: Cascade 1200 (room temp)</a></li>
+                                <li><a href="https://www.google.com">ECL: Ecopia HMS-3000 Hall Measurement</a></li>
+                                <li><a href="https://www.google.com">ECL: FormFactor 11000 (-60 to 300 C)</a></li>
+                                <li><a href="https://www.google.com">ECL: FormFactor 12000 (semi-automated)</a></li>
+                                <li><a href="https://www.google.com">ECL: High Voltage Breakdown \ Polarization</a></li>
+                                <li><a href="https://www.google.com">ECL: Keithley 4200SCS (mobile) $0</a></li>
+                                <li><a href="https://www.google.com">ECL: Lakeshore CRX-VF (10 to 500 K)</a></li>
+                                <li><a href="https://www.google.com">ECL: Love_Filmstage (25 to 500 C) $0</a></li>
+                                <li><a href="https://www.google.com">ECL: Modulab (mobile) $0</a></li>
+                                <li><a href="https://www.google.com">ECL: Modulab XM</a></li>
+                                <li><a href="https://www.google.com">ECL: Other 1</a></li>
+                                <li><a href="https://www.google.com">ECL: Other 2</a></li>
+                                <li><a href="https://www.google.com">ECL: PCB HALT</a></li>
+                                <li><a href="https://www.google.com">ECL: Polarization</a></li>
+                                <li><a href="https://www.google.com">ECL: Poling</a></li>
+                                <li><a href="https://www.google.com">ECL: Seebeck</a></li>
+                                <li><a href="https://www.google.com">ECL: Sonelastic (elastic moduli and damping)</a></li>
+                                <li><a href="https://www.google.com">ECL: System </a></li>
+                                <li><a href="https://www.google.com">ECL: System 2</a></li>
+                                <li><a href="https://www.google.com">ECL: System 3</a></li>
+                                <li><a href="https://www.google.com">ECL: System 4</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Electron Microscopy</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">EPMA: CAMECA SXFive</a></li>
+                                <li><a href="https://www.google.com">ESEM: Q250</a></li>
+                                <li><a href="https://www.google.com">EXpressLO LLC Station $0</a></li>
+                                <li><a href="https://www.google.com">FESEM: Apreo</a></li>
+                                <li><a href="https://www.google.com">FESEM: Verios</a></li>
+                                <li><a href="https://www.google.com">FIB: Helios NanoLab 660</a></li>
+                                <li><a href="https://www.google.com">FIB: Scios 2</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Furnace Lab</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">Furnace 003 Box 1700 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 004 Box 1700 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 005 Tube 1500 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 006 Tube 1500 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 007 Tube 1500 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 008 Big Box 1200 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 009 Box 1200 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 010 Box 1200 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 011 Box 1200 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 012 Box 1200 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 013 Box 1400 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 014 Box 1400 C</a></li>
+                                <li><a href="https://www.google.com">Furnace 015 Box 1400 C</a></li>
+                                <li><a href="https://www.google.com">Furnace Keith Box 1400 C</a></li>
+                                <li><a href="https://www.google.com">Furnace LTCC 2 Box 1100 C</a></li>
+                                <li><a href="https://www.google.com">Furnace LTCC 3 Box 1000 C</a></li>
+                                <li><a href="https://www.google.com">Furnace LTCC 4 Box 1000 C</a></li>
+                                <li><a href="https://www.google.com">Furnace LTCC 5 Box 1500 C</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Mechanical Testing</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">Mechanical: 100kN load frame</a></li>
+                                <li><a href="https://www.google.com">Mechanical: 50kN load frame</a></li>
+                                <li><a href="https://www.google.com">Mechanical: DIC</a></li>
+                                <li><a href="https://www.google.com">Mechanical: DMA</a></li>
+                                <li><a href="https://www.google.com">Mechanical: Indenter</a></li>
+                                <li><a href="https://www.google.com">Mechanical: TMA</a></li>
+                                <li><a href="https://www.google.com">Mechanical: wire EDM</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Molecular Spectroscopy</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">AFM: IconIR</a></li>
+                                <li><a href="https://www.google.com">FT-IR Bruker V70</a></li>
+                                <li><a href="https://www.google.com">FT-IR Microscope - Bruker</a></li>
+                                <li><a href="https://www.google.com">FT-IR: V80v</a></li>
+                                <li><a href="https://www.google.com">Raman: Horiba LUCY</a></li>
+                                <li><a href="https://www.google.com">Raman: Horiba Vlabinir</a></li>
+                                <li><a href="https://www.google.com">Raman: Horiba XploRA</a></li>
+                                <li><a href="https://www.google.com">UV-Vis-NIR: Agilent</a></li>
+                                <li><a href="https://www.google.com">UV-Vis-NIR: PE Lambda 950</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Optical Microscopy</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">Micro: Zeiss Axiolmager</a></li>
+                                <li><a href="https://www.google.com">Micro: Zeiss Smartzoom</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Particle Analysis</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">Mercury Porosimeter</a></li>
+                                <li><a href="https://www.google.com">PCL: ASAP 2020</a></li>
+                                <li><a href="https://www.google.com">PCL: ASAP 2420</a></li>
+                                <li><a href="https://www.google.com">PCL: AutoChem 2920</a></li>
+                                <li><a href="https://www.google.com">PCL: He Pycnometer</a></li>
+                                <li><a href="https://www.google.com">PCL: Malvern Morphologi</a></li>
+                                <li><a href="https://www.google.com">PCL: Malvern Zetasizer</a></li>
+                                <li><a href="https://www.google.com">PCL: Mastersizer 3000</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Sample Prep</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com"  >ADT Provectus 7100 Dicing Saw</a></li>
+                                <li><a href="https://www.google.com">DISCO DFD6240 Dicing Saw</a></li>
+                                <li><a href="https://www.google.com">Prep: Allied TechCut $0</a></li>
+                                <li><a href="https://www.google.com">Prep: Alumina Polish Wheel $0</a></li>
+                                <li><a href="https://www.google.com">Prep: ATM 220 Saw</a></li>
+                                <li><a href="https://www.google.com">Prep: Big Blue Diamond Saw $0</a></li>
+                                <li><a href="https://www.google.com">Prep: Diamond Polish $0</a></li>
+                                <li><a href="https://www.google.com">Prep: Electrochemical Power Source &amp; Work Area $0</a></li>
+                                <li><a href="https://www.google.com">Prep: Hot Mounting Press $0</a></li>
+                                <li><a href="https://www.google.com">Prep: Isomet https://www.google.com2 PB Saw $0</a></li>
+                                <li><a href="https://www.google.com">Prep: Leco Grinding Wheel $0</a></li>
+                                <li><a href="https://www.google.com">Prep: Leica Ion Mill</a></li>
+                                <li><a href="https://www.google.com">Prep: Leica TXP</a></li>
+                                <li><a href="https://www.google.com">Prep: PICO Precision Saw $0</a></li>
+                                <li><a href="https://www.google.com">Prep: PIPS II Ion Thinner</a></li>
+                                <li><a href="https://www.google.com">Prep: Polish MetPrep</a></li>
+                                <li><a href="https://www.google.com">Prep: Polish MultiPrep</a></li>
+                                <li><a href="https://www.google.com">Prep: Polish Vibratory $0</a></li>
+                                <li><a href="https://www.google.com">Prep: Princeton Wire Saw</a></li>
+                                <li><a href="https://www.google.com">Prep: Purple Saw $0</a></li>
+                                <li><a href="https://www.google.com">Prep: Sonic Mill $0</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Sputter coater</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">Coater:  Leica</a></li>
+                                <li><a href="https://www.google.com">Coater: Denton</a></li>
+                                <li><a href="https://www.google.com">Coater: Emitec</a></li>
+                                <li><a href="https://www.google.com">ECL: Quorum Sputter Coater</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Surface Analysis</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">Contact Angle: RH295</a></li>
+                                <li><a href="https://www.google.com">ToF-SIMS: PHI nanoTOF II</a></li>
+                                <li><a href="https://www.google.com">XPS-Auger</a></li>
+                                <li><a href="https://www.google.com">XPS: PHI Versaprobe II</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Surface Metrology</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">AFM: Asylum Cypher VRS</a></li>
+                                <li><a href="https://www.google.com">AFM: Bruker Icon I</a></li>
+                                <li><a href="https://www.google.com">AFM: Bruker Icon II</a></li>
+                                <li><a href="https://www.google.com">AFM: Bruker Resolve</a></li>
+                                <li><a href="https://www.google.com">AFM: Nanofab Bruker Icon</a></li>
+                                <li><a href="https://www.google.com">Nanoindenter</a></li>
+                                <li><a href="https://www.google.com">Profilometer: Keyence VK-X3100</a></li>
+                                <li><a href="https://www.google.com">Profilometer: Zygo NexView 3D</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "tree">Thermal Analysis</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">Thermal: DSC</a></li>
+                                <li><a href="https://www.google.com">Thermal: STA 449 F3 (TGA+DSC)</a></li>
+                                <li><a href="https://www.google.com">Thermal: TGA\Mass Spec</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">Transmission Electron Microscopy</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">TEM Cryo Holder reservation $0</a></li>
+                                <li><a href="https://www.google.com">TEM Data Analysis Computer $0</a></li>
+                                <li><a href="https://www.google.com">TEM insitu holder reservation $0</a></li>
+                                <li><a href="https://www.google.com">TEM tomo computer $0</a></li>
+                                <li><a href="https://www.google.com">TEM: FEI Talos F200C</a></li>
+                                <li><a href="https://www.google.com">TEM: FEI Talos F200X</a></li>
+                                <li><a href="https://www.google.com">TEM: FEI Titan3 TEM\STEM</a></li>
+                                <li><a href="https://www.google.com">TEM: Tecnai LaB6</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class = "collapsible">X-Ray Scattering</a>
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">Air Sensitive Sample Holder $0</a></li>
+                                <li><a href="https://www.google.com">HTK2000N Furnace: Empyrean II</a></li>
+                                <li><a href="https://www.google.com">Prep: Cryomill</a></li>
+                                <li><a href="https://www.google.com">Prep: Micronizing Mill</a></li>
+                                <li><a href="https://www.google.com">XRAY: Empyrean I</a></li>
+                                <li><a href="https://www.google.com">XRAY: Empyrean II</a></li>
+                                <li><a href="https://www.google.com">XRAY: Empyrean III</a></li>
+                                <li><a href="https://www.google.com">XRAY: Laue</a></li>
+                                <li><a href="https://www.google.com">XRAY: MRD</a></li>
+                                <li><a href="https://www.google.com">XRAY: SAXS\WAXS</a></li>
+                                <li><a href="https://www.google.com">XRAY: XRF</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                
+
+
+
+
+
+
+                <li>
+                    <a class = "collapsible"> 2D Crystal Consortium </a>
+                    <ul class = "content">  
+                        <li>
+                            <a class = "collapsible">Commons</a>
+                            <ul class = "content"> 
+                                <li><a href="https://www.google.com">MCL Commons Imaging Workstation</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                             <a class = "collapsible">Electrical Characterization</a> 
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">ECL: Poling</a></li>
+                                <li><a href="https://www.google.com">ECL: Seebeck</a></li>
+                                <li><a href="https://www.google.com">ECL: Sonelastic (elastic moduli and damping)</a></li>
+                                <li><a href="https://www.google.com">ECL: System </a></li>
+                                <li><a href="https://www.google.com">ECL: System 2</a></li>
+                                <li><a href="https://www.google.com">ECL: System 3</a></li>
+                                <li><a href="https://www.google.com">ECL: System 4</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+
+
+                <li>
+                    <a class = "collapsible"> Nanofabraction Lab </a>                        
+                    <ul class = "content">  
+                        <li>
+                        <a class = "collapsible">Commons</a>
+                            <ul class = "content"> 
+                                <li><a href="https://www.google.com">MCL Commons Imaging Workstation</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                        <a class = "collapsible">Electrical Characterization</a> 
+                            <ul class = "content">
+                                <li><a href="https://www.google.com">ECL: Poling</a></li>
+                                <li><a href="https://www.google.com">ECL: Seebeck</a></li>
+                                <li><a href="https://www.google.com">ECL: Sonelastic (elastic moduli and damping)</a></li>
+                                <li><a href="https://www.google.com">ECL: System </a></li>
+                                <li><a href="https://www.google.com">ECL: System 2</a></li>
+                                <li><a href="https://www.google.com">ECL: System 3</a></li>
+                                <li><a href="https://www.google.com">ECL: System 4</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+        
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+
+</body>
+</html>
