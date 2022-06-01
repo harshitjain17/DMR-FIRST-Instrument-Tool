@@ -1,0 +1,66 @@
+.Header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    background-image: url(https://www.mri.psu.edu/sites/all/themes/omega_2017/images/header.png);
+    width: 100%;
+    max-height: 25%;
+    z-index: 10;   
+}
+
+#top-left {
+    width: 25%;
+    clear: none;
+}
+
+#site-name {
+    color: #ffffff;
+    font-size: 1.15em;
+    line-height: 0.5em;
+    margin: 2%;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    font-size: larger;
+}
+
+#site-slogan {
+    font-size: medium;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#top-middle {
+    display: inline;
+    width: 30%;
+    padding: 10px;
+}
+
+#site-slogan {
+    line-height: 1.25em;
+    color: #ffffff;
+    overflow-wrap: break-word;
+    width: 90%;
+}
+
+#top-right {
+    display: inline;   
+}
+
+.rteright {
+    bottom: 0px;
+    text-align: right;
+    height: 20px;
+    width: 157px;
+    margin: 25% 0% 0% 0%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: small;
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#top-middle a {
+    font-size: 1.35em;
+}
