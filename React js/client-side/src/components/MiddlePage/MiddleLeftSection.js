@@ -113,6 +113,262 @@ return (
                     </AccordionDetails>
                 </Accordion>
                 </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Electron Probe MicroAnalysis (EPMA)</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Cameca SX Five Capabilities</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Focused Ion Beam (FIB)</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Helios 660</a></li>
+                        <li><a href="#" className = "links">Scios 2</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Infrared Spectroscopy (FTIR)</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Bruker V70</a></li>
+                        <li><a href="#" className = "links">Bruker V80 Microscope</a></li>
+                        <li><a href="#" className = "links">Bruker V80v</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Mechanical</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">50 kN MTS Criterion load frame</a></li>
+                        <li><a href="#" className = "links">100 kN MTS Criterion load frame</a></li>
+                        <li><a href="#" className = "links">3D DIC Camera</a></li>
+                        <li><a href="#" className = "links">TA Instruments Q800 DMA</a></li>
+                        <li><a href="#" className = "links">Qness Q60 A+ microindenter</a></li>
+                        <li><a href="#" className = "links">Netzsch 402 F1/F3 Hyperion TMA</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Mercury Porosimetry</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Micromeritics AutoPore V Model 9620</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Nanoindentation</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Bruker Hysitron TI-980</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Optical Microscopy</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Zeiss AxioImager</a></li>
+                        <li><a href="#" className = "links">Zeiss SmartZoom</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Optical Profilometry</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Zygo Nexview 3D Optical Surface Profiler</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Particle Size Analysis</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Zetasizer Nano ZS</a></li>
+                        <li><a href="#" className = "links">Mastersizer 3000</a></li>
+                        <li><a href="#" className = "links">Morphologi G3 SE</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Raman Spectroscopy</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Scientific LabRAM HR "VlabiNIR"</a></li>
+                        <li><a href="#" className = "links">Scientific LabRAM HR "Lucy"</a></li>
+                        <li><a href="#" className = "links">Scientific Xplora Plus</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Surface Analysis</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">PHI5000 VERSA PROBE II</a></li>
+                        <li><a href="#" className = "links">PHI5000 VERSA PROBE III</a></li>
+                        <li><a href="#" className = "links">UPS</a></li>
+                        <li><a href="#" className = "links">REELS</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Scanning Electron Microscopy (SEM)</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Verios G4</a></li>
+                        <li><a href="#" className = "links">Apreo S</a></li>
+                        <li><a href="#" className = "links">ESEM Q250</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Surface Area</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">ASAP 2020 / ASAP2420</a></li>
+                        <li><a href="#" className = "links">Autopore V</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Transmission Electron Microscopy (TEM)</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Tecnai G2</a></li>
+                        <li><a href="#" className = "links">Talos F200C</a></li>
+                        <li><a href="#" className = "links">Talos F200X</a></li>
+                        <li><a href="#" className = "links">Titan³ G2</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Thermal Analysis</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Discovery TGA-MS</a></li>
+                        <li><a href="#" className = "links">TA Q2000 DSC</a></li>
+                        <li><a href="#" className = "links">STA 449 F3</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Time of Flight Secondary Ion Mass Spectrometry</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">PHI nanoTOF II</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>UV-Vis-NIR</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Perkin-Elmer Lambda 950 UV-Vis-NIR Spectrophotometer</a></li>
+                        <li><a href="#" className = "links">Agilent/Cary 7000 with UMA</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+                
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>X-Ray Photoelectron Spectroscopy (XPS)</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Versa Probe II</a></li>
+                        <li><a href="#" className = "links">Versa Probe III</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>XRD / SAXS-WAXS</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Malvern Panalytical Empyrean I / II / III</a></li>
+                        <li><a href="#" className = "links">Malvern Panalytical XPert Pro MPD</a></li>
+                        <li><a href="#" className = "links">Malvern Panalytical X'Pert3 MRD</a></li>
+                        <li><a href="#" className = "links">XENOCS Xeuss 2.0 SAXS/WAXS</a></li>
+                        <li><a href="#" className = "links">Multiwire Laue</a></li>
+                        <li><a href="#" className = "links">Emp1; Emp2</a></li>
+                        <li><a href="#" className = "links">MRD</a></li>
+                        <li><a href="#" className = "links">Xuess SAXS/WAXS</a></li>
+                        <li><a href="#" className = "links">McCrone Micronizing Mill</a></li>
+                        <li><a href="#" className = "links">Retsch CryoMill</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
+                <li>
+                <Accordion>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>Zeta Potential</AccordionSummary>
+                    <AccordionDetails>
+                    <ul className = "content">
+                        <li><a href="#" className = "links">Malvern Zetasizer ZS</a></li>
+                    </ul>
+                    </AccordionDetails>
+                </Accordion>
+                </li>
+
         </ul>
 		</AccordionDetails>
 	</Accordion>
