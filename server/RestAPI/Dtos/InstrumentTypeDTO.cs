@@ -15,7 +15,7 @@ namespace Instool.Dtos
                 InstrumentTypeId = a.InstrumentTypeId,
                 Name = a.Name,
                 Uri = a.Uri,
-                Category = a.Category == null ? null : InstrumentTypeDTO.FromEntity(a.Category)
+                Category = a.Category == null ? null : FromEntity(a.Category)
             };
         }
     }

@@ -7,7 +7,6 @@ namespace Instool.DAL.Models
     {
         public Instrument()
         {
-            InstrumentCapabilities = new HashSet<InstrumentCapability>();
             InstrumentContacts = new HashSet<InstrumentContact>();
             Replaces = new HashSet<Instrument>();
             Awards = new HashSet<Award>();
@@ -33,7 +32,6 @@ namespace Instool.DAL.Models
         public virtual Location Location { get; set; } = null!;
         public virtual Institution Institution { get; set; } = null!;
         public virtual Instrument? ReplacedBy { get; set; }
-        public virtual ICollection<InstrumentCapability> InstrumentCapabilities { get; set; }
         public virtual ICollection<InstrumentContact> InstrumentContacts { get; set; }
         public virtual ICollection<Instrument> Replaces { get; set; }
 

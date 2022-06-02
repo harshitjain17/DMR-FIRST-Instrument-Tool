@@ -4,6 +4,8 @@ namespace Instool.DAL.Repositories
 {
     public interface IInstrumentRepository
     {
-        public Task<Instrument?> Get(int id);
+        public Task<Instrument?> GetById(int id);
+
+        public Task<Instrument?> GetByDoi(string doi);
     }
 }

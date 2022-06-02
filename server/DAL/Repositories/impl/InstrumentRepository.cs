@@ -12,17 +12,30 @@ namespace Instool.DAL.Repositories.impl
             _context = context;
         }
 
-        public Task<Instrument?> Get(int id)
+        public Task<Instrument?> GetById(int id)
         {
-            return _context.Instruments
-                               .Where(i => i.InstrumentId == id)
-                               .Include(i => i.Awards)
+            var query = _context.Instruments
+                                .Where(i => i.InstrumentId == id);
+            query = ApplyIncludes(query);
+            return query.AsSingleQuery().SingleOrDefaultAsync();
+        }
+
+        public Task<Instrument?> GetByDoi(string doi)
+        {
+            var query = _context.Instruments
+                                .Where(i => i.Doi == doi);
+            query = ApplyIncludes(query);
+            return query.AsSingleQuery().SingleOrDefaultAsync();
+        }
+
+        private IQueryable<Instrument> ApplyIncludes(IQueryable<Instrument> query)
+        {
+            return query.Include(i => i.Awards)
                                .Include(i => i.Institution)
-                               .Include(i => i.InstrumentCapabilities)
+                               //.Include(i => i.InstrumentCapabilities)
                                .Include(i => i.InstrumentContacts)
                                .Include(i => i.Location)
-                               .AsSingleQuery()
-                               .SingleOrDefaultAsync();
+                               .Include(i => i.InstrumentTypes);
         }
     }
 }

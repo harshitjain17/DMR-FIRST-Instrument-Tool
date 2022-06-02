@@ -19,7 +19,7 @@ CREATE TABLE Investigator (
     [MiddleName] varchar(255) null,
     [LastName] varchar(255) not null,
     [Email] varchar(255) not null,
-    [Phone] varchar(25) not null,
+    [Phone] varchar(25) null,
     CONSTRAINT [PK_Investigator] PRIMARY KEY CLUSTERED (InvestigatorID),
     CONSTRAINT [UK_Investigator_Eppn] UNIQUE (Eppn)
 );
@@ -59,17 +59,17 @@ CREATE TABLE [Instrument] (
 	[Manufacturer] varchar(255) NULL,
 	[ModelNumber] varchar(255) NULL,
 	[SerialNumber] varchar(255) NULL,
-	[AcquistionDate] date NULL,
-	[CompleteionDate] date NULL,
+	[AcquisitionDate] date NULL,
+	[CompletionDate] date NULL,
 	[Status] varchar(255) NOT NULL,
 	[Description] varchar(max) NOT NULL,
     [LocationID] int not null,
     [RoomNumber] varchar(25) null,
     [InstitutionID] int not null,
-    [ReplacedByID] int not null,
+    [ReplacedByID] int null,
     CONSTRAINT [PK_Instrument] PRIMARY KEY CLUSTERED (InstrumentID),
-    CONSTRAINT [FK_Instrument_Location] FOREIGN KEY (LocationID) REFERENCES Location (LocationID,)
-    CONSTRAINT [FK_Instrument_Institutiuon] FOREIGN KEY (InstitutionID) REFERENCES Institution (InstitutionID)
+    CONSTRAINT [FK_Instrument_Location] FOREIGN KEY (LocationID) REFERENCES Location (LocationID),
+    CONSTRAINT [FK_Instrument_Institutiuon] FOREIGN KEY (InstitutionID) REFERENCES Institution (InstitutionID),
     CONSTRAINT [FK_Instrument_Instrument] FOREIGN KEY (ReplacedByID) REFERENCES Instrument (InstrumentID)
 )
 
@@ -88,9 +88,9 @@ CREATE TABLE InstrumentType (
     [InstrumentTypeID] [int] IDENTITY(1, 1) NOT NULL,
     [Name] varchar(255) not null,
     [Uri] varchar(255) null,
-    [Category] int null,
+    [CategoryId] int null,
     CONSTRAINT [PK_InstrumentType] PRIMARY KEY CLUSTERED (InstrumentTypeID),
-    CONSTRAINT [FK_InstrumentType_InstrumentType] FOREIGN KEY (Category) REFERENCES InstrumentType (InstrumentTypeID)
+    CONSTRAINT [FK_InstrumentType_InstrumentType] FOREIGN KEY (CategoryId) REFERENCES InstrumentType (InstrumentTypeID)
 );
 
 CREATE TABLE InstrumentInstrumentType (
@@ -99,6 +99,15 @@ CREATE TABLE InstrumentInstrumentType (
     CONSTRAINT [PK_InstrumentInstrumentType] PRIMARY KEY CLUSTERED (InstrumentTypeID, InstrumentID),
     CONSTRAINT [FK_InstrumentInstrumentType_InstrumentType] FOREIGN KEY (InstrumentTypeID) REFERENCES InstrumentType (InstrumentTypeID),
     CONSTRAINT [FK_InstrumentInstrumentType_Instrument] FOREIGN KEY (InstrumentID) REFERENCES Instrument (InstrumentID)
+);
+
+
+CREATE TABLE ExpertForInstrumentType (
+    [InvestigatorID] [int] NOT NULL,
+    [InstrumentTypeID] [int] NOT NULL,
+    CONSTRAINT [PK_ExportForInstrumentType] PRIMARY KEY CLUSTERED (InvestigatorID, [InstrumentTypeID]),
+    CONSTRAINT [FK_ExportForInstrumentType_Investigator] FOREIGN KEY (InvestigatorID) REFERENCES Investigator (InvestigatorID),
+    CONSTRAINT [FK_ExportForInstrumentType_InstrumentType] FOREIGN KEY (InstrumentTypeID) REFERENCES InstrumentType (InstrumentTypeID)
 );
 
 CREATE TABLE InstrumentAward (

@@ -170,11 +170,11 @@ namespace Instool.DAL.Models
 
                 entity.Property(e => e.Name).IsUnicode(false);
 
-                entity.HasOne(d => d.Instrument)
-                    .WithMany(p => p.InstrumentCapabilities)
-                    .HasForeignKey(d => d.InstrumentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_InstrumentCapability_Instrument");
+                //entity.HasOne(d => d.Instrument)
+                //    .WithMany(p => p.InstrumentCapabilities)
+                //    .HasForeignKey(d => d.InstrumentId)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_InstrumentCapability_Instrument");
             });
 
             modelBuilder.Entity<InstrumentContact>(entity =>
