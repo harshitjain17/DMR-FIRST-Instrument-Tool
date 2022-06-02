@@ -8,7 +8,7 @@ namespace Instool.API
 {
     [ApiController]
     [ApiVersion("1")]
-    [Route("api/v{version:apiVersion}/instrument-types")
+    [Route("api/v{version:apiVersion}/instrument-types")]
     public class InstrumentTypeApiController : ControllerBase
     {
         private readonly IAuthorizationService _authService;
