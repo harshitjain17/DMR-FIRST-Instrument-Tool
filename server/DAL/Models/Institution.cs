@@ -9,5 +9,10 @@ namespace Instool.DAL.Models
         public string Name { get; set; } = null!;
 
         public virtual ICollection<Instrument> Instruments { get; set; }
+
+        public Institution()
+        {
+            Instruments = new HashSet<Instrument>();  
+        }
     }
 }

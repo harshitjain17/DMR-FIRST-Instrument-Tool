@@ -5,7 +5,7 @@ namespace Instool.Helpers
 {
     public static class DateHelper
     {
-        public static string UsDateToDb(string date)
+        public static string? UsDateToDb(string? date)
         {
             return string.IsNullOrWhiteSpace(date) ? null : ParseUsDate(date).ToString("s");
         }
@@ -78,7 +78,7 @@ namespace Instool.Helpers
             return date.ToString("yyMMdd");
         }
 
-        public static string FormatDate(string date)
+        public static string? FormatDate(string? date)
         {
             if (date == null)
             {
@@ -94,7 +94,7 @@ namespace Instool.Helpers
             }
         }
 
-        public static string FormatDate(DateTime? date)
+        public static string? FormatDate(DateTime? date)
         {
             if (date == null)
             {
@@ -110,7 +110,7 @@ namespace Instool.Helpers
             }
         }
 
-        public static string FormatDateTime(string date)
+        public static string? FormatDateTime(string? date)
         {
             if (date == null)
             {
@@ -127,7 +127,7 @@ namespace Instool.Helpers
 
         }
 
-        public static string FormatDateTime(DateTime? date)
+        public static string? FormatDateTime(DateTime? date)
         {
             if (!date.HasValue)
             {
@@ -136,7 +136,7 @@ namespace Instool.Helpers
             return date.Value.ToString("M/d/yyyy h:mm:ss tt", new CultureInfo("en-US"));
         }
 
-        public static string FormatDateTimeMinutes(DateTime? date)
+        public static string? FormatDateTimeMinutes(DateTime? date)
         {
             if (!date.HasValue)
             {
@@ -146,7 +146,7 @@ namespace Instool.Helpers
         }
 
 
-        public static string FormatDateTimeFileName(DateTime? date)
+        public static string? FormatDateTimeFileName(DateTime? date)
         {
             if (!date.HasValue)
             {
@@ -163,7 +163,17 @@ namespace Instool.Helpers
         /// <returns></returns>
         public static int Compare(string first, string second)
         {
-            return UsDateToDb(first).CompareTo(UsDateToDb(second));
+            if (string.IsNullOrEmpty(first))
+            {
+                throw new ArgumentException($"'{nameof(first)}' cannot be null or empty.", nameof(first));
+            }
+
+            if (string.IsNullOrEmpty(second))
+            {
+                throw new ArgumentException($"'{nameof(second)}' cannot be null or empty.", nameof(second));
+            }
+
+            return UsDateToDb(first)!.CompareTo(UsDateToDb(second)!);
         }
 
         public static string CurrentDate()

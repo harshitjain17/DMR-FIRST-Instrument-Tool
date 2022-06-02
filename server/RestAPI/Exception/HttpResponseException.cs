@@ -5,7 +5,7 @@ namespace Instool.RestAPI.Exceptions
 {
     public class HttpResponseException : Exception
     {
-        public HttpResponseException(int status, object value = null)
+        public HttpResponseException(int status, object? value = null)
         {
             Status = status;
             Value = value;
@@ -13,7 +13,7 @@ namespace Instool.RestAPI.Exceptions
 
         public int Status { get; set; } = 500;
 
-        public object Value { get; set; }
+        public object? Value { get; set; }
 
         public static HttpResponseException Forbidden()
         {

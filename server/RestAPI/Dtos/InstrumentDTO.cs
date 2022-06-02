@@ -17,15 +17,18 @@ namespace Instool.Dtos
         public DateTime? CompletionDate { get; set; }
         public string Status { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public int LocationId { get; set; }
         public string? RoomNumber { get; set; }
-        public int InstitutionId { get; set; }
-        public int? ReplacedById { get; set; }
         public string? Name { get; set; }
         public string? SerialNumber { get; set; }
 
+        public LocationDTO? Location { get; set; }
+
+        public InstitutionDTO? Institution { get; set; }
+
         public ICollection<AwardDTO> Awards { get; set; } = new List<AwardDTO>();
         public ICollection<InstrumentTypeDTO> InstrumentTypes { get; set; } = new List<InstrumentTypeDTO>();
+
+        public ICollection<InvestigatorDTO> Contacts { get; set; } = new List<InvestigatorDTO>();   
 
         internal static InstrumentDTO FromEntity(Instrument i)
         {
@@ -36,13 +39,17 @@ namespace Instool.Dtos
                 CompletionDate = i.CompletionDate,
                 Description = i.Description,
                 Doi = i.Doi,
+                InstrumentId = i.InstrumentId,
                 InstrumentTypes = i.InstrumentTypes.Select(t => InstrumentTypeDTO.FromEntity(t)).ToList(),
+                Contacts = i.InstrumentContacts.Select(c => InvestigatorDTO.FromEntity(c.Investigator, c.Role)).ToList(),
                 Manufacturer = i.Manufacturer,
                 ModelNumber = i.ModelNumber,
                 Name = i.Name,
                 RoomNumber = i.RoomNumber,
                 Status = i.Status,
-                SerialNumber = i.SerialNumber
+                SerialNumber = i.SerialNumber,
+                Location = LocationDTO.FromEntity(i.Location),
+                Institution = InstitutionDTO.FromEntity(i.Institution)
             };
         }
     }

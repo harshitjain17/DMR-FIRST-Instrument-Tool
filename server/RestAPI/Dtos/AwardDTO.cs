@@ -9,7 +9,13 @@ namespace Instool.Dtos
         public string AwardNumber { get; set; } = null!;
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        
+        public ICollection<InvestigatorDTO> Investigators { get; set; }
+
+        public AwardDTO()
+        {
+            Investigators = new HashSet<InvestigatorDTO>();
+        }
+
         internal static AwardDTO FromEntity(Award a) {
             return new AwardDTO
             {
@@ -17,7 +23,8 @@ namespace Instool.Dtos
                 AwardNumber = a.AwardNumber,
                 StartDate = a.StartDate,
                 EndDate = a.EndDate,
-                Title = a.Title
+                Title = a.Title,
+                Investigators = a.InvestigatorOnAwards.Select(i => InvestigatorDTO.FromEntity(i.Investigator, i.Role)).ToList()
             };
         }
     }

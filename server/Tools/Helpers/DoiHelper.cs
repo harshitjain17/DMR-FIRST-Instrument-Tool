@@ -15,17 +15,17 @@
 
         /// <summary>
         /// Decode a route with DOIs.
-        /// {idOrDOI}/furtherPath/{furtherId}
+        /// {idOrDOI}/furtherPath/{idOrDOI}
         /// 
         /// DOIs contains slashes, so the usual route matching cannot be used.
         /// 
         /// 
         /// </summary>
         /// <param name="route"></param>
-        /// <param name="numericalId"></param>
-        /// <param name="doi"></param>
-        /// <param name="datapackageId"></param>
-        public static bool DecodeDoi(string route, string furtherPath, out IdOrDoi first, out IdOrDoi second)
+        /// <param name="furtherPath"></param>
+        /// <param name="first">Output parameter, Id or DOI</param>
+        /// <param name="second">Output parameter, Id or DOI</param>
+        public static bool DecodeDoi(string route, string furtherPath, out IdOrDoi? first, out IdOrDoi? second)
         {
             // Make sure we do not treat a starting or ending slash as part of the id
             // (Hopefully we do not get a DOI ending with a slash).
@@ -74,7 +74,7 @@
             }
         }
 
-        public string Doi { get; internal set; }
+        public string? Doi { get; internal set; }
         public int NumericalId { get; internal set; }
 
         public bool IsDoi

@@ -53,6 +53,7 @@ namespace Instool.DAL
             services.AddScoped<ITransactionSupport, TransactionSupport>();
 
             services.AddScoped<IInstrumentRepository, InstrumentRepository>();
+            services.AddScoped<IInstrumentTypeRepository, InstrumentTypeRepository>();
             return services;
         }
     }
