@@ -44,6 +44,7 @@ build:
     - Set-Location ../..
     - New-Item -ItemType Directory -Force -Path c:/gitlab-runner/versions/instool/$env:CI_COMMIT_REF_SLUG
     - Move-Item instool.zip c:/gitlab-runner/versions/instool/$env:CI_COMMIT_REF_SLUG/$((Get-Date).tostring("yyyy-MM-dd__hh-mm"))__$env:CI_COMMIT_SHORT_SHA.zip
+    - Set-Location server/Main
     - npm run clean
   tags:
     - m4-instool
