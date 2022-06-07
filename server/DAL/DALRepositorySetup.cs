@@ -1,6 +1,5 @@
 ﻿using Instool.DAL.Models;
 using Instool.DAL.Repositories;
-using Instool.DAL.Repositories.impl;
 using Instool.DAL.Helpers;
 using Instool.DAL.Helpers.Impl;
 using Instool.Helpers;
@@ -10,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Instool.DAL.Repositories.Impl;
 
 namespace Instool.DAL
 {
@@ -52,6 +52,8 @@ namespace Instool.DAL
             services.AddDataProtection().PersistKeysToDbContext<InstoolContext>();
             services.AddScoped<ITransactionSupport, TransactionSupport>();
 
+            services.AddScoped<IApiKeyRepository, ApiKeyRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IInstrumentRepository, InstrumentRepository>();
             services.AddScoped<IInstrumentTypeRepository, InstrumentTypeRepository>();
             return services;

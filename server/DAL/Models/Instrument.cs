@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Instool.DAL.Models
+﻿namespace Instool.DAL.Models
 {
     public partial class Instrument
     {

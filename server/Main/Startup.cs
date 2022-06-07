@@ -1,4 +1,5 @@
 using Instool.API;
+using Instool.Authorization.Setup;
 using Instool.DAL;
 using Instool.Helpers;
 using Microsoft.AspNetCore.Builder;
@@ -56,6 +57,9 @@ namespace Instool
 
             services.ConfigureDataBase(Configuration);
             services.RegisterDALRepositories();
+
+            services.ConfigureAuthentication(Configuration);
+            services.ConfigureAuthorization();
 
 
             // In production, the React files will be served from this directory
@@ -133,6 +137,7 @@ namespace Instool
             app.UseSwaggerUi3();
 
             app.UseRouting();
+            app.ConfigureAuthMiddleware(Configuration);
 
             app.UseEndpoints(endpoints =>
             {

@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tools", "Tools\Tools.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestAPI", "RestAPI\RestAPI.csproj", "{72FE5263-F69D-43B7-9581-4E308FB8CED0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{2211BDAD-3AB5-49B4-84B9-D94084CAC08D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{2211BDAD-3AB5-49B4-84B9-D94084CAC08D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Authorization\Authorization.csproj", "{FAEC6348-E13D-4A56-8D97-F38F37BB0964}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{2211BDAD-3AB5-49B4-84B9-D94084CAC08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2211BDAD-3AB5-49B4-84B9-D94084CAC08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2211BDAD-3AB5-49B4-84B9-D94084CAC08D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAEC6348-E13D-4A56-8D97-F38F37BB0964}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAEC6348-E13D-4A56-8D97-F38F37BB0964}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAEC6348-E13D-4A56-8D97-F38F37BB0964}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAEC6348-E13D-4A56-8D97-F38F37BB0964}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

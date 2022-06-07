@@ -1,3 +1,5 @@
+using Instool.Authorization.PolicyCode;
+using Instool.Authorization.Privileges;
 using Instool.DAL.Repositories;
 using Instool.DAL.Requests;
 using Instool.Dtos;
@@ -27,6 +29,7 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [HasPrivilege(PrivilegeEnum.Instrument)]
         public async Task<ActionResult<InstrumentDTO>> GetInstrument(string idOrDoi)
         {
             var decoded = DoiHelper.DecodeDoi(idOrDoi);
@@ -44,6 +47,7 @@ namespace Instool.API
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [HasPrivilege(PrivilegeEnum.Instrument)]
         public Task<ActionResult<ICollection<InstrumentDTO>>> Search(InstrumentSearchRequest request)
         {
             throw new NotImplementedException("TO DO");

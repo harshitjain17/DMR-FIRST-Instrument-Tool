@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Instool.DAL.Repositories.impl
+namespace Instool.DAL.Repositories.Impl
 {
     internal class InstrumentTypeRepository : IInstrumentTypeRepository
     {

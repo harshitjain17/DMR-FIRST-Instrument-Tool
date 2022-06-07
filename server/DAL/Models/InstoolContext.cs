@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
+﻿using Instool.DAL.Models.Auth;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Instool.DAL.Models
@@ -13,6 +14,11 @@ namespace Instool.DAL.Models
             : base(options)
         {
         }
+
+        public DbSet<ApiKey> ApiKeys { get; set; } = null!;
+        public DbSet<Role> Roles { get; set; } = null!;
+        public DbSet<RolePrivilege> Privileges { get; set; } = null!;
+
 
         public virtual DbSet<Award> Awards { get; set; } = null!;
         public virtual DbSet<Institution> Institutions { get; set; } = null!;
@@ -359,6 +365,22 @@ namespace Instool.DAL.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
             });
+
+            modelBuilder.Entity<ApiKey>()
+                   .ToTable("ApiKeys");
+            modelBuilder.Entity<ApiKey>()
+                   .HasOne(p => p.Role);
+
+
+            modelBuilder.Entity<Role>()
+                .ToTable("Role");
+
+            modelBuilder.Entity<RolePrivilege>()
+                .ToTable("RolePrivilege");
+            modelBuilder.Entity<RolePrivilege>()
+                .HasOne(p => p.Role)
+                .WithMany(r => r.Privileges);
+
 
         }
     }

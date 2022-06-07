@@ -1,5 +1,5 @@
 using Instool.Helpers;
-using LiST.Tools.Helpers;
+using Instool.Tools.Helpers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

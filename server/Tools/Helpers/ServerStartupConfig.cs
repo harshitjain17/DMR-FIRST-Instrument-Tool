@@ -1,4 +1,4 @@
-﻿namespace LiST.Tools.Helpers
+﻿namespace Instool.Tools.Helpers
 {
     public class ServerStartupConfig
     {

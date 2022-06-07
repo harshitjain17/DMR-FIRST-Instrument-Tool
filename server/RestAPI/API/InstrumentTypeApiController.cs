@@ -1,3 +1,5 @@
+using Instool.Authorization.PolicyCode;
+using Instool.Authorization.Privileges;
 using Instool.DAL.Repositories;
 using Instool.Dtos;
 using Microsoft.AspNetCore.Authorization;
@@ -24,6 +26,7 @@ namespace Instool.API
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [HasPrivilege(PrivilegeEnum.InstrumentType)]
         public async Task<ActionResult<InstrumentTypeDTO>> GetInstrumentType(int id)
         {
             var type = await _repo.GetById(id);
@@ -39,6 +42,7 @@ namespace Instool.API
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [HasPrivilege(PrivilegeEnum.Instrument)]
         public async Task<ActionResult<ICollection<InstrumentDTO>>> GetInstrumentsByType(int id)
         {
             var type = await _repo.GetById(id);
@@ -53,6 +57,7 @@ namespace Instool.API
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [HasPrivilege(PrivilegeEnum.InstrumentType)]
         public async Task<ActionResult<ICollection<InstrumentDTO>>> GetSubtypes(int id)
         {
             // Not really necessary, but maybe helpful if we can return 404 instead of an empty list in that case.
@@ -67,6 +72,7 @@ namespace Instool.API
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [HasPrivilege(PrivilegeEnum.InstrumentType)]
         public async Task<ActionResult<ICollection<InstrumentTypeDTO>>> GetInstrumentTypes()
         {
             var types = await _repo.GetTypes();
