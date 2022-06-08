@@ -23,6 +23,7 @@
     "bootstrap": "^5.2.0-beta1",
     "graphql": "^16.5.0",
     "jquery": "^3.6.0",
+    "mdb-ui-kit": "^4.1.0",
     "moment": "^2.29.3",
     "react": "^18.1.0",
     "react-accessible-accordion": "^5.0.0",
