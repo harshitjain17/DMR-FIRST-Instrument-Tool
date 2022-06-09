@@ -3,15 +3,39 @@ import React, { useState } from 'react';
 
 export default function SearchEngine(props) {
 
-    const [enteredEmail, setEnteredEmail] = useState('');
-    const [enteredPassword, setEnteredPassword] = useState('');
-    
+    const [enteredAddress, setEnteredAddress] = useState('');
+    const [enteredDistance, setEnteredDistance] = useState('');
+    const [enteredInstrumentType, setEnteredInstrumentType] = useState('');
+    const [enteredPUI, setEnteredPUI] = useState(false);
+    const [enteredMSI, setEnteredMSI] = useState(false);
+    const [enteredR1, setEnteredR1] = useState(false);
+    const [enteredNonR1, setEnteredNonR1] = useState(false);
+    const [enteredNonDoctoral, setEnteredNonDoctoral] = useState(false);
 
-    const emailChangeHandler = (event) => {
-        setEnteredEmail(event.target.value);
+
+    const addressChangeHandler = (event) => {
+        setEnteredAddress(event.target.value);
     };
-    const passwordChangeHandler = (event) => {
-        setEnteredPassword(event.target.value);
+    const distanceChangeHandler = (event) => {
+        setEnteredDistance(event.target.value);
+    };
+    const instrumentTypeChangeHandler = (event) => {
+        setEnteredInstrumentType(event.target.value);
+    };
+    const PUIChangeHandler = () => {
+        setEnteredPUI(!enteredPUI);
+    };
+    const MSIChangeHandler = () => {
+        setEnteredMSI(!enteredMSI);
+    };
+    const R1ChangeHandler = () => {
+        setEnteredR1(!enteredR1);
+    };
+    const NonR1ChangeHandler = () => {
+        setEnteredNonR1(!enteredNonR1);
+    };
+    const NonDoctoralChangeHandler = () => {
+        setEnteredNonDoctoral(!enteredNonDoctoral);
     };
 
 
@@ -19,226 +43,107 @@ export default function SearchEngine(props) {
         event.preventDefault();
         
         const userInput = { //object
-            email: enteredEmail,
-            password: enteredPassword
+            location: enteredAddress,
+            distance: enteredDistance,
+            instrumentType: enteredInstrumentType,
+            PUI: enteredPUI,
+            MSI: enteredMSI,
+            R1: enteredR1,
+            NonR1: enteredNonR1,
+            NonDoctoral: enteredNonDoctoral
         };
         props.onSaveUserInput(userInput);
-        setEnteredEmail('');
-        setEnteredPassword('');
+        
+        setEnteredAddress('');
+        setEnteredDistance('');
+        setEnteredInstrumentType('');
+        setEnteredPUI('');
+        setEnteredMSI('');
+        setEnteredR1('');
+        setEnteredNonR1('');
+        setEnteredNonDoctoral('');
     };
     
 
     return (
-        <Container>
+        <Container className="w-50 p-3">
             <Form onSubmit={submitHandler}>
-                <Row>
+                
+                <Row className = "mt-3">
+                    <Form.Group controlId = "formAddress">
+                        <Form.Label>Find Institutions near</Form.Label>
+                        <Form.Control type="text" placeholder="Enter Location" onChange={addressChangeHandler} value = {enteredAddress}/>
+                    </Form.Group>
+                </Row>
+
+                <Row className = "mt-3">
+                    <Form.Group controlId = "formDistance">
+                        <Form.Label>Maximum Distance</Form.Label>
+                        <Form.Select aria-hidden="true" onChange={distanceChangeHandler} value = {enteredDistance}>
+                            <option value="">Select distance...</option>
+                            <option value="25">25 miles</option>
+                            <option value="50">50 miles</option>
+                            <option value="100">100 miles</option>
+                            <option value="200">200 miles</option>
+                            <option value="0">US</option>
+                        </Form.Select>
+                    </Form.Group>
+                </Row>
+
+                <Row className = "mt-3">
+                    <Form.Group controlId = "formInstrumentType">
+                        <Form.Label>Instrument Type</Form.Label>
+                        <Form.Control type="text" placeholder="Enter technique"  onChange={instrumentTypeChangeHandler} value = {enteredInstrumentType}/>
+                    </Form.Group>
+                </Row>
+                
+                <Row className = "mt-3">
                     <Col md>
-                        <Form.Group controlId = "formEmail">
-                            <Form.Label >Email Address</Form.Label>
-                            <Form.Control type="email" placeholder = "example@email.com" onChange={emailChangeHandler} value = {enteredEmail}/>
+                        <Form.Group className="mb-3" controlId="formPUI">
+                            <Form.Check type="checkbox" label="PUI" onChange={PUIChangeHandler} value = {enteredPUI}/>
                         </Form.Group>
                     </Col>
-                
                     <Col md>
-                        <Form.Group controlId = "formPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder = "password" onChange={passwordChangeHandler} value = {enteredPassword}/>
+                        <Form.Group className="mb-3" controlId="formMSI">
+                            <Form.Check type="checkbox" label="MSI" onChange={MSIChangeHandler} value = {enteredMSI}/>
+                        </Form.Group>
+                    </Col>
+                    <Col md/>
+                </Row>
+
+                Doctoral Universities:
+                <Row className = "mt-3">
+                    <Col md>
+                        <Form.Group className="mb-3" controlId="formR1">
+                            <Form.Check type="checkbox" label="R1" onChange={R1ChangeHandler} value = {enteredR1}/>
+                        </Form.Group>
+                    </Col>
+                    <Col md>
+                        <Form.Group className="mb-3" controlId="formNon-R1">
+                            <Form.Check type="checkbox" label="Non-R1" onChange={NonR1ChangeHandler} value = {enteredNonR1}/>
+                        </Form.Group>
+                    </Col>
+                    <Col md>
+                        <Form.Group className="mb-3" controlId="formNonDoctoral">
+                            <Form.Check type="checkbox" label="NonDoctoral" onChange={NonDoctoralChangeHandler} value = {enteredNonDoctoral}/>
                         </Form.Group>
                     </Col>
                 </Row>
-                <Button type = 'submit' className = "mt-3"> Search </Button>
+                <Row>
+                    <Col>
+                        <Button type = 'submit' className = "mt-3"> Search </Button>
+                    </Col>
+                    <Col>
+                        <Button type="button" className = "mt-3">Reset</Button>
+                    </Col>
+                </Row>
             </Form>
         </Container>
         
     );
 };
-// onSubmit = {(event) => {
-//     event.preventDefault();
-//     const formData = new FormData(event.target);
-//     const data = Object.fromEntries(formData.entries());
-//     console.log(data);
-// }}
 
 
-// className="btnFormSend" variant="outline-success" onClick={this.onSubmit}
-
-
-
-
-// value={this.state.val}
-//                                 onChange={e => this.setState({ val: e.target.value })}
-
-
-// <div className="container">
-// <div className="row">
-                
-
-
-
-
-
-// <form className="form-horizontal form-condensed" onsubmit="return false">
-//     <fieldset className="col-md-4 form-horizontal">
-        
-
-//         <div className="form-group" title="Please enter either a location name or a zip code">
-//             <label className="control-label" for="searchAddress">Find Institutions near</label>
-//             <input type="text" name="searchAddress" className="form-control" placeholder="Enter Location" title="Please enter either a location name or a zip code"/><span className="has-error" style={{display: "none;"}}></span>
-//         </div>
-        
-
-//         <div className="form-group">
-//             <label className="control-label" for="maxDist">Maximum Distance</label>
-//             <select className="form-control select2-hidden-accessible" name="maxDist" data-select2-id="1" tabindex="-1" aria-hidden="true">
-//                 <option value="25" data-select2-id="3">25 miles</option>
-//                 <option value="50">50 miles</option>
-//                 <option value="100">100 miles</option>
-//                 <option value="200">200 miles</option>
-//                 <option value="0">US</option>
-//             </select>
-//             <span className="select2 select2-container select2-container--bootstrap" dir="ltr" data-select2-id="2" style={{width: "100%"}}>
-//                 <span className="selection">
-//                     <span className="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false" aria-labelledby="select2-maxDist-2y-container">
-//                         <span className="select2-selection__rendered" id="select2-maxDist-2y-container" role="textbox" aria-readonly="true" title="25 miles">25 miles</span>
-//                         <span className="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
-//                     </span>
-//                 </span>
-//                 <span className="dropdown-wrapper" aria-hidden="true"></span>
-//             </span>
-//         </div>
-        
-
-//         <div className="form-group">
-//             <label className="control-label" for="selectedFields">Prioritize by research fields</label>
-//             <select className="form-control select2-hidden-accessible" name="selectedFields" multiple="" data-select2-id="4" tabindex="-1" aria-hidden="true">
-//                 <optgroup label="Engineering">
-//                     <option value="20">Aerospace engineering</option>                            
-//                     <option value="21">Bioengineering</option>                            
-//                     <option value="22">Chemical engineering</option>                            
-//                     <option value="23">Civil engineering</option>                            
-//                     <option value="24">Electrical &amp; electronic engineering</option>                            
-//                     <option value="25">Industrial engineering</option>                            
-//                     <option value="26">Mechanical engineering</option>                            
-//                     <option value="27">Metallurgical and materials engineering</option>                            
-//                     <option value="28">Engineering, n.e.c.  </option>
-//                 </optgroup>
-        
-//                 <optgroup label="Geosciences">
-//                     <option value="1">Atmospheric sciences</option>
-//                     <option value="2">Gelogical sciences</option>                        
-//                     <option value="3">Ocean sciences</option>                        
-//                     <option value="4">Geosciences, n.e.c.</option>
-//                 </optgroup>
-    
-//                 <optgroup label="Computer and information scienc">
-//                     <option value="29">Computer and information science</option>
-//                 </optgroup>
-    
-//                 <optgroup label="Life Sciences">
-//                     <option value="5">Agricultural sciences</option>
-                
-//                     <option value="6">Biological and biomedical sciences</option>
-                
-//                     <option value="7">Heal sciences</option>
-                
-//                     <option value="8">Natural resources</option>
-                
-//                     <option value="9">Life sciences, n.e.c.</option>
-//                 </optgroup>
-    
-//                 <optgroup label="Mathematics">
-//                     <option value="30">Mathematics and statistics</option>
-//                 </optgroup>
-        
-//                 <optgroup label="All non-S&amp;E fields">
-//                     <option value="33">All non-S&amp;E fields</option>
-//                 </optgroup>
-        
-//                 <optgroup label="Sciences, n.e.c.">
-//                     <option value="32">Sciences, n.e.c.</option>
-//                 </optgroup>
-        
-//                 <optgroup label="Physical sciences">
-//                     <option value="10">Astronomy and astrophysics</option>
-                
-//                     <option value="11">Chemistry</option>
-                
-//                     <option value="12">Materials science</option>
-                
-//                     <option value="13">Physics</option>
-                
-//                     <option value="14">Physical sciences, n.e.c.</option>
-//                 </optgroup>
-        
-//                 <optgroup label="Psychology">
-//                     <option value="31">Psychology</option>
-//                 </optgroup>
-        
-//                 <optgroup label="Social sciences">
-//                     <option value="15">Anthropology</option>
-                
-//                     <option value="16">Economics</option>
-                
-//                     <option value="17">Political science</option>
-                
-//                     <option value="18">Sociology</option>
-                
-//                     <option value="19">Social sciences, n.e.c</option>
-//                 </optgroup>
-//             </select>
-//             <span className="select2 select2-container select2-container--bootstrap" dir="ltr" data-select2-id="5" style={{width: "100%"}}>
-//                 <span className="selection">
-//                     <span className="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false">
-//                         <ul className="select2-selection__rendered">
-//                             <li className="select2-search select2-search--inline">
-//                                 <input className="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" placeholder="No priority, order by distance" style = {{width: "747.991px"}}/>
-//                             </li>
-//                         </ul>
-//                     </span>
-//                 </span>
-//                 <span className="dropdown-wrapper" aria-hidden="true"></span>
-//             </span>
-//         </div>
-        
-        
-//         <div className="form-group">
-//             <div className="row" style={{display: "none"}}>
-//                 <label className="col-xs-12">
-//                     <input type="checkbox"/>Only include Institutions with contacts
-//                 </label>
-//             </div>
-//             <div className="row">
-//                 <label className="col-xs-3">
-//                     <input type="checkbox"/>PUI
-//                 </label>
-//                 <label className="col-xs-3">
-//                     <input type="checkbox"/>MSI
-//                 </label>
-//             </div>
-//             <div className="row">
-//                 <label className="col-xs-12">Doctoral Universities:</label>
-//             </div>
-//             <div className="row">
-//                 <label className="col-xs-3"><input type="checkbox"/>R1</label>
-//                 <label className="col-xs-4"><input type="checkbox"/>Non-R1</label>
-//                 <label className="col-xs-5"><input type="checkbox"/>Not Doctoral</label>
-//             </div>
-//             <span className="has-error" style={{display: "none"}}>Please select at least one category</span>
-//         </div>
-        
-        
-//         <div className="form-group mt-25">
-//             <div className="col-xs-6">
-//                 <button type="button" className="form-group btn btn-primary">Search</button>
-//             </div>
-//             <div className="col-xs-6">
-//                 <button type="button" className="form-group btn btn-secondary">Reset Search</button>
-//             </div>
-//         </div>
-        
-//         <div className="form-group"></div>
-//     </fieldset>
-// </form>
 
 
 // <div className="col-md-8">
