@@ -1,5 +1,6 @@
 import { Form, Container, Button, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
+import SearchableBar from './SearchableBar';
 
 export default function SearchEngine(props) {
 
@@ -129,13 +130,11 @@ export default function SearchEngine(props) {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
-                        <Button type = 'submit' className = "mt-3"> Search </Button>
-                    </Col>
-                    <Col>
-                        <Button type="button" className = "mt-3">Reset</Button>
-                    </Col>
+                <Row className="d-grid gap-2">
+                    <Button type = 'submit' className = "mt-3"> Search </Button>
+                </Row>
+                <Row className="d-grid gap-2">
+                    <Button variant="secondary" type="button" className = "mt-3">Reset</Button>
                 </Row>
             </Form>
         </Container>
