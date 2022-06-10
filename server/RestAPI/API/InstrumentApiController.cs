@@ -1,8 +1,11 @@
+using Authorization;
 using Instool.Authorization.PolicyCode;
 using Instool.Authorization.Privileges;
-using Instool.DAL.Repositories;
+using Instool.DAL.Models;
 using Instool.DAL.Requests;
 using Instool.Dtos;
+using Instool.Enums;
+using Instool.Services;
 using Instool.Tools.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,12 +19,12 @@ namespace Instool.API
     public class InstrumentApiController : ControllerBase
     {
         private readonly IAuthorizationService _authService;
-        private readonly IInstrumentRepository _repo;
+        private readonly IInstrumentService _service;
 
-        public InstrumentApiController(IAuthorizationService authService, IInstrumentRepository repo)
+        public InstrumentApiController(IAuthorizationService authService, IInstrumentService service)
         {
             _authService = authService;
-            _repo = repo;
+            _service = service;
         }
 
         [HttpGet("{*idOrDoi}")]
@@ -34,12 +37,12 @@ namespace Instool.API
         {
             var decoded = DoiHelper.DecodeDoi(idOrDoi);
             var instrument = decoded.IsDoi ?
-                                await _repo.GetByDoi(decoded.Doi!) :
-                                await _repo.GetById(decoded.NumericalId);
+                                await _service.GetByDoi(decoded.Doi!) :
+                                await _service.GetById(decoded.NumericalId);
             if (instrument == null)
             {
                 return NotFound();
-            } 
+            }
             return Ok(InstrumentDTO.FromEntity(instrument));
         }
 
@@ -53,5 +56,46 @@ namespace Instool.API
             throw new NotImplementedException("TO DO");
         }
 
+        [HttpPut("{id}/doi/{*doi}")]
+        [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [HasPrivilege(PrivilegeEnum.Instrument)]
+        public async Task<ActionResult> SetDoi([FromRoute]int id, [FromRoute] string doi)
+        {
+            var instrument = await _service.GetById(id);
+            if (instrument == null) { return NotFound(); }
+            await AuthHelper.Check(_authService.AuthorizeAsync(User, instrument, Operation.Update));
+
+            await _service.SetDoi(id, doi);
+            return NoContent();
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [HasPrivilege(PrivilegeEnum.Instrument)]
+        public async Task<ActionResult<InstrumentDTO>> CreateInstrument([FromBody] InstrumentDTO dto)
+        {
+            if (dto.InstrumentId != null)
+            {
+                return BadRequest("InstrumnetID is set automatically and has to be empty");
+            }
+            var instrument = dto.GetEntity();
+            await AuthHelper.Check(_authService.AuthorizeAsync(User, dto, Operation.Create));
+
+            var contacts = dto.Contacts.Select(c => new InstrumentContact
+            {
+                InvestigatorId = c.InvestigatorId,
+                Eppn = c.Eppn,
+                Investigator = c.AreDataComplete() ? c.GetEntity() : null, 
+                Role = c.Role ?? InvestigatorRole.Technical.ID
+            });
+            var created = await _service.CreateInstrument(instrument, contacts);
+
+            return InstrumentDTO.FromEntity(created);
+        }
     }
 }

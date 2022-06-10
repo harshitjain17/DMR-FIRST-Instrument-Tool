@@ -8,7 +8,7 @@ namespace Instool.DAL.Models
         public Investigator()
         {
             InstrumentContacts = new HashSet<InstrumentContact>();
-            InvestigatorOnAwards = new HashSet<InvestigatorOnAward>();
+            InvestigatorsOnAwards = new HashSet<InvestigatorOnAward>();
         }
 
         public int InvestigatorId { get; set; }
@@ -20,6 +20,6 @@ namespace Instool.DAL.Models
         public string Phone { get; set; } = null!;
 
         public virtual ICollection<InstrumentContact> InstrumentContacts { get; set; }
-        public virtual ICollection<InvestigatorOnAward> InvestigatorOnAwards { get; set; }
+        public virtual ICollection<InvestigatorOnAward> InvestigatorsOnAwards { get; set; }
     }
 }

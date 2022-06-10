@@ -9,7 +9,7 @@ namespace Instool.Dtos
 
     public class InstrumentDTO
     {
-        public int InstrumentId { get; set; }
+        public int? InstrumentId { get; set; }
         public string? Doi { get; set; }
         public string? Manufacturer { get; set; }
         public string? ModelNumber { get; set; }
@@ -41,7 +41,7 @@ namespace Instool.Dtos
                 Doi = i.Doi,
                 InstrumentId = i.InstrumentId,
                 InstrumentTypes = i.InstrumentTypes.Select(t => InstrumentTypeDTO.FromEntity(t)).ToList(),
-                Contacts = i.InstrumentContacts.Select(c => InvestigatorDTO.FromEntity(c.Investigator, c.Role)).ToList(),
+                Contacts = i.InstrumentContacts.Select(c => InvestigatorDTO.FromEntity(c.Investigator!, c.Role)).ToList(),
                 Manufacturer = i.Manufacturer,
                 ModelNumber = i.ModelNumber,
                 Name = i.Name,
@@ -50,6 +50,27 @@ namespace Instool.Dtos
                 SerialNumber = i.SerialNumber,
                 Location = LocationDTO.FromEntity(i.Location),
                 Institution = InstitutionDTO.FromEntity(i.Institution)
+            };
+        }
+
+        internal Instrument GetEntity()
+        {
+            return new Instrument
+            {
+                AcquisitionDate = AcquisitionDate,
+                CompletionDate = CompletionDate,
+                Description = Description,
+                Doi = Doi,
+                InstrumentId = InstrumentId ?? 0,
+                //InstrumentTypes = i.InstrumentTypes.Select(t => InstrumentTypeDTO.FromEntity(t)).ToList(),
+                Manufacturer = Manufacturer,
+                ModelNumber = ModelNumber,
+                Name = Name,
+                RoomNumber = RoomNumber,
+                Status = Status,
+                SerialNumber = SerialNumber,
+                //Location = LocationDTO.FromEntity(i.Location),
+                //Institution = InstitutionDTO.FromEntity(i.Institution)
             };
         }
     }

@@ -302,7 +302,7 @@ namespace Instool.DAL.Models
                     .HasConstraintName("FK_InvestigatorOnAward_Award");
 
                 entity.HasOne(d => d.Investigator)
-                    .WithMany(p => p.InvestigatorOnAwards)
+                    .WithMany(p => p.InvestigatorsOnAwards)
                     .HasForeignKey(d => d.InvestigatorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_InvestigatorOnAward_Investigator");

@@ -2,6 +2,7 @@ using Instool.API;
 using Instool.Authorization.Setup;
 using Instool.DAL;
 using Instool.Helpers;
+using Instool.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -57,6 +58,7 @@ namespace Instool
 
             services.ConfigureDataBase(Configuration);
             services.RegisterDALRepositories();
+            services.RegisterServices();
 
             services.ConfigureAuthentication(Configuration);
             services.ConfigureAuthorization();

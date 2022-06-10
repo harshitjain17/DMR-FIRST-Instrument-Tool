@@ -37,5 +37,19 @@ namespace Instool.DAL.Repositories.Impl
                                .Include(i => i.Location)
                                .Include(i => i.InstrumentTypes);
         }
+
+        public async Task Create(Instrument instrument)
+        {
+            _context.Instruments.Add(instrument);
+            await _context.SaveChangesAsync();
+        }
+    
+        public async Task SetDoi(int id, string doi)
+        {
+            var instrument = await GetById(id);
+            if (instrument == null) { return; }
+            instrument.Doi = doi;
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -19,6 +19,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Authorization\Authorization.csproj" />
 	  <ProjectReference Include="..\DAL\DAL.csproj" />
+	  <ProjectReference Include="..\Services\Services.csproj" />
 	  <ProjectReference Include="..\Tools\Tools.csproj" />
 	</ItemGroup>
 
