@@ -23,11 +23,14 @@ namespace Instool.DAL.Repositories.Impl
             _transactionSupport = transactionSupport;
         }
 
-        public async Task<int> Create(ApiKey apiKey)
+        public async Task<int> Create(ApiKey entity, string keyToHash)
         {
-            _context.ApiKeys.Add(apiKey);
+            entity.Hash = GetHash(keyToHash);
+            entity.Created = DateTime.Now;
+            entity.ApiKeyId = 0;
+            _context.ApiKeys.Add(entity);
             await _context.SaveChangesAsync();
-            return apiKey.ApiKeyId;
+            return entity.ApiKeyId;
         }
 
         public Task Delete(ApiKey apiKey)

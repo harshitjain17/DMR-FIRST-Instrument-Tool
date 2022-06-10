@@ -26,6 +26,7 @@
 	<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
 	<PackageReference Include="LinqKit.Microsoft.EntityFrameworkCore" Version="6.1.2" />  
     <PackageReference Include="NLog" Version="5.0.0" />  
+    <PackageReference Include="PasswordGenerator" Version="2.1.0" />  
   </ItemGroup>
 
   <ItemGroup>

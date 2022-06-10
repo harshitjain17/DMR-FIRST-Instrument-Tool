@@ -152,8 +152,8 @@ CREATE TABLE [dbo].[ApiKey](
 );
 
 set identity_insert Role on;
-insert into Role (RoleID, Name) values (1, 'Admin');
-insert into Role (RoleID, Name) values (2, 'Community');
+insert into Role (RoleID, Name) values (1, 'Community');
+insert into Role (RoleID, Name) values (2, 'Admin');
 set identity_insert Role off;
 
 insert into RolePrivilege 
@@ -196,6 +196,21 @@ insert into RolePrivilege
 (Name, RoleId, [Create], [Read], [Update], [Delete], Submit)
 values
 ('Publication', 2, 1, 1, 1, 1, 1);
+
+insert into RolePrivilege 
+(Name, RoleId, [Create], [Read], [Update], [Delete], Submit)
+values
+('ApiKey', 2, 1, 1, 1, 1, 1);
+
+insert into RolePrivilege 
+(Name, RoleId, [Create], [Read], [Update], [Delete], Submit)
+values
+('Role', 2, 1, 1, 1, 1, 1);
+
+insert into RolePrivilege 
+(Name, RoleId, [Create], [Read], [Update], [Delete], Submit)
+values
+('User', 2, 1, 1, 1, 1, 1);
 
 END TRY BEGIN CATCH IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
 THROW;

@@ -31,7 +31,7 @@ namespace Instool.Helpers
             }
         }
 
-        public static DateTime? ParseUsDateOrNull(string date)
+        public static DateTime? ParseUsDateOrNull(string? date)
         {
             return string.IsNullOrWhiteSpace(date) ? null : ParseUsDate(date);
         }

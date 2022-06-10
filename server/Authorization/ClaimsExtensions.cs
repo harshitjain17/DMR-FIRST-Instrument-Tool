@@ -5,13 +5,13 @@ namespace Instool.Authentication
 {
     public static class ClaimsExtensions
     {
-        public const string DatabaseIdClaimType = "LiST/claims/DatabaseId";
-        public const string AllRolesClaimType = "LiST/claims/AllRoles";
-        public const string AuthType = "LiST/claims/AuthType";
-        public const string ApiKeyId = "LiST/claims/ApiKeyId";
+        public const string DatabaseIdClaimType = "Instool/claims/DatabaseId";
+        public const string AllRolesClaimType = "Instool/claims/AllRoles";
+        public const string AuthType = "Instool/claims/AuthType";
+        public const string ApiKeyId = "Instool/claims/ApiKeyId";
 
-        public const string PackedGeneralPrivilegesClaimType = "LiST/claims/Permissions";
-        public const string LastPermissionsUpdatedClaimType = "LiST/claims/PermissionUpdated";
+        public const string PackedGeneralPrivilegesClaimType = "Instool/claims/Permissions";
+        public const string LastPermissionsUpdatedClaimType = "Instool/claims/PermissionUpdated";
 
         internal const string AuthTypeApiKey = "API-KEY";
         internal const string AuthTypeShibboleth = "SHIBBOLETH";

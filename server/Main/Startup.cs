@@ -80,24 +80,9 @@ namespace Instool
                 doc.ApiGroupNames = new[] { "1" };
                 doc.PostProcess = d =>
                 {
-                    d.Info.Title = "Lifetime Sample Tracking (LiST)";
+                    d.Info.Title = "DMR Instrumentation Tool";
                     d.Info.Version = "v1";
-                    d.Info.Description = "API version intended for the Javascript Client. Some operations are not available using API Keys";
-                    d.Info.Contact = new NSwag.OpenApiContact
-                    {
-                        Name = "Konrad Hilse",
-                        Email = "khilse@psu.edu"
-                    };
-                };
-            });
-            services.AddOpenApiDocument(doc =>
-            {
-                doc.DocumentName = "v2";
-                doc.ApiGroupNames = new[] { "2" };
-                doc.PostProcess = d =>
-                {
-                    d.Info.Title = "Lifetime Sample Tracking (LiST)";
-                    d.Info.Version = "v2";
+                    d.Info.Description = "";
                     d.Info.Contact = new NSwag.OpenApiContact
                     {
                         Name = "Konrad Hilse",

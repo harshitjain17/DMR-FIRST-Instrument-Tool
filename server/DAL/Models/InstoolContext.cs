@@ -367,7 +367,7 @@ namespace Instool.DAL.Models
             });
 
             modelBuilder.Entity<ApiKey>()
-                   .ToTable("ApiKeys");
+                   .ToTable("ApiKey");
             modelBuilder.Entity<ApiKey>()
                    .HasOne(p => p.Role);
 

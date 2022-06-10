@@ -9,7 +9,7 @@ namespace Instool.DAL.Repositories
         Task<ApiKey?> GetById(int id);
         Task<List<ApiKey>> List(bool includeExpired);
 
-        Task<int> Create(ApiKey apiKey);
+        Task<int> Create(ApiKey apiKey, string keyToHash);
 
         Task Delete(ApiKey apiKey);
 
