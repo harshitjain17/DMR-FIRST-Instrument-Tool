@@ -1,7 +1,7 @@
 ﻿using Instool.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Instool.DAL.Repositories.impl
+namespace Instool.DAL.Repositories.Impl
 {
     internal class InvestigatorRepository : IInvestigatorRepository
     {
