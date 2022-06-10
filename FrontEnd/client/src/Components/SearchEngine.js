@@ -7,12 +7,8 @@ export default function SearchEngine(props) {
     const [enteredAddress, setEnteredAddress] = useState('');
     const [enteredDistance, setEnteredDistance] = useState('');
     const [enteredInstrumentType, setEnteredInstrumentType] = useState('');
-    const [enteredPUI, setEnteredPUI] = useState(false);
-    const [enteredMSI, setEnteredMSI] = useState(false);
-    const [enteredR1, setEnteredR1] = useState(false);
-    const [enteredNonR1, setEnteredNonR1] = useState(false);
-    const [enteredNonDoctoral, setEnteredNonDoctoral] = useState(false);
-
+    const [enteredAwardNumber, setEnteredAwardNumber] = useState('');
+    const [enteredIRI, setEnteredIRI] = useState(false);
 
     const addressChangeHandler = (event) => {
         setEnteredAddress(event.target.value);
@@ -23,20 +19,11 @@ export default function SearchEngine(props) {
     const instrumentTypeChangeHandler = (event) => {
         setEnteredInstrumentType(event.target.value);
     };
-    const PUIChangeHandler = () => {
-        setEnteredPUI(!enteredPUI);
+    const awardNumberChangeHandler = (event) => {
+        setEnteredAwardNumber(event.target.value);
     };
-    const MSIChangeHandler = () => {
-        setEnteredMSI(!enteredMSI);
-    };
-    const R1ChangeHandler = () => {
-        setEnteredR1(!enteredR1);
-    };
-    const NonR1ChangeHandler = () => {
-        setEnteredNonR1(!enteredNonR1);
-    };
-    const NonDoctoralChangeHandler = () => {
-        setEnteredNonDoctoral(!enteredNonDoctoral);
+    const IRIChangeHandler = () => {
+        setEnteredIRI(!enteredIRI);
     };
 
 
@@ -45,24 +32,18 @@ export default function SearchEngine(props) {
         
         const userInput = { //object
             location: enteredAddress,
-            distance: enteredDistance,
+            maxDistance: enteredDistance,
             instrumentType: enteredInstrumentType,
-            PUI: enteredPUI,
-            MSI: enteredMSI,
-            R1: enteredR1,
-            NonR1: enteredNonR1,
-            NonDoctoral: enteredNonDoctoral
+            awardNumber: enteredAwardNumber,
+            includeRetired: enteredIRI
         };
         props.onSaveUserInput(userInput);
         
         setEnteredAddress('');
         setEnteredDistance('');
         setEnteredInstrumentType('');
-        setEnteredPUI('');
-        setEnteredMSI('');
-        setEnteredR1('');
-        setEnteredNonR1('');
-        setEnteredNonDoctoral('');
+        setEnteredAwardNumber('');
+        setEnteredIRI('');
     };
     
 
@@ -97,42 +78,24 @@ export default function SearchEngine(props) {
                         <Form.Control type="text" placeholder="Enter technique"  onChange={instrumentTypeChangeHandler} value = {enteredInstrumentType}/>
                     </Form.Group>
                 </Row>
+
+                <Row className = "mt-3">
+                    <Form.Group controlId = "formAwardNumber">
+                        <Form.Label>Award Number</Form.Label>
+                        <Form.Control type="text" placeholder="Enter award number"  onChange={awardNumberChangeHandler} value = {enteredAwardNumber}/>
+                    </Form.Group>
+                </Row>
                 
                 <Row className = "mt-3">
-                    <Col md>
-                        <Form.Group className="mb-3" controlId="formPUI">
-                            <Form.Check type="checkbox" label="PUI" onChange={PUIChangeHandler} value = {enteredPUI}/>
-                        </Form.Group>
-                    </Col>
-                    <Col md>
-                        <Form.Group className="mb-3" controlId="formMSI">
-                            <Form.Check type="checkbox" label="MSI" onChange={MSIChangeHandler} value = {enteredMSI}/>
-                        </Form.Group>
-                    </Col>
-                    <Col md/>
+                    <Form.Group className="mb-3" controlId="formIRI">
+                        <Form.Check type="checkbox" label="Include retired instruments" onChange={IRIChangeHandler} value = {enteredIRI}/>
+                    </Form.Group>
                 </Row>
 
-                Doctoral Universities:
-                <Row className = "mt-3">
-                    <Col md>
-                        <Form.Group className="mb-3" controlId="formR1">
-                            <Form.Check type="checkbox" label="R1" onChange={R1ChangeHandler} value = {enteredR1}/>
-                        </Form.Group>
-                    </Col>
-                    <Col md>
-                        <Form.Group className="mb-3" controlId="formNon-R1">
-                            <Form.Check type="checkbox" label="Non-R1" onChange={NonR1ChangeHandler} value = {enteredNonR1}/>
-                        </Form.Group>
-                    </Col>
-                    <Col md>
-                        <Form.Group className="mb-3" controlId="formNonDoctoral">
-                            <Form.Check type="checkbox" label="NonDoctoral" onChange={NonDoctoralChangeHandler} value = {enteredNonDoctoral}/>
-                        </Form.Group>
-                    </Col>
-                </Row>
                 <Row className="d-grid gap-2">
                     <Button type = 'submit' className = "mt-3"> Search </Button>
                 </Row>
+                
                 <Row className="d-grid gap-2">
                     <Button variant="secondary" type="button" className = "mt-3">Reset</Button>
                 </Row>
