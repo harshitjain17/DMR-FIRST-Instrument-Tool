@@ -2,6 +2,11 @@ import { Form, Container, Button, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
 import SearchableBar from './SearchableBar';
 
+import Geocode from "react-geocode";
+Geocode.setApiKey("AIzaSyBWAhdwQk6dpFAjF4QcTfUo_pZH0n0Xgxk");
+Geocode.setLanguage("en");
+
+
 export default function SearchEngine(props) {
 
     const [enteredAddress, setEnteredAddress] = useState('');
@@ -25,14 +30,28 @@ export default function SearchEngine(props) {
     const IRIChangeHandler = () => {
         setEnteredIRI(!enteredIRI);
     };
+    // Get latitude & longitude from address.
+    Geocode.fromAddress("Eiffel Tower").then(
+    (response) => {
+      const { lat, lng } = response.results[0].geometry.location;
+      console.log(lat, lng);
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
+
 
 
     const submitHandler = (event) => {
         event.preventDefault();
         
         const userInput = { //object
-            location: enteredAddress,
-            maxDistance: enteredDistance,
+            location: {
+                latitude: enteredAddress,
+                longitude: enteredAddress,
+                maxDistance: enteredDistance
+            },
             instrumentType: enteredInstrumentType,
             awardNumber: enteredAwardNumber,
             includeRetired: enteredIRI
