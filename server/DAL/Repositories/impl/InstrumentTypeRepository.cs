@@ -39,5 +39,26 @@ namespace Instool.DAL.Repositories.Impl
             query = IncludeHierarchy(query);
             return await query.AsSingleQuery().ToListAsync();
         }
+
+        public async Task<ICollection<InstrumentType>> LoadHierarchie()
+        {
+            var query = _context.InstrumentTypes.OrderBy(i => i.InstrumentTypeId);
+            var map = new Dictionary<int, InstrumentType>();
+            foreach (var type in await query.AsNoTracking().ToListAsync()) {
+                map.Add(type.InstrumentTypeId, type);
+            };
+            var result = new List<InstrumentType>();
+            foreach (var type in map.Values)
+            {
+                if (type.CategoryId == null)
+                {
+                    result.Add(type);
+                } else
+                {
+                    map[type.CategoryId.Value].InverseCategory.Add(type);
+                }
+            }
+            return result;
+        }
     }
 }

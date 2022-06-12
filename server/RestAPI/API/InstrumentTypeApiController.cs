@@ -53,13 +53,13 @@ namespace Instool.API
             [FromQuery] string? sortColumn, [FromQuery] string? sortOrder,
             [FromQuery] int start, [FromQuery] int length, [FromQuery] int draw)
         {
+            // Not really necessary, but maybe helpful if we can return 404 instead of an empty list in that case.
             var type = await _repo.GetById(id);
-            if (type == null)
-            {
-                return NotFound();
-            }
+            if (type == null) { return NotFound(); }
+
             var instruments = await _instrumentService.Search(
-                new InstrumentSearchRequest { 
+                new InstrumentSearchRequest
+                {
                     InstrumentTypeId = type.InstrumentTypeId
                 },
                 sortColumn, sortOrder, start, length
@@ -90,6 +90,17 @@ namespace Instool.API
         public async Task<ActionResult<ICollection<InstrumentTypeDTO>>> GetInstrumentTypes()
         {
             var types = await _repo.GetTypes();
+            return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i)));
+        }
+
+        [HttpGet("hierarchie")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [HasPrivilege(PrivilegeEnum.InstrumentType)]
+        public async Task<ActionResult<ICollection<InstrumentTypeDTO>>> GetInstrumentTypeHierarchie()
+        {
+            var types = await _repo.LoadHierarchie();
             return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i)));
         }
 

@@ -18,5 +18,6 @@ namespace Instool.DAL.Repositories
         /// <param name="category"></param>
         /// <returns></returns>
         public Task<ICollection<InstrumentType>> GetTypes(int? category = null);
+        Task<ICollection<InstrumentType>> LoadHierarchie();
     }
 }

@@ -15,6 +15,6 @@ namespace Instool.DAL.Repositories
         Task SetDoi(int id, string doi);
         Task<PaginatedList<Instrument>> InstrumentSearchRequest(
             InstrumentSearchRequest request,
-            string sortColumn, string sortOrder, int start, int length);
+            string? sortColumn, string? sortOrder, int start, int length);
     }
 }

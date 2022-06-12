@@ -99,7 +99,7 @@ namespace Instool.Services.Impl
         }
 
         public Task<PaginatedList<Instrument>> Search(InstrumentSearchRequest request,
-            string sortColumn, string sortOrder, int start, int length
+            string? sortColumn, string? sortOrder, int start, int length
             )
         {
             return _repo.InstrumentSearchRequest(request, sortColumn, sortOrder, start, length);
