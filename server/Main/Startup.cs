@@ -124,13 +124,12 @@ namespace Instool
                 }
             });
 
-            app.UseOpenApi(options => {
+            app.UseOpenApi(options =>
+            {
                 options.PostProcess = (document, httpReq) =>
                 {
-                    if (httpReq.Headers.ContainsKey("X-Original-URL"))
-                    {
-                        document.Host = httpReq.Headers["X-Original-URL"];
-                    }
+
+                    document.Host = httpReq.Headers.Host;
                 };
             });
             app.UseSwaggerUi3();
@@ -157,4 +156,3 @@ namespace Instool
         }
     }
 }
-        
