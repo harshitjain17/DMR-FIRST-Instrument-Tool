@@ -127,9 +127,9 @@ namespace Instool
             app.UseOpenApi(options => {
                 options.PostProcess = (document, httpReq) =>
                 {
-                    if (httpReq.Headers.ContainsKey("X-Forwarded-Host"))
+                    if (httpReq.Headers.ContainsKey("X-Original-URL"))
                     {
-                        document.Host = httpReq.Headers["X-Forwarded-Host"];
+                        document.Host = httpReq.Headers["X-Original-URL"];
                     }
                 };
             });
