@@ -8,7 +8,7 @@
 
         public string? InstrumentType { get; set; }
 
-        public string? Capabilities { get; set; }
+        public string? Keywords { get; set; }
 
         public int? AwardId { get; set; }
 
@@ -16,7 +16,7 @@
 
         public string? Manufacturer { get; set; }
 
-        public string? Status { get; set; }
+        public bool? IncludeRetired { get; set; }
 
     }
 }

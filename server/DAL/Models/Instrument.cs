@@ -1,4 +1,8 @@
-﻿namespace Instool.DAL.Models
+﻿using Instool.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Instool.DAL.Models
 {
     public partial class Instrument
     {
@@ -17,13 +21,33 @@
         public string? ModelNumber { get; set; }
         public DateTime? AcquisitionDate { get; set; }
         public DateTime? CompletionDate { get; set; }
+        
+        [Required]
         public string Status { get; set; } = null!;
+
+        [NotMapped]
+        public Status StatusEnum
+        {
+            get
+            {
+                return Enums.Status.GetEnum(this.Status)!;
+            }
+
+            set
+            {
+                this.Status = value.ID;
+            }
+        }
         public string Description { get; set; } = null!;
         public int LocationId { get; set; }
         public string? RoomNumber { get; set; }
         public int InstitutionId { get; set; }
         public int? ReplacedById { get; set; }
-        public string? Name { get; set; }
+
+        [Required]
+        public string Name { get; set; } = null!;
+
+       
         public string? SerialNumber { get; set; }
 
         public virtual Location Location { get; set; } = null!;

@@ -3,6 +3,7 @@ using Instool.Authorization.PolicyCode;
 using Instool.Authorization.Privileges;
 using Instool.DAL.Models;
 using Instool.DAL.Requests;
+using Instool.DAL.Results;
 using Instool.Dtos;
 using Instool.Enums;
 using Instool.Services;
@@ -51,9 +52,13 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [HasPrivilege(PrivilegeEnum.Instrument)]
-        public Task<ActionResult<ICollection<InstrumentDTO>>> Search(InstrumentSearchRequest request)
+        public async Task<ActionResult<InstrumentSearchResult>> Search(
+            [FromBody] InstrumentSearchRequest request,
+            [FromQuery] string? sortColumn, [FromQuery] string? sortOrder,
+            [FromQuery] int start, [FromQuery] int length, [FromQuery] int draw)
         {
-            throw new NotImplementedException("TO DO");
+            var instruments = await _service.Search(request, sortColumn, sortOrder, start, length);
+            return Ok(new InstrumentSearchResult(instruments, draw));
         }
 
         [HttpPut("{id}/doi/{*doi}")]

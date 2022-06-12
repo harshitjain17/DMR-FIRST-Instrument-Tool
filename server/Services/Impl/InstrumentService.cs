@@ -1,6 +1,8 @@
 ﻿using Instool.DAL.Helpers;
 using Instool.DAL.Models;
 using Instool.DAL.Repositories;
+using Instool.DAL.Requests;
+using Instool.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,6 +96,13 @@ namespace Instool.Services.Impl
         public Task SetDoi(int id, string doi)
         {
             return _repo.SetDoi(id, doi);
+        }
+
+        public Task<PaginatedList<Instrument>> Search(InstrumentSearchRequest request,
+            string sortColumn, string sortOrder, int start, int length
+            )
+        {
+            return _repo.InstrumentSearchRequest(request, sortColumn, sortOrder, start, length);
         }
     }
 }

@@ -1,7 +1,10 @@
 using Instool.Authorization.PolicyCode;
 using Instool.Authorization.Privileges;
 using Instool.DAL.Repositories;
+using Instool.DAL.Requests;
+using Instool.DAL.Results;
 using Instool.Dtos;
+using Instool.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +18,13 @@ namespace Instool.API
     {
         private readonly IAuthorizationService _authService;
         private readonly IInstrumentTypeRepository _repo;
+        private readonly IInstrumentService _instrumentService;
 
-        public InstrumentTypeApiController(IAuthorizationService authService, IInstrumentTypeRepository repo)
+        public InstrumentTypeApiController(IAuthorizationService authService, IInstrumentTypeRepository repo, IInstrumentService instrumentService)
         {
             _authService = authService;
             _repo = repo;
+            _instrumentService = instrumentService;
         }
 
         [HttpGet("{id}")]
@@ -43,14 +48,23 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [HasPrivilege(PrivilegeEnum.Instrument)]
-        public async Task<ActionResult<ICollection<InstrumentDTO>>> GetInstrumentsByType(int id)
+        public async Task<ActionResult<InstrumentSearchResult>> GetInstrumentsByType(
+            [FromQuery] int id,
+            [FromQuery] string? sortColumn, [FromQuery] string? sortOrder,
+            [FromQuery] int start, [FromQuery] int length, [FromQuery] int draw)
         {
             var type = await _repo.GetById(id);
             if (type == null)
             {
                 return NotFound();
             }
-            return Ok(type.Instruments.Select(i => InstrumentDTO.FromEntity(i)));
+            var instruments = await _instrumentService.Search(
+                new InstrumentSearchRequest { 
+                    InstrumentTypeId = type.InstrumentTypeId
+                },
+                sortColumn, sortOrder, start, length
+            );
+            return Ok(new InstrumentSearchResult(instruments, draw));
         }
 
         [HttpGet("{id}/types")]

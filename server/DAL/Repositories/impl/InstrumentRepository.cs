@@ -1,5 +1,10 @@
 ﻿using Instool.DAL.Models;
+using Instool.DAL.Requests;
+using Instool.Enums;
+using Instool.Helpers;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Instool.DAL.Repositories.Impl
 {
@@ -50,6 +55,67 @@ namespace Instool.DAL.Repositories.Impl
             if (instrument == null) { return; }
             instrument.Doi = doi;
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<PaginatedList<Instrument>> InstrumentSearchRequest(
+            InstrumentSearchRequest request,
+            string sortColumn, string sortOrder, int start, int length)
+        {
+            IQueryable<Instrument> queryAll = _context.Instruments;
+
+            var query = ApplyCriteria(queryAll, request);
+
+            int countAll = await queryAll.CountAsync();
+            int count = await query.CountAsync();
+            query = ApplyIncludes(query);
+            if (length > 0)
+            {
+                query = query.Skip(start).Take(length);
+            }
+            var data = await query.AsSplitQuery().AsNoTracking().ToListAsync();
+            return new PaginatedList<Instrument>(data, countAll, count);
+        }
+
+        private IQueryable<Instrument> ApplyCriteria(IQueryable<Instrument> query, InstrumentSearchRequest criteria)
+        {
+            if (criteria.IncludeRetired != true)
+            {
+                query = query.Where(i => i.Status == Status.Active.ID);
+            }
+            if (criteria.InstrumentTypeId != null)
+            {
+                query = query.Where(i => i.InstrumentTypes.Any(t => t.InstrumentTypeId == criteria.InstrumentTypeId));  
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.InstrumentType))
+            {
+                query = query.Where(i => i.InstrumentTypes.Any(t => t.Uri == criteria.InstrumentType));
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.Keywords)) {
+                var keywords = criteria.Keywords
+                                       .Split(new char[] { ' ', ',' })
+                                       .Select(k => k.Trim());
+                var keywordFilter = PredicateBuilder.New<Instrument>();
+                foreach (var keyword in keywords)
+                {
+                    keywordFilter = keywordFilter.Or(i => i.Description.Contains(keyword)
+                         //|| i.Capabilities.Contains(keyword)
+                    );
+                }
+                query = query.Where(keywordFilter);
+            }
+            if (criteria.AwardId != null)
+            {
+                query = query.Where(i => i.Awards.Any(a => a.AwardId == criteria.AwardId));
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.AwardNumber))
+            {
+                query = query.Where(i => i.Awards.Any(a => a.AwardNumber == criteria.AwardNumber));
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.Manufacturer))
+            {
+                query = query.Where(i => i.Manufacturer == criteria.Manufacturer);
+            }
+            return query;
         }
     }
 }
