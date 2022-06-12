@@ -5,6 +5,7 @@ using Instool.Helpers;
 using Instool.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -107,7 +108,10 @@ namespace Instool
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
@@ -120,7 +124,15 @@ namespace Instool
                 }
             });
 
-            app.UseOpenApi();
+            app.UseOpenApi(options => {
+                options.PostProcess = (document, httpReq) =>
+                {
+                    if (httpReq.Headers.ContainsKey("X-Forwarded-Host"))
+                    {
+                        document.Host = httpReq.Headers["X-Forwarded-Host"];
+                    }
+                };
+            });
             app.UseSwaggerUi3();
 
             app.UseRouting();
