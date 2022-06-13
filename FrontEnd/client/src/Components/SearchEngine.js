@@ -1,11 +1,7 @@
 import { Form, Container, Button, Row, Col } from 'react-bootstrap';
 import React, { useState } from 'react';
 import axios from 'axios';
-
-import Geocode from "react-geocode";
-Geocode.setApiKey("AIzaSyBWAhdwQk6dpFAjF4QcTfUo_pZH0n0Xgxk");
-Geocode.setLanguage("en");
-
+// import SearchableBar from './SearchableBar';
 
 export default function SearchEngine(props) {
 
@@ -31,25 +27,24 @@ export default function SearchEngine(props) {
         setEnteredIRI(!enteredIRI);
     };
 
-    function geocode() {
-        axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
-            params: {
-                address: 'Boston',
-                Key: 'AIzaSyBWAhdwQk6dpFAjF4QcTfUo_pZH0n0Xgxk'
-            }
-        })
-        .then(function(response){
-            // var lat = response.data.results[0].geometry.location.lat;
-            // var lng = response.data.results[0].geometry.location.lng;
-            // console.log(lat,lng)
-            console.log(response);
-        })
-        .catch(function(error){
-            console.log(error);
-        });
-    }
-    geocode();
-
+    // function geocode() {
+    //     axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+    //         params: {
+    //             address: 'Boston',
+    //             key: 'AIzaSyADttIHGod0gEvx6-yG8dXHq7qNRp2hf14'
+    //         }
+    //     })
+    //     .then(function(response){
+    //         // var lat = response.data.results[0].geometry.location.lat;
+    //         // var lng = response.data.results[0].geometry.location.lng;
+    //         // console.log(lat,lng)
+    //         console.log(response)
+    //     })
+    //     .catch(function(error){
+    //         console.log(error);
+    //     });
+    // }
+    // geocode();
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -102,7 +97,7 @@ export default function SearchEngine(props) {
                 <Row className = "mt-3">
                     <Form.Group controlId = "formInstrumentType">
                         <Form.Label>Instrument Type</Form.Label>
-                        <Form.Control type="text" placeholder="Enter technique"  onChange={instrumentTypeChangeHandler} value = {enteredInstrumentType}/>
+                        <Form.Control type="search" placeholder="Enter technique"  onChange={instrumentTypeChangeHandler} value = {enteredInstrumentType}/>
                     </Form.Group>
                 </Row>
 

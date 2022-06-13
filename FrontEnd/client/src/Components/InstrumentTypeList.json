@@ -1,11 +1,5 @@
 [
-    {
-        "InstrumentType": "Auger Electron Spectroscopy (AES)"
-    },
-    {
-        "InstrumentType": "Contact Angle"
-    },
-    {
-        "InstrumentType": "Atomic Force Microscopy (AFM)"
-    }
+"Auger Electron Spectroscopy (AES)",
+"Contact Angle",
+"Atomic Force Microscopy (AFM)"
 ]

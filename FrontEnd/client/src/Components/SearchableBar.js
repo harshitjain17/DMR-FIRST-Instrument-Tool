@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './SearchableBar.css';
+import InstrumentTypeList from './InstrumentTypeList.json';
 
 const SearchbarDropdown = (props) => {
     const { options, onInputChange } = props;
@@ -45,19 +46,12 @@ const SearchbarDropdown = (props) => {
     );
 };
 
-const defaultOptions = [
-    'Auger Electron Spectroscopy (AES)',
-    'Atomic Force Microscopy (AFM)',
-    'Contact Angle',
-    'more...'
-];
 
-
-function SearchableBar() {
+function SearchableBar(data) {
     const [options, setOptions] = useState([]);
     const onInputChange = (event) => {
         setOptions(
-            defaultOptions.filter((option) => option.includes(event.target.value))
+            data.filter((option) => option.includes(event.target.value))
         );
     };
     return (
