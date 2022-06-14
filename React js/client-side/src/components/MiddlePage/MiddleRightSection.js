@@ -13,6 +13,7 @@ function MiddleRightSection () {
     return (
         <div className = 'middle-right-section'>
             <RightSection description = {data[i].descript1} capabilities = {data[i].capab1}></RightSection>
+            
         </div>
     );
 };
