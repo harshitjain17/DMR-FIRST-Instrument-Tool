@@ -7,6 +7,10 @@ import CreatableSelect from 'react-select/creatable';
 
 export default function SearchEngine(props) {
 
+    const components = {
+        DropdownIndicator: null,
+    };  
+
     const [enteredAddress, setEnteredAddress] = useState('');
     const [enteredDistance, setEnteredDistance] = useState('');
     const [enteredInstrumentType, setEnteredInstrumentType] = useState('');
@@ -25,29 +29,13 @@ export default function SearchEngine(props) {
         setEnteredInstrumentType(event.target.value);
     };
     
-    const keywordsChangeHandler = (value) => {
+    const keywordsChangeHandler = (event) => {
         var arr = [];
-        for (var i=0; i<value.length; i++) {
-            arr.push(value[i].value);
+        for (var i=0; i<event.length; i++) {
+            arr.push(event[i].value);
         }
         setEnteredKeywords(arr);
     };
-
-    // const KeyboardEventHandler = (event) => {
-    //     const { inputValue, value } = enteredKeywords;
-    //     if (!inputValue) return;
-    //     switch (event.key) {
-    //       case 'Enter':
-    //       case 'Tab':
-    //         console.log(value);
-    //         console.groupEnd();
-    //         setEnteredKeywords({
-    //           inputValue: '',
-    //           value: [...value, createOption(inputValue)],
-    //         });
-    //         event.preventDefault();
-    //     }
-    //   };
 
     const manufacturerChangeHandler = (event) => {
         setEnteredManufacturer(event.target.value);
