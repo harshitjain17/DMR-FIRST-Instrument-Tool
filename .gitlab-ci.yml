@@ -1,8 +1,7 @@
 cache:
   key: "$CI_COMMIT_REF_SLUG"
   paths:
-    - client/.npm/
-    - server/Main/.npm/
+    - webapp/Main/.npm/
 
 stages:
   - test
@@ -18,7 +17,7 @@ test:
     #- npm ci --cache .npm --prefer-offline
     #- npm run clean
     #- npm run recipe
-    - Set-Location server/Test
+    - Set-Location webapp/Test
     # Copy appsettings (how to connect to box). This is a server config file, available in /var/dotnet
     #- Copy-Item c:/gitlab-runner/testing-config/list/appsettings*.json .
     - dotnet test
