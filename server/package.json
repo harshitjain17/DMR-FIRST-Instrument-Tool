@@ -4,7 +4,7 @@
   "description": "C# Backend DMR Instrument Tool",
   "main": "index.js",
   "scripts": {
-    "clean": "del-cli instool.zip Release.zip Release bin obj",
+    "clean": "del-cli instool.zip Release.zip Main/Release Main/bin Main/obj",
     "build": "npm run last-commit && dotnet build",
     "release": "npm run last-commit && dotnet publish -c Release --output Release . && npm run zip",
     "test:cs": "cd ../Test && dotnet test",

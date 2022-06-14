@@ -5,3 +5,5 @@ config/*
 data/Hybrid MBE (MBE2).json
 data/Hybrid MBE (MBE2).xml
 etc
+/instool.zip
+/server/Release
