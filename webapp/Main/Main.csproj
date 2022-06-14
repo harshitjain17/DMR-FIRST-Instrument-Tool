@@ -5,7 +5,7 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
-    <SpaRoot>..\..\FrontEnd\client\</SpaRoot>
+    <SpaRoot>..\FrontEnd\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
   </PropertyGroup>
 
@@ -61,5 +61,9 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
+
+   <ItemGroup>
+    <Content Update="build.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 
 </Project>

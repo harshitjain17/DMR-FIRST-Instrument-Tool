@@ -6,7 +6,6 @@ using Instool.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -68,7 +67,7 @@ namespace Instool
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "FrontEnd/build";
             });
 
             services.AddVersionedApiExplorer(options =>
@@ -146,7 +145,7 @@ namespace Instool
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "../FrontEnd";
 
                 if (env.IsDevelopment())
                 {
