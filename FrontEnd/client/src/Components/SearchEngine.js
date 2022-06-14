@@ -1,6 +1,7 @@
-import { Form, Container, Button, Row, Col } from 'react-bootstrap';
+import { Form, Container, Button, Row } from 'react-bootstrap';
 import React, { useState } from 'react';
 import axios from 'axios';
+import CreatableSelect from 'react-select/creatable';
 
 // import SearchableBar from './SearchableBar';
 
@@ -9,6 +10,7 @@ export default function SearchEngine(props) {
     const [enteredAddress, setEnteredAddress] = useState('');
     const [enteredDistance, setEnteredDistance] = useState('');
     const [enteredInstrumentType, setEnteredInstrumentType] = useState('');
+    const [enteredKeywords, setEnteredKeywords] = useState([]);
     const [enteredManufacturer, setEnteredManufacturer] = useState('');
     const [enteredAwardNumber, setEnteredAwardNumber] = useState('');
     const [enteredIRI, setEnteredIRI] = useState(false);
@@ -22,6 +24,31 @@ export default function SearchEngine(props) {
     const instrumentTypeChangeHandler = (event) => {
         setEnteredInstrumentType(event.target.value);
     };
+    
+    const keywordsChangeHandler = (value) => {
+        var arr = [];
+        for (var i=0; i<value.length; i++) {
+            arr.push(value[i].value);
+        }
+        setEnteredKeywords(arr);
+    };
+
+    // const KeyboardEventHandler = (event) => {
+    //     const { inputValue, value } = enteredKeywords;
+    //     if (!inputValue) return;
+    //     switch (event.key) {
+    //       case 'Enter':
+    //       case 'Tab':
+    //         console.log(value);
+    //         console.groupEnd();
+    //         setEnteredKeywords({
+    //           inputValue: '',
+    //           value: [...value, createOption(inputValue)],
+    //         });
+    //         event.preventDefault();
+    //     }
+    //   };
+
     const manufacturerChangeHandler = (event) => {
         setEnteredManufacturer(event.target.value);
     };
@@ -62,6 +89,7 @@ export default function SearchEngine(props) {
                 maxDistance: enteredDistance
             },
             instrumentType: enteredInstrumentType,
+            keywords: enteredKeywords,
             manufacturer: enteredManufacturer,
             awardNumber: enteredAwardNumber,
             includeRetired: enteredIRI
@@ -71,14 +99,17 @@ export default function SearchEngine(props) {
         setEnteredAddress('');
         setEnteredDistance('');
         setEnteredInstrumentType('');
+        setEnteredKeywords('');
         setEnteredManufacturer('');
         setEnteredAwardNumber('');
         setEnteredIRI('');
     };
 
+    const { inputValue, value } = enteredKeywords;
 
     return (
-        <Container className="w-50 p-3">
+
+        <Container className="p-3 border">
             <Form onSubmit={submitHandler}>
                 
                 <Row className = "mt-3">
@@ -110,6 +141,21 @@ export default function SearchEngine(props) {
                 </Row>
 
                 <Row className = "mt-3">
+                    <Form.Group controlId = "formKeywords">
+                        <Form.Label>Keywords</Form.Label>
+                        <CreatableSelect
+                            components={components} 
+                            inputValue={inputValue}
+                            isClearable 
+                            isMulti 
+                            placeholder="Enter keywords and press enter (optional)" 
+                            onChange={keywordsChangeHandler}
+                            value={value}
+                            />
+                    </Form.Group>
+                </Row>
+
+                <Row className = "mt-3">
                     <Form.Group controlId = "formManufacturer">
                         <Form.Label>Manufacturer</Form.Label>
                         <Form.Control type="text" placeholder="Enter manufacturer (optional)"  onChange={manufacturerChangeHandler} value = {enteredManufacturer}/>
@@ -134,7 +180,7 @@ export default function SearchEngine(props) {
                 </Row>
                 
                 <Row className="d-grid gap-2">
-                    <Button variant="secondary" type="button" className = "mt-3">Reset</Button>
+                    <Button variant="secondary" type="reset" className = "mt-3">Reset</Button>
                 </Row>
             </Form>
         </Container>
