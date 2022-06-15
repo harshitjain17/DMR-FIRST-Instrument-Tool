@@ -1,14 +1,21 @@
 import { Form, Container, Button, Row } from 'react-bootstrap';
 import React, { useState } from 'react';
 import axios from 'axios';
+import CreatableSelect from 'react-select/creatable';
 
 // import SearchableBar from './SearchableBar';
 
 export default function SearchEngine(props) {
 
+    const components = {
+        DropdownIndicator: null,
+    };  
+
     const [enteredAddress, setEnteredAddress] = useState('');
     const [enteredDistance, setEnteredDistance] = useState('');
     const [enteredInstrumentType, setEnteredInstrumentType] = useState('');
+    const [enteredKeywords, setEnteredKeywords] = useState([]);
+    const [enteredManufacturer, setEnteredManufacturer] = useState('');
     const [enteredAwardNumber, setEnteredAwardNumber] = useState('');
     const [enteredIRI, setEnteredIRI] = useState(false);
 
@@ -21,6 +28,18 @@ export default function SearchEngine(props) {
     const instrumentTypeChangeHandler = (event) => {
         setEnteredInstrumentType(event.target.value);
     };
+    
+    const keywordsChangeHandler = (event) => {
+        var arr = [];
+        for (var i=0; i<event.length; i++) {
+            arr.push(event[i].value);
+        }
+        setEnteredKeywords(arr);
+    };
+
+    const manufacturerChangeHandler = (event) => {
+        setEnteredManufacturer(event.target.value);
+    };
     const awardNumberChangeHandler = (event) => {
         setEnteredAwardNumber(event.target.value);
     };
@@ -28,48 +47,57 @@ export default function SearchEngine(props) {
         setEnteredIRI(!enteredIRI);
     };
 
-
-    const submitHandler = (event) => {
-        event.preventDefault();
-        
-        //Geocoding
-        axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
-            params: {
-                address: enteredAddress,
-                key: 'AIzaSyBWAhdwQk6dpFAjF4QcTfUo_pZH0n0Xgxk'
-            }
-        })
-        .then(function(response){
+    async function Geocoding() {
+        try {
+            const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+                params: {
+                    address: enteredAddress,
+                    key: 'AIzaSyBWAhdwQk6dpFAjF4QcTfUo_pZH0n0Xgxk'
+                }
+            })
             var lat = response.data.results[0].geometry.location.lat;
             var lng = response.data.results[0].geometry.location.lng;
-            
-            // Creating final object
-            const userInput = {
-                location: {
-                    latitude: lat,
-                    longitude: lng,
-                    maxDistance: enteredDistance
-                },
-                instrumentType: enteredInstrumentType,
-                awardNumber: enteredAwardNumber,
-                includeRetired: enteredIRI
-            };
-            props.onSaveUserInput(userInput);
-        })
-        .catch(function(error){
-            console.log(error);
-        });
+            return [lat, lng];
         
+        } catch (error) {
+            console.error(error)
+            throw error;
+        }
+    }
+      
+    const submitHandler = async (event) => {
+        event.preventDefault();
+      
+        var coordinates = await Geocoding();
+      
+        const userInput = { //object
+            location: {
+                latitude: coordinates[0],
+                longitude: coordinates[1],
+                maxDistance: enteredDistance
+            },
+            instrumentType: enteredInstrumentType,
+            keywords: enteredKeywords,
+            manufacturer: enteredManufacturer,
+            awardNumber: enteredAwardNumber,
+            includeRetired: enteredIRI
+        };
+        props.onSaveUserInput(userInput);
+      
         setEnteredAddress('');
         setEnteredDistance('');
         setEnteredInstrumentType('');
+        setEnteredKeywords('');
+        setEnteredManufacturer('');
         setEnteredAwardNumber('');
         setEnteredIRI('');
     };
-    
+
+    const { inputValue, value } = enteredKeywords;
 
     return (
-        <Container className="w-50 p-3">
+
+        <Container className="p-3 border">
             <Form onSubmit={submitHandler}>
                 
                 <Row className = "mt-3">
@@ -101,9 +129,31 @@ export default function SearchEngine(props) {
                 </Row>
 
                 <Row className = "mt-3">
+                    <Form.Group controlId = "formKeywords">
+                        <Form.Label>Keywords</Form.Label>
+                        <CreatableSelect
+                            components={components} 
+                            inputValue={inputValue}
+                            isClearable 
+                            isMulti 
+                            placeholder="Enter keywords and press enter (optional)" 
+                            onChange={keywordsChangeHandler}
+                            value={value}
+                            />
+                    </Form.Group>
+                </Row>
+
+                <Row className = "mt-3">
+                    <Form.Group controlId = "formManufacturer">
+                        <Form.Label>Manufacturer</Form.Label>
+                        <Form.Control type="text" placeholder="Enter manufacturer (optional)"  onChange={manufacturerChangeHandler} value = {enteredManufacturer}/>
+                    </Form.Group>
+                </Row>
+
+                <Row className = "mt-3">
                     <Form.Group controlId = "formAwardNumber">
                         <Form.Label>Award Number</Form.Label>
-                        <Form.Control type="text" placeholder="Enter award number"  onChange={awardNumberChangeHandler} value = {enteredAwardNumber}/>
+                        <Form.Control type="text" placeholder="Enter award number (optional)"  onChange={awardNumberChangeHandler} value = {enteredAwardNumber}/>
                     </Form.Group>
                 </Row>
                 
@@ -118,7 +168,7 @@ export default function SearchEngine(props) {
                 </Row>
                 
                 <Row className="d-grid gap-2">
-                    <Button variant="secondary" type="button" className = "mt-3">Reset</Button>
+                    <Button variant="secondary" type="reset" className = "mt-3">Reset</Button>
                 </Row>
             </Form>
         </Container>

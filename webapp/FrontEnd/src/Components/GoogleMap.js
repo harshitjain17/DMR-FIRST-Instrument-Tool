@@ -28,7 +28,7 @@ export class MapContainer extends Component {
         return (
         <Map
             google={this.props.google} 
-            style = {{width: "50%", height: "50%", margin: "10px auto"}}
+            style = {{width: "50%", height: "60%", margin: "20px 0px"}}
             zoom = {10}
             initialCenter = {
                 {
@@ -55,9 +55,3 @@ export default GoogleApiWrapper({
     apiKey: 'AIzaSyBWAhdwQk6dpFAjF4QcTfUo_pZH0n0Xgxk',
     signature: "LC1mGA488ZCYIHZh-ld44I1-tnU="
   })(MapContainer)
-
-
-
-
-// API Key from harshitj.cs@gmail.com: AIzaSyBpBSoUVpBiDRhaTZu1fY6_LcSHhZEp2I4
-// API Key from jainharshit179@gmail.com: AIzaSyADttIHGod0gEvx6-yG8dXHq7qNRp2hf14
