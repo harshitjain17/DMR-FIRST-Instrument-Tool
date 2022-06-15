@@ -1,53 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './SearchableBar.css';
 
-export default class SearchableBar extends React.Component {
-    constructor (props) {
-        super(props);
-        this.state  = {
-            suggestions: [],
-            enteredInstrumentType: ''
-        }
-    }
+export default function SearchableBar(props) {
+    const [enteredInstrumentType, setEnteredInstrumentType] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
+    
 
-    onTextChanged = (event) => {
-        const { items } = this.props;
+    const onTextChanged = (event) => {
         const value = event.target.value;
         let suggestions = [];
         if (value.length > 0) {
             const regex = new RegExp(`^${value}`, 'i');
-            suggestions = items.sort().filter(v => regex.test(v));
+            suggestions = props.items.sort().filter(value => regex.test(value));
         }
-        this.setState(() => ({ suggestions, enteredInstrumentType: value}));
-
+        setSuggestions(suggestions);
+        setEnteredInstrumentType(value);
     }
 
-    suggestionSelected (value) {
-        this.setState(() => ({
-            enteredInstrumentType: value,
-            suggestions: []
-        }))
-    }
+    const suggestionSelected = (value) => {
+        setSuggestions([]);
+        setEnteredInstrumentType(value);
+        props.onSaveInput(value);
+    };
 
-    renderSuggestions () {
-        const { suggestions } = this.state;
+    const renderSuggestions = () => {
         if (suggestions.length === 0) {
             return null;
         }
         return (
             <ul>
-                {suggestions.map((item) => <li onClick = {() => this.suggestionSelected(item)}>{item}</li>)}
+                {suggestions.map((item) => <li onClick = {() => suggestionSelected(item)}>{item}</li>)}
             </ul>
         );
-    }
-
-    render () {
-        const { enteredInstrumentType } = this.state;
-        return (
-            <div>
-                <input className="form-control" type="search" placeholder="Enter technique" value = {enteredInstrumentType} onChange={this.onTextChanged}/>
-                {this.renderSuggestions()}
-            </div>
-        )
-    }
-}
+    };
+    
+    return (
+        <div>
+            <input className="form-control" type="search" placeholder="Enter technique" value = {enteredInstrumentType} onChange={onTextChanged}/>
+            {renderSuggestions()}
+        </div>
+    )
+};

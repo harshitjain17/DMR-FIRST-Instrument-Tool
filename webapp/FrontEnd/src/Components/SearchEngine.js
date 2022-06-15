@@ -27,8 +27,8 @@ export default function SearchEngine(props) {
     const distanceChangeHandler = (event) => {
         setEnteredDistance(event.target.value);
     };
-    const instrumentTypeChangeHandler = (event) => {
-        setEnteredInstrumentType(event.target.value);
+    const instrumentTypeChangeHandler = (enteredInput) => {
+        setEnteredInstrumentType(enteredInput);
     };
     
     const keywordsChangeHandler = (event) => {
@@ -126,8 +126,7 @@ export default function SearchEngine(props) {
                 <Row className = "mt-3">
                     <Form.Group controlId = "formInstrumentType">
                         <Form.Label>Instrument Type</Form.Label>
-                        <Form.Control type="search" placeholder="Enter technique"  onChange={instrumentTypeChangeHandler} value = {enteredInstrumentType}/>
-                        {/* <SearchableBar items = {InstrumentTypeList}/> */}
+                        <SearchableBar onSaveInput = {instrumentTypeChangeHandler} items = {InstrumentTypeList}/>
                     </Form.Group>
                 </Row>
 
