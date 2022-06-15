@@ -1,8 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-<<<<<<< HEAD:FrontEnd/client/src/App.js
 import {Navbar, Nav, Container} from 'react-bootstrap';
-=======
->>>>>>> 4ad879fe6c58de7b1b756881807dc96f1398e943:webapp/FrontEnd/src/App.js
 import './App.css';
 import SearchEngine from './Components/SearchEngine';
 import GoogleMap from './Components/GoogleMap';
