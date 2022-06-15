@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Map, Marker, InfoWindow, GoogleApiWrapper } from 'google-maps-react';
-var config = require("../config/config")()
+var config = require("../config/config").default()
 
 export class MapContainer extends Component {
     state = {
