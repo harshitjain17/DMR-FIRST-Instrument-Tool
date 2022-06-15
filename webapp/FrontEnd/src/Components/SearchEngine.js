@@ -5,8 +5,6 @@ import CreatableSelect from 'react-select/creatable';
 import SearchableBar from './SearchableBar';
 import InstrumentTypeList from './InstrumentTypeList.json';
 
-// import SearchableBar from './SearchableBar';
-
 export default function SearchEngine(props) {
 
     const components = {
