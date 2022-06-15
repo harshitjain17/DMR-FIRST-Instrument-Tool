@@ -1,6 +1,6 @@
 //static data to don't have to generate the conf_adata 2 times
 let config_data = null
-export default function () {
+export default function config() {
     // if the static data was already set. return it
     if (config_data !== null && config_data !== undefined) {
         return config_data
