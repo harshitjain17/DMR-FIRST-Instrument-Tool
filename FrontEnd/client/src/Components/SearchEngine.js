@@ -2,6 +2,8 @@ import { Form, Container, Button, Row } from 'react-bootstrap';
 import React, { useState } from 'react';
 import axios from 'axios';
 import CreatableSelect from 'react-select/creatable';
+import SearchableBar from './SearchableBar';
+import InstrumentTypeList from './InstrumentTypeList.json';
 
 // import SearchableBar from './SearchableBar';
 
@@ -125,6 +127,7 @@ export default function SearchEngine(props) {
                     <Form.Group controlId = "formInstrumentType">
                         <Form.Label>Instrument Type</Form.Label>
                         <Form.Control type="search" placeholder="Enter technique"  onChange={instrumentTypeChangeHandler} value = {enteredInstrumentType}/>
+                        {/* <SearchableBar items = {InstrumentTypeList}/> */}
                     </Form.Group>
                 </Row>
 

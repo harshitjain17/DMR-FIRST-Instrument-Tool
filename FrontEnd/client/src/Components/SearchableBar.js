@@ -1,64 +1,53 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import './SearchableBar.css';
-import InstrumentTypeList from './InstrumentTypeList.json';
 
-const SearchbarDropdown = (props) => {
-    const { options, onInputChange } = props;
-    const ulRef = useRef();
-    const inputRef = useRef();
-    useEffect(() => {
-        inputRef.current.addEventListener('click', (event) => {
-            event.stopPropagation();
-            ulRef.current.style.display = 'flex';
-            onInputChange(event);
-        });
-        document.addEventListener('click', (event) => {
-            ulRef.current.style.display = 'none';
-        });
-    }, []);    
-    return (
-        <div classname = 'search-bar-dropdown'>
-            <input
-                id = 'search-bar'
-                type = 'text'
-                className = 'form-control'
-                placeholder = 'Search'
-                ref = {inputRef}
-                onChange = {onInputChange}
-            />
-            <ul id = 'results' className = 'list-group' ref = {ulRef}>
-                {options.map((option,index) => {
-                    return (
-                        <button
-                            type = 'button'
-                            key = {index}
-                            onClick = {(e) => {
-                                inputRef.current.value = option;
-                            }}
-                            className = 'list-group-item list-group-item-action'
-                        >
-                        {option}
-                        </button>
-                    );
-                })}
-            </ul> 
-        </div>
-    );
-};
+export default class SearchableBar extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state  = {
+            suggestions: [],
+            enteredInstrumentType: ''
+        }
+    }
 
+    onTextChanged = (event) => {
+        const { items } = this.props;
+        const value = event.target.value;
+        let suggestions = [];
+        if (value.length > 0) {
+            const regex = new RegExp(`^${value}`, 'i');
+            suggestions = items.sort().filter(v => regex.test(v));
+        }
+        this.setState(() => ({ suggestions, enteredInstrumentType: value}));
 
-function SearchableBar(data) {
-    const [options, setOptions] = useState([]);
-    const onInputChange = (event) => {
-        setOptions(
-            data.filter((option) => option.includes(event.target.value))
+    }
+
+    suggestionSelected (value) {
+        this.setState(() => ({
+            enteredInstrumentType: value,
+            suggestions: []
+        }))
+    }
+
+    renderSuggestions () {
+        const { suggestions } = this.state;
+        if (suggestions.length === 0) {
+            return null;
+        }
+        return (
+            <ul>
+                {suggestions.map((item) => <li onClick = {() => this.suggestionSelected(item)}>{item}</li>)}
+            </ul>
         );
-    };
-    return (
-        <div className = 'SearchableBar container mt-2 mb-3'>
-            <SearchbarDropdown options={options} onInputChange={onInputChange}/>
-        </div>
-    );
-}
+    }
 
-export default SearchableBar;
+    render () {
+        const { enteredInstrumentType } = this.state;
+        return (
+            <div>
+                <input className="form-control" type="search" placeholder="Enter technique" value = {enteredInstrumentType} onChange={this.onTextChanged}/>
+                {this.renderSuggestions()}
+            </div>
+        )
+    }
+}
