@@ -112,7 +112,6 @@ namespace Instool
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
                 OnPrepareResponse = ctx =>
@@ -122,6 +121,7 @@ namespace Instool
                         "public,max-age=" + thirtyDaysInSeconds;
                 }
             });
+            app.UseSpaStaticFiles();
 
             app.UseOpenApi(options =>
             {
@@ -132,7 +132,6 @@ namespace Instool
                 };
             });
             app.UseSwaggerUi3();
-
             app.UseRouting();
             app.ConfigureAuthMiddleware(Configuration);
 
