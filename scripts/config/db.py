@@ -1,4 +1,4 @@
-server='tcp:mri-db03.mri.psu.edu'
+server='tcp:localhost'
 database='instool'
 username='2DCC_User'
-password='UzqsSxok5EYHqD8J'
+password='jXpqrTHbEh4X'
