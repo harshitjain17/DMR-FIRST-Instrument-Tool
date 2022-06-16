@@ -26,11 +26,10 @@ function App() {
       <div className='container'>
         <div className = "row">
           <div className="col"><SearchEngine onSaveUserInput = {saveUserInputHandler}/></div>
-          <div className="col"></div>
-        </div>
-        
-        <div className = "row">
-          <GoogleMap/>
+          <div className="col">
+            <div className="row"><GoogleMap/></div>
+            <div className="row"></div>
+          </div>
         </div>
       </div>
     </>
