@@ -102,7 +102,7 @@ export default function SearchEngine(props) {
                 
                 <Row className = "mt-3">
                     <Form.Group controlId = "formAddress">
-                        <Form.Label>Find Institutions near</Form.Label>
+                        <Form.Label>Find Instruments near</Form.Label>
                         <Form.Control type="text" placeholder="Enter Location" onChange={addressChangeHandler} value = {enteredAddress}/>
                     </Form.Group>
                 </Row>
@@ -130,7 +130,7 @@ export default function SearchEngine(props) {
 
                 <Row className = "mt-3">
                     <Form.Group controlId = "formKeywords">
-                        <Form.Label>Keywords</Form.Label>
+                        <Form.Label>Capabilities description keywords</Form.Label>
                         <CreatableSelect
                             components={components} 
                             inputValue={inputValue}
