@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ListGroup } from 'react-bootstrap';
 import './SearchableBar.css';
 
 export default function SearchableBar(props) {
@@ -28,9 +29,9 @@ export default function SearchableBar(props) {
             return null;
         }
         return (
-            <ul>
-                {suggestions.map((item) => <li onClick = {() => suggestionSelected(item)}>{item}</li>)}
-            </ul>
+            <ListGroup>
+                {suggestions.map((item) => <ListGroup.Item onClick = {() => suggestionSelected(item)}>{item}</ListGroup.Item>)}
+            </ListGroup>
         );
     };
     
