@@ -59,7 +59,7 @@ namespace Instool.DAL.Repositories.Impl
 
         public async Task<PaginatedList<Instrument>> InstrumentSearchRequest(
             InstrumentSearchRequest request,
-            string sortColumn, string sortOrder, int start, int length)
+            string? sortColumn, string? sortOrder, int start, int length)
         {
             IQueryable<Instrument> queryAll = _context.Instruments;
 
@@ -90,12 +90,9 @@ namespace Instool.DAL.Repositories.Impl
             {
                 query = query.Where(i => i.InstrumentTypes.Any(t => t.Uri == criteria.InstrumentType));
             }
-            if (!string.IsNullOrWhiteSpace(criteria.Keywords)) {
-                var keywords = criteria.Keywords
-                                       .Split(new char[] { ' ', ',' })
-                                       .Select(k => k.Trim());
+            if (criteria.Keywords.Any()) {
                 var keywordFilter = PredicateBuilder.New<Instrument>();
-                foreach (var keyword in keywords)
+                foreach (var keyword in criteria.Keywords)
                 {
                     keywordFilter = keywordFilter.Or(i => i.Description.Contains(keyword)
                          //|| i.Capabilities.Contains(keyword)
