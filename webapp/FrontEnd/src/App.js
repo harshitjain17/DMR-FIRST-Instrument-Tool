@@ -1,8 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Navbar, Nav, Container} from 'react-bootstrap';
+import {Navbar, Nav, Container, Row, Col} from 'react-bootstrap';
 import './App.css';
 import SearchEngine from './Components/SearchEngine';
 import GoogleMap from './Components/GoogleMap';
+// import TableComponent from './Components/TableComponent';
 
 function App() {
   const saveUserInputHandler = (enteredUserInput) => {
@@ -12,7 +13,7 @@ function App() {
     console.log(userInput);
   };
   return (
-    <>
+    <div>
       <Navbar bg="dark" variant="dark">
         <Container>
         <Navbar.Brand href="#home">Logo (or name)</Navbar.Brand>
@@ -23,16 +24,14 @@ function App() {
         </Nav>
         </Container>
       </Navbar>
-      <div className='container'>
-        <div className = "row">
-          <div className="col"><SearchEngine onSaveUserInput = {saveUserInputHandler}/></div>
-          <div className="col">
-            <div className="row"><GoogleMap/></div>
-            <div className="row"></div>
-          </div>
+      <div>        
+        <div style={{width: "50%", display: "inline-block"}}><SearchEngine onSaveUserInput = {saveUserInputHandler}/></div>
+        <div>
+          <Row><GoogleMap/></Row>
+          {/* <Row><TableComponent/></Row> */}
         </div>
       </div>
-    </>
+    </div>
   );  
 }
 export default App;

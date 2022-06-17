@@ -1,0 +1,10 @@
+.form-control, .form-select, .form-check, .css-b62m3t-container {
+font-size: 0.8rem;
+}
+.form-label {
+font-size: 0.8rem;
+margin-bottom: 0.4rem;
+}
+.mt-3 {
+    margin-top: 0.8rem !important;
+}

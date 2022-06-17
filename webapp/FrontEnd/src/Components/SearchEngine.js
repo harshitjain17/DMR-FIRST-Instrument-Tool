@@ -1,4 +1,5 @@
 import { Form, Container, Button, Row } from 'react-bootstrap';
+import './SearchEngine.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import CreatableSelect from 'react-select/creatable';
@@ -97,8 +98,8 @@ export default function SearchEngine(props) {
 
     return (
 
-        <Container className="p-3 border">
-            <Form onSubmit={submitHandler}>
+        <div className="px-3 border" style={{width: "70%", height: "80%"}}>
+            <Form onSubmit={submitHandler} style={{width: "100%", height: "100%"}}>
                 
                 <Row className = "mt-3">
                     <Form.Group controlId = "formAddress">
@@ -114,7 +115,9 @@ export default function SearchEngine(props) {
                             <option value="">Select distance...</option>
                             <option value="25">25 miles</option>
                             <option value="50">50 miles</option>
+                            <option value="75">75 miles</option>
                             <option value="100">100 miles</option>
+                            <option value="10">150 miles</option>
                             <option value="200">200 miles</option>
                             <option value="0">US</option>
                         </Form.Select>
@@ -171,19 +174,12 @@ export default function SearchEngine(props) {
                     <Button variant="secondary" type="reset" className = "mt-3">Reset</Button>
                 </Row>
             </Form>
-        </Container>
+        </div>
         
     );
 };
 
 
-
-
-// <div className="col-md-8">
-//     <h4> Institutions near <span>University Park, PA</span></h4>
-//     <div id="map" style= {{height: "380px", width: "100%", display: "none"}}></div>
-//     <img style={{height: "380px", width: "100%"}} src="https://maps.googleapis.com/maps/api/staticmap?center=University+Park,PA&amp;zoom=7&amp;size=640x380&amp;maptype=roadmap&amp;markers=color:blue%7Clabel:S%7C40.802196,-77.859823&amp;key=AIzaSyANybCerdJ_PyJ-V3JKjXQqk871uvuQCK4&amp;signature=oYO-pmxJfAUNob1aIERy9y-agOU="/>
-// </div>
 
 // </div>
 
