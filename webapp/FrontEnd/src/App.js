@@ -3,7 +3,7 @@ import './App.css';
 import NavBar from './Components/NavBar';
 import SearchEngine from './Components/SearchEngine';
 import GoogleMap from './Components/GoogleMap';
-import DataTable from './Components/DataTable/DataTable';
+import DataTable from './Components//DataTable';
 
 function App() {
   const saveUserInputHandler = (enteredUserInput) => {

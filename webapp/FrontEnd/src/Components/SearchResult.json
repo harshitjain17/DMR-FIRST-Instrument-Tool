@@ -6,21 +6,15 @@
         "status": "Active",
         "institution": "Penn State University",
         "location": "N-02B",
-        "latitude": 0,
-        "longitude": 0,
-        "state": "Active",
         "award": "433647492"
     },
     {
-        "doi": "364vrubfu4y58b",
+        "doi": "364vrubfu4y58",
         "name": "Auger",
         "type": "Auger S.",
         "status": "Active",
         "institution": "Penn State University",
         "location": "N-01A",
-        "latitude": 0,
-        "longitude": 0,
-        "state": "Active",
         "award": "364228191"
     }
 ]
