@@ -98,9 +98,8 @@ export default function SearchEngine(props) {
 
     return (
 
-        <div className="px-3 border" style={{width: "70%", height: "80%"}}>
+        <div className="px-3 border" style={{width: "96%", height: "102%"}}>
             <Form onSubmit={submitHandler} style={{width: "100%", height: "100%"}}>
-                
                 <Row className = "mt-3">
                     <Form.Group controlId = "formAddress">
                         <Form.Label>Find Instruments near</Form.Label>
@@ -161,17 +160,17 @@ export default function SearchEngine(props) {
                 </Row>
                 
                 <Row className = "mt-3">
-                    <Form.Group className="mb-3" controlId="formIRI">
+                    <Form.Group className="mb-1" controlId="formIRI">
                         <Form.Check type="checkbox" label="Include retired instruments" onChange={IRIChangeHandler} value = {enteredIRI}/>
                     </Form.Group>
                 </Row>
 
                 <Row className="d-grid gap-2">
-                    <Button type = 'submit' className = "mt-3"> Search </Button>
+                    <Button type = 'submit' className = "mt-2" style = {{width:"90%", margin: "auto"}}> Search </Button>
                 </Row>
                 
                 <Row className="d-grid gap-2">
-                    <Button variant="secondary" type="reset" className = "mt-3">Reset</Button>
+                    <Button variant="secondary" type="reset" className = "mt-2" style = {{width:"90%", margin: "auto"}}>Reset</Button>
                 </Row>
             </Form>
         </div>
