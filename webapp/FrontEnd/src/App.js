@@ -3,7 +3,7 @@ import './App.css';
 import NavBar from './Components/NavBar';
 import SearchEngine from './Components/SearchEngine';
 import GoogleMap from './Components/GoogleMap';
-import TableComponent from './Components/TableComponent';
+import DataTable from './Components/DataTable/DataTable';
 
 function App() {
   const saveUserInputHandler = (enteredUserInput) => {
@@ -15,13 +15,14 @@ function App() {
   return (
     <div>
       <NavBar/>
-      <div className="d-flex flex-row">
+      {/* <div className="d-flex flex-row">
         <div style={{width: "35%", display: "inline-block"}}><SearchEngine onSaveUserInput = {saveUserInputHandler}/></div>
         <div>
           <TableComponent/>
           <GoogleMap/>
         </div>
-      </div>
+      </div> */}
+      <DataTable/>
     </div>
   );  
 }
