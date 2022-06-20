@@ -1,4 +1,4 @@
-// import faker from 'faker';
+// COLORFUL TABLE
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import SearchResult from './SearchResult.json';
@@ -124,3 +124,60 @@ export default function DataTable() {
     </TableContainer>
   );
 };
+
+
+
+
+// PROFESSINAL DATATABLE
+// import React from 'react';
+// import { DataGrid } from '@mui/x-data-grid';
+
+// const columns = [
+//   { field: 'id', headerName: 'ID', type: 'number', width: 120 },
+//   { field: 'institution', headerName: 'Institution', width: 190 },
+//   { field: 'type', headerName: 'Instrument Type', width: 140 },
+//   { field: 'name', headerName: 'Instrument Name', width: 150 },
+//   { field: 'doi', headerName: 'DOI', width: 160 },
+//   { field: 'location', headerName: 'Location', width: 150 },
+//   { field: 'award', headerName: 'Award', width: 150 },
+//   { field: 'status', headerName: 'Status', width: 100 },
+//   // { field: 'fullName', headerName: 'Full name', description: 'This column has a value getter and is not sortable.', sortable: false, width: 160,
+//   //   valueGetter: (params) => `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+//   // }
+// ];
+
+// const rows = [
+//     {
+//       id: 1,
+//       institution: "Penn State University",
+//       type: "Raman",
+//       name: "Lucy",
+//       doi: "riu8y87h4u4", 
+//       location: "N-02B",
+//       award: "433647492",    
+//       status: "Active",
+//     },
+//     {
+//       id: 2,
+//       institution: "Penn State University",
+//       type: "Auger S.",
+//       name: "Auger",
+//       doi: "364vrubfu4y58",
+//       location: "N-01A",
+//       award: "364228191",
+//       status: "Active",
+//     }
+// ]
+// export default function DataTable() {
+//   return (
+//     <div style={{ height: 400, width: '100%' }}>
+//       <DataGrid
+//         rows={rows}
+//         columns={columns}
+//         pageSize={5}
+//         rowsPerPageOptions={[5]}
+//         checkboxSelection
+//       />
+//     </div>
+//   );
+// };
