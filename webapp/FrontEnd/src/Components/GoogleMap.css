@@ -1,5 +1,5 @@
-#root > div > div > div:nth-child(2) > div:nth-child(1) > div > div:nth-child(1) {
-    position: absolute;
-    width: 44% !important;
-    height: 54% !important;
+#root > div > div > div:nth-child(2) > div:nth-child(2) > div:nth-child(1){
+    width: 60% !important;
+    height: 45% !important;
+    margin: 20px auto !important;
 }

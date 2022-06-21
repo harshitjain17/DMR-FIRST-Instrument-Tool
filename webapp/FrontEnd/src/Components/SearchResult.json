@@ -1,0 +1,20 @@
+[
+    {
+        "doi": "riu8y87h4u4",
+        "name": "Lucy",
+        "type": "Raman",
+        "status": "Active",
+        "institution": "Penn State University",
+        "location": "N-02B",
+        "award": "433647492"
+    },
+    {
+        "doi": "364vrubfu4y58",
+        "name": "Auger",
+        "type": "Auger S.",
+        "status": "Active",
+        "institution": "Penn State University",
+        "location": "N-01A",
+        "award": "364228191"
+    }
+]
