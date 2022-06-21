@@ -15,14 +15,13 @@ function App() {
   return (
     <div>
       <NavBar/>
-      {/* <div className="d-flex flex-row">
+      <div className="d-flex flex-row">
         <div style={{width: "35%", display: "inline-block"}}><SearchEngine onSaveUserInput = {saveUserInputHandler}/></div>
         <div>
-          <TableComponent/>
+          <DataTable/>
           <GoogleMap/>
         </div>
-      </div> */}
-      <DataTable/>
+      </div>
     </div>
   );  
 }
