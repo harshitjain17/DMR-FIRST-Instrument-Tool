@@ -1,13 +1,10 @@
-import { Form, Button, Row } from 'react-bootstrap';
+import { Form, Container, Button, Row } from 'react-bootstrap';
 import './SearchEngine.css';
 import React, { useState } from 'react';
 import axios from 'axios';
 import CreatableSelect from 'react-select/creatable';
+import SearchableBar from './SearchableBar';
 import InstrumentTypeList from './InstrumentTypeList.json';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import MenuItem from '@mui/material/MenuItem';
-import Chip from '@mui/material/Chip';
 
 export default function SearchEngine(props) {
 
@@ -29,9 +26,8 @@ export default function SearchEngine(props) {
     const distanceChangeHandler = (event) => {
         setEnteredDistance(event.target.value);
     };
-
-    const instrumentTypeChangeHandler = (event, value) => {
-        setEnteredInstrumentType(value);
+    const instrumentTypeChangeHandler = (enteredInput) => {
+        setEnteredInstrumentType(enteredInput);
     };
     
     const keywordsChangeHandler = (event) => {
@@ -92,90 +88,60 @@ export default function SearchEngine(props) {
         setEnteredAddress('');
         setEnteredDistance('');
         setEnteredInstrumentType('');
-        setEnteredKeywords([]);
+        setEnteredKeywords('');
         setEnteredManufacturer('');
         setEnteredAwardNumber('');
-        setEnteredIRI(false);
+        setEnteredIRI('');
     };
 
     const { inputValue, value } = enteredKeywords;
 
     return (
 
-        <div className="px-3 border" style={{width: "100%", height: "102%"}}>
+        <div className="px-3 border" style={{width: "96%", height: "102%"}}>
             <Form onSubmit={submitHandler} style={{width: "100%", height: "100%"}}>
                 <Row className = "mt-3">
                     <Form.Group controlId = "formAddress">
-                        <TextField
-                            fullWidth
-                            size="small"
-                            onChange={addressChangeHandler} 
-                            value = {enteredAddress} 
-                            label="Find instruments near" 
-                            variant="outlined"
-                            />
+                        <Form.Label>Find Instruments near</Form.Label>
+                        <Form.Control type="text" placeholder="Enter Location" onChange={addressChangeHandler} value = {enteredAddress}/>
                     </Form.Group>
                 </Row>
 
                 <Row className = "mt-3">
                     <Form.Group controlId = "formDistance">
-                        <TextField
-                            fullWidth
-                            size="small"
-                            select
-                            label="Maximum Distance"
-                            value={enteredDistance}
-                            onChange={distanceChangeHandler}
-                            defaultValue="Select Distance..."
-                        >
-                            <MenuItem key = "" value = "">Select Distance...</MenuItem>
-                            <MenuItem key = "25" value = "25">25 miles</MenuItem>
-                            <MenuItem key = "50" value = "50">50 miles</MenuItem>
-                            <MenuItem key = "75" value = "75">75 miles</MenuItem>
-                            <MenuItem key = "100" value = "100">100 miles</MenuItem>
-                            <MenuItem key = "150" value = "150">150 miles</MenuItem>
-                            <MenuItem key = "200" value = "200">200 miles</MenuItem>
-                            <MenuItem key = "0" value = "0">US</MenuItem>
-                        </TextField>
+                        <Form.Label>Maximum Distance</Form.Label>
+                        <Form.Select aria-hidden="true" onChange={distanceChangeHandler} value = {enteredDistance}>
+                            <option value="">Select distance...</option>
+                            <option value="25">25 miles</option>
+                            <option value="50">50 miles</option>
+                            <option value="75">75 miles</option>
+                            <option value="100">100 miles</option>
+                            <option value="10">150 miles</option>
+                            <option value="200">200 miles</option>
+                            <option value="0">US</option>
+                        </Form.Select>
                     </Form.Group>
                 </Row>
 
                 <Row className = "mt-3">
                     <Form.Group controlId = "formInstrumentType">
-                        <Autocomplete
-                            fullwidth
-                            size="small"
-                            options={InstrumentTypeList.sort((a, b) =>
-                                b.technique.localeCompare(a.technique.toString())
-                              )}
-                            groupBy={(option) => option.technique}
-                            getOptionLabel={(option) => option.value}
-                            onChange = {instrumentTypeChangeHandler}
-                            renderInput={(params) => <TextField {...params} label="Instrument Type"/>}
-                        />
+                        <Form.Label>Instrument Type</Form.Label>
+                        <SearchableBar onSaveInput = {instrumentTypeChangeHandler} items = {InstrumentTypeList}/>
                     </Form.Group>
                 </Row>
 
                 <Row className = "mt-3">
                     <Form.Group controlId = "formKeywords">
-                        <Autocomplete
-                            multiple
-                            fullwidth
-                            size="small"
-                            options={InstrumentTypeList.map((option) => option.value)}
-                            freeSolo
-                            renderTags={(value, getTagProps) =>
-                            value.map((option, index) => (
-                                <Chip variant="outlined" label={option} {...getTagProps({ index })} />
-                            ))
-                            }
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Capabilities description keywords"
-                                />
-                            )}
-                        />
+                        <Form.Label>Capabilities description keywords</Form.Label>
+                        <CreatableSelect
+                            components={components} 
+                            inputValue={inputValue}
+                            isClearable 
+                            isMulti 
+                            placeholder="Enter keywords and press enter (optional)" 
+                            onChange={keywordsChangeHandler}
+                            value={value}
+                            />
                     </Form.Group>
                 </Row>
 

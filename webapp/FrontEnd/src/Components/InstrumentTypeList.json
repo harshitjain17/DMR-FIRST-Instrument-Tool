@@ -1,6 +1,18 @@
 [
-"Auger Electron Spectroscopy (AES)",
-"Contact Angle",
-"Atomic Force Microscopy (AFM)",
-"Raman Spectroscopy"
+    {
+        "technique": "Characterization",
+        "value": "Auger Electron Spectroscopy (AES)"
+    },
+    {
+        "technique": "Characterization",
+        "value": "Contact Angle"
+    },
+    {
+        "technique": "Characterization",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Characterization",
+        "value": "Atomic Force Microscopy (AFM)"
+    }
 ]
