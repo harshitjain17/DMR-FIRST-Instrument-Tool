@@ -16,7 +16,7 @@ function App() {
     <div>
       <NavBar/>
       <div className="d-flex flex-row">
-        <div style={{width: "35%", display: "inline-block"}}><SearchEngine onSaveUserInput = {saveUserInputHandler}/></div>
+        <div style={{width: "35%", height: "100%", display: "inline-block"}}><SearchEngine onSaveUserInput = {saveUserInputHandler}/></div>
         <div style={{width: "100%"}}>
           <DataTable/>
           <GoogleMap/>

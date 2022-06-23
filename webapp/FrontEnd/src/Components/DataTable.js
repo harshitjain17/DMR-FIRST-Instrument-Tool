@@ -94,12 +94,12 @@ function CustomNoRowsOverlay() {
 
 export default function DataTable() {
   return (
-    <div style={{ height: '58%', width: '100%' }}>
+    <div style={{ height: '65%', width: '100%' }}>
       <DataGrid
         rows={SearchResult}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        density="compact"
+        pageSize={6}
         components={{ 
           Toolbar: GridToolbar,
           LoadingOverlay: LinearProgress,
