@@ -35,7 +35,7 @@ export default function SearchEngine(props) {
         for (var i=0; i<event.length; i++) {
             arr.push(event[i].value);
         }
-        setEnteredKeywords(arr);
+        setEnteredKeywords(event);
     };
 
     const manufacturerChangeHandler = (event) => {
