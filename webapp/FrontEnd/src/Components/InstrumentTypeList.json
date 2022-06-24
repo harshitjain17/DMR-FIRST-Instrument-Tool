@@ -1,6 +1,78 @@
 [
-"Auger Electron Spectroscopy (AES)",
-"Contact Angle",
-"Atomic Force Microscopy (AFM)",
-"Raman Spectroscopy"
+    {
+        "technique": "Characterization",
+        "value": "Auger Electron Spectroscopy (AES)"
+    },
+    {
+        "technique": "Characterization",
+        "value": "Contact Angle"
+    },
+    {
+        "technique": "Characterization",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Characterization",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Characterization",
+        "value": "Contact Angle"
+    },
+    {
+        "technique": "Characterization",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Characterization",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Synthesis",
+        "value": "Auger Electron Spectroscopy (AES)"
+    },
+    {
+        "technique": "Synthesis",
+        "value": "Contact Angle"
+    },
+    {
+        "technique": "Synthesis",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Synthesis",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Synthesis",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Synthesis",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Fabrication",
+        "value": "Auger Electron Spectroscopy (AES)"
+    },
+    {
+        "technique": "Fabrication",
+        "value": "Contact Angle"
+    },
+    {
+        "technique": "Fabrication",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Fabrication",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Fabrication",
+        "value": "Atomic Force Microscopy (AFM)"
+    },
+    {
+        "technique": "Fabrication",
+        "value": "Atomic Force Microscopy (AFM)"
+    }
 ]

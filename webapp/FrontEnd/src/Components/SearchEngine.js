@@ -1,17 +1,19 @@
-// eslint-disable-next-line no-unused-vars
-import { Form, Button, Row } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import './SearchEngine.css';
 import React, { useState } from 'react';
 import axios from 'axios';
-import CreatableSelect from 'react-select/creatable';
-import SearchableBar from './SearchableBar';
 import InstrumentTypeList from './InstrumentTypeList.json';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import MenuItem from '@mui/material/MenuItem';
+import Chip from '@mui/material/Chip';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+
 
 export default function SearchEngine(props) {
-
-    const components = {
-        DropdownIndicator: null,
-    };  
 
     const [enteredAddress, setEnteredAddress] = useState('');
     const [enteredDistance, setEnteredDistance] = useState('');
@@ -24,19 +26,18 @@ export default function SearchEngine(props) {
     const addressChangeHandler = (event) => {
         setEnteredAddress(event.target.value);
     };
+
     const distanceChangeHandler = (event) => {
         setEnteredDistance(event.target.value);
     };
-    const instrumentTypeChangeHandler = (enteredInput) => {
-        setEnteredInstrumentType(enteredInput);
+
+    const instrumentTypeChangeHandler = (event, value) => {
+        setEnteredInstrumentType(value);
     };
     
     const keywordsChangeHandler = (event) => {
-        var arr = [];
-        for (var i=0; i<event.length; i++) {
-            arr.push(event[i].value);
-        }
-        setEnteredKeywords(arr);
+        enteredKeywords.push(event.target.value);
+        setEnteredKeywords(enteredKeywords);
     };
 
     const manufacturerChangeHandler = (event) => {
@@ -66,7 +67,13 @@ export default function SearchEngine(props) {
             throw error;
         }
     }
-      
+
+    const Div = styled('div')(({ theme }) => ({
+        ...theme.typography.button,
+        backgroundColor: theme.palette.background.paper,
+        padding: theme.spacing(1),
+    }));
+
     const submitHandler = async (event) => {
         event.preventDefault();
       
@@ -85,125 +92,161 @@ export default function SearchEngine(props) {
             includeRetired: enteredIRI
         };
         props.onSaveUserInput(userInput);
-      
+    };
+
+    const resetHandler = async (event) => {
+        event.preventDefault();
+
         setEnteredAddress('');
         setEnteredDistance('');
         setEnteredInstrumentType('');
-        setEnteredKeywords('');
+        setEnteredKeywords([]);
         setEnteredManufacturer('');
         setEnteredAwardNumber('');
-        setEnteredIRI('');
+        setEnteredIRI(false);
     };
-
-    const { inputValue, value } = enteredKeywords;
 
     return (
 
-        <div className="px-3 border" style={{width: "96%", height: "102%"}}>
-            <Form onSubmit={submitHandler} style={{width: "100%", height: "100%"}}>
-                <Row className = "mt-3">
+        <div className="px-3 border" style={{width: "100%", height: "102%"}}>
+            <Div>{"SEARCH TOOL"}</Div>
+            <Form onSubmit={submitHandler} onReset={resetHandler} style={{width: "100%", height: "100%"}}>
+                
+                    <div className="mt-3">
                     <Form.Group controlId = "formAddress">
-                        <Form.Label>Find Instruments near</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Location" onChange={addressChangeHandler} value = {enteredAddress}/>
-                    </Form.Group>
-                </Row>
-
-                <Row className = "mt-3">
-                    <Form.Group controlId = "formDistance">
-                        <Form.Label>Maximum Distance</Form.Label>
-                        <Form.Select aria-hidden="true" onChange={distanceChangeHandler} value = {enteredDistance}>
-                            <option value="">Select distance...</option>
-                            <option value="25">25 miles</option>
-                            <option value="50">50 miles</option>
-                            <option value="75">75 miles</option>
-                            <option value="100">100 miles</option>
-                            <option value="10">150 miles</option>
-                            <option value="200">200 miles</option>
-                            <option value="0">US</option>
-                        </Form.Select>
-                    </Form.Group>
-                </Row>
-
-                <Row className = "mt-3">
-                    <Form.Group controlId = "formInstrumentType">
-                        <Form.Label>Instrument Type</Form.Label>
-                        <SearchableBar onSaveInput = {instrumentTypeChangeHandler} items = {InstrumentTypeList}/>
-                    </Form.Group>
-                </Row>
-
-                <Row className = "mt-3">
-                    <Form.Group controlId = "formKeywords">
-                        <Form.Label>Capabilities description keywords</Form.Label>
-                        <CreatableSelect
-                            components={components} 
-                            inputValue={inputValue}
-                            isClearable 
-                            isMulti 
-                            placeholder="Enter keywords and press enter (optional)" 
-                            onChange={keywordsChangeHandler}
-                            value={value}
+                        <TextField
+                            required
+                            fullWidth
+                            size="small"
+                            onChange={addressChangeHandler}
+                            value = {enteredAddress} 
+                            label="Find instruments near" 
+                            variant="outlined"
                             />
                     </Form.Group>
-                </Row>
+                    </div>
+                
 
-                <Row className = "mt-3">
+                    <div className="mt-3">
+                    <Form.Group controlId = "formDistance">
+                        <TextField
+                            fullWidth
+                            size="small"
+                            select
+                            label="Maximum Distance"
+                            value = {enteredDistance}
+                            onChange={distanceChangeHandler}
+                            
+                        >
+                            <MenuItem key = "25" value = "25">25 miles</MenuItem>
+                            <MenuItem key = "50" value = "50">50 miles</MenuItem>
+                            <MenuItem key = "75" value = "75">75 miles</MenuItem>
+                            <MenuItem key = "100" value = "100">100 miles</MenuItem>
+                            <MenuItem key = "150" value = "150">150 miles</MenuItem>
+                            <MenuItem key = "200" value = "200">200 miles</MenuItem>
+                            <MenuItem key = "0" value = "0">US</MenuItem>
+                        </TextField>
+                    </Form.Group>
+                    </div>
+                
+
+                    <div className="mt-3">
+                    <Form.Group controlId = "formInstrumentType">
+                        <Autocomplete
+                            fullwidth
+                            size="small"
+                            options={InstrumentTypeList.sort((a, b) =>
+                                b.technique.localeCompare(a.technique.toString())
+                              )}
+                            groupBy={(option) => option.technique}
+                            getOptionLabel={(option) => option.value}
+                            inputValue = {enteredInstrumentType}
+                            onInputChange = {instrumentTypeChangeHandler}
+                            renderInput={(params) => <TextField {...params} label="Instrument Type"/>}
+                            
+                        />
+                    </Form.Group>
+                    </div>
+                
+
+                    <div className="mt-3">
+                    <Form.Group controlId = "formKeywords">
+                        <Autocomplete
+                            multiple
+                            fullwidth
+                            size="small"
+                            options={[]}
+                            freeSolo
+                            onChange={keywordsChangeHandler}
+                            renderTags={(value, getTagProps) =>
+                                value.map((option, index) => (
+                                    <Chip size="small" label={option} {...getTagProps({ index })} />
+                                ))
+                            }
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Capabilities description keywords"
+                                />
+                            )}
+                            
+                        />
+                    </Form.Group>
+                    </div>
+                
+
+                    <div className="mt-3">
                     <Form.Group controlId = "formManufacturer">
-                        <Form.Label>Manufacturer</Form.Label>
-                        <Form.Control type="text" placeholder="Enter manufacturer (optional)"  onChange={manufacturerChangeHandler} value = {enteredManufacturer}/>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            onChange={manufacturerChangeHandler}
+                            value={enteredManufacturer}
+                            label="Manufacturer" 
+                            variant="outlined"
+                            
+                        />
                     </Form.Group>
-                </Row>
+                    </div>
+                
 
-                <Row className = "mt-3">
+                    <div className="mt-3">
                     <Form.Group controlId = "formAwardNumber">
-                        <Form.Label>Award Number</Form.Label>
-                        <Form.Control type="text" placeholder="Enter award number (optional)"  onChange={awardNumberChangeHandler} value = {enteredAwardNumber}/>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            value={enteredAwardNumber}
+                            onChange={awardNumberChangeHandler}
+                            label="Award Number" 
+                            variant="outlined"
+                            
+                        />
                     </Form.Group>
-                </Row>
-                
-                <Row className = "mt-3">
-                    <Form.Group className="mb-1" controlId="formIRI">
-                        <Form.Check type="checkbox" label="Include retired instruments" onChange={IRIChangeHandler} value = {enteredIRI}/>
-                    </Form.Group>
-                </Row>
+                    </div>                
 
-                <Row className="d-grid gap-2">
-                    <Button type = 'submit' className = "mt-2" style = {{width:"90%", margin: "auto"}}> Search </Button>
-                </Row>
+                    <div className="mt-2">
+                    <Form.Group className="mb-1" controlId="formIRI">
+                    <FormControlLabel control={
+                        <Checkbox
+                            checked={enteredIRI}
+                            onChange={IRIChangeHandler}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                        />
+                    } label="Include retired instruments"
+                    />
+                    </Form.Group>
+                    </div>
                 
-                <Row className="d-grid gap-2">
+
+                <div className="d-grid gap-2 mt-3">
+                    <Button type = 'submit' variant="contained" style = {{width:"90%", margin: "auto"}}>Search</Button>
+                </div>
+                
+                <div className="d-grid gap-2">
                     <Button variant="secondary" type="reset" className = "mt-2" style = {{width:"90%", margin: "auto"}}>Reset</Button>
-                </Row>
+                </div>
             </Form>
         </div>
         
     );
 };
-
-
-
-// </div>
-
-// <div className="row">
-// <div id="InstitutionList_wrapper" className="dataTables_wrapper no-footer"><div className="dataTables_length" id="InstitutionList_length"><label>Show <select name="InstitutionList_length" aria-controls="InstitutionList" className=""><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="-1">All</option></select> entries</label></div><table id="InstitutionList" className="detail compact dataTable no-footer" cellspacing="0" width="100%" role="grid" aria-describedby="InstitutionList_info" style={{width: "100%"}}>
-// <thead>
-// <tr role="row"><th className="sorting_asc" tabindex="0" aria-controls="InstitutionList" rowspan="1" colspan="1" aria-sort="ascending" aria-label="
-//     Label
-// : activate to sort column descending" style={{width: "33px"}}>
-//     <span className="hidden-xs">Label</span>
-// </th><th className="sorting" tabindex="0" aria-controls="InstitutionList" rowspan="1" colspan="1" aria-label="
-//     Distance [mi]
-//     mi
-// : activate to sort column ascending" style={{width: "52px"}}>
-//     <span className="hidden-xs">Distance [mi]</span>
-//     <span className="visible-xs">mi</span>
-// </th><th className="sorting" tabindex="0" aria-controls="InstitutionList" rowspan="1" colspan="1" aria-label="Institution: activate to sort column ascending" style={{width: "61px"}}>Institution</th><th className="sorting" tabindex="0" aria-controls="InstitutionList" rowspan="1" colspan="1" aria-label="City: activate to sort column ascending" style={{width: "24px"}}>City</th><th className="sorting" tabindex="0" aria-controls="InstitutionList" rowspan="1" colspan="1" aria-label="
-//     Doctoral1
-//     className1
-// : activate to sort column ascending" style={{width: "56px"}}>
-//     <span className="hidden-xs">Doctoral<sup>1</sup></span>
-//     <span className="visible-xs">className<sup>1</sup></span>
-// </th><th className="sorting" tabindex="0" aria-controls="InstitutionList" rowspan="1" colspan="1" aria-label="PUI2: activate to sort column ascending" style={{width: "27px"}}>PUI<sup>2</sup></th><th className="sorting" tabindex="0" aria-controls="InstitutionList" rowspan="1" colspan="1" aria-label="MSI: activate to sort column ascending" style={{width: "24px"}}>MSI</th><th className="hidden-xs sorting" tabindex="0" aria-controls="InstitutionList" rowspan="1" colspan="1" aria-label="Enrollment: activate to sort column ascending" style={{width: "65px"}}>Enrollment</th><th className="hidden-xs sorting" tabindex="0" aria-controls="InstitutionList" rowspan="1" colspan="1" aria-label="classNameification: activate to sort column ascending" style={{width: "82px"}}>classNameification</th><th className="sorting_disabled" rowspan="1" colspan="1" aria-label="&amp;nbsp;" style={{width: "4px"}}>&nbsp;</th></tr>
-// </thead>
-// <tbody><tr className="odd"><td valign="top" colspan="10" className="dataTables_empty">No data available in table</td></tr></tbody></table><div className="dataTables_info" id="InstitutionList_info" role="status" aria-live="polite">Showing 0 to 0 of 0 entries</div><div className="dataTables_paginate paging_simple_numbers" id="InstitutionList_paginate"><a className="paginate_button previous disabled" aria-controls="InstitutionList" data-dt-idx="0" tabindex="-1" id="InstitutionList_previous">Previous</a><span></span><a className="paginate_button next disabled" aria-controls="InstitutionList" data-dt-idx="1" tabindex="-1" id="InstitutionList_next">Next</a></div></div>
-// </div>
-// </div>
