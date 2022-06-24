@@ -111,7 +111,8 @@ export default function SearchEngine(props) {
         <div className="px-3 border" style={{width: "100%", height: "102%"}}>
             <Div>{"SEARCH TOOL"}</Div>
             <Form onSubmit={submitHandler} onReset={resetHandler} style={{width: "100%", height: "100%"}}>
-                <Row>
+                
+                    <div className="mt-3">
                     <Form.Group controlId = "formAddress">
                         <TextField
                             required
@@ -123,9 +124,10 @@ export default function SearchEngine(props) {
                             variant="outlined"
                             />
                     </Form.Group>
-                </Row>
+                    </div>
+                
 
-                <Row>
+                    <div className="mt-3">
                     <Form.Group controlId = "formDistance">
                         <TextField
                             fullWidth
@@ -134,7 +136,7 @@ export default function SearchEngine(props) {
                             label="Maximum Distance"
                             value = {enteredDistance}
                             onChange={distanceChangeHandler}
-                            margin="normal"
+                            
                         >
                             <MenuItem key = "25" value = "25">25 miles</MenuItem>
                             <MenuItem key = "50" value = "50">50 miles</MenuItem>
@@ -145,9 +147,10 @@ export default function SearchEngine(props) {
                             <MenuItem key = "0" value = "0">US</MenuItem>
                         </TextField>
                     </Form.Group>
-                </Row>
+                    </div>
+                
 
-                <Row className = "mt-2">
+                    <div className="mt-3">
                     <Form.Group controlId = "formInstrumentType">
                         <Autocomplete
                             fullwidth
@@ -160,12 +163,13 @@ export default function SearchEngine(props) {
                             inputValue = {enteredInstrumentType}
                             onInputChange = {instrumentTypeChangeHandler}
                             renderInput={(params) => <TextField {...params} label="Instrument Type"/>}
-                            margin="normal"
+                            
                         />
                     </Form.Group>
-                </Row>
+                    </div>
+                
 
-                <Row className = "mt-3">
+                    <div className="mt-3">
                     <Form.Group controlId = "formKeywords">
                         <Autocomplete
                             multiple
@@ -185,12 +189,13 @@ export default function SearchEngine(props) {
                                     label="Capabilities description keywords"
                                 />
                             )}
-                            margin="normal"
+                            
                         />
                     </Form.Group>
-                </Row>
+                    </div>
+                
 
-                <Row>
+                    <div className="mt-3">
                     <Form.Group controlId = "formManufacturer">
                         <TextField
                             fullWidth
@@ -199,12 +204,13 @@ export default function SearchEngine(props) {
                             value={enteredManufacturer}
                             label="Manufacturer" 
                             variant="outlined"
-                            margin="normal"
+                            
                         />
                     </Form.Group>
-                </Row>
+                    </div>
+                
 
-                <Row>
+                    <div className="mt-3">
                     <Form.Group controlId = "formAwardNumber">
                         <TextField
                             fullWidth
@@ -213,12 +219,12 @@ export default function SearchEngine(props) {
                             onChange={awardNumberChangeHandler}
                             label="Award Number" 
                             variant="outlined"
-                            margin="normal"
+                            
                         />
                     </Form.Group>
-                </Row>
-                
-                <Row>
+                    </div>                
+
+                    <div className="mt-2">
                     <Form.Group className="mb-1" controlId="formIRI">
                     <FormControlLabel control={
                         <Checkbox
@@ -229,15 +235,16 @@ export default function SearchEngine(props) {
                     } label="Include retired instruments"
                     />
                     </Form.Group>
-                </Row>
-
-                <Row className="d-grid gap-2 mt-3">
-                    <Button type = 'submit' variant="contained" style = {{width:"90%", margin: "auto"}}>Search</Button>
-                </Row>
+                    </div>
                 
-                <Row className="d-grid gap-2">
+
+                <div className="d-grid gap-2 mt-3">
+                    <Button type = 'submit' variant="contained" style = {{width:"90%", margin: "auto"}}>Search</Button>
+                </div>
+                
+                <div className="d-grid gap-2">
                     <Button variant="secondary" type="reset" className = "mt-2" style = {{width:"90%", margin: "auto"}}>Reset</Button>
-                </Row>
+                </div>
             </Form>
         </div>
         
