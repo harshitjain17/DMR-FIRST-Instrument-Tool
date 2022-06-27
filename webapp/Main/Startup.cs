@@ -2,6 +2,7 @@ using Instool.API;
 using Instool.Authorization.Setup;
 using Instool.DAL;
 using Instool.Helpers;
+using Instool.RestAPI.Exceptions;
 using Instool.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -46,7 +47,7 @@ namespace Instool
                 options =>
                 {
                     options.EnableEndpointRouting = true;
-                    //                    options.Filters.Add(new HttpResponseExceptionFilter());
+                    //options.Filters.Add(new HttpResponseExceptionFilter());
                 }
             ).AddApplicationPart(assembly)
              .AddNewtonsoftJson(options =>
@@ -134,6 +135,7 @@ namespace Instool
             app.UseSwaggerUi3();
             app.UseRouting();
             app.ConfigureAuthMiddleware(Configuration);
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

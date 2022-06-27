@@ -216,7 +216,7 @@ namespace Instool.DAL.Models
 
                 entity.Property(e => e.InstrumentTypeId).HasColumnName("InstrumentTypeID");
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.ShortName)
                     .HasMaxLength(255)
                     .IsUnicode(false);
 

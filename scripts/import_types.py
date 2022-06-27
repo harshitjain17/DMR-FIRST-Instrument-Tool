@@ -1,13 +1,25 @@
 from asyncio.windows_events import NULL
-import pyodbc
-import config.db as dbconf
 import csv
+import json
+from unicodedata import category
+from requests.auth import HTTPBasicAuth
+import requests
+import config.instool as instool
 
-cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+dbconf.server+';DATABASE='+dbconf.database+';UID='+dbconf.username+';PWD='+ dbconf.password)
-cursor = cnxn.cursor()
+def create_json(name, label, category):
+    json_dict = {
+        "name": name,
+        "label": label,
+        "uri": None
+    }
+    if (category):
+        json_dict["category"] = {
+            "name": category
+        }
+    
+    return json_dict
 
-insertTopLevel = "Insert into InstrumentType (Name) values (?)"
-insert = "Insert into InstrumentType (Name, Category) (select ?, InstrumentTypeId from InstrumentType where Name = ?)"
+headers = {'Content-Type': 'application/json'}
 
 with open('data/types.csv', encoding='utf-8-sig') as csvfile:
     reader = csv.reader(csvfile, dialect='excel')
@@ -15,14 +27,20 @@ with open('data/types.csv', encoding='utf-8-sig') as csvfile:
     for row in reader:
         level, name = next((x, val) for x, val in enumerate(row) if val)
         currentCategories[level] = name
-        print("{level}: {name}".format(level=level, name=name))
-        # That's a top-level category
-        if (level == 0): 
-            cursor.execute(insertTopLevel, name)
-        else:
-            cursor.execute(insert, name, currentCategories[level -1 ])
-       
-    cnxn.commit()
+        label = row[level + 1] or name
+        print("{level}: {name} - {label}".format(level=level, name=name, label=label))
 
-cursor.close()
-cnxn.close()
+        data = create_json(name, label, currentCategories[level-1] )
+
+        result = requests.post(instool.url + '/instrument-types', json=data, headers=headers, auth=HTTPBasicAuth('X-API-Key', instool.auth), verify=False)
+        if result.status_code == 201:
+            try:
+                result = json.load(result)
+            except:
+                print(result.text)
+        else: 
+                print(result.text)
+
+
+
+
