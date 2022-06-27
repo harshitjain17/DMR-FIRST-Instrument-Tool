@@ -28,19 +28,18 @@ export class MapContainer extends Component {
     
     render() {
         return (
-        <Map
-            google={this.props.google} 
-            style = {{width: "100%", height: "100%"}}
-            zoom = {10}
-            initialCenter = {
-                {
-                    lat: 40.816170,
-                    lng: -77.856911
+            <Map
+                google={this.props.google} 
+                style = {{width: "100%", height: "100%"}}
+                zoom = {10}
+                initialCenter = {
+                    {
+                        lat: 40.816170,
+                        lng: -77.856911
+                    }
                 }
-            }
-            onClick={this.onMapClicked}>
-            <Marker onClick={this.onMarkerClick}
-                    name={'Current location'}/>
+                onClick={this.onMapClicked}>
+            <Marker onClick={this.onMarkerClick} name={'Current location'}/>
             <InfoWindow
                 marker={this.state.activeMarker}
                 visible={this.state.showingInfoWindow}>
@@ -48,7 +47,7 @@ export class MapContainer extends Component {
                         <h1>{this.state.selectedPlace.name}</h1>
                     </div>
             </InfoWindow>
-        </Map>
+            </Map>
         );
     };
 };
