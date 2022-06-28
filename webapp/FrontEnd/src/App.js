@@ -151,16 +151,16 @@ function App() {
               
               {/* Google Maps */}
               <Grid item xs={12} md={5} lg={7}>
-                {/* <Paper
+                <Paper
                   sx={{
-                    p: 2,
-                    // display: 'flex',
-                    // flexDirection: 'column',
-                    height: 250,
+                    p: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 187,
                   }}
-                > */}
+                >
                   <GoogleMap2/>
-                {/* </Paper> */}
+                </Paper>
                 
               </Grid>
               

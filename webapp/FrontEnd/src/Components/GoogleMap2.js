@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import './GoogleMap.css';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 var config = require("../config/config").default();
+
 export class GoogleMap2 extends Component {
     constructor(props) {
       super(props);
@@ -30,7 +32,7 @@ export class GoogleMap2 extends Component {
           <Map
             google={this.props.google}
             zoom={8}
-            style={{ width: '10%', height: '10%'}}
+            style={{ width: '100%', height: '100%'}}
             initialCenter={{ lat: 47.444, lng: -122.176}}
           >
             {this.displayMarkers()}
