@@ -22,6 +22,7 @@ export default function SearchEngine(props) {
     const [enteredManufacturer, setEnteredManufacturer] = useState('');
     const [enteredAwardNumber, setEnteredAwardNumber] = useState('');
     const [enteredIRI, setEnteredIRI] = useState(false);
+    const [instrumentTypes, setInstrumentTypes] = useState([]);
 
     const addressChangeHandler = (event) => {
         setEnteredAddress(event.target.value);
@@ -32,6 +33,13 @@ export default function SearchEngine(props) {
     };
 
     const instrumentTypeChangeHandler = (event, value) => {
+        fetch('https://m4-instool.vmhost.psu.edu/api/v1/instrument-types/dropdown')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setInstrumentTypes(data);
+            });
         setEnteredInstrumentType(value);
     };
     
@@ -48,6 +56,16 @@ export default function SearchEngine(props) {
     };
     const IRIChangeHandler = () => {
         setEnteredIRI(!enteredIRI);
+    };
+
+    function fetchInstrumentTypeHandler() {
+        fetch('https://m4-instool.vmhost.psu.edu/api/v1/instrument-types/dropdown')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                setInstrumentTypes(data);
+            });
     };
 
     async function Geocoding() {
@@ -154,13 +172,13 @@ export default function SearchEngine(props) {
                     <Autocomplete
                         fullwidth
                         size="small"
-                        options={InstrumentTypeList.sort((a, b) =>
-                            b.technique.localeCompare(a.technique.toString())
+                        options={instrumentTypes.sort((a, b) =>
+                            b.category.localeCompare(a.category.toString())
                             )}
-                        groupBy={(option) => option.technique}
-                        getOptionLabel={(option) => option.value}
+                        groupBy={(option) => option.category}
+                        getOptionLabel={(option) => option.label}
                         inputValue = {enteredInstrumentType}
-                        onInputChange = {instrumentTypeChangeHandler}
+                        onInputChange = {fetchInstrumentTypeHandler}
                         renderInput={(params) => <TextField {...params} label="Instrument Type"/>}
                         
                     />
