@@ -151,6 +151,21 @@ namespace Instool.API
             return Ok(types);
         }
 
+        [HttpGet("dropdown")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [HasPrivilege(PrivilegeEnum.InstrumentType)]
+        public async Task<ActionResult<ICollection<InstrumentTypeDropdownEntry>>> GetDropDownEntries()
+        {
+            var categories = await _repo.LoadHierarchie();
+            var types = categories.SelectMany(cat => cat.InverseCategory.SelectMany(subCat =>
+                                subCat.InverseCategory.Select(type => InstrumentTypeDropdownEntry.FromEntity(type, cat, subCat))
+                        )
+            );
+            return Ok(types);
+        }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
