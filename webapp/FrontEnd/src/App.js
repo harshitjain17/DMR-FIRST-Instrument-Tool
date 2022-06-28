@@ -138,7 +138,7 @@ function App() {
               </Grid>
               
               {/* Google Maps */}
-              <Grid item xs={12} md={5} lg={7}>
+              <Grid item xs={12} md={7} lg={7}>
                 <Paper
                   sx={{
                     p: 1,
