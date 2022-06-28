@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import SearchEngine from './Components/SearchEngine';
-import GoogleMap2 from './Components/GoogleMap2';
+import GoogleMap from './Components/GoogleMap';
 import DataTable from './Components/DataTable';
 
 import * as React from 'react';
@@ -73,18 +73,6 @@ function App() {
     console.log(userInput);
   };
   return (
-    // <div>
-    //   <NavBar/>
-    //   <div className="d-flex flex-row">
-    //     <div style={{width: "35%", height: "100%", display: "inline-block"}}><SearchEngine onSaveUserInput = {saveUserInputHandler}/></div>
-    //     <div style={{width: "100%"}}>
-    //       <DataTable/>
-    //       <GoogleMap/>
-    //     </div>
-    //   </div>
-    // </div>
-
-
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline/>
@@ -159,7 +147,7 @@ function App() {
                     height: 187,
                   }}
                 >
-                  <GoogleMap2/>
+                  <GoogleMap/>
                 </Paper>
                 
               </Grid>
