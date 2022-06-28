@@ -17,6 +17,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using System.Reflection;
 
 namespace Instool
@@ -81,6 +83,17 @@ namespace Instool
             {
                 doc.DocumentName = "v1";
                 doc.ApiGroupNames = new[] { "1" };
+
+                doc.AddSecurity("apikey", new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "X-API-KEY",
+                    In = OpenApiSecurityApiKeyLocation.Header
+                });
+
+                doc.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("apikey"));
+
+
                 doc.PostProcess = d =>
                 {
                     d.Info.Title = "DMR Instrumentation Tool";
@@ -124,15 +137,18 @@ namespace Instool
             });
             app.UseSpaStaticFiles();
 
-            app.UseOpenApi(options =>
+            app.UseOpenApi();
+            app.UseSwaggerUi3(config => config.TransformToExternalPath = (internalUiRoute, request) =>
             {
-                options.PostProcess = (document, httpReq) =>
+                if (internalUiRoute.StartsWith("/") == true && internalUiRoute.StartsWith(request.PathBase) == false)
                 {
-
-                    document.Host = httpReq.Headers.Host;
-                };
+                    return request.PathBase + internalUiRoute;
+                }
+                else
+                {
+                    return internalUiRoute;
+                }
             });
-            app.UseSwaggerUi3();
             app.UseRouting();
             app.ConfigureAuthMiddleware(Configuration);
             app.UseMiddleware<ExceptionMiddleware>();
