@@ -108,135 +108,134 @@ export default function SearchEngine(props) {
 
     return (
 
-        <div className="px-3 border" style={{width: "100%", height: "102%"}}>
-            <Div>{"SEARCH TOOL"}</Div>
+        <div className="px-3 border" style={{width: "100%", height: "100%"}}>
             <Form onSubmit={submitHandler} onReset={resetHandler} style={{width: "100%", height: "100%"}}>
-                
-                    <div className="mt-3">
-                    <Form.Group controlId = "formAddress">
-                        <TextField
-                            required
-                            fullWidth
-                            size="small"
-                            onChange={addressChangeHandler}
-                            value = {enteredAddress} 
-                            label="Find instruments near" 
-                            variant="outlined"
-                            />
-                    </Form.Group>
-                    </div>
-                
-
-                    <div className="mt-3">
-                    <Form.Group controlId = "formDistance">
-                        <TextField
-                            fullWidth
-                            size="small"
-                            select
-                            label="Maximum Distance"
-                            value = {enteredDistance}
-                            onChange={distanceChangeHandler}
-                            
-                        >
-                            <MenuItem key = "25" value = "25">25 miles</MenuItem>
-                            <MenuItem key = "50" value = "50">50 miles</MenuItem>
-                            <MenuItem key = "75" value = "75">75 miles</MenuItem>
-                            <MenuItem key = "100" value = "100">100 miles</MenuItem>
-                            <MenuItem key = "150" value = "150">150 miles</MenuItem>
-                            <MenuItem key = "200" value = "200">200 miles</MenuItem>
-                            <MenuItem key = "0" value = "0">US</MenuItem>
-                        </TextField>
-                    </Form.Group>
-                    </div>
-                
-
-                    <div className="mt-3">
-                    <Form.Group controlId = "formInstrumentType">
-                        <Autocomplete
-                            fullwidth
-                            size="small"
-                            options={InstrumentTypeList.sort((a, b) =>
-                                b.technique.localeCompare(a.technique.toString())
-                              )}
-                            groupBy={(option) => option.technique}
-                            getOptionLabel={(option) => option.value}
-                            inputValue = {enteredInstrumentType}
-                            onInputChange = {instrumentTypeChangeHandler}
-                            renderInput={(params) => <TextField {...params} label="Instrument Type"/>}
-                            
+            <Div>{"SEARCH TOOL"}</Div>
+                <div className="mt-3">
+                <Form.Group controlId = "formAddress">
+                    <TextField
+                        required
+                        fullWidth
+                        size="small"
+                        onChange={addressChangeHandler}
+                        value = {enteredAddress} 
+                        label="Find instruments near" 
+                        variant="outlined"
                         />
-                    </Form.Group>
-                    </div>
-                
+                </Form.Group>
+                </div>
+            
 
-                    <div className="mt-3">
-                    <Form.Group controlId = "formKeywords">
-                        <Autocomplete
-                            multiple
-                            fullwidth
-                            size="small"
-                            options={[]}
-                            freeSolo
-                            onChange={keywordsChangeHandler}
-                            renderTags={(value, getTagProps) =>
-                                value.map((option, index) => (
-                                    <Chip size="small" label={option} {...getTagProps({ index })} />
-                                ))
-                            }
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Capabilities description keywords"
-                                />
+                <div className="mt-3">
+                <Form.Group controlId = "formDistance">
+                    <TextField
+                        fullWidth
+                        size="small"
+                        select
+                        label="Maximum Distance"
+                        value = {enteredDistance}
+                        onChange={distanceChangeHandler}
+                        
+                    >
+                        <MenuItem key = "25" value = "25">25 miles</MenuItem>
+                        <MenuItem key = "50" value = "50">50 miles</MenuItem>
+                        <MenuItem key = "75" value = "75">75 miles</MenuItem>
+                        <MenuItem key = "100" value = "100">100 miles</MenuItem>
+                        <MenuItem key = "150" value = "150">150 miles</MenuItem>
+                        <MenuItem key = "200" value = "200">200 miles</MenuItem>
+                        <MenuItem key = "0" value = "0">US</MenuItem>
+                    </TextField>
+                </Form.Group>
+                </div>
+            
+
+                <div className="mt-3">
+                <Form.Group controlId = "formInstrumentType">
+                    <Autocomplete
+                        fullwidth
+                        size="small"
+                        options={InstrumentTypeList.sort((a, b) =>
+                            b.technique.localeCompare(a.technique.toString())
                             )}
-                            
-                        />
-                    </Form.Group>
-                    </div>
-                
-
-                    <div className="mt-3">
-                    <Form.Group controlId = "formManufacturer">
-                        <TextField
-                            fullWidth
-                            size="small"
-                            onChange={manufacturerChangeHandler}
-                            value={enteredManufacturer}
-                            label="Manufacturer" 
-                            variant="outlined"
-                            
-                        />
-                    </Form.Group>
-                    </div>
-                
-
-                    <div className="mt-3">
-                    <Form.Group controlId = "formAwardNumber">
-                        <TextField
-                            fullWidth
-                            size="small"
-                            value={enteredAwardNumber}
-                            onChange={awardNumberChangeHandler}
-                            label="Award Number" 
-                            variant="outlined"
-                            
-                        />
-                    </Form.Group>
-                    </div>                
-
-                    <div className="mt-2">
-                    <Form.Group className="mb-1" controlId="formIRI">
-                    <FormControlLabel control={
-                        <Checkbox
-                            checked={enteredIRI}
-                            onChange={IRIChangeHandler}
-                            inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                    } label="Include retired instruments"
+                        groupBy={(option) => option.technique}
+                        getOptionLabel={(option) => option.value}
+                        inputValue = {enteredInstrumentType}
+                        onInputChange = {instrumentTypeChangeHandler}
+                        renderInput={(params) => <TextField {...params} label="Instrument Type"/>}
+                        
                     />
-                    </Form.Group>
-                    </div>
-                
+                </Form.Group>
+                </div>
+            
+
+                <div className="mt-3">
+                <Form.Group controlId = "formKeywords">
+                    <Autocomplete
+                        multiple
+                        fullwidth
+                        size="small"
+                        options={[]}
+                        freeSolo
+                        onChange={keywordsChangeHandler}
+                        renderTags={(value, getTagProps) =>
+                            value.map((option, index) => (
+                                <Chip size="small" label={option} {...getTagProps({ index })} />
+                            ))
+                        }
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Capabilities description keywords"
+                            />
+                        )}
+                        
+                    />
+                </Form.Group>
+                </div>
+            
+
+                <div className="mt-3">
+                <Form.Group controlId = "formManufacturer">
+                    <TextField
+                        fullWidth
+                        size="small"
+                        onChange={manufacturerChangeHandler}
+                        value={enteredManufacturer}
+                        label="Manufacturer" 
+                        variant="outlined"
+                        
+                    />
+                </Form.Group>
+                </div>
+            
+
+                <div className="mt-3">
+                <Form.Group controlId = "formAwardNumber">
+                    <TextField
+                        fullWidth
+                        size="small"
+                        value={enteredAwardNumber}
+                        onChange={awardNumberChangeHandler}
+                        label="Award Number" 
+                        variant="outlined"
+                        
+                    />
+                </Form.Group>
+                </div>                
+
+                <div className="mt-3">
+                <Form.Group className="mb-1" controlId="formIRI">
+                <FormControlLabel control={
+                    <Checkbox
+                        checked={enteredIRI}
+                        onChange={IRIChangeHandler}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
+                } label="Include retired instruments"
+                />
+                </Form.Group>
+                </div>
+            
 
                 <div className="d-grid gap-2 mt-3">
                     <Button type = 'submit' variant="contained" style = {{width:"90%", margin: "auto"}}>Search</Button>

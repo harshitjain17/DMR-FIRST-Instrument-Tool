@@ -1,5 +1,5 @@
-#root > div > div > div:nth-child(2) > div:nth-child(2) > div:nth-child(1){
-    width: 36% !important;
-    height: 45% !important;
-    margin: 7px !important;
+#root > div > main > div.MuiContainer-root.MuiContainer-maxWidthLg.css-16dwyet-MuiContainer-root > div > div.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12.MuiGrid-grid-md-5.MuiGrid-grid-lg-7.css-1c4lf0o-MuiGrid-root > div > div > div:nth-child(1) {
+    width: 40% !important;
+    height: 29% !important;
+    position: fixed !important;
 }

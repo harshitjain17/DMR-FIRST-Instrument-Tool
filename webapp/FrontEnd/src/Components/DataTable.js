@@ -94,12 +94,11 @@ function CustomNoRowsOverlay() {
 
 export default function DataTable() {
   return (
-    <div style={{ height: '65%', width: '100%' }}>
       <DataGrid
         rows={SearchResult}
         columns={columns}
         density="compact"
-        pageSize={6}
+        pageSize={5}
         components={{ 
           Toolbar: GridToolbar,
           LoadingOverlay: LinearProgress,
@@ -110,6 +109,5 @@ export default function DataTable() {
         checkboxSelection
         disableSelectionOnClick
       />
-    </div>
   );
 };
