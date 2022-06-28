@@ -44,8 +44,7 @@ namespace Instool
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ApiVersionReader = new UrlSegmentApiVersionReader();
                 options.ReportApiVersions = true;
-            });
-            services.AddControllersWithViews(
+            }).AddControllersWithViews(
                 options =>
                 {
                     options.EnableEndpointRouting = true;
@@ -65,6 +64,17 @@ namespace Instool
 
             services.ConfigureAuthentication(Configuration);
             services.ConfigureAuthorization();
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.WithOrigins(
+                        "http://localhost:3000",
+                        "https://localhost:3000"
+                    );
+                });
+            });
 
 
             // In production, the React files will be served from this directory
@@ -150,6 +160,10 @@ namespace Instool
                 }
             });
             app.UseRouting();
+            if (env.IsDevelopment() || env.IsStaging())
+            {
+                app.UseCors();
+            }
             app.ConfigureAuthMiddleware(Configuration);
             app.UseMiddleware<ExceptionMiddleware>();
 
