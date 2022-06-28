@@ -2,7 +2,6 @@ import { Form } from 'react-bootstrap';
 import './SearchEngine.css';
 import React, { useState } from 'react';
 import axios from 'axios';
-import InstrumentTypeList from './InstrumentTypeList.json';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
@@ -32,16 +31,16 @@ export default function SearchEngine(props) {
         setEnteredDistance(event.target.value);
     };
 
-    const instrumentTypeChangeHandler = (event, value) => {
-        fetch('https://m4-instool.vmhost.psu.edu/api/v1/instrument-types/dropdown')
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                setInstrumentTypes(data);
-            });
-        setEnteredInstrumentType(value);
-    };
+    // const instrumentTypeChangeHandler = (event, value) => {
+    //     fetch('https://m4-instool.vmhost.psu.edu/api/v1/instrument-types/dropdown')
+    //         .then((response) => {
+    //             return response.json();
+    //         })
+    //         .then((data) => {
+    //             setInstrumentTypes(data);
+    //         });
+    //     setEnteredInstrumentType(value);
+    // };
     
     const keywordsChangeHandler = (event) => {
         enteredKeywords.push(event.target.value);
