@@ -101,8 +101,7 @@ function App() {
               justifyContent: 'flex-end',
               px: [1],
             }}
-          >
-          </Toolbar>
+          />
             <SearchEngine onSaveUserInput = {saveUserInputHandler}/>
         </Drawer>
 

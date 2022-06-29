@@ -56,7 +56,13 @@ export default function SearchEngine(props) {
             setInstrumentTypes(response.data);
         });
         }, []);
-    
+
+    function sortAlphabeticallyAscending(a,b){
+        if(a.label < b.label) return -1;
+        else if (a.label > b.label) return 1;
+        else return 0;
+    }
+
     // geocoding
     async function Geocoding() {
         try {
@@ -81,6 +87,7 @@ export default function SearchEngine(props) {
         ...theme.typography.button,
         backgroundColor: theme.palette.background.paper,
         padding: theme.spacing(1),
+        textAlign: 'center'
     }));
 
     // submit handling
@@ -122,7 +129,7 @@ export default function SearchEngine(props) {
         <div className="px-3 border" style={{width: "100%", height: "100%"}}>
             <Form onSubmit={submitHandler} onReset={resetHandler} style={{width: "100%", height: "100%"}}>
             <Div>{"SEARCH TOOL"}</Div>
-                <div className="mt-3">
+                <div>
                 <Form.Group controlId = "formAddress">
                     <TextField
                         required
@@ -165,9 +172,7 @@ export default function SearchEngine(props) {
                     <Autocomplete
                         fullWidth = {true}
                         size="small"
-                        options={instrumentTypes.sort((a, b) =>
-                            b.category.localeCompare(a.category.toString())
-                            )}
+                        options={instrumentTypes}
                         groupBy={(option) => option.category}
                         getOptionLabel={(option) => option.label}
                         inputValue = {enteredInstrumentType}
