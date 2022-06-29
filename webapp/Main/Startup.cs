@@ -72,7 +72,7 @@ namespace Instool
                     policy.WithOrigins(
                         "http://localhost:3000",
                         "https://localhost:3000"
-                    );
+                    ).AllowAnyHeader();
                 });
             });
 
@@ -94,6 +94,7 @@ namespace Instool
                 doc.DocumentName = "v1";
                 doc.ApiGroupNames = new[] { "1" };
 
+                // Document the authentication we're using
                 doc.AddSecurity("apikey", new OpenApiSecurityScheme
                 {
                     Type = OpenApiSecuritySchemeType.ApiKey,
@@ -164,6 +165,7 @@ namespace Instool
             {
                 app.UseCors();
             }
+            
             app.ConfigureAuthMiddleware(Configuration);
             app.UseMiddleware<ExceptionMiddleware>();
 

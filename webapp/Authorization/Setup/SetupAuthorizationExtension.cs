@@ -56,6 +56,13 @@ namespace Instool.Authorization.Setup
             return services;
         }
 
+        /// <summary>
+        ///     Add Authentication & Authorization middleware.
+        ///     This includes ApiKey authentiation, setting privileges for anonymous access, etc.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static IApplicationBuilder ConfigureAuthMiddleware(this IApplicationBuilder app, IConfiguration configuration)
         {
             app.UseAuthentication();

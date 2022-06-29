@@ -57,11 +57,11 @@ export default function SearchEngine(props) {
         });
         }, []);
 
-    function sortAlphabeticallyAscending(a,b){
-        if(a.label < b.label) return -1;
-        else if (a.label > b.label) return 1;
-        else return 0;
-    }
+    // function sortAlphabeticallyAscending(a,b){
+    //     if(a.label < b.label) return -1;
+    //     else if (a.label > b.label) return 1;
+    //     else return 0;
+    // }
 
     // geocoding
     async function Geocoding() {
