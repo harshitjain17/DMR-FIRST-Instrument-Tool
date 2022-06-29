@@ -99,6 +99,7 @@ export default function DataTable() {
         columns={columns}
         density="compact"
         pageSize={5}
+        rowsPerPageOptions={[5]}
         components={{ 
           Toolbar: GridToolbar,
           LoadingOverlay: LinearProgress,

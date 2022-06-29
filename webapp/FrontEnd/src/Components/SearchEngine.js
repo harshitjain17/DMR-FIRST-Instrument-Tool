@@ -31,16 +31,9 @@ export default function SearchEngine(props) {
         setEnteredDistance(event.target.value);
     };
 
-    // const instrumentTypeChangeHandler = (event, value) => {
-    //     fetch('https://m4-instool.vmhost.psu.edu/api/v1/instrument-types/dropdown')
-    //         .then((response) => {
-    //             return response.json();
-    //         })
-    //         .then((data) => {
-    //             setInstrumentTypes(data);
-    //         });
-    //     setEnteredInstrumentType(value);
-    // };
+    const instrumentTypeChangeHandler = (event, value) => {
+        setEnteredInstrumentType(value);
+    };
     
     const keywordsChangeHandler = (event) => {
         enteredKeywords.push(event.target.value);
@@ -57,16 +50,20 @@ export default function SearchEngine(props) {
         setEnteredIRI(!enteredIRI);
     };
 
-    function fetchInstrumentTypeHandler() {
-        fetch('https://m4-instool.vmhost.psu.edu/api/v1/instrument-types/dropdown')
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                setInstrumentTypes(data);
-            });
-    };
+    // autocompletion of instrument types
+    React.useEffect(() => {
+        axios.get(`https://m4-instool.vmhost.psu.edu/api/v1/instrument-types/dropdown`).then((response) => {
+            setInstrumentTypes(response.data);
+        });
+        }, []);
 
+    function sortAlphabeticallyAscending(a,b){
+        if(a.label < b.label) return -1;
+        else if (a.label > b.label) return 1;
+        else return 0;
+    }
+
+    // geocoding
     async function Geocoding() {
         try {
             const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
@@ -85,12 +82,15 @@ export default function SearchEngine(props) {
         }
     }
 
+    // typography
     const Div = styled('div')(({ theme }) => ({
         ...theme.typography.button,
         backgroundColor: theme.palette.background.paper,
         padding: theme.spacing(1),
+        textAlign: 'center'
     }));
 
+    // submit handling
     const submitHandler = async (event) => {
         event.preventDefault();
       
@@ -111,6 +111,7 @@ export default function SearchEngine(props) {
         props.onSaveUserInput(userInput);
     };
 
+    // reset handling
     const resetHandler = async (event) => {
         event.preventDefault();
 
@@ -128,11 +129,11 @@ export default function SearchEngine(props) {
         <div className="px-3 border" style={{width: "100%", height: "100%"}}>
             <Form onSubmit={submitHandler} onReset={resetHandler} style={{width: "100%", height: "100%"}}>
             <Div>{"SEARCH TOOL"}</Div>
-                <div className="mt-3">
+                <div>
                 <Form.Group controlId = "formAddress">
                     <TextField
                         required
-                        fullWidth
+                        fullWidth = {true}
                         size="small"
                         onChange={addressChangeHandler}
                         value = {enteredAddress} 
@@ -146,7 +147,7 @@ export default function SearchEngine(props) {
                 <div className="mt-3">
                 <Form.Group controlId = "formDistance">
                     <TextField
-                        fullWidth
+                        fullWidth = {true}
                         size="small"
                         select
                         label="Maximum Distance"
@@ -169,15 +170,13 @@ export default function SearchEngine(props) {
                 <div className="mt-3">
                 <Form.Group controlId = "formInstrumentType">
                     <Autocomplete
-                        fullwidth
+                        fullWidth = {true}
                         size="small"
-                        options={instrumentTypes.sort((a, b) =>
-                            b.category.localeCompare(a.category.toString())
-                            )}
+                        options={instrumentTypes}
                         groupBy={(option) => option.category}
                         getOptionLabel={(option) => option.label}
                         inputValue = {enteredInstrumentType}
-                        onInputChange = {fetchInstrumentTypeHandler}
+                        onInputChange = {instrumentTypeChangeHandler}
                         renderInput={(params) => <TextField {...params} label="Instrument Type"/>}
                         
                     />
@@ -189,7 +188,7 @@ export default function SearchEngine(props) {
                 <Form.Group controlId = "formKeywords">
                     <Autocomplete
                         multiple
-                        fullwidth
+                        fullWidth = {true}
                         size="small"
                         options={[]}
                         freeSolo
@@ -214,7 +213,7 @@ export default function SearchEngine(props) {
                 <div className="mt-3">
                 <Form.Group controlId = "formManufacturer">
                     <TextField
-                        fullWidth
+                        fullWidth = {true}
                         size="small"
                         onChange={manufacturerChangeHandler}
                         value={enteredManufacturer}
@@ -229,7 +228,7 @@ export default function SearchEngine(props) {
                 <div className="mt-3">
                 <Form.Group controlId = "formAwardNumber">
                     <TextField
-                        fullWidth
+                        fullWidth = {true}
                         size="small"
                         value={enteredAwardNumber}
                         onChange={awardNumberChangeHandler}
