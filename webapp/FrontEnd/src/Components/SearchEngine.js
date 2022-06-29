@@ -55,13 +55,7 @@ export default function SearchEngine(props) {
         axios.get(`https://m4-instool.vmhost.psu.edu/api/v1/instrument-types/dropdown`).then((response) => {
             setInstrumentTypes(response.data);
         });
-        }, []);
-
-    function sortAlphabeticallyAscending(a,b){
-        if(a.label < b.label) return -1;
-        else if (a.label > b.label) return 1;
-        else return 0;
-    }
+    }, []);
 
     // geocoding
     async function Geocoding() {
@@ -95,8 +89,9 @@ export default function SearchEngine(props) {
         event.preventDefault();
       
         var coordinates = await Geocoding();
-      
-        const userInput = { //object
+        
+        //object
+        const userInput = {
             location: {
                 latitude: coordinates[0],
                 longitude: coordinates[1],
@@ -108,7 +103,13 @@ export default function SearchEngine(props) {
             awardNumber: enteredAwardNumber,
             includeRetired: enteredIRI
         };
-        props.onSaveUserInput(userInput);
+
+        axios.post(`https://m4-instool.vmhost.psu.edu/api/v1/instruments/search`, { userInput })
+        .then(response => {
+            // props.onSaveResponseData(response.data.data);
+            console.log(response.data);
+        })
+        console.log(userInput);
     };
 
     // reset handling

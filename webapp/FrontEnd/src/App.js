@@ -4,7 +4,7 @@ import SearchEngine from './Components/SearchEngine';
 import GoogleMap from './Components/GoogleMap';
 import DataTable from './Components/DataTable';
 
-import * as React from 'react';
+import React from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -65,13 +65,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function App() {
+  // const [response, setResponse] = useState([]);
+  // const responseDataHandler = (responseData) => {
+  //   setResponse(responseData);
+  //   console.log(responseData);
+  // };
 
-  const saveUserInputHandler = (enteredUserInput) => {
-    const userInput = {
-      ...enteredUserInput
-    };
-    console.log(userInput);
-  };
+  
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -102,7 +103,8 @@ function App() {
               px: [1],
             }}
           />
-            <SearchEngine onSaveUserInput = {saveUserInputHandler}/>
+          {/* onSaveResponseData = {responseDataHandler} */}
+            <SearchEngine/>
         </Drawer>
 
         {/* Right Section */}

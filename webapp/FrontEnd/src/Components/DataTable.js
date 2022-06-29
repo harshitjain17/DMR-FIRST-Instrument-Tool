@@ -7,7 +7,7 @@ import SearchResult from './SearchResult.json';
 import "./DataTable.css";
 
 const columns = [
-  { field: 'id', headerName: <b>ID</b>, type: 'number', width: 120 },
+  { field: 'id', headerName: <b>ID</b>, type: 'number', width: 90 },
   { field: 'institution', headerName: <b>Institution</b>, width: 190 },
   { field: 'type', headerName: <b>Instrument Type</b>, width: 140 },
   { field: 'name', headerName: <b>Instrument Name</b>, width: 150 },
@@ -93,6 +93,15 @@ function CustomNoRowsOverlay() {
 
 
 export default function DataTable() {
+  
+  // const saveUserInputHandler = (enteredUserInput) => {
+  //   const userInput = {
+  //     ...enteredUserInput
+  //   };
+  //   console.log(userInput);
+  // };
+  
+  
   return (
       <DataGrid
         rows={SearchResult}
