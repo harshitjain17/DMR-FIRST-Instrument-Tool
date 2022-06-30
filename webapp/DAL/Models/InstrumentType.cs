@@ -9,7 +9,9 @@
         }
 
         public int InstrumentTypeId { get; set; }
-        public string Name { get; set; } = null!;
+
+        public string ShortName { get; set; } = null!;
+        public string Label { get; set; } = null!;
         public string? Uri { get; set; }
         public int? CategoryId { get; set; }
 

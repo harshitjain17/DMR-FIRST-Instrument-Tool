@@ -8,7 +8,7 @@
 
         public string? InstrumentType { get; set; }
 
-        public string? Keywords { get; set; }
+        public ICollection<string> Keywords { get; set; } = new List<string>();
 
         public int? AwardId { get; set; }
 

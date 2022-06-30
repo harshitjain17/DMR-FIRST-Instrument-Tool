@@ -2,9 +2,9 @@
 {
     public class Role
     {
-        public static readonly int RoleAdmin = 1;
+        public static readonly int RoleAdmin = 2;
 
-        public static readonly int RoleCommunity = 2;
+        public static readonly int RoleCommunity = 1;
 
         public int RoleId { get; set; }
         public string Name { get; set; }

@@ -1,9 +1,6 @@
-scripts/dbconf.py
-scripts/__pycache__/*
-config/*
+**/__pycache__
 **/node_modules/*
-data/Hybrid MBE (MBE2).json
-data/Hybrid MBE (MBE2).xml
+scripts/config/*
 etc
 **/instool.zip
 **/Release

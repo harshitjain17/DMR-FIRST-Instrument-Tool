@@ -86,10 +86,12 @@ CREATE TABLE InstrumentContact (
 
 CREATE TABLE InstrumentType (
     [InstrumentTypeID] [int] IDENTITY(1, 1) NOT NULL,
-    [Name] varchar(255) not null,
+    [ShortName] varchar(50) not null,
+    [Label] varchar(255) not null,
     [Uri] varchar(255) null,
     [CategoryId] int null,
     CONSTRAINT [PK_InstrumentType] PRIMARY KEY CLUSTERED (InstrumentTypeID),
+    CONSTRAINT [UK_InstrumentType] UNIQUE NONCLUSTERED (ShortName),
     CONSTRAINT [FK_InstrumentType_InstrumentType] FOREIGN KEY (CategoryId) REFERENCES InstrumentType (InstrumentTypeID)
 );
 

@@ -11,7 +11,7 @@ namespace Instool.Authorization.Privileges
         InstrumentType = 10,
 
         [Display(GroupName = "Customizing", Name = "ApiKey", Description = "Api Keys.")]
-        [AvailableOperations("crudl")]
+        [AvailableOperations("crud")]
         ApiKey = 11,
 
         [Display(GroupName = "Customizing", Name = "Role", Description = "Customize Roles and Privileges. Read allows loading details in the customizing dialog.")]

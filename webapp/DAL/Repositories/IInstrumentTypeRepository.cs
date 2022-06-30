@@ -10,6 +10,7 @@ namespace Instool.DAL.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         public Task<InstrumentType?> GetById(int id);
+        public Task<InstrumentType?> GetByShortname(string id);
 
         /// <summary>
         ///     Load all instrument types within a category, 
@@ -18,6 +19,9 @@ namespace Instool.DAL.Repositories
         /// <param name="category"></param>
         /// <returns></returns>
         public Task<ICollection<InstrumentType>> GetTypes(int? category = null);
-        Task<ICollection<InstrumentType>> LoadHierarchie();
+        Task<ICollection<InstrumentType>> LoadHierarchie(int? category = null);
+        Task Update(InstrumentType type);
+        Task Delete(InstrumentType type);
+        Task Create(InstrumentType type);
     }
 }

@@ -2,6 +2,7 @@ using Instool.API;
 using Instool.Authorization.Setup;
 using Instool.DAL;
 using Instool.Helpers;
+using Instool.RestAPI.Exceptions;
 using Instool.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NSwag;
+using NSwag.Generation.Processors.Security;
 using System.Reflection;
 
 namespace Instool
@@ -41,12 +44,11 @@ namespace Instool
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.ApiVersionReader = new UrlSegmentApiVersionReader();
                 options.ReportApiVersions = true;
-            });
-            services.AddControllersWithViews(
+            }).AddControllersWithViews(
                 options =>
                 {
                     options.EnableEndpointRouting = true;
-                    //                    options.Filters.Add(new HttpResponseExceptionFilter());
+                    //options.Filters.Add(new HttpResponseExceptionFilter());
                 }
             ).AddApplicationPart(assembly)
              .AddNewtonsoftJson(options =>
@@ -62,6 +64,17 @@ namespace Instool
 
             services.ConfigureAuthentication(Configuration);
             services.ConfigureAuthorization();
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.WithOrigins(
+                        "http://localhost:3000",
+                        "https://localhost:3000"
+                    ).AllowAnyHeader();
+                });
+            });
 
 
             // In production, the React files will be served from this directory
@@ -80,6 +93,18 @@ namespace Instool
             {
                 doc.DocumentName = "v1";
                 doc.ApiGroupNames = new[] { "1" };
+
+                // Document the authentication we're using
+                doc.AddSecurity("apikey", new OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "X-API-KEY",
+                    In = OpenApiSecurityApiKeyLocation.Header
+                });
+
+                doc.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("apikey"));
+
+
                 doc.PostProcess = d =>
                 {
                     d.Info.Title = "DMR Instrumentation Tool";
@@ -123,17 +148,26 @@ namespace Instool
             });
             app.UseSpaStaticFiles();
 
-            app.UseOpenApi(options =>
+            app.UseOpenApi();
+            app.UseSwaggerUi3(config => config.TransformToExternalPath = (internalUiRoute, request) =>
             {
-                options.PostProcess = (document, httpReq) =>
+                if (internalUiRoute.StartsWith("/") == true && internalUiRoute.StartsWith(request.PathBase) == false)
                 {
-
-                    document.Host = httpReq.Headers.Host;
-                };
+                    return request.PathBase + internalUiRoute;
+                }
+                else
+                {
+                    return internalUiRoute;
+                }
             });
-            app.UseSwaggerUi3();
             app.UseRouting();
+            if (env.IsDevelopment() || env.IsStaging())
+            {
+                app.UseCors();
+            }
+            
             app.ConfigureAuthMiddleware(Configuration);
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

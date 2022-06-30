@@ -1,7 +1,6 @@
 import { Form } from 'react-bootstrap';
 import './SearchEngine.css';
 import React, { useState } from 'react';
-import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,6 +10,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 
+import InstoolApi from '../Api/InstoolApi';
+import GoogleApi from '../Api/GoogleApi';
 
 export default function SearchEngine(props) {
 
@@ -52,29 +53,10 @@ export default function SearchEngine(props) {
 
     // autocompletion of instrument types
     React.useEffect(() => {
-        axios.get(`https://m4-instool.vmhost.psu.edu/api/v1/instrument-types/dropdown`).then((response) => {
+        InstoolApi.get(`/instrument-types/dropdown`).then((response) => {
             setInstrumentTypes(response.data);
         });
     }, []);
-
-    // geocoding
-    async function Geocoding() {
-        try {
-            const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
-                params: {
-                    address: enteredAddress,
-                    key: 'AIzaSyBWAhdwQk6dpFAjF4QcTfUo_pZH0n0Xgxk'
-                }
-            })
-            var lat = response.data.results[0].geometry.location.lat;
-            var lng = response.data.results[0].geometry.location.lng;
-            return [lat, lng];
-        
-        } catch (error) {
-            console.error(error)
-            throw error;
-        }
-    }
 
     // typography
     const Div = styled('div')(({ theme }) => ({
@@ -88,7 +70,7 @@ export default function SearchEngine(props) {
     const submitHandler = async (event) => {
         event.preventDefault();
       
-        var coordinates = await Geocoding();
+        var coordinates = await GoogleApi.getCoordinates(enteredAddress);
         
         //object
         const userInput = {
@@ -104,7 +86,7 @@ export default function SearchEngine(props) {
             includeRetired: enteredIRI
         };
 
-        axios.post(`https://m4-instool.vmhost.psu.edu/api/v1/instruments/search`, { userInput })
+        InstoolApi.post(`/instruments/search`, { userInput })
         .then(response => {
             props.onSaveResponseData(response.data.data);
         })

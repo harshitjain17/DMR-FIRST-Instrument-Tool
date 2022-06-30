@@ -1,120 +1,117 @@
 ﻿Characterization,,,
 ,Atomic Content Characterization,,
-,,Atom probe,
-,,Focused Ion Beam,
+,,atom_probe,Atom probe
+,,fib-char,Focused Ion Beam
 ,Electrical Characterization,,
-,,Dielectric Breakdown,
-,,Electrical and Mechanical Displacement Measurement,
-,,Electrochemical Impedance Spectroscopy,
-,,Microwave / 5G Techniques,
-,,Physical Property Measurement System (PPMS),
-,,Thermally Stimulated Depolarization Currents (TSDC),
-,,Thermoelectric Seebeck Coefficient,
-,,Van der Pauw Method for Resistivity & Hall Mobility,
+,,dielect,Dielectric Breakdown
+,,displace,Electrical and Mechanical Displacement Measurement
+,,ec-impedance,Electrochemical Impedance Spectroscopy
+,,5g,Microwave / 5G Techniques
+,,ppms,Physical Property Measurement System (PPMS)
+,,tsdc,Thermally Stimulated Depolarization Currents (TSDC)
+,,th-seebeck,Thermoelectric Seebeck Coefficient
+,,pauw,Van der Pauw Method for Resistivity & Hall Mobility
 ,Magnetic Characterization,,
-,,Superconducting Quantum Interference Device (SQUID) Magnetometry,
-,,Mass/Density Characterization,
-,,Pycnometer,
+,,squid,Superconducting Quantum Interference Device (SQUID) Magnetometry
+,,mass-dens,Mass/Density Characterization
+,,pycno,Pycnometer
 ,Mechanical Characterization,,
-,,Tension/Compression/Bend Testing,
-,,Digital Image Correlation (DIC),
-,,Dynamic Mechanical Analysis (DMA),
-,,Microindentation,
-,,Nanoindentation,
-,,Thermomechanical Analysis (TMA),
+,,ten-compr,Tension/Compression/Bend Testing
+,,dic,Digital Image Correlation (DIC)
+,,dma,Dynamic Mechanical Analysis (DMA)
+,,m-indent,Microindentation
+,,n-0indent,Nanoindentation
+,,tma,Thermomechanical Analysis (TMA)
 ,Optical Characterization,,
-,,Ellipsometry,
-,,Solar Simulator,
-,,Optical Spectrometry,
-,,Optical Profilometry,
+,,ellipso,Ellipsometry
+,,solar,Solar Simulator
+,,os,Optical Spectrometry
+,,op,Optical Profilometry
 ,Polymer Characterization,,
-,,Circular Dichrosim,
-,,Dynamic Light Scattering,
-,,Gas Chromatography,
-,,Gel Permeation Chromatography,
+,,dichro,Circular Dichrosim
+,,dyn-light,Dynamic Light Scattering
+,,gas-chroma,Gas Chromatography
+,,gel-permea,Gel Permeation Chromatography
 ,Structural Characterization,,
-,,Angle-resolved photoemission spectroscopy (ARPES),
-,,Porosimetry,
-,,Dynamical Mechanical Analysis,
-,,Rheometry,
-,,Atom probe,
-,,X-ray Diffraction,
-,,Small Angle X-Ray Scattering (SAXS),
-,,Wide Angle X-Ray Scattering (WAXS),
+,,arpes,Angle-resolved photoemission spectroscopy (ARPES)
+,,porosity,Porosimetry
+,,dma,Dynamical Mechanical Analysis
+,,rheo,Rheometry
+,,atmo-probe,Atom probe
+,,x-diff,X-ray Diffraction
+,,saxs,Small Angle X-Ray Scattering (SAXS)
+,,waxs,Wide Angle X-Ray Scattering (WAXS)
 ,Surface Characterization,,
-,,Surface Area,
-,,Reflection High-Energy Electron Diffraction (RHEED,
-,,Time of Flight Secondary Ion Mass Spectrometry (ToF-SIMS),
+,,surface,Surface Area
+,,rheed,Reflection High-Energy Electron Diffraction (RHEED
+,,tof-sims,Time of Flight Secondary Ion Mass Spectrometry (ToF-SIMS)
 ,Thermal Characterization,,
-,,Calorimetry,
-,,Thermo-Gravimetric Analysis,
+,,calori,Calorimetry
+,,th-gravi,Thermo-Gravimetric Analysis
 ,Microscopy,,
-,,Electron Microscopy,
-,,,Transmission Electron Microscopy (TEM)
-,,,Scanning Transmission Electron Microscope (STEM)
-,,,Scanning Electron Microscope (SEM)
-,,Image Analysis and Processing,
-,,Optical Microscopy,
-,,,Near Field Scanning Microwave Microscopy
-,,,Confocal Fluorescence Microscopy
-,,Scanning Probe Microscopy,
-,,,Atomic Force Microscopy (AFM)
-,,,Scanning Tunnel Microscopy (STM)
+,,tem,Transmission Electron Microscopy (TEM)
+,,stem,Scanning Transmission Electron Microscope (STEM)
+,,sem,Scanning Electron Microscopy (SEM)
+,,nfs-mwave,Near Field Scanning Microwave Microscopy
+,,fluro-micro,Confocal Fluorescence Microscopy
+,,afm,Atomic Force Microscopy (AFM)
+,,stm,Scanning Tunnel Microscopy (STM)
 ,Spectroscopy,,
-,,Electron Energy Loss Spectroscopy (EELS),
-,,Electron Magnetic Resonance,
-,,Energy Dispersive Spectroscopy (EDS),
-,,Energy Dispersive X-Ray (EDX),
-,,Fourier-transform infrared spectroscopy (FTIR),
-,,Inductively Coupled Plasma Atomic Emission Spectroscopy (ICP-AES),
-,,InfraRed Reflection Absorption Spectroscopy (IRRAS),
-,,LEED / Auger Electron Spectroscopy (AES),
-,,Nuclear Magnetic Resonance (NMR),
-,,Photo Luminescence,
-,,Raman Spectroscopy,
-,,Rutherford Backscattering Spectrometry,
-,,Secondary ion mass spectrometry (SIMS),
-,,Ultraviolet-Visible-near-IR Spectroscopy (UV-Vis-NIR),
-,,X-ray Photoelectron Spectroscopy (XPS),
-,Free Electron Laser,,
-,Synchrotron Beam Line,,
+,,eels,Electron Energy Loss Spectroscopy (EELS)
+,,emr,Electron Magnetic Resonance
+,,eds,Energy Dispersive Spectroscopy (EDS)
+,,edx,Energy Dispersive X-Ray (EDX)
+,,ftir,Fourier-transform infrared spectroscopy (FTIR)
+,,icp-aes,Inductively Coupled Plasma Atomic Emission Spectroscopy (ICP-AES)
+,,arras,InfraRed Reflection Absorption Spectroscopy (IRRAS)
+,,aes,LEED / Auger Electron Spectroscopy (AES)
+,,nmr,Nuclear Magnetic Resonance (NMR)
+,,pl,Photo Luminescence
+,,raman,Raman Spectroscopy
+,,rbs,Rutherford Backscattering Spectrometry
+,,st-fmr,Spin Torque Ferromagnetic Resonance
+,,sims,Secondary ion mass spectrometry (SIMS)
+,,uv-vis-nir,Ultraviolet-Visible-near-IR Spectroscopy (UV-Vis-NIR)
+,,xps,X-ray Photoelectron Spectroscopy (XPS)
+,Free Electron Laser,elec-laster,
+,Synchrotron Beam Line,synchro,
 Computing / Simulation,,,
-,Image Analysis and Processing,,
+,Image Analysis and Processing,image,
 Synthesis,,,
 ,Bulk Crystal Growth,,
-,,Chemical Vapor Transport (CVT),
-,,Bridgman,
-,,Melt/Flux Growth,
-,,Floating Zone,
+,,cvt,Chemical Vapor Transport (CVT)
+,,brm,Bridgman
+,,melt-flux,Melt/Flux Growth
+,,float,Floating Zone
 ,Microwave Reactor,,
 ,Ovens,,
-,,Rapid Thermal Annealer,
-,,Vacuum Oven,
-,,Furnace,
+,,th-anneal,Rapid Thermal Annealer
+,,vacuum,Vacuum Oven
+,,furnace,Furnace
 ,Thin Film Deposition,,
-,,Atomic Layer Deposition (ALD),
-,,Chemical Vapor Deposition (CVD),
-,,Evaporation,
-,,Molecular-Beam Epitaxy (MBE),
-,,Metalorganic Chemical Vapor Deposition / Metalorganic Vapor-Phase Epitaxy (MOCVD)/(MOVPE),
-,,Oxidation,
-,,Plating,
-,,Plasma-Enhanced Chemical Vapor Deposition (PECVD),
-,,Pulsed Laser Deposition,
-,,Physical vapor deposition (PVD),
-,,Sol-Gel,
-,,Sputtering,
+,,ald,Atomic Layer Deposition (ALD)
+,,cvd,Chemical Vapor Deposition (CVD)
+,,eva,Evaporation
+,,mbe,Molecular-Beam Epitaxy (MBE)
+,,mocvd,Metalorganic Chemical Vapor Deposition / Metalorganic Vapor-Phase Epitaxy (MOCVD)/(MOVPE)
+,,oxi,Oxidation
+,,plat,Plating
+,,pecvd,Plasma-Enhanced Chemical Vapor Deposition (PECVD)
+,,pld,Pulsed Laser Deposition
+,,pvd,Physical vapor deposition (PVD)
+,,sol,Sol-Gel
+,,sput,Sputtering
 Fabrication,,,
 ,Etching,,
-,,Wet Etching,
-,,Dry Etching,
-,,Vapor Etching,
+,,w-etch,Wet Etching
+,,d-etch,Dry Etching
+,,v-etch,Vapor Etching
 ,Lithography,,
-,,Contact,
-,,Laser,
-,,I-Line Stepper,
-,,Electron Beam,
-,,Focused Ion Beam,
+,,contact-lit,Contact
+,,las-lit,Laser
+,,i-line,I-Line Stepper
+,,eb-lit,Electron Beam
+,,fib-lit,Focused Ion Beam (FIB)
 ,Microfabrication / Microelectronics / Clean Room,,
-,,Wire Bonding,
-,,Polymer Processing,
+,,w-bind,Wire Bonding
+,,poly,Polymer Processing

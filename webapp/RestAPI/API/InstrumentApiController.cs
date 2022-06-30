@@ -66,7 +66,6 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
-        [HasPrivilege(PrivilegeEnum.Instrument)]
         public async Task<ActionResult> SetDoi([FromRoute]int id, [FromRoute] string doi)
         {
             var instrument = await _service.GetById(id);
@@ -81,7 +80,6 @@ namespace Instool.API
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        [HasPrivilege(PrivilegeEnum.Instrument)]
         public async Task<ActionResult<InstrumentDTO>> CreateInstrument([FromBody] InstrumentDTO dto)
         {
             if (dto.InstrumentId != null)

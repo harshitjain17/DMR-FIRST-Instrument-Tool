@@ -25,12 +25,12 @@ namespace Instool
         public static void Main(string[] args)
         {
             NLogBuilder.ConfigureNLog(GetConfigPath("nlog.config"));
-            var loggerFactory = LoggerFactory
-            .Create(builder =>
+            var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.ClearProviders();
                 builder.AddConsole();
             });
+
             // NLog: setup the logger first to catch all errors
             var logger = loggerFactory.CreateLogger<Program>();
             try
