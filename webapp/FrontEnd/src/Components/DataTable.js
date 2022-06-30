@@ -3,7 +3,6 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import SearchResult from './SearchResult.json';
 import "./DataTable.css";
 
 const columns = [
@@ -92,19 +91,24 @@ function CustomNoRowsOverlay() {
 
 
 
-export default function DataTable() {
+export default function DataTable(props) {
   
-  // const saveUserInputHandler = (enteredUserInput) => {
-  //   const userInput = {
-  //     ...enteredUserInput
-  //   };
-  //   console.log(userInput);
-  // };
-  
-  
+  var searchResult = [];
+  for (var i = 0; i < props.response.length; i++) {
+    var object = {
+      id: props.response[i].instrumentId,
+      institution: props.response[i].institution,
+      award: props.response[i].award,
+      doi: props.response[i].doi,
+      location: props.response[i].location,
+      name: props.response[i].name,
+      status: props.response[i].status
+    };
+    searchResult.push(object);
+  };
   return (
       <DataGrid
-        rows={SearchResult}
+        rows={searchResult}
         columns={columns}
         density="compact"
         pageSize={5}

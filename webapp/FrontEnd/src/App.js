@@ -4,7 +4,7 @@ import SearchEngine from './Components/SearchEngine';
 import GoogleMap from './Components/GoogleMap';
 import DataTable from './Components/DataTable';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -65,13 +65,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const mdTheme = createTheme();
 
 function App() {
-  // const [response, setResponse] = useState([]);
-  // const responseDataHandler = (responseData) => {
-  //   setResponse(responseData);
-  //   console.log(responseData);
-  // };
+  const [response, setResponse] = useState([]);
+  const responseDataHandler = (responseData) => {
+    setResponse(responseData);
+  };
 
-  
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -103,8 +101,7 @@ function App() {
               px: [1],
             }}
           />
-          {/* onSaveResponseData = {responseDataHandler} */}
-            <SearchEngine/>
+            <SearchEngine onSaveResponseData = {responseDataHandler}/>
         </Drawer>
 
         {/* Right Section */}
@@ -134,7 +131,7 @@ function App() {
                     height: 290,
                   }}
                 >
-                <DataTable/>
+                <DataTable response={response}/>
                 </Paper>
               </Grid>
               
@@ -148,9 +145,8 @@ function App() {
                     height: 187,
                   }}
                 >
-                  <GoogleMap/>
+                  <GoogleMap response={response}/>
                 </Paper>
-                
               </Grid>
               
             </Grid>

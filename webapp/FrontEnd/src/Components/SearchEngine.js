@@ -106,8 +106,7 @@ export default function SearchEngine(props) {
 
         axios.post(`https://m4-instool.vmhost.psu.edu/api/v1/instruments/search`, { userInput })
         .then(response => {
-            // props.onSaveResponseData(response.data.data);
-            console.log(response.data);
+            props.onSaveResponseData(response.data.data);
         })
         console.log(userInput);
     };
