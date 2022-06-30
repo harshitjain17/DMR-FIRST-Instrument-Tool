@@ -37,7 +37,7 @@ namespace Instool.API
         public async Task<ActionResult<InstrumentTypeDTO>> GetInstrumentType(string idOrShortName)
         {
             var type = await LoadType(idOrShortName);
-            return Ok(InstrumentTypeDTO.FromEntity(type));
+            return Ok(InstrumentTypeDTO.FromEntity(type, true));
         }
 
 
@@ -74,7 +74,7 @@ namespace Instool.API
             var type = await LoadType(idOrShortName);
             type.Label = label;
             await _repo.Update(type);
-            return Ok(InstrumentTypeDTO.FromEntity(type));
+            return Ok(InstrumentTypeDTO.FromEntity(type, true));
         }
 
         [HttpPost]
@@ -97,7 +97,7 @@ namespace Instool.API
 
             await _repo.Create(entity);
 
-            return InstrumentTypeDTO.FromEntity(entity);
+            return InstrumentTypeDTO.FromEntity(entity, true);
         }
 
 
@@ -133,7 +133,7 @@ namespace Instool.API
         {
             var type = await LoadType(idOrShortName);
             var types = await _repo.GetTypes(type.InstrumentTypeId);
-            return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i)));
+            return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i, true)));
         }
 
         [HttpGet("{idOrShortName}/dropdown")]
@@ -174,7 +174,7 @@ namespace Instool.API
         public async Task<ActionResult<ICollection<InstrumentTypeDTO>>> GetInstrumentTypes()
         {
             var types = await _repo.GetTypes();
-            return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i)));
+            return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i, true)));
         }
 
         [HttpGet("hierarchie")]
@@ -185,7 +185,7 @@ namespace Instool.API
         public async Task<ActionResult<ICollection<InstrumentTypeDTO>>> GetInstrumentTypeHierarchie()
         {
             var types = await _repo.LoadHierarchie();
-            return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i)));
+            return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i, true)));
         }
 
         /// <summary>

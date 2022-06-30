@@ -5,13 +5,13 @@ namespace Instool.Dtos
 {
     public class InvestigatorDTO
     {
-        public int InvestigatorId { get; set; }
+        public int? InvestigatorId { get; set; }
         public string? Eppn { get; set; }
         public string? FirstName { get; set; } = null!;
         public string? MiddleName { get; set; }
         public string? LastName { get; set; } = null!;
         public string? Email { get; set; } = null!;
-        public string Phone { get; set; } = null!;
+        public string? Phone { get; set; } = null!;
         public string? Role { get; private set; }
 
         internal static InvestigatorDTO FromEntity(Investigator i, string role)
@@ -33,7 +33,7 @@ namespace Instool.Dtos
         {
             return new Investigator
             {
-                InvestigatorId = InvestigatorId,
+                InvestigatorId = InvestigatorId ?? 0,
                 Email = Email ?? throw new ArgumentNullException("Email"),
                 Eppn = Eppn ?? throw new ArgumentNullException("Eppn"),
                 FirstName = FirstName ?? throw new ArgumentNullException("FirstName"),

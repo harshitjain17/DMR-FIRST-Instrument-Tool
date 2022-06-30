@@ -39,7 +39,7 @@ namespace Instool.DAL.Results
 
         public string Institution { get; set; } = string.Empty;
 
-        public string Location { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
 
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
@@ -48,6 +48,8 @@ namespace Instool.DAL.Results
         public string State { get; set; } = string.Empty;
 
         public string Award { get; set; } = string.Empty;
+
+        public string? Manufacturer { get; set; }
 
         public InstrumentRow(Instrument i, string? label, int? distance)
         {
@@ -60,8 +62,9 @@ namespace Instool.DAL.Results
             Label = label;
             Status = i.StatusEnum.Label;
             Institution = i.Institution?.Name ?? String.Empty;
-            Location = i.Location?.City ?? String.Empty;
+            City = i.Location?.City ?? String.Empty;
             State = i.Location?.State ?? String.Empty;
+            Manufacturer = i.Manufacturer;
             Distance = distance;
             Latitude = i.Location?.Latitude;
             Longitude = i.Location?.Longitude;

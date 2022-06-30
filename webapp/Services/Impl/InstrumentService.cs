@@ -14,26 +14,48 @@ namespace Instool.Services.Impl
     internal class InstrumentService : IInstrumentService
     {
         private readonly IInstrumentRepository _repo;
-        private readonly IInvestigatorRepository _investigatorRepository;
+        private readonly IInvestigatorRepository _investigatorRepo;
+        private readonly IInstrumentTypeRepository _instrumentTypeRepo;
         private readonly ITransactionSupport _transaction;
 
-        public InstrumentService(ITransactionSupport transaction, IInstrumentRepository repo, IInvestigatorRepository investigatorRepository)
+        public InstrumentService(ITransactionSupport transaction, 
+            IInstrumentRepository repo, 
+            IInvestigatorRepository investigatorRepo, 
+            IInstrumentTypeRepository instrumentTypeRepo)
         {
             _transaction = transaction;
             _repo = repo;
-            _investigatorRepository = investigatorRepository;
+            _investigatorRepo = investigatorRepo;
+            _instrumentTypeRepo = instrumentTypeRepo;
         }
 
         public async Task<Instrument> CreateInstrument(
             Instrument entity, 
-            IEnumerable<InstrumentContact> contacts)
+            IEnumerable<InstrumentContact> contacts,
+            IEnumerable<InstrumentType> types)
         {
             await _transaction.ExecuteInTransaction(async () =>
             {
                 await GetOrCreateInvestigators(entity, contacts);
                 await _repo.Create(entity);
+                await SetInstrumentTypes(entity, types);
             });
             return (await _repo.GetById(entity.InstrumentId))!;
+        }
+
+        private async Task SetInstrumentTypes(Instrument entity, IEnumerable<InstrumentType> types)
+        {
+            foreach (var type in types) {
+                var typeEntity = await _instrumentTypeRepo.GetByShortname(type.ShortName);
+                if (typeEntity == null)
+                {
+                    throw new IncompleteDataException("Instrument Type", type.ShortName);
+                }
+                typeEntity.Instruments.Clear();
+                typeEntity.Category = null;
+                typeEntity.InverseCategory.Clear();
+                await _repo.SetType(entity, typeEntity);
+            }
         }
 
         private async Task GetOrCreateInvestigators(Instrument entity, IEnumerable<InstrumentContact> contacts)
@@ -56,19 +78,19 @@ namespace Instool.Services.Impl
             Investigator? investigator = null;
             if (contact.InvestigatorId != 0)
             {
-                investigator = await _investigatorRepository.GetById(contact.InvestigatorId);
+                investigator = await _investigatorRepo.GetById(contact.InvestigatorId);
             }
             if (investigator == null && contact.Eppn != null)
             {
-                investigator = await _investigatorRepository.GetByEppn(contact.Eppn);
+                investigator = await _investigatorRepo.GetByEppn(contact.Eppn);
             }
-            if (contact.Investigator?.InvestigatorId != 0)
+            if (contact.Investigator != null && contact.Investigator.InvestigatorId != 0)
             {
-                investigator = await _investigatorRepository.GetById(contact.Investigator!.InvestigatorId);
+                investigator = await _investigatorRepo.GetById(contact.Investigator!.InvestigatorId);
             }
             if (investigator == null && contact.Investigator?.Eppn != null)
             {
-                investigator = await _investigatorRepository.GetByEppn(contact.Investigator.Eppn);
+                investigator = await _investigatorRepo.GetByEppn(contact.Investigator.Eppn);
             }
             if (investigator != null)
             {
@@ -78,7 +100,7 @@ namespace Instool.Services.Impl
             {
                 throw new IncompleteDataException("Investigator", contact.Eppn ?? contact.InvestigatorId.ToString());
             } else { 
-                return await _investigatorRepository.Create(contact.Investigator);
+                return await _investigatorRepo.Create(contact.Investigator);
             }
         }
         

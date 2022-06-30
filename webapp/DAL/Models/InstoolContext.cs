@@ -18,8 +18,6 @@ namespace Instool.DAL.Models
         public DbSet<ApiKey> ApiKeys { get; set; } = null!;
         public DbSet<Role> Roles { get; set; } = null!;
         public DbSet<RolePrivilege> Privileges { get; set; } = null!;
-
-
         public virtual DbSet<Award> Awards { get; set; } = null!;
         public virtual DbSet<Institution> Institutions { get; set; } = null!;
         public virtual DbSet<Instrument> Instruments { get; set; } = null!;

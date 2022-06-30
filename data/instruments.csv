@@ -1,0 +1,73 @@
+﻿2DCC Bridgman 1,brm,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
+Mao Bridgman 2,brm,,,,,A,,,,2DCC,ARL Freeport,zim1
+CHET,,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
+New Chet,,,,,N135 ,A,,,,2DCC,Millenium Science Complex,jar403
+Wafer-scale CHET,,,,,N129 ,A,,,,2DCC,Millenium Science Complex,jar403
+2DCC Compounding Furnace 1,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
+2DCC Box Furnace,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
+2DCC Muffle Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+2DCC Muffle Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+2DCC Muffle Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+2DCC Muffle Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+2DCC Muffle Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+CVD1,cvd,,,,,A,,,,2DCC,230 Building Innovation Park,jmr31
+2DCC CVT1,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
+2DCC CVT2,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
+2DCC CVT3,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
+2DCC CVT4,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
+HPCVD1,cvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31
+2DCC High Temp Muffle 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+MBE1,mbe,,,,35,A,,,,2DCC,Davey Lab,nxs16
+MBE2,mbe,DCA,,,N118A ,A,,,,2DCC,Millenium Science Complex,sal6149
+MBE4,mbe,,,,N118A ,A,,,,2DCC,Millenium Science Complex,sal6149
+MBE5,mbe,,,,144,A,,,,2DCC,Davey Lab,nxs16
+MBE6,mbe,,,,144,A,,,,2DCC,Davey Lab,nxs16
+MBF3,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
+MOCVD1,mocvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31
+MOCVD2,mocvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31
+MOCVD3,mocvd,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
+Nitride MOCVD ,mocvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31
+Mao CVT 1,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao CVT 2,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao CVT 3,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao CVT 4,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao CVT 5,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao CVT 6,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao CVT 7,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
+Powder Vaporization 1,eva,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
+Powder Vaporization 2,eva,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
+PVD1,pvd,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
+SiCG (Frank),,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
+SiCG II (Francesca),,,,,N135A ,A,,,,2DCC,Millenium Science Complex,jar403
+Sputtering1,sput,,,,N118A ,A,,,,2DCC,Millenium Science Complex,zim1
+TBF3,melt-flux,,,,,A,,,,2DCC,South Frear Building,zim1
+Mao Crucible Furnace 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Crucible Furnace 2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Crucible Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Crucible Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Crucible Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Crucible Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Crucible Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+ZFZ1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+ZFZ2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 10,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 11,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 8,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+Mao Muffle Furnace 9,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
+ARP1,arpes,ScientaOmicron,DA30-L ARPES,,35,A,,,,2DCC,Davey Lab,nxs16
+ARP2,arpes,,,,35,A,,,,2DCC,Davey Lab,nxs16
+RMN3,raman,Witec,,,N-125,A,,,,2DCC,Millenium Science Complex,jmr31
+FMR1,st-fmr,,,,356,A,,,,2DCC,Davey Lab,nxs16
+ICP1,icp-aes,,Thermo iCAP 6500,,,A,,,,2DCC,,
+SQD1,squid,Quantum Design ,MPMS SQUID,,329,A,,,,2DCC,Davey Lab,
+SQD2,squid,Quantum Design ,MPMS SQUID,,301,A,,,,2DCC,Davey Lab,
+STM1,stm,ScientaOmicron,LT-Nanoprobe,,35,A,,,,2DCC,Davey Lab,nxs16
+STM2,stm,Snipe,,,,,,,,2DCC,,
+UVV1,uv-vis-nir,Perkin-Elmer,Lambda 950,,,A,,,Lambda 950 UV-Vis-NIR Spectrophotometer and Agilent/Cary 7000 with UMA,2DCC,Millenium Science Complex,jmr31

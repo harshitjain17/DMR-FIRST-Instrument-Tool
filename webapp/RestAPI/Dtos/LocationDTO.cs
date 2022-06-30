@@ -1,21 +1,16 @@
 ﻿using Instool.DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Instool.Dtos
 {
     public class LocationDTO
     {
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
         public string? Building { get; set; }
-        public string Street { get; set; } = null!;
-        public string City { get; set; } = null!;
+        public string? Street { get; set; } = null!;
+        public string? City { get; set; } = null!;
         public string? State { get; set; }
-        public string Zip { get; set; } = null!;
-        public string Country { get; set; } = null!;
+        public string? Zip { get; set; } = null!;
+        public string? Country { get; set; } = null!;
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
 
@@ -34,6 +29,11 @@ namespace Instool.Dtos
                 Latitude = l.Latitude,
                 Longitude = l.Longitude
             };
+        }
+
+        internal bool IsReference()
+        {
+            return City == null || Street == null || State == null;
         }
     }
 }

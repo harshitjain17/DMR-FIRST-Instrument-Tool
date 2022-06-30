@@ -16,5 +16,6 @@ namespace Instool.DAL.Repositories
         Task<PaginatedList<Instrument>> InstrumentSearchRequest(
             InstrumentSearchRequest request,
             string? sortColumn, string? sortOrder, int start, int length);
+        Task SetType(Instrument entity, InstrumentType type);
     }
 }

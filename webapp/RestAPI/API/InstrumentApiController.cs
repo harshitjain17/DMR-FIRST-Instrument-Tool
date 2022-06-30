@@ -4,6 +4,7 @@ using Instool.Authorization.Privileges;
 using Instool.DAL.Models;
 using Instool.DAL.Requests;
 using Instool.DAL.Results;
+using Instool.DAL.Repositories;
 using Instool.Dtos;
 using Instool.Enums;
 using Instool.Services;
@@ -11,6 +12,7 @@ using Instool.Tools.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Instool.RestAPI.Exceptions;
 
 namespace Instool.API
 {
@@ -22,10 +24,19 @@ namespace Instool.API
         private readonly IAuthorizationService _authService;
         private readonly IInstrumentService _service;
 
-        public InstrumentApiController(IAuthorizationService authService, IInstrumentService service)
+        private readonly ILocationRepository _locationRepo;
+        private readonly IInstitutionRepository _institutionRepo;
+
+        public InstrumentApiController(
+            IAuthorizationService authService,
+            IInstrumentService service,
+            ILocationRepository locationRepo,
+            IInstitutionRepository institutionRepo)
         {
             _authService = authService;
             _service = service;
+            _locationRepo = locationRepo;
+            _institutionRepo = institutionRepo;
         }
 
         [HttpGet("{*idOrDoi}")]
@@ -66,7 +77,7 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> SetDoi([FromRoute]int id, [FromRoute] string doi)
+        public async Task<ActionResult> SetDoi([FromRoute] int id, [FromRoute] string doi)
         {
             var instrument = await _service.GetById(id);
             if (instrument == null) { return NotFound(); }
@@ -87,18 +98,69 @@ namespace Instool.API
                 return BadRequest("InstrumnetID is set automatically and has to be empty");
             }
             var instrument = dto.GetEntity();
-            await AuthHelper.Check(_authService.AuthorizeAsync(User, dto, Operation.Create));
+            await AuthHelper.Check(_authService.AuthorizeAsync(User, instrument, Operation.Create));
+
+            if (dto.Location?.IsReference() == true)
+            {
+                instrument.LocationId = await LookupLocation(dto.Location);
+            }
+            // else create location
+            if (dto.Institution?.IsReference() == true)
+            {
+                instrument.InstitutionId = await LookupInstitution(dto.Institution);
+            }
+            // else create location
 
             var contacts = dto.Contacts.Select(c => new InstrumentContact
             {
-                InvestigatorId = c.InvestigatorId,
+                InvestigatorId = c.InvestigatorId ?? 0,
                 Eppn = c.Eppn,
-                Investigator = c.AreDataComplete() ? c.GetEntity() : null, 
+                Investigator = c.AreDataComplete() ? c.GetEntity() : null,
                 Role = c.Role ?? InvestigatorRole.Technical.ID
             });
-            var created = await _service.CreateInstrument(instrument, contacts);
+            var types = dto.InstrumentTypes.Select(t => t.GetEntity());
+            try
+            {
+                var created = await _service.CreateInstrument(instrument, contacts, types);
+                return InstrumentDTO.FromEntity(created);
+            }
+            catch (IncompleteDataException e) {
+                throw new HttpResponseException(StatusCodes.Status412PreconditionFailed, e.Message);
+            }
 
-            return InstrumentDTO.FromEntity(created);
+            
+        }
+
+        private async Task<int> LookupInstitution(InstitutionDTO institution)
+        {
+            if (institution.InstitutionId != null)
+            {
+                return institution.InstitutionId.Value;
+            }
+            if (institution.Facility == null)
+            {
+                throw new HttpResponseException(StatusCodes.Status400BadRequest, "Need Institution ID or facility for lookup");
+            }
+            var found = await _institutionRepo.Lookup(institution.Facility);
+            return found?.InstitutionId ?? throw new HttpResponseException(
+                         StatusCodes.Status412PreconditionFailed, "Facility does not exist"
+            );
+        }
+
+        private async Task<int> LookupLocation(LocationDTO location)
+        {
+            if (location.LocationId != null)
+            {
+                return location.LocationId.Value;
+            }
+            if (location.Building == null)
+            {
+                throw new HttpResponseException(StatusCodes.Status400BadRequest, "Need Location ID or Building for lookup");
+            }
+            var found = await _locationRepo.Lookup(location.Building);
+            return found?.LocationId ?? throw new HttpResponseException(
+                         StatusCodes.Status412PreconditionFailed, "Location does not exist"
+            );
         }
     }
 }
