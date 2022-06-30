@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React from 'react';
 import './GoogleMap.css';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 var config = require("../config/config").default();
