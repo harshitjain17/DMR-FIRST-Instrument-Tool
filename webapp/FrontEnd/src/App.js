@@ -70,12 +70,6 @@ function App() {
     setResponse(responseData);
   };
 
-  const [Iterator, setIterator] = useState(null);
-  const iteratorHandler = (iterator) => {
-    setIterator(iterator);
-  }
-
-
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -136,7 +130,7 @@ function App() {
                     height: 290,
                   }}
                 >
-                <DataTable response={response} iterator={iteratorHandler}/>
+                <DataTable response={response}/>
                 </Paper>
               </Grid>
               
@@ -150,7 +144,7 @@ function App() {
                     height: 187,
                   }}
                 >
-                  <GoogleMap response={response} iterator={Iterator}/>
+                  <GoogleMap response={response}/>
                 </Paper>
               </Grid>
               

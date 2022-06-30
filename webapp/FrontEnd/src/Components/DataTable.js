@@ -107,7 +107,6 @@ export default function DataTable(props) {
       status: props.response[i].status
     };
     searchResult.push(object);
-    props.iterator(i+1);
   };
   return (
       <DataGrid
