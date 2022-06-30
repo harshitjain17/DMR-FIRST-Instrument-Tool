@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
@@ -11,7 +11,8 @@ const columns = [
   { field: 'type', headerName: <b>Instrument Type</b>, width: 140 },
   { field: 'name', headerName: <b>Instrument Name</b>, width: 150 },
   { field: 'doi', headerName: <b>DOI</b>, width: 160 },
-  { field: 'location', headerName: <b>Location</b>, width: 150 },
+  { field: 'location', headerName: <b>City</b>, width: 150 },
+  { field: 'state', headerName: <b>State</b>, width: 100 },
   { field: 'award', headerName: <b>Award</b>, width: 150 },
   { field: 'status', headerName: <b>Status</b>, width: 100 },
 ];
@@ -92,19 +93,21 @@ function CustomNoRowsOverlay() {
 
 
 export default function DataTable(props) {
-  
+
   var searchResult = [];
-  for (var i = 0; i < props.response.length; i++) {
+  for ( var i = 0; i < props.response.length; i++) {
     var object = {
-      id: props.response[i].instrumentId,
+      id: i+1,
       institution: props.response[i].institution,
       award: props.response[i].award,
       doi: props.response[i].doi,
       location: props.response[i].location,
+      state: props.response[i].state,
       name: props.response[i].name,
       status: props.response[i].status
     };
     searchResult.push(object);
+    props.iterator(i+1);
   };
   return (
       <DataGrid

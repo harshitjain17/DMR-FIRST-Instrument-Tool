@@ -70,6 +70,11 @@ function App() {
     setResponse(responseData);
   };
 
+  const [Iterator, setIterator] = useState(null);
+  const iteratorHandler = (iterator) => {
+    setIterator(iterator);
+  }
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -131,7 +136,7 @@ function App() {
                     height: 290,
                   }}
                 >
-                <DataTable response={response}/>
+                <DataTable response={response} iterator={iteratorHandler}/>
                 </Paper>
               </Grid>
               
@@ -145,7 +150,7 @@ function App() {
                     height: 187,
                   }}
                 >
-                  <GoogleMap response={response}/>
+                  <GoogleMap response={response} iterator={Iterator}/>
                 </Paper>
               </Grid>
               

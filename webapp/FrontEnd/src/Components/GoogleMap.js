@@ -19,6 +19,7 @@ export function GoogleMap (props) {
       return <Marker
               key={index}
               id={index}
+              label={props.iterator}
               position={{
                 lat: store.latitude,
                 lng: store.longitude
