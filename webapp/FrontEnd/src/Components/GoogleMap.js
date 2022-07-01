@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 var config = require("../config/config").default();
 
@@ -6,7 +6,7 @@ export function GoogleMap (props) {
 
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [activeMarker, setActiveMarker] = useState();
-  const [selectedPlace, setSelectedPlace] = useState();
+  const [setSelectedPlace] = useState();
 
   var searchResult = [];
   for (var i = 0; i < props.response.length; i++) {
