@@ -48,7 +48,7 @@ namespace Instool.DAL.Repositories.Impl
             _context.Instruments.Add(instrument);
             await _context.SaveChangesAsync();
         }
-    
+
         public async Task SetDoi(int id, string doi)
         {
             var instrument = await GetById(id);
@@ -62,7 +62,7 @@ namespace Instool.DAL.Repositories.Impl
             await _context.SaveChangesAsync();
         }
 
-        public async Task<PaginatedList<Instrument>> InstrumentSearchRequest(
+        public async Task<PaginatedList<Instrument>> List(
             InstrumentSearchRequest request,
             string? sortColumn, string? sortOrder, int start, int length)
         {
@@ -89,18 +89,19 @@ namespace Instool.DAL.Repositories.Impl
             }
             if (criteria.InstrumentTypeId != null)
             {
-                query = query.Where(i => i.InstrumentTypes.Any(t => t.InstrumentTypeId == criteria.InstrumentTypeId));  
+                query = query.Where(i => i.InstrumentTypes.Any(t => t.InstrumentTypeId == criteria.InstrumentTypeId));
             }
             if (!string.IsNullOrWhiteSpace(criteria.InstrumentType))
             {
-                query = query.Where(i => i.InstrumentTypes.Any(t => t.Uri == criteria.InstrumentType));
+                query = query.Where(i => i.InstrumentTypes.Any(t => t.ShortName == criteria.InstrumentType || t.Uri == criteria.InstrumentType));
             }
-            if (criteria.Keywords.Any()) {
+            if (criteria.Keywords.Any())
+            {
                 var keywordFilter = PredicateBuilder.New<Instrument>();
                 foreach (var keyword in criteria.Keywords)
                 {
                     keywordFilter = keywordFilter.Or(i => i.Description.Contains(keyword)
-                         //|| i.Capabilities.Contains(keyword)
+                    //|| i.Capabilities.Contains(keyword)
                     );
                 }
                 query = query.Where(keywordFilter);
@@ -118,6 +119,25 @@ namespace Instool.DAL.Repositories.Impl
                 query = query.Where(i => i.Manufacturer == criteria.Manufacturer);
             }
             return query;
+        }
+
+        public async Task<PaginatedList<Instrument>> ListWithinFrame(
+            InstrumentSearchRequest request,
+            string? sortColumn, string? sortOrder,
+            LocationFrame frame)
+        {
+            IQueryable<Instrument> queryAll = _context.Instruments;
+
+            var query = ApplyCriteria(queryAll, request);
+            query = query.Where(i =>
+                i.Location.Latitude > frame.minLat && i.Location.Latitude < frame.maxLat &&
+                i.Location.Longitude > frame.minLng && i.Location.Longitude < frame.maxLng);
+
+            int countAll = await queryAll.CountAsync();
+            int count = await query.CountAsync();
+            query = ApplyIncludes(query);
+            var data = await query.AsSplitQuery().AsNoTracking().ToListAsync();
+            return new PaginatedList<Instrument>(data, countAll, count);
         }
     }
 }

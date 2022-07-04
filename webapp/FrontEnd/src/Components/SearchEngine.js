@@ -86,7 +86,7 @@ export default function SearchEngine(props) {
             includeRetired: enteredIRI
         };
 
-        InstoolApi.post(`/instruments/search`, { userInput })
+        InstoolApi.post(`/instruments/search`, userInput)
         .then(response => {
             props.onSaveResponseData(response.data.data);
         })

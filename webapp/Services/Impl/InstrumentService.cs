@@ -2,35 +2,36 @@
 using Instool.DAL.Models;
 using Instool.DAL.Repositories;
 using Instool.DAL.Requests;
+using Instool.Dto;
 using Instool.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Instool.Services.Impl
 {
-    internal class InstrumentService : IInstrumentService
+    internal partial class InstrumentService : IInstrumentService
     {
         private readonly IInstrumentRepository _repo;
         private readonly IInvestigatorRepository _investigatorRepo;
         private readonly IInstrumentTypeRepository _instrumentTypeRepo;
         private readonly ITransactionSupport _transaction;
 
-        public InstrumentService(ITransactionSupport transaction, 
-            IInstrumentRepository repo, 
-            IInvestigatorRepository investigatorRepo, 
-            IInstrumentTypeRepository instrumentTypeRepo)
+        private readonly ILogger<InstrumentService> _logger;
+
+        public InstrumentService(ITransactionSupport transaction,
+            IInstrumentRepository repo,
+            IInvestigatorRepository investigatorRepo,
+            IInstrumentTypeRepository instrumentTypeRepo,
+            ILogger<InstrumentService> logger)
         {
             _transaction = transaction;
             _repo = repo;
             _investigatorRepo = investigatorRepo;
             _instrumentTypeRepo = instrumentTypeRepo;
+            _logger = logger;
         }
 
         public async Task<Instrument> CreateInstrument(
-            Instrument entity, 
+            Instrument entity,
             IEnumerable<InstrumentContact> contacts,
             IEnumerable<InstrumentType> types)
         {
@@ -45,7 +46,8 @@ namespace Instool.Services.Impl
 
         private async Task SetInstrumentTypes(Instrument entity, IEnumerable<InstrumentType> types)
         {
-            foreach (var type in types) {
+            foreach (var type in types)
+            {
                 var typeEntity = await _instrumentTypeRepo.GetByShortname(type.ShortName);
                 if (typeEntity == null)
                 {
@@ -99,11 +101,13 @@ namespace Instool.Services.Impl
             else if (contact.Investigator == null)
             {
                 throw new IncompleteDataException("Investigator", contact.Eppn ?? contact.InvestigatorId.ToString());
-            } else { 
+            }
+            else
+            {
                 return await _investigatorRepo.Create(contact.Investigator);
             }
         }
-        
+
 
         public Task<Instrument?> GetByDoi(string doi)
         {
@@ -120,11 +124,69 @@ namespace Instool.Services.Impl
             return _repo.SetDoi(id, doi);
         }
 
-        public Task<PaginatedList<Instrument>> Search(InstrumentSearchRequest request,
+        public async Task<PaginatedList<InstrumentWithDistance>> Search(InstrumentSearchRequest request,
             string? sortColumn, string? sortOrder, int start, int length
             )
         {
-            return _repo.InstrumentSearchRequest(request, sortColumn, sortOrder, start, length);
+            var locationCriteria = request.Location;
+            if (locationCriteria == null || locationCriteria.MaxDistance <= 0)
+            {
+                var instruments = await _repo.List(request, sortColumn, sortOrder, start, length);
+                return new PaginatedList<InstrumentWithDistance>(
+                    instruments.Select(i => new InstrumentWithDistance(i, 0)),
+                    instruments.RecordsTotal,
+                    instruments.RecordsFiltered
+                );
+            }
+            else
+            {
+                return await FilterByDistance(request, locationCriteria, sortColumn, sortOrder, start, length);
+            }
         }
+
+        private async Task<PaginatedList<InstrumentWithDistance>> FilterByDistance(InstrumentSearchRequest request, SearchByLocationRequest locationCriteria, string? sortColumn, string? sortOrder, int start, int length)
+        {
+            List<InstrumentWithDistance> instrumentsFound = new();
+            LocationFrame frame = new(locationCriteria.Latitude, locationCriteria.Longitude, locationCriteria.MaxDistance);
+            _logger.LogDebug($"Searching in frame {frame.minLat}/{frame.minLng} and {frame.maxLat}/{frame.maxLng}");
+
+            var found = await _repo.ListWithinFrame(request, sortColumn, sortOrder, frame);
+            _logger.LogDebug($"Found {found.Count} instruments");
+            // Filter all Institutions by distance
+            foreach (var item in found)
+            {
+                if (item.Location.Longitude != null && item.Location.Latitude != null)
+                {
+                    int dist = GetDistance(locationCriteria.Latitude, locationCriteria.Longitude,
+                        item.Location.Latitude.Value,
+                        item.Location.Longitude.Value);
+
+                    if (dist < locationCriteria.MaxDistance)
+                    {
+                        var nearby = new InstrumentWithDistance(item, dist);
+                        instrumentsFound.Add(nearby);
+                    }
+                }
+            }
+            _logger.LogDebug($"Distance filter retained {instrumentsFound.Count} Institutions");
+            return new PaginatedList<InstrumentWithDistance>(instrumentsFound,  found.RecordsTotal, instrumentsFound.Count());
+        }
+
+        private int GetDistance(double lat1, double long1, double lat2, double long2)
+        {
+            double long1rad = long1 / 180 * Math.PI;
+            double long2rad = long2 / 180 * Math.PI;
+            double lat1rad = lat1 / 180 * Math.PI;
+            double lat2rad = lat2 / 180 * Math.PI;
+
+            double distRad = Math.Acos(
+                Math.Sin(lat1rad) * Math.Sin(lat2rad) +
+                Math.Cos(lat1rad) * Math.Cos(lat2rad) * Math.Cos(Math.Abs(long1rad - long2rad)));
+
+            double distMiles = distRad * 6371 / 1.609;
+
+            return (int)distMiles;
+        }
+
     }
 }

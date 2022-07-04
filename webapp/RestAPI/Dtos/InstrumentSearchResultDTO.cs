@@ -1,4 +1,5 @@
 ﻿using Instool.DAL.Models;
+using Instool.Dto;
 using Instool.Helpers;
 
 namespace Instool.DAL.Results
@@ -14,9 +15,9 @@ namespace Instool.DAL.Results
 
         public int RecordsFiltered { get; }
         
-        public InstrumentSearchResult(PaginatedList<Instrument> data, int draw)
+        public InstrumentSearchResult(PaginatedList<InstrumentWithDistance> data, int draw)
         {
-            Data = data.Select((row, i) => new InstrumentRow(row, i.ToString(), null));
+            Data = data.Select((row, i) => new InstrumentRow(row.Instrument, i.ToString(), row.Distance));
             RecordsTotal = data.RecordsTotal;
             RecordsFiltered = data.RecordsFiltered;
             Draw = draw;
