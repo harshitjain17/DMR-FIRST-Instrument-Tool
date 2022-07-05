@@ -22,7 +22,7 @@ namespace Instool.DAL.Repositories.Impl
             var query = _context.Instruments
                                 .Where(i => i.InstrumentId == id);
             query = ApplyIncludes(query);
-            return query.AsSingleQuery().SingleOrDefaultAsync();
+            return query.AsSingleQuery().AsNoTracking().SingleOrDefaultAsync();
         }
 
         public Task<Instrument?> GetByDoi(string doi)
@@ -30,7 +30,7 @@ namespace Instool.DAL.Repositories.Impl
             var query = _context.Instruments
                                 .Where(i => i.Doi == doi);
             query = ApplyIncludes(query);
-            return query.AsSingleQuery().SingleOrDefaultAsync();
+            return query.AsSingleQuery().AsNoTracking().SingleOrDefaultAsync();
         }
 
         private IQueryable<Instrument> ApplyIncludes(IQueryable<Instrument> query)
@@ -38,7 +38,7 @@ namespace Instool.DAL.Repositories.Impl
             return query.Include(i => i.Awards)
                                .Include(i => i.Institution)
                                //.Include(i => i.InstrumentCapabilities)
-                               .Include(i => i.InstrumentContacts)
+                               .Include(i => i.InstrumentContacts).ThenInclude(c => c.Investigator)
                                .Include(i => i.Location)
                                .Include(i => i.InstrumentTypes);
         }
@@ -48,7 +48,7 @@ namespace Instool.DAL.Repositories.Impl
             _context.Instruments.Add(instrument);
             await _context.SaveChangesAsync();
         }
-    
+
         public async Task SetDoi(int id, string doi)
         {
             var instrument = await GetById(id);
@@ -56,8 +56,13 @@ namespace Instool.DAL.Repositories.Impl
             instrument.Doi = doi;
             await _context.SaveChangesAsync();
         }
+        public async Task SetType(Instrument instrument, InstrumentType type)
+        {
+            instrument.InstrumentTypes.Add(type);
+            await _context.SaveChangesAsync();
+        }
 
-        public async Task<PaginatedList<Instrument>> InstrumentSearchRequest(
+        public async Task<PaginatedList<Instrument>> List(
             InstrumentSearchRequest request,
             string? sortColumn, string? sortOrder, int start, int length)
         {
@@ -84,18 +89,19 @@ namespace Instool.DAL.Repositories.Impl
             }
             if (criteria.InstrumentTypeId != null)
             {
-                query = query.Where(i => i.InstrumentTypes.Any(t => t.InstrumentTypeId == criteria.InstrumentTypeId));  
+                query = query.Where(i => i.InstrumentTypes.Any(t => t.InstrumentTypeId == criteria.InstrumentTypeId));
             }
             if (!string.IsNullOrWhiteSpace(criteria.InstrumentType))
             {
-                query = query.Where(i => i.InstrumentTypes.Any(t => t.Uri == criteria.InstrumentType));
+                query = query.Where(i => i.InstrumentTypes.Any(t => t.ShortName == criteria.InstrumentType || t.Uri == criteria.InstrumentType));
             }
-            if (criteria.Keywords.Any()) {
+            if (criteria.Keywords.Any())
+            {
                 var keywordFilter = PredicateBuilder.New<Instrument>();
                 foreach (var keyword in criteria.Keywords)
                 {
                     keywordFilter = keywordFilter.Or(i => i.Description.Contains(keyword)
-                         //|| i.Capabilities.Contains(keyword)
+                    //|| i.Capabilities.Contains(keyword)
                     );
                 }
                 query = query.Where(keywordFilter);
@@ -113,6 +119,25 @@ namespace Instool.DAL.Repositories.Impl
                 query = query.Where(i => i.Manufacturer == criteria.Manufacturer);
             }
             return query;
+        }
+
+        public async Task<PaginatedList<Instrument>> ListWithinFrame(
+            InstrumentSearchRequest request,
+            string? sortColumn, string? sortOrder,
+            LocationFrame frame)
+        {
+            IQueryable<Instrument> queryAll = _context.Instruments;
+
+            var query = ApplyCriteria(queryAll, request);
+            query = query.Where(i =>
+                i.Location.Latitude > frame.minLat && i.Location.Latitude < frame.maxLat &&
+                i.Location.Longitude > frame.minLng && i.Location.Longitude < frame.maxLng);
+
+            int countAll = await queryAll.CountAsync();
+            int count = await query.CountAsync();
+            query = ApplyIncludes(query);
+            var data = await query.AsSplitQuery().AsNoTracking().ToListAsync();
+            return new PaginatedList<Instrument>(data, countAll, count);
         }
     }
 }

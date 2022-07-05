@@ -46,8 +46,7 @@ namespace Instool.DAL.Models
 
         [Required]
         public string Name { get; set; } = null!;
-
-       
+      
         public string? SerialNumber { get; set; }
 
         public virtual Location Location { get; set; } = null!;

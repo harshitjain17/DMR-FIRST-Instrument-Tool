@@ -57,6 +57,8 @@ namespace Instool.DAL
             services.AddScoped<IInstrumentRepository, InstrumentRepository>();
             services.AddScoped<IInstrumentTypeRepository, InstrumentTypeRepository>();
             services.AddScoped<IInvestigatorRepository, InvestigatorRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<IInstitutionRepository, InstitutionRepository>();
             return services;
         }
     }
