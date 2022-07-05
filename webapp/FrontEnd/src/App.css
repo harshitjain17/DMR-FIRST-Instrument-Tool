@@ -23,6 +23,11 @@
   color: #61dafb;
 }
 
+/* @media (min-width: 600px) */
+.css-1k455el {
+    min-height: 48px !important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

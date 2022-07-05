@@ -1,6 +1,7 @@
 import { Form } from 'react-bootstrap';
 import './SearchEngine.css';
 import React, { useState } from 'react';
+import { useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
@@ -22,6 +23,7 @@ export default function SearchEngine(props) {
     const [enteredManufacturer, setEnteredManufacturer] = useState('');
     const [enteredAwardNumber, setEnteredAwardNumber] = useState('');
     const [enteredIRI, setEnteredIRI] = useState(false);
+    
     const [instrumentTypes, setInstrumentTypes] = useState([]);
 
     const addressChangeHandler = (event) => {
@@ -55,6 +57,7 @@ export default function SearchEngine(props) {
     React.useEffect(() => {
         InstoolApi.get(`/instrument-types/dropdown`).then((response) => {
             setInstrumentTypes(response.data);
+            props.onSaveInstrumentDropdown(response.data);
         });
     }, []);
 
@@ -86,11 +89,10 @@ export default function SearchEngine(props) {
             includeRetired: enteredIRI
         };
 
-        InstoolApi.post(`/instruments/search`, { userInput })
+        InstoolApi.post(`/instruments/search`, userInput )
         .then(response => {
             props.onSaveResponseData(response.data.data);
         })
-        console.log(userInput);
     };
 
     // reset handling
@@ -106,11 +108,12 @@ export default function SearchEngine(props) {
         setEnteredIRI(false);
     };
 
+    const theme = useTheme();
     return (
 
         <div className="px-3 border" style={{width: "100%", height: "100%"}}>
             <Form onSubmit={submitHandler} onReset={resetHandler} style={{width: "100%", height: "100%"}}>
-            <Div>{"SEARCH TOOL"}</Div>
+                <Div>{"SEARCH TOOL"}</Div>            
                 <div>
                 <Form.Group controlId = "formAddress">
                     <TextField
@@ -152,9 +155,17 @@ export default function SearchEngine(props) {
                 <div className="mt-3">
                 <Form.Group controlId = "formInstrumentType">
                     <Autocomplete
+                        renderOption={(props, option) => {
+                            return (
+                                <li {...props} key={option.value}>
+                                    {option.label}
+                                </li>
+                            )
+                        }}
                         fullWidth = {true}
                         size="small"
                         options={instrumentTypes}
+                        isOptionEqualToValue={(option, value) => option.value === value.value}
                         groupBy={(option) => option.category}
                         getOptionLabel={(option) => option.label}
                         inputValue = {enteredInstrumentType}

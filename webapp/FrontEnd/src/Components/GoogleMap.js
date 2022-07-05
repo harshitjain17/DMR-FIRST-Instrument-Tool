@@ -11,14 +11,14 @@ export function GoogleMap (props) {
   var searchResult = [];
   for (var i = 0; i < props.response.length; i++) {
     var object = {
-      id: i+1,
-      location: props.response[i].location,
+      id: parseInt(props.response[i].label)+1,
       latitude: props.response[i].latitude,
       longitude: props.response[i].longitude
     };
     searchResult.push(object);
+  
   };
-
+  
   const onMarkerClick = (props, marker, e) => {
     setSelectedPlace(props);
     setActiveMarker(marker);
@@ -42,8 +42,7 @@ export function GoogleMap (props) {
           lat: store.latitude,
           lng: store.longitude
         }}
-        onClick={onMarkerClick}
-        name={'Current location'}>
+        onClick={onMarkerClick}>
         <InfoWindow
           marker={activeMarker}
           visible={showingInfoWindow}>
@@ -55,14 +54,14 @@ export function GoogleMap (props) {
      
     })
   };
-  
+
   return (
       <Map
         google={props.google}
-        zoom={3}
-        onClick={onMapClicked}
-        style={{ width: '100%', height: '100%'}}
-        containerStyle={{width: "40%", height: "29%", position: "fixed"}}
+        zoom={4}
+        // onClick={onMapClicked}
+        style={{ width: '100%', height: '100%', position: "static"}}
+        containerStyle={{width: "34%", height: "32%"}}
         initialCenter={{
           lat: 40.854885,
           lng: -88.081807

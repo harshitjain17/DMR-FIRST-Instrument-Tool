@@ -4,17 +4,18 @@ import LinearProgress from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import "./DataTable.css";
+import InstoolApi from '../Api/InstoolApi';
 
 const columns = [
-  { field: 'id', headerName: <b>ID</b>, type: 'number', width: 90 },
-  { field: 'institution', headerName: <b>Institution</b>, width: 190 },
-  { field: 'type', headerName: <b>Instrument Type</b>, width: 140 },
-  { field: 'name', headerName: <b>Instrument Name</b>, width: 150 },
-  { field: 'doi', headerName: <b>DOI</b>, width: 160 },
-  { field: 'location', headerName: <b>City</b>, width: 150 },
-  { field: 'state', headerName: <b>State</b>, width: 100 },
-  { field: 'award', headerName: <b>Award</b>, width: 150 },
-  { field: 'status', headerName: <b>Status</b>, width: 100 },
+  { field: 'id', headerName: 'ID', type: 'number', width: 90 },
+  { field: 'institution', headerName: 'Institution', width: 190 },
+  { field: 'type', headerName: 'Instrument Type', width: 140 },
+  { field: 'name', headerName: 'Instrument Name', width: 150 },
+  { field: 'doi', headerName: 'DOI', width: 160 },
+  { field: 'city', headerName: 'City', width: 150 },
+  { field: 'state', headerName: 'State', width: 100 },
+  { field: 'award', headerName: 'Award', width: 150 },
+  { field: 'status', headerName: 'Status', width: 100 },
 ];
 
 // styling for No Rows Overlay
@@ -93,21 +94,33 @@ function CustomNoRowsOverlay() {
 
 
 export default function DataTable(props) {
-
+  
   var searchResult = [];
   for ( var i = 0; i < props.response.length; i++) {
     var object = {
-      id: i+1,
+      id: parseInt(props.response[i].label)+1,
       institution: props.response[i].institution,
-      award: props.response[i].award,
-      doi: props.response[i].doi,
-      location: props.response[i].location,
-      state: props.response[i].state,
+      type: props.response[i].type,
       name: props.response[i].name,
+      doi: props.response[i].doi,
+      city: props.response[i].city,
+      state: props.response[i].state,
+      award: props.response[i].award,
       status: props.response[i].status
     };
     searchResult.push(object);
   };
+
+  // const [finalClickInfo, setFinalClickInfo] = useState(null);
+
+  const handleOnRowClick = (params) => {
+    // setFinalClickInfo(params.row);
+    console.log(params.row);
+    InstoolApi.get(`/instruments`, { params: { doi: params.row.doi } }).then((response) => {
+      console.log(response);
+  });
+  };
+
   return (
       <DataGrid
         rows={searchResult}
@@ -124,6 +137,7 @@ export default function DataTable(props) {
         }}
         checkboxSelection
         disableSelectionOnClick
+        onRowClick={handleOnRowClick}
       />
   );
 };

@@ -5,18 +5,17 @@ import GoogleMap from './Components/GoogleMap';
 import DataTable from './Components/DataTable';
 
 import React, { useState } from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled, createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-
-const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -27,8 +26,8 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: "25%",
+    width: `calc(75%)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -41,7 +40,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     '& .MuiDrawer-paper': {
       position: 'relative',
       whiteSpace: 'nowrap',
-      width: drawerWidth,
+      width: "25%",
       transition: theme.transitions.create('width', {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -62,10 +61,25 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
+
 const mdTheme = createTheme();
 
 function App() {
   const [response, setResponse] = useState([]);
+  const [instrumentDropdown, setInstrumentDropdown] = useState([]);
+  
+  const instrumentDropdownHandler = (responseData) => {
+    setInstrumentDropdown(responseData);
+  };
+  
   const responseDataHandler = (responseData) => {
     setResponse(responseData);
   };
@@ -76,8 +90,8 @@ function App() {
         <CssBaseline/>
         
         {/* navigation Bar */}
-        <AppBar>
-          <Toolbar sx={{pr: '24px'}}>
+        <AppBar position="fixed">
+          <Toolbar sx={{pr: '24px'}} variant="dense">
             <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               Instrument Locator
             </Typography>
@@ -88,19 +102,15 @@ function App() {
         <Drawer 
           variant="permanent"
           sx={{
-            width: '25%',
-            flexShrink: 0,
-            [`& .MuiDrawer-paper`]: { width: '100%', boxSizing: 'border-box' },
+          width: "25%",
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: "100%",
+            boxSizing: 'border-box',
+          }
           }}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          />
-            <SearchEngine onSaveResponseData = {responseDataHandler}/>
+            <DrawerHeader/>
+            <SearchEngine onSaveResponseData = {responseDataHandler} onSaveInstrumentDropdown = {instrumentDropdownHandler}/>
         </Drawer>
 
         {/* Right Section */}
@@ -117,7 +127,7 @@ function App() {
           }}
         >
           <Toolbar/>
-          <Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
+          <Container maxWidth="lg" sx={{ mb: 2 }}>
             <Grid container spacing={2}>
               
               {/* Datatable */}
@@ -130,18 +140,18 @@ function App() {
                     height: 290,
                   }}
                 >
-                <DataTable response={response}/>
+                <DataTable response={response} instrumentDropdown={instrumentDropdown}/>
                 </Paper>
               </Grid>
               
               {/* Google Maps */}
-              <Grid item xs={12} md={7} lg={7}>
+              <Grid item xs={12} md={7} lg={6}>
                 <Paper
                   sx={{
                     p: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 187,
+                    height: 205,
                   }}
                 >
                   <GoogleMap response={response}/>
