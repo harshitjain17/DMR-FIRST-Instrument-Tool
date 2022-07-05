@@ -1,7 +1,6 @@
 import { Form } from 'react-bootstrap';
 import './SearchEngine.css';
 import React, { useState } from 'react';
-import { useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
@@ -59,7 +58,7 @@ export default function SearchEngine(props) {
             setInstrumentTypes(response.data);
             props.onSaveInstrumentDropdown(response.data);
         });
-    }, []);
+    }, [props]);
 
     // typography
     const Div = styled('div')(({ theme }) => ({
@@ -108,7 +107,7 @@ export default function SearchEngine(props) {
         setEnteredIRI(false);
     };
 
-    const theme = useTheme();
+    // const theme = useTheme();
     return (
 
         <div className="px-3 border" style={{width: "100%", height: "100%"}}>
