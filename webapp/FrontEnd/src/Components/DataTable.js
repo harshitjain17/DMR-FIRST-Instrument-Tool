@@ -1,10 +1,18 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from 'react-router-dom';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import "./DataTable.css";
 import InstoolApi from '../Api/InstoolApi';
+import ModalBox from './ModalBox';
+
 
 const columns = [
   { field: 'id', headerName: 'ID', type: 'number', width: 90 },
@@ -106,28 +114,40 @@ export default function DataTable(props) {
       city: props.response[i].city,
       state: props.response[i].state,
       award: props.response[i].award,
-      status: props.response[i].status
+      status: props.response[i].status,
+      instrumentId: props.response[i].instrumentId
     };
     searchResult.push(object);
   };
 
-  // const [finalClickInfo, setFinalClickInfo] = useState(null);
+  const [instrumentData, setInstrumentData] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [isLoading3, setIsLoading3] = React.useState(false);
 
   const handleOnRowClick = (params) => {
-    // setFinalClickInfo(params.row);
-    console.log(params.row);
-    InstoolApi.get(`/instruments`, { params: { doi: params.row.doi } }).then((response) => {
-      console.log(response);
-  });
+    InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
+      setInstrumentData(response.data);
+    });
+    setOpen(true);
   };
 
+  const handleCloseModal = () => {
+    setOpen(false)
+  };
+
+  React.useEffect(() => {
+    setIsLoading3(props.loading);
+  }, [])
+
   return (
+    <div style={{ display: 'flex', height: '100%' }}>
       <DataGrid
         rows={searchResult}
         columns={columns}
         density="compact"
         pageSize={5}
         rowsPerPageOptions={[5]}
+        loading={isLoading3}
         components={{ 
           Toolbar: GridToolbar,
           LoadingOverlay: LinearProgress,
@@ -139,5 +159,7 @@ export default function DataTable(props) {
         disableSelectionOnClick
         onRowClick={handleOnRowClick}
       />
+      <ModalBox openClose={open} handleClose={handleCloseModal} instrumentData={instrumentData}/>
+    </div>
   );
 };

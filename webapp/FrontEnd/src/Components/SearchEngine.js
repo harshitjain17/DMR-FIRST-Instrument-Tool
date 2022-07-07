@@ -1,7 +1,6 @@
 import { Form } from 'react-bootstrap';
 import './SearchEngine.css';
-import React, { useState } from 'react';
-import { useTheme } from '@mui/material/styles';
+import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
@@ -25,7 +24,8 @@ export default function SearchEngine(props) {
     const [enteredIRI, setEnteredIRI] = useState(false);
     
     const [instrumentTypes, setInstrumentTypes] = useState([]);
-
+    const [isLoading1, setIsLoading1] = useState(false);
+    
     const addressChangeHandler = (event) => {
         setEnteredAddress(event.target.value);
     };
@@ -72,9 +72,9 @@ export default function SearchEngine(props) {
     // submit handling
     const submitHandler = async (event) => {
         event.preventDefault();
-      
         var coordinates = await GoogleApi.getCoordinates(enteredAddress);
-        
+        setIsLoading1(true);
+
         //object
         const userInput = {
             location: {
@@ -92,8 +92,13 @@ export default function SearchEngine(props) {
         InstoolApi.post(`/instruments/search`, userInput)
         .then(response => {
             props.onSaveResponseData(response.data.data);
+            
         })
+        
     };
+    useEffect(() => {
+        props.loading(isLoading1);
+      }, [isLoading1])
 
     // reset handling
     const resetHandler = async (event) => {
@@ -108,12 +113,11 @@ export default function SearchEngine(props) {
         setEnteredIRI(false);
     };
 
-    const theme = useTheme();
     return (
 
         <div className="px-3 border" style={{width: "100%", height: "100%"}}>
             <Form onSubmit={submitHandler} onReset={resetHandler} style={{width: "100%", height: "100%"}}>
-                <Div>{"SEARCH TOOL"}</Div>            
+                <Div>{"SEARCH TOOL"}</Div>
                 <div>
                 <Form.Group controlId = "formAddress">
                     <TextField

@@ -13,25 +13,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function FullScreenDialog() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
+export default function ModalBox(props) {
   const handleClose = () => {
-    setOpen(false);
+    props.handleClose(false);
   };
+  // console.log(props.instrumentData)
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open full-screen dialog
-      </Button>
       <Dialog
         fullScreen
-        open={open}
+        open={props.openClose}
         onClose={handleClose}
         TransitionComponent={Transition}
       >
@@ -46,7 +38,7 @@ export default function FullScreenDialog() {
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Instrument Name
+              Instrument name
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               save

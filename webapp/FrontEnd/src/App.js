@@ -5,13 +5,12 @@ import GoogleMap from './Components/GoogleMap';
 import DataTable from './Components/DataTable';
 
 import React, { useState } from 'react';
-import { styled, createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -74,14 +73,13 @@ const mdTheme = createTheme();
 
 function App() {
   const [response, setResponse] = useState([]);
-  const [instrumentDropdown, setInstrumentDropdown] = useState([]);
-  
-  const instrumentDropdownHandler = (responseData) => {
-    setInstrumentDropdown(responseData);
-  };
-  
+  const [isLoading2, setIsLoading2] = React.useState(false);
+
   const responseDataHandler = (responseData) => {
     setResponse(responseData);
+  };
+  const loadingHandler = (params) => {
+    setIsLoading2(params);
   };
 
   return (
@@ -110,7 +108,7 @@ function App() {
           }
           }}>
             <DrawerHeader/>
-            <SearchEngine onSaveResponseData = {responseDataHandler} onSaveInstrumentDropdown = {instrumentDropdownHandler}/>
+            <SearchEngine onSaveResponseData = {responseDataHandler} loading={loadingHandler}/>
         </Drawer>
 
         {/* Right Section */}
@@ -140,7 +138,7 @@ function App() {
                     height: 290,
                   }}
                 >
-                <DataTable response={response} instrumentDropdown={instrumentDropdown}/>
+                <DataTable response={response} loading={isLoading2}/>
                 </Paper>
               </Grid>
               
@@ -157,7 +155,6 @@ function App() {
                   <GoogleMap response={response}/>
                 </Paper>
               </Grid>
-              
             </Grid>
             {/* <Copyright sx={{ pt: 4 }} /> */}
           </Container>
