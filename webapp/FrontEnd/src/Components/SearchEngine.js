@@ -1,10 +1,6 @@
 import { Form } from 'react-bootstrap';
 import './SearchEngine.css';
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
-=======
-import React, { useState } from 'react';
->>>>>>> 50f5eb0dba08276d106e1462ef1755a3b254b979
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
@@ -117,10 +113,6 @@ export default function SearchEngine(props) {
         setEnteredIRI(false);
     };
 
-<<<<<<< HEAD
-=======
-    // const theme = useTheme();
->>>>>>> 50f5eb0dba08276d106e1462ef1755a3b254b979
     return (
 
         <div className="px-3 border" style={{width: "100%", height: "100%"}}>
