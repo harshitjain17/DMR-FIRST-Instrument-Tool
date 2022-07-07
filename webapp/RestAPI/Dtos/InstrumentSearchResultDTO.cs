@@ -70,7 +70,7 @@ namespace Instool.DAL.Results
             Latitude = i.Location?.Latitude;
             Longitude = i.Location?.Longitude;
             Award = string.Join(", ", i.Awards.Select(a => a.AwardNumber));
-            Type = string.Join(", ", mostSpecific.Select(t => t.ShortName));
+            Type = string.Join(", ", mostSpecific.Select(t => t.Label));
         }
 
     }

@@ -25,12 +25,12 @@ export function GoogleMap (props) {
     setShowingInfoWindow(true);
   };
   
-  const onMapClicked = (props) => {
-    if (showingInfoWindow) {
-      setActiveMarker(null);
-      setShowingInfoWindow(false);
-    }
-  };
+  // const onMapClicked = (props) => {
+  //   if (showingInfoWindow) {
+  //     setActiveMarker(null);
+  //     setShowingInfoWindow(false);
+  //   }
+  // };
 
   const displayMarkers = () => {
     return searchResult.map((store, index) => {
