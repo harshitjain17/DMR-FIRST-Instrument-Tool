@@ -73,13 +73,9 @@ const mdTheme = createTheme();
 
 function App() {
   const [response, setResponse] = useState([]);
-  const [isLoading2, setIsLoading2] = React.useState(false);
 
   const responseDataHandler = (responseData) => {
     setResponse(responseData);
-  };
-  const loadingHandler = (params) => {
-    setIsLoading2(params);
   };
 
   return (
@@ -108,7 +104,7 @@ function App() {
           }
           }}>
             <DrawerHeader/>
-            <SearchEngine onSaveResponseData = {responseDataHandler} loading={loadingHandler}/>
+            <SearchEngine onSaveResponseData={responseDataHandler}/>
         </Drawer>
 
         {/* Right Section */}
@@ -138,7 +134,7 @@ function App() {
                     height: 290,
                   }}
                 >
-                <DataTable response={response} loading={isLoading2}/>
+                <DataTable response={response}/>
                 </Paper>
               </Grid>
               

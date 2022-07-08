@@ -24,7 +24,6 @@ export default function SearchEngine(props) {
     const [enteredIRI, setEnteredIRI] = useState(false);
     
     const [instrumentTypes, setInstrumentTypes] = useState([]);
-    const [isLoading1, setIsLoading1] = useState(false);
     
     const addressChangeHandler = (event) => {
         setEnteredAddress(event.target.value);
@@ -57,9 +56,8 @@ export default function SearchEngine(props) {
     React.useEffect(() => {
         InstoolApi.get(`/instrument-types/dropdown`).then((response) => {
             setInstrumentTypes(response.data);
-            props.onSaveInstrumentDropdown(response.data);
         });
-    }, [props]);
+    }, []);
 
     // typography
     const Div = styled('div')(({ theme }) => ({
@@ -73,7 +71,6 @@ export default function SearchEngine(props) {
     const submitHandler = async (event) => {
         event.preventDefault();
         var coordinates = await GoogleApi.getCoordinates(enteredAddress);
-        setIsLoading1(true);
 
         //object
         const userInput = {
@@ -96,10 +93,6 @@ export default function SearchEngine(props) {
         })
         
     };
-    useEffect(() => {
-        props.loading(isLoading1);
-      }, [isLoading1])
-
     // reset handling
     const resetHandler = async (event) => {
         event.preventDefault();

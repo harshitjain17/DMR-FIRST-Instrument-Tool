@@ -103,6 +103,8 @@ function CustomNoRowsOverlay() {
 
 export default function DataTable(props) {
   
+  const [isLoading3, setIsLoading3] = React.useState(true);
+
   var searchResult = [];
   for ( var i = 0; i < props.response.length; i++) {
     var object = {
@@ -120,10 +122,13 @@ export default function DataTable(props) {
     searchResult.push(object);
   };
 
-  const [instrumentData, setInstrumentData] = React.useState(null);
-  const [open, setOpen] = React.useState(false);
-  const [isLoading3, setIsLoading3] = React.useState(false);
+  React.useEffect(() => {
+    setIsLoading3(false);    
+  }, [searchResult])
 
+  const [instrumentData, setInstrumentData] = React.useState('');
+  const [open, setOpen] = React.useState(false);
+  
   const handleOnRowClick = (params) => {
     InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
       setInstrumentData(response.data);
@@ -134,10 +139,6 @@ export default function DataTable(props) {
   const handleCloseModal = () => {
     setOpen(false)
   };
-
-  React.useEffect(() => {
-    setIsLoading3(props.loading);
-  }, [])
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
