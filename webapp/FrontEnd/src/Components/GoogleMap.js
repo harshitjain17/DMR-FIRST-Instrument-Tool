@@ -24,13 +24,6 @@ export function GoogleMap (props) {
     setActiveMarker(marker);
     setShowingInfoWindow(true);
   };
-  
-  // const onMapClicked = (props) => {
-  //   if (showingInfoWindow) {
-  //     setActiveMarker(null);
-  //     setShowingInfoWindow(false);
-  //   }
-  // };
 
   const displayMarkers = () => {
     return searchResult.map((store, index) => {
