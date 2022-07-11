@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap';
 import './SearchEngine.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
