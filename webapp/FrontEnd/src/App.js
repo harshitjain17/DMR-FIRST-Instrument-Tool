@@ -73,9 +73,19 @@ const mdTheme = createTheme();
 
 function App() {
   const [response, setResponse] = useState([]);
+  const [minimumTimeElapsed, setMinimumTimeElapsed] = useState();
+  const [loading, setLoading] = useState();
 
   const responseDataHandler = (responseData) => {
     setResponse(responseData);
+  };
+  
+  const minimumTimeElapsedHandler = (params) => {
+    setMinimumTimeElapsed(params);
+  };
+
+  const loadingHandler = (params) => {
+    setLoading(params);
   };
 
   return (
@@ -104,7 +114,7 @@ function App() {
           }
           }}>
             <DrawerHeader/>
-            <SearchEngine onSaveResponseData={responseDataHandler}/>
+            <SearchEngine onSaveResponseData={responseDataHandler} minimumTimeElapsed={minimumTimeElapsedHandler} loading={loadingHandler}/>
         </Drawer>
 
         {/* Right Section */}
@@ -134,7 +144,7 @@ function App() {
                     height: 290,
                   }}
                 >
-                <DataTable response={response}/>
+                <DataTable response={response} minimumTimeElapsed={minimumTimeElapsed} loading={loading}/>
                 </Paper>
               </Grid>
               
