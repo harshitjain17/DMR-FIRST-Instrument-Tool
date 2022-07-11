@@ -12,16 +12,27 @@ namespace Instool.Dtos
 
         public ICollection<InstrumentTypeDTO>? SubTypes { get; private set; } = null;
 
-        internal static InstrumentTypeDTO FromEntity(InstrumentType a, bool includeHierachie = false)
+        internal static InstrumentTypeDTO WithCategory(InstrumentType type)
+        {
+            return FromEntity(type, true, false);
+        }
+
+        internal static InstrumentTypeDTO WithSubTypes(InstrumentType type)
+        {
+            return FromEntity(type, false, true);
+        }
+
+        private static InstrumentTypeDTO FromEntity(InstrumentType type, bool includeCategory, bool includeSubTypes)
         {
             return new InstrumentTypeDTO
             {
-                InstrumentTypeId = a.InstrumentTypeId,
-                Name = a.ShortName,
-                Label = a.Label,
-                Uri = a.Uri,
-                Category = !includeHierachie || a.Category == null ? null : FromEntity(a.Category),
-                SubTypes = !includeHierachie || a.InverseCategory.Any() ? a.InverseCategory.Select(t =>         FromEntity(t)).ToList() : null
+                InstrumentTypeId = type.InstrumentTypeId,
+                Name = type.ShortName,
+                Label = type.Label,
+                Uri = type.Uri,
+                Category = !includeCategory || type.Category == null ? null : FromEntity(type.Category, true, false),
+                SubTypes = !includeSubTypes || !type.InverseCategory.Any() ? null : type.InverseCategory.Select(t =>         
+                    FromEntity(t, false, true)).ToList()
             };
         }
 

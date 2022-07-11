@@ -17,6 +17,7 @@ export default function SearchEngine(props) {
 
     const [enteredAddress, setEnteredAddress] = useState('');
     const [enteredDistance, setEnteredDistance] = useState('');
+    const [instrumentTypeSearchText, setInstrumentTypeLabel] = useState('');
     const [enteredInstrumentType, setEnteredInstrumentType] = useState('');
     const [enteredKeywords, setEnteredKeywords] = useState([]);
     const [enteredManufacturer, setEnteredManufacturer] = useState('');
@@ -33,8 +34,12 @@ export default function SearchEngine(props) {
         setEnteredDistance(event.target.value);
     };
 
-    const instrumentTypeChangeHandler = (event, value) => {
-        setEnteredInstrumentType(value);
+    const instrumentTypeLabelChangeHandler = (event, value) => {
+        setInstrumentTypeLabel(value);
+    }
+
+    const instrumentTypeChangeHandler = (event, option) => {
+        setEnteredInstrumentType(option.value);
     };
     
     const keywordsChangeHandler = (event) => {
@@ -165,8 +170,9 @@ export default function SearchEngine(props) {
                         isOptionEqualToValue={(option, value) => option.value === value.value}
                         groupBy={(option) => option.category}
                         getOptionLabel={(option) => option.label}
-                        inputValue = {enteredInstrumentType}
-                        onInputChange = {instrumentTypeChangeHandler}
+                        inputValue = {instrumentTypeSearchText}
+                        onInputChange = {instrumentTypeLabelChangeHandler}
+                        onChange = {instrumentTypeChangeHandler}
                         renderInput={(params) => <TextField {...params} label="Instrument Type"/>}
                         
                     />

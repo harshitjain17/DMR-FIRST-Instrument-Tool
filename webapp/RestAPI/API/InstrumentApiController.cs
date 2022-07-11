@@ -68,6 +68,10 @@ namespace Instool.API
             [FromQuery] string? sortColumn, [FromQuery] string? sortOrder,
             [FromQuery] int start, [FromQuery] int length, [FromQuery] int draw)
         {
+            if (!string.IsNullOrWhiteSpace(request.InstrumentType))
+            {
+                request.InstrumentType = request.InstrumentType.Split("#")[0];
+            }
             var instruments = await _service.Search(request, sortColumn, sortOrder, start, length);
             return Ok(new InstrumentSearchResult(instruments, draw));
         }

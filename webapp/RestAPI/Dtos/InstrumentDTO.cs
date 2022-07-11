@@ -40,7 +40,7 @@ namespace Instool.Dtos
                 Description = i.Description,
                 Doi = i.Doi,
                 InstrumentId = i.InstrumentId,
-                InstrumentTypes = i.InstrumentTypes.Select(t => InstrumentTypeDTO.FromEntity(t)).ToList(),
+                InstrumentTypes = i.InstrumentTypes.Select(t => InstrumentTypeDTO.WithCategory(t)).ToList(),
                 Contacts = i.InstrumentContacts.Select(c => InvestigatorDTO.FromEntity(c.Investigator!, c.Role)).ToList(),
                 Manufacturer = i.Manufacturer,
                 ModelNumber = i.ModelNumber,
