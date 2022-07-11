@@ -85,7 +85,7 @@ export default function SearchEngine(props) {
             awardNumber: enteredAwardNumber,
             includeRetired: enteredIRI
         };
-
+        console.log(userInput);
         InstoolApi.post(`/instruments/search`, userInput)
         .then(response => {
             props.onSaveResponseData(response.data.data);

@@ -97,8 +97,6 @@ function CustomNoRowsOverlay() {
 
 export default function DataTable(props) {
   
-  const [isLoading3, setIsLoading3] = React.useState(true);
-
   var searchResult = [];
   for ( var i = 0; i < props.response.length; i++) {
     var object = {
@@ -115,10 +113,6 @@ export default function DataTable(props) {
     };
     searchResult.push(object);
   };
-
-  React.useEffect(() => {
-    setIsLoading3(false);    
-  }, [searchResult])
 
   const [instrumentData, setInstrumentData] = React.useState('');
   const [open, setOpen] = React.useState(false);
@@ -142,7 +136,6 @@ export default function DataTable(props) {
         density="compact"
         pageSize={5}
         rowsPerPageOptions={[5]}
-        loading={isLoading3}
         components={{ 
           Toolbar: GridToolbar,
           LoadingOverlay: LinearProgress,
