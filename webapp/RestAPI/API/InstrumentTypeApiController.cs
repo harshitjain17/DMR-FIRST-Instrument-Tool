@@ -37,7 +37,7 @@ namespace Instool.API
         public async Task<ActionResult<InstrumentTypeDTO>> GetInstrumentType(string idOrShortName)
         {
             var type = await LoadType(idOrShortName);
-            return Ok(InstrumentTypeDTO.FromEntity(type, true));
+            return Ok(InstrumentTypeDTO.WithCategory(type));
         }
 
 
@@ -74,7 +74,7 @@ namespace Instool.API
             var type = await LoadType(idOrShortName);
             type.Label = label;
             await _repo.Update(type);
-            return Ok(InstrumentTypeDTO.FromEntity(type, true));
+            return Ok(InstrumentTypeDTO.WithCategory(type));
         }
 
         [HttpPost]
@@ -97,7 +97,7 @@ namespace Instool.API
 
             await _repo.Create(entity);
 
-            return InstrumentTypeDTO.FromEntity(entity, true);
+            return InstrumentTypeDTO.WithCategory(entity);
         }
 
 
@@ -133,7 +133,7 @@ namespace Instool.API
         {
             var type = await LoadType(idOrShortName);
             var types = await _repo.GetTypes(type.InstrumentTypeId);
-            return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i, true)));
+            return Ok(types.Select(i => InstrumentTypeDTO.WithSubTypes(i)));
         }
 
         [HttpGet("{idOrShortName}/dropdown")]
@@ -145,8 +145,9 @@ namespace Instool.API
         {
             var type = await LoadType(idOrShortName);
             var categories = await _repo.LoadHierarchie(type.InstrumentTypeId);
-            var types = categories.SelectMany(c => 
-                                c.InverseCategory.Select(t => InstrumentTypeDropdownEntry.FromEntity(t, c))
+            var types = categories.SelectMany(cat => 
+                                cat.InverseCategory.Select((type, index) => 
+                                    InstrumentTypeDropdownEntry.FromEntity(type, cat, index))
             );
             return Ok(types);
         }
@@ -160,7 +161,8 @@ namespace Instool.API
         {
             var categories = await _repo.LoadHierarchie();
             var types = categories.SelectMany(cat => cat.InverseCategory.SelectMany(subCat =>
-                                subCat.InverseCategory.Select(type => InstrumentTypeDropdownEntry.FromEntity(type, cat, subCat))
+                                subCat.InverseCategory.Select((type, index) => 
+                                       InstrumentTypeDropdownEntry.FromEntity(type, cat, subCat, index))
                         )
             );
             return Ok(types);
@@ -174,7 +176,7 @@ namespace Instool.API
         public async Task<ActionResult<ICollection<InstrumentTypeDTO>>> GetInstrumentTypes()
         {
             var types = await _repo.GetTypes();
-            return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i, true)));
+            return Ok(types.Select(i => InstrumentTypeDTO.WithCategory(i)));
         }
 
         [HttpGet("hierarchie")]
@@ -185,7 +187,7 @@ namespace Instool.API
         public async Task<ActionResult<ICollection<InstrumentTypeDTO>>> GetInstrumentTypeHierarchie()
         {
             var types = await _repo.LoadHierarchie();
-            return Ok(types.Select(i => InstrumentTypeDTO.FromEntity(i, true)));
+            return Ok(types.Select(i => InstrumentTypeDTO.WithSubTypes(i)));
         }
 
         /// <summary>
@@ -196,12 +198,23 @@ namespace Instool.API
         private async Task<InstrumentType> LoadType(string idOrName) {
             var entity = int.TryParse(idOrName, out int id) ? 
                         await _repo.GetById(id) : 
-                        await _repo.GetByShortname(idOrName);
+                        await LoadTypeByShortName(idOrName);
             if (entity == null)
             {
                 throw HttpResponseException.NotFound();
             }
             return entity;
+        }
+
+        /// <summary>
+        ///     Frontend needs unique shortnames, so we add a number with #dd.
+        ///     That has to be stripped away before querying the DB.
+        /// </summary>
+        /// <param name="shortName"></param>
+        /// <returns></returns>
+        private Task<InstrumentType?> LoadTypeByShortName(string shortName)
+        {
+            return _repo.GetByShortname(shortName.Split("#")[0]);
         }
     }
 }

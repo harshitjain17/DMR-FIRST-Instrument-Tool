@@ -12,24 +12,28 @@ namespace Instool.Dtos
 
         public string Label { get; private set; } = null!;
 
-        internal static InstrumentTypeDropdownEntry FromEntity(InstrumentType i, InstrumentType c)
+        internal static InstrumentTypeDropdownEntry FromEntity(InstrumentType type, InstrumentType category, int index)
         {
             return new InstrumentTypeDropdownEntry
             {
-                Value = i.ShortName,
-                Label = i.Label,
-                Category = c.ShortName
+                Value = $"{type.ShortName}#{index}",
+                Label = type.Label,
+                Category = category.ShortName
             };
         }
 
-        internal static InstrumentTypeDropdownEntry FromEntity(InstrumentType i, InstrumentType c, InstrumentType s)
+        internal static InstrumentTypeDropdownEntry FromEntity(
+            InstrumentType type, 
+            InstrumentType category, 
+            InstrumentType subcategory,
+            Index index)
         {
             return new InstrumentTypeDropdownEntry
             {
-                Value = i.ShortName,
-                Label = i.Label,
-                Category = c.ShortName,
-                SubCategory = s.ShortName
+                Value = $"{type.ShortName}#{index}",
+                Label = type.Label,
+                Category = category.ShortName,
+                SubCategory = subcategory.ShortName
             };
         }
     }
