@@ -145,8 +145,8 @@ namespace Instool.API
         {
             var type = await LoadType(idOrShortName);
             var categories = await _repo.LoadHierarchie(type.InstrumentTypeId);
-            var types = categories.SelectMany(cat => 
-                                cat.InverseCategory.Select((type, index) => 
+            var types = categories.SelectMany((cat, index) => 
+                                cat.InverseCategory.Select(type => 
                                     InstrumentTypeDropdownEntry.FromEntity(type, cat, index))
             );
             return Ok(types);
@@ -160,8 +160,8 @@ namespace Instool.API
         public async Task<ActionResult<ICollection<InstrumentTypeDropdownEntry>>> GetDropDownEntries()
         {
             var categories = await _repo.LoadHierarchie();
-            var types = categories.SelectMany(cat => cat.InverseCategory.SelectMany(subCat =>
-                                subCat.InverseCategory.Select((type, index) => 
+            var types = categories.SelectMany(cat => cat.InverseCategory.SelectMany((subCat, index) =>
+                                subCat.InverseCategory.Select(type => 
                                        InstrumentTypeDropdownEntry.FromEntity(type, cat, subCat, index))
                         )
             );
