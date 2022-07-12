@@ -1,8 +1,9 @@
 import React from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import LinearProgress from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
 import "./DataTable.css";
 import InstoolApi from '../Api/InstoolApi';
 import ModalBox from './ModalBox';
@@ -92,12 +93,20 @@ function CustomNoRowsOverlay() {
     </StyledGridOverlay>
   );
 };
-
-
+const skeletonArray = Array(4).fill('');
+function CustomLoadingOverlay() {
+  return (
+    skeletonArray.map((item, index) => (
+      <Stack>
+        <Skeleton animation="wave" variant="text" width={1000} height={30} />
+      </Stack>
+      ))
+  )
+}
 
 export default function DataTable(props) {
-
-  const [isLoading3, setIsLoading3] = React.useState(true);
+  const [instrumentData, setInstrumentData] = React.useState('');
+  const [open, setOpen] = React.useState(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   var searchResult = [];
@@ -119,13 +128,6 @@ export default function DataTable(props) {
     };
   }
 
-  React.useEffect(() => {
-    setIsLoading3(false);
-  }, [searchResult])
-
-  const [instrumentData, setInstrumentData] = React.useState('');
-  const [open, setOpen] = React.useState(false);
-
   const handleOnRowClick = (params) => {
     InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
       setInstrumentData(response.data);
@@ -136,21 +138,39 @@ export default function DataTable(props) {
   const handleCloseModal = () => {
     setOpen(false)
   };
-
+  
   return (
     <div style={{ display: 'flex', height: '100%' }}>
+      
+      {/* if loading, render skeleton rows */}
+      {!props.minimumTimeElapsed || props.loading ? (
+      <DataGrid
+        rows={[]}
+        columns={columns}
+        density="compact"
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        components={{ 
+          Toolbar: GridToolbar,
+          NoRowsOverlay: CustomLoadingOverlay }}
+        componentsProps={{
+          toolbar: { showQuickFilter: true },
+        }}
+        checkboxSelection
+        disableSelectionOnClick
+      />
+
+      ) : (
       <DataGrid
         rows={searchResult}
         columns={columns}
         density="compact"
         pageSize={5}
         rowsPerPageOptions={[5]}
-        loading={isLoading3}
-        components={{
+        components={{ 
           Toolbar: GridToolbar,
-          LoadingOverlay: LinearProgress,
-          NoRowsOverlay: CustomNoRowsOverlay
-        }}
+          // LoadingOverlay: LoadingSkeleton,
+          NoRowsOverlay: CustomNoRowsOverlay }}
         componentsProps={{
           toolbar: { showQuickFilter: true },
         }}
@@ -158,7 +178,8 @@ export default function DataTable(props) {
         disableSelectionOnClick
         onRowClick={handleOnRowClick}
       />
-      <ModalBox openClose={open} handleClose={handleCloseModal} instrumentData={instrumentData} />
+      )}
+      <ModalBox openClose={open} handleClose={handleCloseModal} instrumentData={instrumentData}/>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap';
 import './SearchEngine.css';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,6 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
 
 import InstoolApi from '../Api/InstoolApi';
 import GoogleApi from '../Api/GoogleApi';
@@ -108,7 +109,7 @@ export default function SearchEngine(props) {
             awardNumber: enteredAwardNumber,
             includeRetired: enteredIRI
         };
-
+        console.log(userInput);
         InstoolApi.post(`/instruments/search`, userInput)
             .then(response => 
                 props.onSaveResponseData({
@@ -118,6 +119,30 @@ export default function SearchEngine(props) {
             )
 
     };
+
+    // Another Submit handler
+    const [minimumTime] = useState(500);
+    const [minimumTimeElapsed, setMinimumTimeElapsed] = useState(true);
+    const [loading, setLoading] = useState(false);
+
+    const restartTimeout = useCallback(() => {
+        setMinimumTimeElapsed(false);
+        setLoading(true);
+        const randomLoadTime = Math.random() * 5000;
+        
+        setTimeout(() => {
+          setMinimumTimeElapsed(true);
+        }, minimumTime);
+    
+        setTimeout(() => {
+          setLoading(false);
+        }, randomLoadTime);
+        
+      }, [setMinimumTimeElapsed, setLoading, minimumTime]);
+
+      props.minimumTimeElapsed(minimumTimeElapsed);
+      props.loading(loading);
+    
     // reset handling
     const resetHandler = async (event) => {
         event.preventDefault();
@@ -289,7 +314,7 @@ export default function SearchEngine(props) {
 
 
                 <div className="d-grid gap-2 mt-3">
-                    <Button type='submit' variant="contained" style={{ width: "90%", margin: "auto" }}>Search</Button>
+                    <Button endIcon={<SearchIcon/>} onClick = {() => {restartTimeout()}} type = 'submit' variant="contained" style = {{width:"90%", margin: "auto"}}>Search</Button>
                 </div>
 
                 <div className="d-grid gap-2">

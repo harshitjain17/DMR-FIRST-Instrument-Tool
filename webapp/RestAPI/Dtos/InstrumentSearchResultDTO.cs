@@ -17,7 +17,7 @@ namespace Instool.DAL.Results
         
         public InstrumentSearchResult(PaginatedList<InstrumentWithDistance> data, int draw)
         {
-            Data = data.Select((row, i) => new InstrumentRow(row.Instrument, i.ToString(), row.Distance));
+            Data = data.Select((row, i) => new InstrumentRow(row.Instrument, (i+1).ToString(), row.Distance));
             RecordsTotal = data.RecordsTotal;
             RecordsFiltered = data.RecordsFiltered;
             Draw = draw;
