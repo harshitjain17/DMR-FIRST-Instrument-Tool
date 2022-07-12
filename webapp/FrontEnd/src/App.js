@@ -131,7 +131,7 @@ function App() {
                     p: 0,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 290,
+                    height: '40vh',
                   }}
                 >
                 <DataTable response={response}/>
@@ -139,13 +139,13 @@ function App() {
               </Grid>
               
               {/* Google Maps */}
-              <Grid item xs={12} md={7} lg={6}>
+              <Grid item xs={12} md={12} lg={12}>
                 <Paper
                   sx={{
                     p: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: 205,
+                    height: '48vh',
                   }}
                 >
                   <GoogleMap response={response}/>

@@ -96,33 +96,36 @@ function CustomNoRowsOverlay() {
 
 
 export default function DataTable(props) {
-  
+
   const [isLoading3, setIsLoading3] = React.useState(true);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   var searchResult = [];
-  for ( var i = 0; i < props.response.length; i++) {
-    var object = {
-      id: parseInt(props.response[i].label)+1,
-      institution: props.response[i].institution,
-      type: props.response[i].type,
-      name: props.response[i].name,
-      doi: props.response[i].doi,
-      city: props.response[i].city,
-      state: props.response[i].state,
-      award: props.response[i].award,
-      status: props.response[i].status,
-      instrumentId: props.response[i].instrumentId
+  if (props.response.data) {
+    for (var instrument of props.response.data) {
+      var object = {
+        id: instrument.label,
+        institution: instrument.institution,
+        type: instrument.type,
+        name: instrument.name,
+        doi: instrument.doi,
+        city: instrument.city,
+        state: instrument.state,
+        award: instrument.award,
+        status: instrument.status,
+        instrumentId: instrument.instrumentId
+      };
+      searchResult.push(object);
     };
-    searchResult.push(object);
-  };
+  }
 
   React.useEffect(() => {
-    setIsLoading3(false);    
+    setIsLoading3(false);
   }, [searchResult])
 
   const [instrumentData, setInstrumentData] = React.useState('');
   const [open, setOpen] = React.useState(false);
-  
+
   const handleOnRowClick = (params) => {
     InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
       setInstrumentData(response.data);
@@ -143,10 +146,11 @@ export default function DataTable(props) {
         pageSize={5}
         rowsPerPageOptions={[5]}
         loading={isLoading3}
-        components={{ 
+        components={{
           Toolbar: GridToolbar,
           LoadingOverlay: LinearProgress,
-          NoRowsOverlay: CustomNoRowsOverlay }}
+          NoRowsOverlay: CustomNoRowsOverlay
+        }}
         componentsProps={{
           toolbar: { showQuickFilter: true },
         }}
@@ -154,7 +158,7 @@ export default function DataTable(props) {
         disableSelectionOnClick
         onRowClick={handleOnRowClick}
       />
-      <ModalBox openClose={open} handleClose={handleCloseModal} instrumentData={instrumentData}/>
+      <ModalBox openClose={open} handleClose={handleCloseModal} instrumentData={instrumentData} />
     </div>
   );
 };

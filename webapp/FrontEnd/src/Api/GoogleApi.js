@@ -1,12 +1,17 @@
 import axios from 'axios';
+var config = require("../config/config").default();
 
 class GoogleApi {
     static async getCoordinates(address) {
         try {
+            if (!address) {
+                // center to US
+                return [37, -95];
+            }
             const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
                 params: {
                     address: address,
-                    key: 'AIzaSyBWAhdwQk6dpFAjF4QcTfUo_pZH0n0Xgxk'
+                    key: config.apiKey,
                 }
             })
             var lat = response.data.results[0].geometry.location.lat;

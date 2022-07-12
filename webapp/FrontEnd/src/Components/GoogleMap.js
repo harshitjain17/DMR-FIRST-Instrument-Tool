@@ -2,23 +2,34 @@ import React, { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 var config = require("../config/config").default();
 
-export function GoogleMap (props) { 
+export function GoogleMap(props) {
 
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [activeMarker, setActiveMarker] = useState();
   const [setSelectedPlace] = useState();
 
-  var searchResult = [];
-  for (var i = 0; i < props.response.length; i++) {
-    var object = {
-      id: parseInt(props.response[i].label)+1,
-      latitude: props.response[i].latitude,
-      longitude: props.response[i].longitude
+  const searchResult = [];
+  const location = props.response.location;
+  // Might be '0', so using == intentionally
+  // eslint-disable-next-line eqeqeq
+  const zoom = !location?.maxDistance || location.maxDistance == 0 ? 4 : location?.maxDistance > 100 ? 7 : 8
+  
+  const center = {
+    lat: location?.latitude ?? 37,
+    lng: location?.longitude ?? -95
+  }
+
+  if (props.response.data) {
+    for (const instrument of props.response?.data) {
+      const object = {
+        id: instrument.label,
+        latitude: instrument.latitude,
+        longitude: instrument.longitude
+      };
+      searchResult.push(object);
     };
-    searchResult.push(object);
-  
-  };
-  
+  }
+
   const onMarkerClick = (props, marker, e) => {
     setSelectedPlace(props);
     setActiveMarker(marker);
@@ -39,34 +50,32 @@ export function GoogleMap (props) {
         <InfoWindow
           marker={activeMarker}
           visible={showingInfoWindow}>
-            <div>
-              <h1>{store.location}</h1>
-            </div>
+          <div>
+            <h1>{store.location}</h1>
+          </div>
         </InfoWindow>
-        </Marker>
-     
+      </Marker>
+
     })
   };
 
   return (
-      <Map
-        google={props.google}
-        zoom={4}
-        // onClick={onMapClicked}
-        style={{ width: '100%', height: '100%', position: "static"}}
-        containerStyle={{width: "34%", height: "32%"}}
-        initialCenter={{
-          lat: 40.854885,
-          lng: -88.081807
-        }}
-      >
-        {displayMarkers()}
-        
-      </Map>
+    <Map
+      google={props.google}
+      zoom={zoom}
+      // onClick={onMapClicked}
+      style={{ width: '100%', height: '100%', position: "static" }}
+      containerStyle={{ width: "66%", height: "46vh" }}
+      center= {center}
+      initialCenter = {center}
+    >
+      {displayMarkers()}
+
+    </Map>
   );
 }
 
 export default GoogleApiWrapper({
-    apiKey: config.apiKey,
-    signature: config.signature
+  apiKey: config.apiKey,
+  signature: config.signature
 })(GoogleMap)
