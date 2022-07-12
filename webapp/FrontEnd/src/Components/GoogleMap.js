@@ -65,8 +65,8 @@ export function GoogleMap(props) {
       zoom={zoom}
       // onClick={onMapClicked}
       style={{ width: '100%', height: '100%', position: "static" }}
-      containerStyle={{ width: "66%", height: "46vh" }}
-      center= {center}
+      containerStyle={{ width: "34%", height: "37.5%" }}
+      center = {center}
       initialCenter = {center}
     >
       {displayMarkers()}

@@ -126,7 +126,7 @@ function App() {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: '100vh',
+            height: '105vh',
             overflow: 'auto',
           }}
         >
@@ -141,7 +141,7 @@ function App() {
                     p: 0,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '40vh',
+                    height: '48vh',
                   }}
                 >
                 <DataTable response={response} minimumTimeElapsed={minimumTimeElapsed} loading={loading}/>
@@ -149,13 +149,13 @@ function App() {
               </Grid>
               
               {/* Google Maps */}
-              <Grid item xs={12} md={12} lg={12}>
+              <Grid item xs={12} md={7} lg={6}>
                 <Paper
                   sx={{
                     p: 1,
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '48vh',
+                    height: '40vh',
                   }}
                 >
                   <GoogleMap response={response}/>

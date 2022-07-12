@@ -16,6 +16,7 @@ import GoogleApi from '../Api/GoogleApi';
 
 export default function SearchEngine(props) {
 
+    // States for input given in the textbox (in search engine)
     const [enteredAddress, setEnteredAddress] = useState('');
     const [enteredDistance, setEnteredDistance] = useState('0');
     const [instrumentTypeSearchText, setInstrumentTypeLabel] = useState('');
@@ -26,6 +27,7 @@ export default function SearchEngine(props) {
     const [enteredAwardNumber, setEnteredAwardNumber] = useState('');
     const [enteredIRI, setEnteredIRI] = useState(false);
 
+    // States for dropdowns (in search engine)
     const [instrumentCategories, setInstrumentCategories] = useState([]);
     const [instrumentTypes, setInstrumentTypes] = useState([]);
 
@@ -57,31 +59,36 @@ export default function SearchEngine(props) {
     const manufacturerChangeHandler = (event) => {
         setEnteredManufacturer(event.target.value);
     };
+
     const awardNumberChangeHandler = (event) => {
         setEnteredAwardNumber(event.target.value);
     };
+
     const IRIChangeHandler = () => {
         setEnteredIRI(!enteredIRI);
     };
 
+    // Instrument Categories Dropdown List
     React.useEffect(() => {
         InstoolApi.get(`/instrument-types`).then((response) => {
             setInstrumentCategories(response.data);
         });
     }, []);
 
-    // autocompletion of instrument types
+    // Autocompletion of instrument types
     React.useEffect(() => {
-        if (enteredInstrumentCategory) {
+
+        if (enteredInstrumentCategory) { // Case - I (If the user selected the category)
             InstoolApi.get(`/instrument-types/${enteredInstrumentCategory}/dropdown`).then((response) => {
                 setInstrumentTypes(response.data);
             });
-        } else {
+
+        } else { // Case - II (If the user did not selected the category)
             InstoolApi.get(`/instrument-types/dropdown`).then((response) => {
                 setInstrumentTypes(response.data);
             });
         }
-    }, [enteredInstrumentCategory]);
+    }, [enteredInstrumentCategory]); // dependent on category selected
 
     // typography
     const Div = styled('div')(({ theme }) => ({
@@ -110,40 +117,41 @@ export default function SearchEngine(props) {
             includeRetired: enteredIRI
         };
         console.log(userInput);
+
+        // Posting the user input and recieving/saving the data recieved from the server
         InstoolApi.post(`/instruments/search`, userInput)
             .then(response => 
                 props.onSaveResponseData({
                     data: response.data.data,
-                    location: userInput.location
+                    location: userInput.location //taking the location object
                 })
             )
-
     };
 
-    // Another Submit handler
-    const [minimumTime] = useState(500);
+    // Another Submit handler (for handling loading states)
+    // const [minimumTime, setMinimumTime] = useState(500);
     const [minimumTimeElapsed, setMinimumTimeElapsed] = useState(true);
     const [loading, setLoading] = useState(false);
 
     const restartTimeout = useCallback(() => {
         setMinimumTimeElapsed(false);
         setLoading(true);
-        const randomLoadTime = Math.random() * 5000;
+        const randomLoadTime = Math.random() * 4000;
         
         setTimeout(() => {
           setMinimumTimeElapsed(true);
-        }, minimumTime);
+        }, 500);
     
         setTimeout(() => {
           setLoading(false);
         }, randomLoadTime);
         
-      }, [setMinimumTimeElapsed, setLoading, minimumTime]);
+      }, [setMinimumTimeElapsed, setLoading]);
 
       props.minimumTimeElapsed(minimumTimeElapsed);
       props.loading(loading);
     
-    // reset handling
+    // Reset handling
     const resetHandler = async (event) => {
         event.preventDefault();
 
