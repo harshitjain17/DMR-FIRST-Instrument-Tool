@@ -154,8 +154,7 @@ export default function DataTable(props) {
         loading
         components={{ 
           Toolbar: GridToolbar,
-          LoadingOverlay: LinearProgress,
-          // NoRowsOverlay: CustomLoadingOverlay
+          LoadingOverlay: LinearProgress, 
          }}
         componentsProps={{
           toolbar: { showQuickFilter: true },
