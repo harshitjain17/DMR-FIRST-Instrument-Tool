@@ -122,8 +122,9 @@ export default function SearchEngine(props) {
         InstoolApi.post(`/instruments/search`, userInput)
             .then(response => 
                 props.onSaveResponseData({
-                    data: response.data.data,
-                    location: userInput.location //taking the location object
+                    instruments: response.data.instruments,
+                    locations: response.data.locations,
+                    searchLocation: userInput.location //taking the location object
                 })
             )
     };

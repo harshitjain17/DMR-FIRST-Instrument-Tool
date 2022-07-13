@@ -1,5 +1,6 @@
 ﻿using Instool.DAL.Models;
 using Instool.Dto;
+using Instool.Dtos;
 using Instool.Helpers;
 
 namespace Instool.DAL.Results
@@ -7,17 +8,27 @@ namespace Instool.DAL.Results
 
     public class InstrumentSearchResult
     {
-        public IEnumerable<InstrumentRow> Data { get; set; }
+        public IEnumerable<InstrumentRow> Instruments { get; set; }
+        public IEnumerable<LocationRow> Locations { get; set; }
 
         public int Draw { get; }
 
         public int RecordsTotal { get; }
 
         public int RecordsFiltered { get; }
-        
+
         public InstrumentSearchResult(PaginatedList<InstrumentWithDistance> data, int draw)
         {
-            Data = data.Select((row, i) => new InstrumentRow(row.Instrument, (i+1).ToString(), row.Distance));
+            Locations = data.Select(r => r.Instrument.Location)
+                            .DistinctBy(l => l.LocationId)
+                            .Select((l, index) => new LocationRow(l, index + 1));
+            Instruments = data.Select((row, i) => 
+                new InstrumentRow(
+                    row.Instrument, 
+                    i+1, 
+                    Locations.SingleOrDefault(l => l.DbId == row.Instrument.LocationId)?.Id,
+                    row.Distance)
+            );
             RecordsTotal = data.RecordsTotal;
             RecordsFiltered = data.RecordsFiltered;
             Draw = draw;
@@ -42,9 +53,7 @@ namespace Instool.DAL.Results
 
         public string City { get; set; } = string.Empty;
 
-        public double? Latitude { get; set; }
-        public double? Longitude { get; set; }
-
+        public int? Location { get; set; }
         public int? Distance { get; set; }
         public string State { get; set; } = string.Empty;
 
@@ -52,7 +61,7 @@ namespace Instool.DAL.Results
 
         public string? Manufacturer { get; set; }
 
-        public InstrumentRow(Instrument i, string? label, int? distance)
+        public InstrumentRow(Instrument i, int label, int? location, int? distance)
         {
             var types = i.InstrumentTypes;
             var mostSpecific = types.Where(t => !types.Any(sub => sub.CategoryId == t.InstrumentTypeId)).ToList();
@@ -60,18 +69,34 @@ namespace Instool.DAL.Results
             InstrumentId = i.InstrumentId;
             Doi = i.Doi;
             Name = i.Name;
-            Label = label;
+            Label = label.ToString();
             Status = i.StatusEnum.Label;
             Institution = i.Institution?.Name ?? String.Empty;
+            Location = location;
             City = i.Location?.City ?? String.Empty;
             State = i.Location?.State ?? String.Empty;
             Manufacturer = i.Manufacturer;
             Distance = distance;
-            Latitude = i.Location?.Latitude;
-            Longitude = i.Location?.Longitude;
             Award = string.Join(", ", i.Awards.Select(a => a.AwardNumber));
             Type = string.Join(", ", mostSpecific.Select(t => t.Label));
         }
+    }
 
+    public class LocationRow
+    {
+        public int Id { get; set; }
+
+        public double? Longitude { get; set; }
+
+        public double? Latitude { get; set; }
+        public int DbId { get; }
+
+        public LocationRow(Location l, int index)
+        {
+            Id = index;
+            Longitude = l.Longitude;
+            Latitude = l.Latitude;
+            DbId = l.LocationId;
+        }
     }
 }

@@ -8,27 +8,24 @@ export function GoogleMap(props) {
   const [activeMarker, setActiveMarker] = useState();
   const [setSelectedPlace] = useState();
 
-  const searchResult = [];
-  const location = props.response.location;
+  const location = props.response.searchLocation;
   // Might be '0', so using == intentionally
   // eslint-disable-next-line eqeqeq
   const zoom = !location?.maxDistance || location.maxDistance == 0 ? 4 : location?.maxDistance > 100 ? 7 : 8
-  
+
   const center = {
     lat: location?.latitude ?? 37,
     lng: location?.longitude ?? -95
   }
 
-  if (props.response.data) {
-    for (const instrument of props.response?.data) {
-      const object = {
-        id: instrument.label,
-        latitude: instrument.latitude,
-        longitude: instrument.longitude
+  const searchResult = props.response.locations ?
+    props.response.locations.map(location => {
+      return {
+        id: location.id,
+        latitude: location.latitude,
+        longitude: location.longitude
       };
-      searchResult.push(object);
-    };
-  }
+    }) : [];
 
   const onMarkerClick = (props, marker, e) => {
     setSelectedPlace(props);
@@ -66,8 +63,8 @@ export function GoogleMap(props) {
       // onClick={onMapClicked}
       style={{ width: '100%', height: '100%', position: "static" }}
       containerStyle={{ width: "34%", height: "37.5%" }}
-      center = {center}
-      initialCenter = {center}
+      center={center}
+      initialCenter={center}
     >
       {displayMarkers()}
 
