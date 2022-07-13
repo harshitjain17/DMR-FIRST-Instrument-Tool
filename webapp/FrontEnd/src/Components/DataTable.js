@@ -7,6 +7,7 @@ import Stack from '@mui/material/Stack';
 import "./DataTable.css";
 import InstoolApi from '../Api/InstoolApi';
 import ModalBox from './ModalBox';
+import LinearProgress from '@mui/material/LinearProgress';
 
 
 const columns = [
@@ -93,16 +94,16 @@ function CustomNoRowsOverlay() {
     </StyledGridOverlay>
   );
 };
-const skeletonArray = Array(4).fill('');
-function CustomLoadingOverlay() {
-  return (
-    skeletonArray.map((item, index) => (
-      <Stack>
-        <Skeleton animation="wave" variant="text" width={1000} height={30} />
-      </Stack>
-      ))
-  )
-}
+// const skeletonArray = Array(4).fill('');
+// function CustomLoadingOverlay() {
+//   return (
+//     skeletonArray.map((item, index) => (
+//       <Stack>
+//         <Skeleton animation="wave" variant="text" width={450} height={30} />
+//       </Stack>
+//       ))
+//   )
+// }
 
 export default function DataTable(props) {
   const [instrumentData, setInstrumentData] = React.useState('');
@@ -150,9 +151,12 @@ export default function DataTable(props) {
         density="compact"
         pageSize={5}
         rowsPerPageOptions={[5]}
+        loading
         components={{ 
           Toolbar: GridToolbar,
-          NoRowsOverlay: CustomLoadingOverlay }}
+          LoadingOverlay: LinearProgress,
+          // NoRowsOverlay: CustomLoadingOverlay
+         }}
         componentsProps={{
           toolbar: { showQuickFilter: true },
         }}
