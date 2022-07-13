@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
+import React from 'react';
+import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 var config = require("../config/config").default();
 
 export function GoogleMap(props) {
 
-  const [showingInfoWindow, setShowingInfoWindow] = useState(false);
-  const [activeMarker, setActiveMarker] = useState();
-  const [setSelectedPlace] = useState();
+  // const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  // const [activeMarker, setActiveMarker] = useState();
+  // const [selectedPlace, setSelectedPlace] = useState();
 
   const location = props.response.searchLocation;
   // Might be '0', so using == intentionally
@@ -27,10 +27,11 @@ export function GoogleMap(props) {
       };
     }) : [];
 
-  const onMarkerClick = (props, marker, e) => {
-    setSelectedPlace(props);
-    setActiveMarker(marker);
-    setShowingInfoWindow(true);
+  const onMarkerClick = (p) => {
+    // setSelectedPlace(props);
+    // setActiveMarker(marker);
+    props.onSelectLocation(p.label);
+    // setShowingInfoWindow(true);
   };
 
   const displayMarkers = () => {
@@ -44,13 +45,13 @@ export function GoogleMap(props) {
           lng: store.longitude
         }}
         onClick={onMarkerClick}>
-        <InfoWindow
+        {/* <InfoWindow
           marker={activeMarker}
           visible={showingInfoWindow}>
           <div>
             <h1>{store.location}</h1>
           </div>
-        </InfoWindow>
+        </InfoWindow> */}
       </Marker>
 
     })

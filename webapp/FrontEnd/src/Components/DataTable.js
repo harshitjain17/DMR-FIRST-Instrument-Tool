@@ -107,6 +107,7 @@ function CustomNoRowsOverlay() {
 export default function DataTable(props) {
   const [instrumentData, setInstrumentData] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  // const [filterModel, setFilterModel] = React.useState()
 
   var searchResult = props.response.instruments ?
     props.response.instruments.map(instrument => {
@@ -124,6 +125,15 @@ export default function DataTable(props) {
         instrumentId: instrument.instrumentId
       };
     }) : [];
+
+  var filterModel = props.selectedLocation ?
+    {
+      items: [
+        { id: 1, columnField: 'location', operatorValue: 'equals', value: props.selectedLocation }
+      ]
+    } : {
+      items: []
+    };
 
   const handleOnRowClick = (params) => {
     InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
@@ -159,7 +169,8 @@ export default function DataTable(props) {
           initialState={{
             columns: {
               columnVisibilityModel: {
-                id: false              },
+                id: false
+              },
             },
           }}
           checkboxSelection
@@ -181,6 +192,12 @@ export default function DataTable(props) {
           componentsProps={{
             toolbar: { showQuickFilter: true },
           }}
+          initialState={{
+            columns: {
+              columnVisibilityModel: { id: false },
+            },
+          }}
+          filterModel={filterModel}
           checkboxSelection
           disableSelectionOnClick
           onRowClick={handleOnRowClick}
