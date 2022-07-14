@@ -151,31 +151,30 @@ export default function DataTable(props) {
 
       {/* if loading, render skeleton rows */}
       {!props.minimumTimeElapsed || props.loading ? (
-        <DataGrid
-          rows={[]}
-          columns={columns}
-          density="compact"
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          loading
-          components={{
-            Toolbar: GridToolbar,
-            LoadingOverlay: LinearProgress,
-            // NoRowsOverlay: CustomLoadingOverlay
-          }}
-          componentsProps={{
-            toolbar: { showQuickFilter: true },
-          }}
-          initialState={{
-            columns: {
-              columnVisibilityModel: {
-                id: false
-              },
+      <DataGrid
+        rows={[]}
+        columns={columns}
+        density="compact"
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        loading
+        components={{ 
+          Toolbar: GridToolbar,
+          LoadingOverlay: LinearProgress, 
+         }}
+        componentsProps={{
+          toolbar: { showQuickFilter: true },
+        }}
+        initialState={{
+          columns: {
+            columnVisibilityModel: {
+              id: false
             },
-          }}
-          checkboxSelection
-          disableSelectionOnClick
-        />
+          },
+        }}
+        checkboxSelection
+        disableSelectionOnClick
+      />
 
       ) : (
         <DataGrid
