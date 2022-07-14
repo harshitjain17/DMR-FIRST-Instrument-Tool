@@ -16,6 +16,10 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
+import initLogging from './logging';
+// Initialize the loggin library, so that a user can toggle log levels with Ctrl-F12
+initLogging();
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({

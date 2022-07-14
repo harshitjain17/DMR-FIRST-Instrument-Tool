@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import Tabination from './Tabination';
+import log from 'loglevel';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -18,7 +19,7 @@ export default function ModalBox(props) {
     props.handleClose(false);
   };
   const object = props.instrumentData;
-  console.log(object);
+  log.debug(object);
 
   return (
     <div>

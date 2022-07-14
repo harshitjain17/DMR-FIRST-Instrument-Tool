@@ -191,11 +191,6 @@ export default function DataTable(props) {
           componentsProps={{
             toolbar: { showQuickFilter: true },
           }}
-          initialState={{
-            columns: {
-              columnVisibilityModel: { id: false },
-            },
-          }}
           filterModel={filterModel}
           checkboxSelection
           disableSelectionOnClick

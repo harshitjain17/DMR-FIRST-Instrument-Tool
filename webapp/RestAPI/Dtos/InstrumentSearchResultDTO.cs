@@ -19,9 +19,9 @@ namespace Instool.DAL.Results
 
         public InstrumentSearchResult(PaginatedList<InstrumentWithDistance> data, int draw)
         {
-            Locations = data.Select(r => r.Instrument.Location)
-                            .DistinctBy(l => l.LocationId)
-                            .Select((l, index) => new LocationRow(l, index + 1));
+            Locations = data.GroupBy(l => l.Instrument.LocationId)
+                            .Select((x, index) => new LocationRow(x.First().Instrument, index + 1, x.Count())
+                            );
             Instruments = data.Select((row, i) => 
                 new InstrumentRow(
                     row.Instrument, 
@@ -90,13 +90,19 @@ namespace Instool.DAL.Results
 
         public double? Latitude { get; set; }
         public int DbId { get; }
+        public string? Building { get; }
+        public string? Institution { get; }
+        public int Count { get; }
 
-        public LocationRow(Location l, int index)
+        public LocationRow(Instrument i, int index, int count)
         {
             Id = index;
-            Longitude = l.Longitude;
-            Latitude = l.Latitude;
-            DbId = l.LocationId;
+            Longitude = i.Location.Longitude;
+            Latitude = i.Location.Latitude;
+            DbId = i.Location.LocationId;
+            Building = i.Location.Building;
+            Institution = i.Institution?.Name;
+            Count = count;
         }
     }
 }

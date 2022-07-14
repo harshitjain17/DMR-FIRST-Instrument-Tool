@@ -1,4 +1,6 @@
 import axios from 'axios';
+import log from 'loglevel';
+
 var config = require("../config/config").default();
 
 class GoogleApi {
@@ -18,7 +20,7 @@ class GoogleApi {
             var lng = response.data.results[0].geometry.location.lng;
             return [lat, lng];
         } catch (error) {
-            console.error(error)
+            log.error(error)
             throw error;
         }
     }
