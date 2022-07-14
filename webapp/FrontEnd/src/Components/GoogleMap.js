@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Map, GoogleApiWrapper, Marker, InfoWindow, Circle } from 'google-maps-react';
+import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 var config = require("../config/config").default();
 
 export function GoogleMap(props) {
@@ -8,21 +8,17 @@ export function GoogleMap(props) {
   const [activeMarker, setActiveMarker] = useState();
   const [selectedLocation, setSelectedLocation] = useState();
 
-  const location = props.response.searchLocation;
-  // That is just some heuristic so that the zoom level is not completely off
-  // TODO: We might want to set proper bounds with the locations we found.
-
-  // Might be '0', so using == intentionally
-  // eslint-disable-next-line eqeqeq
-  const zoom = !location?.maxDistance || location.maxDistance == 0 ? 4 : location?.maxDistance > 100 ? 6 : 7
-
-  // Center to the US by default.
-  const center = {
-    lat: location?.latitude ?? 37,
-    lng: location?.longitude ?? -95
-  }
-
   const searchResult = props.response.locations || [];
+
+  // Gather all locations, and let google determine which part of the map to show
+  // so we see all of them.
+  const bounds = new google.maps.LatLngBounds()
+  for (const l of searchResult) {
+    bounds.extend({
+        lat: l.latitude,
+        lng: l.longitude
+    })
+  }
 
   // Show an info window, and filter the table for instruments at that location
   const onMarkerClick = (p, marker) => {
@@ -63,19 +59,12 @@ export function GoogleMap(props) {
   return (
     <Map
       google={props.google}
-      zoom={zoom}
       style={{ width: '100%', height: '100%', position: "static" }}
       containerStyle={{ width: "34%", height: "37.5%" }}
-      center={center}
-      initialCenter={center}
-    >
-      <Circle
-        radius={200}
-        center={center}
-        strokeColor='orange'
-        strokeWeight={5}
-        fillColor='transparent'
-      />
+      bounds={bounds}
+      initialCenter={{lat: 37, lng: -95}}
+      zoom={4}
+  >
       {displayMarkers()}
       <InfoWindow
         marker={activeMarker}
