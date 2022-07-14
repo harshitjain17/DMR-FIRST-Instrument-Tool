@@ -16,6 +16,10 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
+import initLogging from './logging';
+// Initialize the loggin library, so that a user can toggle log levels with Ctrl-F12
+initLogging();
+
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
@@ -75,6 +79,7 @@ function App() {
   const [response, setResponse] = useState([]);
   const [minimumTimeElapsed, setMinimumTimeElapsed] = useState();
   const [loading, setLoading] = useState();
+  const [selectedLocation, selectLocation] = useState();
 
   const responseDataHandler = (responseData) => {
     setResponse(responseData);
@@ -86,6 +91,10 @@ function App() {
 
   const loadingHandler = (params) => {
     setLoading(params);
+  };
+
+  const selectLocationHandler = (params) => {
+    selectLocation(params);
   };
 
   return (
@@ -144,7 +153,7 @@ function App() {
                     height: '48vh',
                   }}
                 >
-                <DataTable response={response} minimumTimeElapsed={minimumTimeElapsed} loading={loading}/>
+                <DataTable response={response} selectedLocation={selectedLocation} minimumTimeElapsed={minimumTimeElapsed} loading={loading}/>
                 </Paper>
               </Grid>
               
@@ -158,7 +167,7 @@ function App() {
                     height: '40vh',
                   }}
                 >
-                  <GoogleMap response={response}/>
+                  <GoogleMap response={response} onSelectLocation={selectLocationHandler}/>
                 </Paper>
               </Grid>
             </Grid>

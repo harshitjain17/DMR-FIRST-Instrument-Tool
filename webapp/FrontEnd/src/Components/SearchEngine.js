@@ -14,6 +14,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import InstoolApi from '../Api/InstoolApi';
 import GoogleApi from '../Api/GoogleApi';
 
+import log from 'loglevel';
+
 export default function SearchEngine(props) {
 
     // States for input given in the textbox (in search engine)
@@ -98,12 +100,13 @@ export default function SearchEngine(props) {
         textAlign: 'center'
     }));
 
-    // submit handling
+    // We only search once the user hits submit - handled here
     const submitHandler = async (event) => {
         event.preventDefault();
         var coordinates = await GoogleApi.getCoordinates(enteredAddress);
+        log.info(`Found coordinates (${coordinates[0]}, ${coordinates[1]}) for ${enteredAddress}`);
 
-        //object
+        // search criteria as expected by the server
         const userInput = {
             location: {
                 latitude: coordinates[0],
@@ -116,16 +119,23 @@ export default function SearchEngine(props) {
             awardNumber: enteredAwardNumber,
             includeRetired: enteredIRI
         };
-        console.log(userInput);
 
-        // Posting the user input and recieving/saving the data recieved from the server
-        InstoolApi.post(`/instruments/search`, userInput)
-            .then(response => 
-                props.onSaveResponseData({
-                    data: response.data.data,
-                    location: userInput.location //taking the location object
-                })
-            )
+        log.debug(userInput);
+        try {
+            const response = await InstoolApi.post(`/instruments/search`, userInput);
+            log.info(`Server returned ${response.data.instruments?.length} instruments, and ${response.data.locations?.length} locations`)
+            log.debug(response);
+            // Let other components update using both the results we got from the server,
+            // as well as the search location, which is needed to center the map
+            props.onSaveResponseData({
+                instruments: response.data.instruments,
+                locations: response.data.locations,
+                searchLocation: userInput.location
+            })
+        } catch (error) {
+            log.error(error);
+            throw error;
+        }
     };
 
     // Another Submit handler (for handling loading states)
@@ -137,26 +147,28 @@ export default function SearchEngine(props) {
         setMinimumTimeElapsed(false);
         setLoading(true);
         const randomLoadTime = Math.random() * 4000;
-        
-        setTimeout(() => {
-          setMinimumTimeElapsed(true);
-        }, 500);
-    
-        setTimeout(() => {
-          setLoading(false);
-        }, randomLoadTime);
-        
-      }, [setMinimumTimeElapsed, setLoading]);
 
-      props.minimumTimeElapsed(minimumTimeElapsed);
-      props.loading(loading);
-    
+        setTimeout(() => {
+            setMinimumTimeElapsed(true);
+        }, 500);
+
+        setTimeout(() => {
+            setLoading(false);
+        }, randomLoadTime);
+
+    }, [setMinimumTimeElapsed, setLoading]);
+
+    React.useEffect(() => {
+        props.minimumTimeElapsed(minimumTimeElapsed);
+        props.loading(loading);
+    }, [props, minimumTimeElapsed, loading]);
+
     // Reset handling
     const resetHandler = async (event) => {
         event.preventDefault();
 
         setEnteredAddress('');
-        setEnteredDistance('');
+        setEnteredDistance('0');
         setEnteredInstrumentCategory('');
         setEnteredInstrumentType('');
         setEnteredKeywords([]);
@@ -322,7 +334,7 @@ export default function SearchEngine(props) {
 
 
                 <div className="d-grid gap-2 mt-3">
-                    <Button endIcon={<SearchIcon/>} onClick = {() => {restartTimeout()}} type = 'submit' variant="contained" style = {{width:"90%", margin: "auto"}}>Search</Button>
+                    <Button endIcon={<SearchIcon />} onClick={() => { restartTimeout() }} type='submit' variant="contained" style={{ width: "90%", margin: "auto" }}>Search</Button>
                 </div>
 
                 <div className="d-grid gap-2">

@@ -6,71 +6,75 @@ export function GoogleMap(props) {
 
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [activeMarker, setActiveMarker] = useState();
-  const [setSelectedPlace] = useState();
+  const [selectedLocation, setSelectedLocation] = useState();
 
-  const searchResult = [];
-  const location = props.response.location;
-  // Might be '0', so using == intentionally
-  // eslint-disable-next-line eqeqeq
-  const zoom = !location?.maxDistance || location.maxDistance == 0 ? 4 : location?.maxDistance > 100 ? 7 : 8
-  
-  const center = {
-    lat: location?.latitude ?? 37,
-    lng: location?.longitude ?? -95
+  const searchResult = props.response.locations || [];
+
+  // Gather all locations, and let google determine which part of the map to show
+  // so we see all of them.
+  const bounds = new google.maps.LatLngBounds()
+  for (const l of searchResult) {
+    bounds.extend({
+        lat: l.latitude,
+        lng: l.longitude
+    })
   }
 
-  if (props.response.data) {
-    for (const instrument of props.response?.data) {
-      const object = {
-        id: instrument.label,
-        latitude: instrument.latitude,
-        longitude: instrument.longitude
-      };
-      searchResult.push(object);
-    };
-  }
-
-  const onMarkerClick = (props, marker, e) => {
-    setSelectedPlace(props);
-    setActiveMarker(marker);
-    setShowingInfoWindow(true);
+  // Show an info window, and filter the table for instruments at that location
+  const onMarkerClick = (p, marker) => {
+    if (selectedLocation?.id.toString() === p.label) {
+      onMarkerDeselected();
+    } else {
+      setSelectedLocation(searchResult.find(l => l.id.toString() === p.label));
+      setActiveMarker(marker);
+      setShowingInfoWindow(true);
+      props.onSelectLocation(p.label);
+    }
   };
 
+  // Called when the same marker is clicked again, or when the infobox is closed.
+  // Table filter is reset and all instruments are shown again.
+  const onMarkerDeselected = () => {
+    setSelectedLocation(null);
+    setActiveMarker(null);
+    setShowingInfoWindow(false);
+    props.onSelectLocation(null);
+  }
+
   const displayMarkers = () => {
-    return searchResult.map((store, index) => {
+    return searchResult.map((location, index) => {
       return <Marker
         key={index}
         id={index}
-        label={store.id.toString()}
+        label={location.id.toString()}
         position={{
-          lat: store.latitude,
-          lng: store.longitude
+          lat: location.latitude,
+          lng: location.longitude
         }}
         onClick={onMarkerClick}>
-        <InfoWindow
-          marker={activeMarker}
-          visible={showingInfoWindow}>
-          <div>
-            <h1>{store.location}</h1>
-          </div>
-        </InfoWindow>
       </Marker>
-
     })
   };
 
   return (
     <Map
       google={props.google}
-      zoom={zoom}
-      // onClick={onMapClicked}
       style={{ width: '100%', height: '100%', position: "static" }}
       containerStyle={{ width: "34%", height: "37.5%" }}
-      center = {center}
-      initialCenter = {center}
-    >
+      bounds={bounds}
+      initialCenter={{lat: 37, lng: -95}}
+      zoom={4}
+  >
       {displayMarkers()}
-
+      <InfoWindow
+        marker={activeMarker}
+        visible={showingInfoWindow}
+        onClose={onMarkerDeselected}>
+        <div>
+          <h5>{selectedLocation?.building ?? selectedLocation?.institition}</h5>
+          <p>{selectedLocation?.count} instrument(s)</p>
+        </div>
+      </InfoWindow>
     </Map>
   );
 }

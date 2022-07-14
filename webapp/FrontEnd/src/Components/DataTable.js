@@ -15,11 +15,12 @@ import {
 
 
 const columns = [
-  { field: 'id', headerName: 'ID', type: 'number', width: 90 },
+  { field: 'id', headerName: 'ID', type: 'number', width: 0 },
   { field: 'institution', headerName: 'Institution', width: 190 },
   { field: 'type', headerName: 'Instrument Type', width: 140 },
   { field: 'name', headerName: 'Instrument Name', width: 150 },
   { field: 'doi', headerName: 'DOI', width: 160 },
+  { field: 'location', headerName: 'Location', width: 90 },
   { field: 'city', headerName: 'City', width: 150 },
   { field: 'state', headerName: 'State', width: 100 },
   { field: 'award', headerName: 'Award', width: 150 },
@@ -102,14 +103,14 @@ function CustomNoRowsOverlay() {
 export default function DataTable(props) {
   const [instrumentData, setInstrumentData] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  // const [filterModel, setFilterModel] = React.useState()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  var searchResult = [];
-  if (props.response.data) {
-    for (var instrument of props.response.data) {
-      var object = {
+  var searchResult = props.response.instruments ?
+    props.response.instruments.map(instrument => {
+      return {
         id: instrument.label,
         institution: instrument.institution,
+        location: instrument.location,
         type: instrument.type,
         name: instrument.name,
         doi: instrument.doi,
@@ -119,9 +120,16 @@ export default function DataTable(props) {
         status: instrument.status,
         instrumentId: instrument.instrumentId
       };
-      searchResult.push(object);
+    }) : [];
+
+  var filterModel = props.selectedLocation ?
+    {
+      items: [
+        { id: 1, columnField: 'location', operatorValue: 'equals', value: props.selectedLocation }
+      ]
+    } : {
+      items: []
     };
-  }
 
   const handleOnRowClick = (params) => {
     InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
@@ -133,10 +141,10 @@ export default function DataTable(props) {
   const handleCloseModal = () => {
     setOpen(false)
   };
-  
+
   return (
     <div style={{ display: 'flex', height: '100%' }}>
-      
+
       {/* if loading, render skeleton rows */}
       {!props.minimumTimeElapsed || props.loading ? (
       <DataGrid
@@ -153,29 +161,39 @@ export default function DataTable(props) {
         componentsProps={{
           toolbar: { showQuickFilter: true },
         }}
+        initialState={{
+          columns: {
+            columnVisibilityModel: {
+              id: false
+            },
+          },
+        }}
         checkboxSelection
         disableSelectionOnClick
       />
 
       ) : (
-      <DataGrid
-        rows={searchResult}
-        columns={columns}
-        density="compact"
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        components={{ 
-          Toolbar: GridToolbar,
-          NoRowsOverlay: CustomNoRowsOverlay }}
-        componentsProps={{
-          toolbar: { showQuickFilter: true },
-        }}
-        checkboxSelection
-        disableSelectionOnClick
-        onRowClick={handleOnRowClick}
-      />
+        <DataGrid
+          rows={searchResult}
+          columns={columns}
+          density="compact"
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          components={{
+            Toolbar: GridToolbar,
+            // LoadingOverlay: LoadingSkeleton,
+            NoRowsOverlay: CustomNoRowsOverlay
+          }}
+          componentsProps={{
+            toolbar: { showQuickFilter: true },
+          }}
+          filterModel={filterModel}
+          checkboxSelection
+          disableSelectionOnClick
+          onRowClick={handleOnRowClick}
+        />
       )}
-      <ModalBox openClose={open} handleClose={handleCloseModal} instrumentData={instrumentData}/>
+      <ModalBox openClose={open} handleClose={handleCloseModal} instrumentData={instrumentData} />
     </div>
   );
 };
