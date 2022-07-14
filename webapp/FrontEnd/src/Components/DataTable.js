@@ -2,12 +2,16 @@ import React from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
-import Stack from '@mui/material/Stack';
 import "./DataTable.css";
 import InstoolApi from '../Api/InstoolApi';
 import ModalBox from './ModalBox';
 import LinearProgress from '@mui/material/LinearProgress';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from 'react-router-dom';
 
 
 const columns = [
@@ -94,16 +98,6 @@ function CustomNoRowsOverlay() {
     </StyledGridOverlay>
   );
 };
-// const skeletonArray = Array(4).fill('');
-// function CustomLoadingOverlay() {
-//   return (
-//     skeletonArray.map((item, index) => (
-//       <Stack>
-//         <Skeleton animation="wave" variant="text" width={450} height={30} />
-//       </Stack>
-//       ))
-//   )
-// }
 
 export default function DataTable(props) {
   const [instrumentData, setInstrumentData] = React.useState('');
@@ -172,7 +166,6 @@ export default function DataTable(props) {
         rowsPerPageOptions={[5]}
         components={{ 
           Toolbar: GridToolbar,
-          // LoadingOverlay: LoadingSkeleton,
           NoRowsOverlay: CustomNoRowsOverlay }}
         componentsProps={{
           toolbar: { showQuickFilter: true },
