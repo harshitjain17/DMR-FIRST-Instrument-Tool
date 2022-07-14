@@ -47,7 +47,7 @@ build:
   tags:
     - m4-instool
 
-deploy_dev_manual:
+deploy_dev:
     cache: {}
     stage: deploy_test
     variables:
@@ -56,9 +56,6 @@ deploy_dev_manual:
     environment:
         name: dev
         url: https://m4-instool.vmhost.psu.edu
-    when: manual
-    except:
-     - master
     script:
      - c:/gitlab-runner/scripts/deploy_version.ps1 -hash "$env:CI_COMMIT_SHORT_SHA" -app instool -site 'instool-dev'
     tags:
