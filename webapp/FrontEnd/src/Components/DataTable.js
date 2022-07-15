@@ -6,6 +6,12 @@ import "./DataTable.css";
 import InstoolApi from '../Api/InstoolApi';
 import ModalBox from './ModalBox';
 import LinearProgress from '@mui/material/LinearProgress';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from 'react-router-dom';
 
 
 const columns = [
@@ -93,16 +99,6 @@ function CustomNoRowsOverlay() {
     </StyledGridOverlay>
   );
 };
-// const skeletonArray = Array(4).fill('');
-// function CustomLoadingOverlay() {
-//   return (
-//     skeletonArray.map((item, index) => (
-//       <Stack>
-//         <Skeleton animation="wave" variant="text" width={450} height={30} />
-//       </Stack>
-//       ))
-//   )
-// }
 
 export default function DataTable(props) {
   const [instrumentData, setInstrumentData] = React.useState('');
