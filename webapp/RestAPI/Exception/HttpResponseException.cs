@@ -7,11 +7,11 @@ namespace Instool.RestAPI.Exceptions
     {
         public HttpResponseException(int status, object? value = null)
         {
-            Status = status;
+            StatusCode = status;
             Value = value;
         }
 
-        public int Status { get; set; } = 500;
+        public int StatusCode { get; set; } = 500;
 
         public object? Value { get; set; }
 

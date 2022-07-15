@@ -1,73 +1,135 @@
-﻿2DCC Bridgman 1,brm,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
-Mao Bridgman 2,brm,,,,,A,,,,2DCC,ARL Freeport,zim1
-CHET,,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
-New Chet,,,,,N135 ,A,,,,2DCC,Millenium Science Complex,jar403
-Wafer-scale CHET,,,,,N129 ,A,,,,2DCC,Millenium Science Complex,jar403
-2DCC Compounding Furnace 1,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
-2DCC Box Furnace,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
-2DCC Muffle Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-2DCC Muffle Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-2DCC Muffle Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-2DCC Muffle Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-2DCC Muffle Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-CVD1,cvd,,,,,A,,,,2DCC,230 Building Innovation Park,jmr31
-2DCC CVT1,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
-2DCC CVT2,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
-2DCC CVT3,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
-2DCC CVT4,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
-HPCVD1,cvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31
-2DCC High Temp Muffle 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-MBE1,mbe,,,,35,A,,,,2DCC,Davey Lab,nxs16
-MBE2,mbe,DCA,,,N118A ,A,,,,2DCC,Millenium Science Complex,sal6149
-MBE4,mbe,,,,N118A ,A,,,,2DCC,Millenium Science Complex,sal6149
-MBE5,mbe,,,,144,A,,,,2DCC,Davey Lab,nxs16
-MBE6,mbe,,,,144,A,,,,2DCC,Davey Lab,nxs16
-MBF3,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1
-MOCVD1,mocvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31
-MOCVD2,mocvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31
-MOCVD3,mocvd,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
-Nitride MOCVD ,mocvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31
-Mao CVT 1,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao CVT 2,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao CVT 3,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao CVT 4,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao CVT 5,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao CVT 6,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao CVT 7,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1
-Powder Vaporization 1,eva,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
-Powder Vaporization 2,eva,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
-PVD1,pvd,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
-SiCG (Frank),,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403
-SiCG II (Francesca),,,,,N135A ,A,,,,2DCC,Millenium Science Complex,jar403
-Sputtering1,sput,,,,N118A ,A,,,,2DCC,Millenium Science Complex,zim1
-TBF3,melt-flux,,,,,A,,,,2DCC,South Frear Building,zim1
-Mao Crucible Furnace 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Crucible Furnace 2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Crucible Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Crucible Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Crucible Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Crucible Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Crucible Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-ZFZ1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-ZFZ2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 10,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 11,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 8,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-Mao Muffle Furnace 9,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1
-ARP1,arpes,ScientaOmicron,DA30-L ARPES,,35,A,,,,2DCC,Davey Lab,nxs16
-ARP2,arpes,,,,35,A,,,,2DCC,Davey Lab,nxs16
-RMN3,raman,Witec,,,N-125,A,,,,2DCC,Millenium Science Complex,jmr31
-FMR1,st-fmr,,,,356,A,,,,2DCC,Davey Lab,nxs16
-ICP1,icp-aes,,Thermo iCAP 6500,,,A,,,,2DCC,,
-SQD1,squid,Quantum Design ,MPMS SQUID,,329,A,,,,2DCC,Davey Lab,
-SQD2,squid,Quantum Design ,MPMS SQUID,,301,A,,,,2DCC,Davey Lab,
-STM1,stm,ScientaOmicron,LT-Nanoprobe,,35,A,,,,2DCC,Davey Lab,nxs16
-STM2,stm,Snipe,,,,,,,,2DCC,,
-UVV1,uv-vis-nir,Perkin-Elmer,Lambda 950,,,A,,,Lambda 950 UV-Vis-NIR Spectrophotometer and Agilent/Cary 7000 with UMA,2DCC,Millenium Science Complex,jmr31
+Name,Technique in database,Manufacturer,Model Number,Serial Number,Room,Status,Acquisition Date,Completion Date,Description,Facility,Location,Experts,,
+2DCC Bridgman 1,brm,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1@psu.edu,shl12@psu.edu,
+Mao Bridgman 2,brm,,,,,A,,,,2DCC,ARL Freeport,zim1@psu.edu,shl12@psu.edu,
+CHET,,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403@psu.edu,cud263@psu.edu,
+New Chet,,,,,N135 ,A,,,,2DCC,Millenium Science Complex,jar403@psu.edu,cud263@psu.edu,
+Wafer-scale CHET,,,,,N129 ,A,,,,2DCC,Millenium Science Complex,jar403@psu.edu,cud263@psu.edu,
+2DCC Compounding Furnace 1,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1@psu.edu,shl12@psu.edu,
+2DCC Box Furnace,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1@psu.edu,shl12@psu.edu,
+2DCC Muffle Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+2DCC Muffle Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+2DCC Muffle Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+2DCC Muffle Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+2DCC Muffle Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+CVD1,cvd,,,,,A,,,,2DCC,230 Building Innovation Park,jmr31@psu.edu,cuc33@psu.edu,
+2DCC CVT1,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1@psu.edu,shl12@psu.edu,
+2DCC CVT2,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1@psu.edu,shl12@psu.edu,
+2DCC CVT3,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1@psu.edu,shl12@psu.edu,
+2DCC CVT4,cvt,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1@psu.edu,shl12@psu.edu,
+HPCVD1,cvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31@psu.edu,cuc33@psu.edu,
+2DCC High Temp Muffle 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+MBE1,mbe,,,,35,A,,,,2DCC,Davey Lab,nxs16@psu.edu,arr19@psu.edu,
+MBE2,mbe,DCA,,,N118A ,A,,,,2DCC,Millenium Science Complex,sal6149@psu.edu,mxh752@psu.edu,
+MBE4,mbe,,,,N118A ,A,,,,2DCC,Millenium Science Complex,sal6149@psu.edu,mxh752@psu.edu,
+MBE5,mbe,,,,144,A,,,,2DCC,Davey Lab,nxs16@psu.edu,arr19@psu.edu,
+MBE6,mbe,,,,144,A,,,,2DCC,Davey Lab,nxs16@psu.edu,arr19@psu.edu,
+MBF3,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,zim1@psu.edu,shl12@psu.edu,
+MOCVD1,mocvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31@psu.edu,cuc33@psu.edu,
+MOCVD2,mocvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31@psu.edu,cuc33@psu.edu,
+MOCVD3,mocvd,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403@psu.edu,,
+Nitride MOCVD ,mocvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,jmr31@psu.edu,cuc33@psu.edu,
+Mao CVT 1,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao CVT 2,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao CVT 3,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao CVT 4,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao CVT 5,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao CVT 6,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao CVT 7,cvt,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Powder Vaporization 1,eva,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403@psu.edu,,
+Powder Vaporization 2,eva,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403@psu.edu,,
+PVD1,pvd,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403@psu.edu,,
+SiCG (Frank),,,,,N037 ,A,,,,2DCC,Millenium Science Complex,jar403@psu.edu,cud263@psu.edu,
+SiCG II (Francesca),,,,,N135A ,A,,,,2DCC,Millenium Science Complex,jar403@psu.edu,cud263@psu.edu,
+Sputtering1,sput,,,,N118A ,A,,,,2DCC,Millenium Science Complex,sal6149@psu.edu,mxh752@psu.edu,
+TBF3,melt-flux,,,,,A,,,,2DCC,South Frear Building,zim1@psu.edu,shl12@psu.edu,
+Mao Crucible Furnace 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Crucible Furnace 2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Crucible Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Crucible Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Crucible Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Crucible Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Crucible Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+ZFZ1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+ZFZ2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 10,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 11,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 8,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+Mao Muffle Furnace 9,melt-flux,,,,347,A,,,,2DCC,Davey Lab,zim1@psu.edu,shl12@psu.edu,
+ARP1,arpes,ScientaOmicron,DA30-L ARPES,,35,A,,,,2DCC,Davey Lab,nxs16@psu.edu,arr19@psu.edu,
+ARP2,arpes,,,,35,A,,,,2DCC,Davey Lab,nxs16@psu.edu,arr19@psu.edu,
+RMN3,raman,Witec,,,N-125,A,,,,2DCC,Millenium Science Complex,jmr31@psu.edu,cuc33@psu.edu,
+FMR1,st-fmr,,,,356,A,,,,2DCC,Davey Lab,nxs16@psu.edu,arr19@psu.edu,
+ICP1,icp-aes,,Thermo iCAP 6500,,,A,,,,2DCC,,,,
+SQD1,squid,Quantum Design ,MPMS SQUID,,329,A,,,,2DCC,Davey Lab,,,
+SQD2,squid,Quantum Design ,MPMS SQUID,,301,A,,,,2DCC,Davey Lab,,,
+STM1,stm,ScientaOmicron,LT-Nanoprobe,,35,A,,,,2DCC,Davey Lab,nxs16@psu.edu,arr19@psu.edu,
+STM2,stm,Snipe,,,,,,,,2DCC,,ewh10,,
+UVV1,uv-vis-nir,Perkin-Elmer,Lambda 950,,,A,,,Lambda 950 UV-Vis-NIR Spectrophotometer and Agilent/Cary 7000 with UMA,2DCC,Millenium Science Complex,jmr31@psu.edu,,
+AFM3,afm,,,,6F,A,,,,2DCC,Osmond Lab,,,
+PHI 670 with 680 motorized stage,aes,,,,,A,,,,MCL,Millenium Science Complex,rwh133@psu.edu,jxs124@psu.edu,
+Bruker Dimension Icon I,afm,,,,,A,,,,MCL,Millenium Science Complex,tbt1@psu.edu,snk3@psu.edu,
+Bruker Dimension Icon II,afm,,,,,A,,,,MCL,Millenium Science Complex,tbt1@psu.edu,snk3@psu.edu,
+Asylum Research Cypher VRS,afm,OXFORD ASYLUM,CYPHER,19338,N018,A,,,,MCL,Millenium Science Complex,tbt1@psu.edu,snk3@psu.edu,
+Bruker BioScope Resolve,afm,,,,,A,,,,MCL,Millenium Science Complex,tbt1@psu.edu,snk3@psu.edu,
+Automated Goniometer/ Tensiometer with Environmental Chamber Support (ram�-hart Model 295),,FAMEHART INSTRU,295-F4,130301,N007,A,,,,MCL,Millenium Science Complex,mtw5027@psu.edu,,
+Micromeritics Accupyc II 1340,pycno,MICROMERITIC,ACCUPYC1340,2295,N030K,A,,,,MCL,Millenium Science Complex,nmw10@psu.edu,glt5009@psu.edu,
+Oxford Symmetry,,OXFORD INSTRUME,SYMMETRY,915759,N030K,A,,,,MCL,Millenium Science Complex,jma14@psu.edu,tec11@psu.edu,
+Oxford Nordlys Max2,,,,,,A,,,,MCL,Millenium Science Complex,jma14@psu.edu,tec11@psu.edu,
+Energy Dispersive Spectrometer,eds,,,,,A,,,,MCL,Millenium Science Complex,jma14@psu.edu,,
+Helios 660,fib-lit,FEI,1037473,9922583,N031A,A,,,,MCL,Millenium Science Complex,tec11@psu.edu,wua101@psu.edu,huw19@psu.edu
+Scios 2,fib-lit,FEI,SCIOS2,99503422,,A,,,,MCL,Millenium Science Complex,tec11@psu.edu,wua101@psu.edu,huw19@psu.edu
+Micromeritics AutoPore V Model 9620 (120),porosity,MICROMERITICS,9620,120,N004,A,,,,MCL,Millenium Science Complex,jma14@psu.edu,,
+Bruker Hysitron TI-980,n-indent,HYSITRON INC,TI 9810,15947,N030D,A,,,,MCL,Millenium Science Complex,tbt1@psu.edu,,
+Zygo Nexview 3D Optical Surface Profiler (1433-80044),op,ZYGO,NEXVIEW 3D,1433-80044,N030A,A,,,,MCL,Millenium Science Complex,tbt1@psu.edu,,
+"LabRAM HR ""VlabiNIR"" (1149)",raman,HORIBA SCIENTIF,LABRAM HR EV,1149,N007,A,,,,MCL,Millenium Science Complex,mtw5027@psu.edu,,
+"LabRAM HR ""Lucy"" (1129)",raman,HORIBA SCIENTIF,LABRAM HR EV,1129,N007,A,,,,MCL,Millenium Science Complex,mtw5027@psu.edu,,
+Xplora Plus (72410),raman,HORIBA SCIENTIF,XPLORA PLUS,72410,N007,A,,,,MCL,Millenium Science Complex,mtw5027@psu.edu,,
+XPS-Auger (6),aes,UIVAC-PHI,PHI5000 VERSA PROBE III,6,N031D,A,,,,MCL,Millenium Science Complex,,,
+XPS (1124114),xps,ULVAC PHI INC,PHI5000,1124114,N031D,A,,,,MCL,Millenium Science Complex,jxs124@psu.edu,tjz127@psu.edu,
+Verios G4 (9952413),sem,THERMO SCIENTIF,VERIOS G4,9952413,N030K,A,,,,MCL,Millenium Science Complex,jma14@psu.edu,wua101@psu.edu,
+Apreo S (9952411),sem,THERMO SCIENTIF,APREO,9952411,N030K,A,,,,MCL,Millenium Science Complex,jma14@psu.edu,wua101@psu.edu,
+ESEM Q250 (9950352),sem,THERMA SCIENTIF,Q250,9950352,N030K,A,,,,MCL,Millenium Science Complex,jma14@psu.edu,wua101@psu.edu,
+ASAP 2020,surface,MICROMETRICS,ASAP 2020,411,N007,A,,,,MCL,Millenium Science Complex,nmw10@psu.edu,jma14@psu.edu,glt5009@psu.edu
+Autopore V,surface,MICROMETRICS,9620,120,N007,A,,,,MCL,Millenium Science Complex,nmw10@psu.edu,jma14@psu.edu,glt5009@psu.edu
+ASAP 2420,surface,MICROMETRICS,ASAP 2420,,N004,A,,,,MCL,Millenium Science Complex,nmw10@psu.edu,jma14@psu.edu,glt5009@psu.edu
+Tecnai G2,tem,FEI COMPANY,G2 20X TWIN,D2315,N030J,A,,,,MCL,Millenium Science Complex,jlg375@psu.edu,kuw13@psu.edu,
+Talos F200C,tem,FEI COMPANY,F200C,,N031E,A,,,,MCL,Millenium Science Complex,jlg375@psu.edu,kuw13@psu.edu,
+Talos F200X,tem,FEI COMPANY,FX200X,D6326,N030G,A,,,,MCL,Millenium Science Complex,jlg375@psu.edu,kuw13@psu.edu,
+Titan? G2,tem,,,,,A,,,,MCL,Millenium Science Complex,jlg375@psu.edu,kuw13@psu.edu,
+Discovery TGA-MS,,TA INSTRUMENTS,TGA5500,55000124,,A,,,,MCL,Millenium Science Complex,glt5009@psu.edu,,
+TA Q2000 DSC,calori,TA INSTRUMENTS,DSCQ2000,29131,N007,A,,,,MCL,Millenium Science Complex,glt5009@psu.edu,,
+STA 449 F3,,NETZSCH,STA 449F3 JUPITER,STA449F3B-0232-M,N007,A,,,,MCL,Millenium Science Complex,glt5009@psu.edu,,
+PHI nanoTOF II,tof-sims,ULVAC PHI INC,PHITRIFTV,500815,N030D,A,,,,MCL,Millenium Science Complex,huc24@psu.edu,,
+Perkin-Elmer Lambda 950 UV-Vis-NIR Spectrophotometer,uv-vis-nir,PERKIN ELMER,950,950N7123003,N007,A,,,,MCL,Millenium Science Complex,jjs366@psu.edu,,
+Agilent/Cary 7000 with UMA,uv-vis-nir,,,,,A,,,,MCL,Millenium Science Complex,jjs366@psu.edu,,
+Malvern Panalytical Empyrean I / II / III,xrd,,,,,A,,,,MCL,Millenium Science Complex,nmw10@psu.edu,,
+Malvern Panalytical XPert Pro MPD,xrd,,,,,A,,,,MCL,Millenium Science Complex,nmw10@psu.edu,,
+Malvern Panalytical X'Pert3�MRD,xrd,PANALYTICAL INC,XPERT3,DY5383,N008,A,,,,MCL,Millenium Science Complex,nmw10@psu.edu,,
+XENOCS Xeuss 2.0 SAXS/WAXS,xrd,XENOCS,XEUSS 2.0,16410410,N008,A,,,,MCL,Millenium Science Complex,nmw10@psu.edu,,
+Multiwire Laue,xrd,MULTIWIRE,MWL120,288,N008,A,,,,MCL,Millenium Science Complex,nmw10@psu.edu,,
+Trek 30kV Amplifier,dielect,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Linear Variable Differential Tranformer (LVDT),displace,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Modulab XM,ec-impedance,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Agilent E4980A,ec-impedance,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Agilent 4294A,ec-impedance,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+FormFactor 11000B,ec-impedance,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Keysight P9374A PNA,5g,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Anritsu 37369D,5g,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Keysight PNA-X N5247B,5g,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+pA meter,tsdc,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+amplifier and oven / furnace combinations,tsdc,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Linseis LSR - 3,th-seebeck,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Ecopia HMS-3000,pauw,,,,,A,,,,MCL,Millenium Science Complex,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+50 kN MTS Criterion load frame,ten-compr,MTS,50KN,17006557,N001,A,,,,MCL,Millenium Science Complex,gzc5305@psu.edu,,
+100 kN MTS Criterion load frame,ten-compr,MTS,100KN,17001053,N001,A,,,,MCL,Millenium Science Complex,gzc5305@psu.edu,,
+3D DIC Camera,dic,,,,,A,,,,MCL,Millenium Science Complex,gzc5305@psu.edu,,
+TA Instruments Q800 DMA,dma,TA INSTRUMENTS,Q800,0800-2108,N007,A,,,,MCL,Millenium Science Complex,gzc5305@psu.edu,,
+Qness�Q60 A+�microindenter,m-indent,QNESS,Q60A+,Q1381/0618,N031D,A,,,,MCL,Millenium Science Complex,gzc5305@psu.edu,,
+Netzsch 402 F1/F3 Hyperion TMA,tma,NETZSCH INSTRUM,TMA402,206028049,N007,A,,,,MCL,Millenium Science Complex,gzc5305@psu.edu,,
