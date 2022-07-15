@@ -6,13 +6,6 @@ import "./DataTable.css";
 import InstoolApi from '../Api/InstoolApi';
 import ModalBox from './ModalBox';
 import LinearProgress from '@mui/material/LinearProgress';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link
-} from 'react-router-dom';
-
 
 const columns = [
   { field: 'id', headerName: 'ID', type: 'number', width: 0 },
