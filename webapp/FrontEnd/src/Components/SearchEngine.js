@@ -146,7 +146,7 @@ export default function SearchEngine(props) {
     const restartTimeout = useCallback(() => {
         setMinimumTimeElapsed(false);
         setLoading(true);
-        const randomLoadTime = Math.random() * 4000;
+        const randomLoadTime = 4000;
 
         setTimeout(() => {
             setMinimumTimeElapsed(true);
