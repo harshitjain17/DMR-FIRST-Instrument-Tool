@@ -86,9 +86,9 @@ namespace Instool.DAL.Results
     {
         public int Id { get; set; }
 
-        public double? Longitude { get; set; }
+        public double Longitude { get; set; }
 
-        public double? Latitude { get; set; }
+        public double Latitude { get; set; }
         public int DbId { get; }
         public string? Building { get; }
         public string? Institution { get; }
@@ -97,8 +97,8 @@ namespace Instool.DAL.Results
         public LocationRow(Instrument i, int index, int count)
         {
             Id = index;
-            Longitude = i.Location.Longitude;
-            Latitude = i.Location.Latitude;
+            Longitude = i.Location.Longitude ?? 32.0;
+            Latitude = i.Location.Latitude ?? -97.0;
             DbId = i.Location.LocationId;
             Building = i.Location.Building;
             Institution = i.Institution?.Name;

@@ -25,15 +25,18 @@ def create_json(row):
             "facility": row[10]
         }
     }
-    if (row[1]):
-        json_dict["instrumentTypes"] = [{
-            "name": row[1]
-        }]
+    instrumentTypes = []
+    for t in row[1].split(','):
+        if t:
+            instrumentTypes.append({"name": t})
+    if len(instrumentTypes) > 0:
+        json_dict["instrumentTypes"] = instrumentTypes
     contacts = []
     for i in range(12, len(row)):
-        contacts.append({
-            "eppn": row[i]
-        })
+        if (row[i]):
+            contacts.append({
+                "eppn": row[i]
+            })
     if len(contacts) > 0:
         json_dict["contacts"] = contacts
     
@@ -46,15 +49,18 @@ headers = {
 
 with open('data/instruments.csv', encoding='utf-8-sig') as csvfile:
     reader = csv.reader(csvfile, dialect='excel')
-    currentCategories = [None] * 5
+    inHeader = True
     for row in reader:
+        if inHeader:
+            inHeader = False
+            continue
         data = create_json(row)
 
         result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False)
         if result.status_code == 201 or result.status_code == 200:
                 print('Sucessful')
         else: 
-                print('Error {}: {}'.format(result.status_code, result.text))
+                print('Error {} inserting {}: {}'.format(result.status_code, row[0], result.text))
 
 
 

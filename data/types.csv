@@ -1,6 +1,6 @@
 ﻿Characterization,,,
 ,Atomic Content Characterization,,
-,,atom_probe,Atom probe
+,,atom-probe,Atom probe
 ,,fib-char,Focused Ion Beam
 ,Electrical Characterization,,
 ,,dielect,Dielectric Breakdown
@@ -20,7 +20,7 @@
 ,,dic,Digital Image Correlation (DIC)
 ,,dma,Dynamic Mechanical Analysis (DMA)
 ,,m-indent,Microindentation
-,,n-0indent,Nanoindentation
+,,n-indent,Nanoindentation
 ,,tma,Thermomechanical Analysis (TMA)
 ,Optical Characterization,,
 ,,ellipso,Ellipsometry
@@ -38,7 +38,7 @@
 ,,dma,Dynamical Mechanical Analysis
 ,,rheo,Rheometry
 ,,atmo-probe,Atom probe
-,,x-diff,X-ray Diffraction
+,,xrd,X-ray Diffraction
 ,,saxs,Small Angle X-Ray Scattering (SAXS)
 ,,waxs,Wide Angle X-Ray Scattering (WAXS)
 ,Surface Characterization,,

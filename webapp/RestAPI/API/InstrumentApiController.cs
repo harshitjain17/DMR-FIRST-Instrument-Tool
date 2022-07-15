@@ -99,7 +99,7 @@ namespace Instool.API
         {
             if (dto.InstrumentId != null)
             {
-                return BadRequest("InstrumnetID is set automatically and has to be empty");
+                return BadRequest("InstrumentID is set automatically and has to be empty");
             }
             var instrument = dto.GetEntity();
             await AuthHelper.Check(_authService.AuthorizeAsync(User, instrument, Operation.Create));
@@ -113,7 +113,7 @@ namespace Instool.API
             {
                 instrument.InstitutionId = await LookupInstitution(dto.Institution);
             }
-            // else create location
+            // else create institution
 
             var contacts = dto.Contacts.Select(c => new InstrumentContact
             {

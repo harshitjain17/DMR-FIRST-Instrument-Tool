@@ -48,7 +48,7 @@ namespace Instool
                 options =>
                 {
                     options.EnableEndpointRouting = true;
-                    //options.Filters.Add(new HttpResponseExceptionFilter());
+                    options.Filters.Add<HttpResponseExceptionFilter>();
                 }
             ).AddApplicationPart(assembly)
              .AddNewtonsoftJson(options =>
@@ -124,11 +124,11 @@ namespace Instool
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/error-development");
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -167,7 +167,6 @@ namespace Instool
             }
             
             app.ConfigureAuthMiddleware(Configuration);
-            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
