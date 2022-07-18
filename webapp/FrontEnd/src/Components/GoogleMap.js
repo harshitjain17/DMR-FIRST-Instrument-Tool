@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
-var config = require("../config/config").default();
+import { config } from '../config/config';
 
 export function GoogleMap(props) {
 

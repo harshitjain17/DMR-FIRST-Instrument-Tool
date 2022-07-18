@@ -1,7 +1,6 @@
 import axios from 'axios';
 import log from 'loglevel';
-
-var config = require("../config/config").default();
+import { config } from '../config/config';
 
 class GoogleApi {
     static async getCoordinates(address) {
