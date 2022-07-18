@@ -5,11 +5,8 @@ import Box from '@mui/material/Box';
 import "./DataTable.css";
 import InstoolApi from '../Api/InstoolApi';
 import LinearProgress from '@mui/material/LinearProgress';
-<<<<<<< HEAD
 import InstrumentPage from './InstrumentPage';
 
-=======
->>>>>>> 21fea85d389978fb35474b611c50665b1d7b929c
 
 const columns = [
   { field: 'id', headerName: 'ID', type: 'number', width: 0 },

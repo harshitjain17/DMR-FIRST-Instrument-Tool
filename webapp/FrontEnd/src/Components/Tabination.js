@@ -45,6 +45,7 @@ export default function Tabination(props) {
     setValue(newValue);
   };
   const object = props.details;
+  console.log(object)
   const objectLocation = props.details.location;
 
   
@@ -80,9 +81,10 @@ export default function Tabination(props) {
         Address:
         <br/>
         {object.roomNumber}
-        {/* {objectLocation.building}
         <br/>
-        {objectLocation.city} {objectLocation.state} {objectLocation.zip} */}
+        {objectLocation?.building}
+        <br/>
+        {objectLocation?.city} {objectLocation?.state} {objectLocation?.zip}
       </TabPanel>
       
       <TabPanel value={value} index={2}>
