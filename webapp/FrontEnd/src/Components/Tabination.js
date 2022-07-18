@@ -45,7 +45,7 @@ export default function Tabination(props) {
     setValue(newValue);
   };
   const object = props.details;
-  // const objectLocation = props.details.location;
+  const objectLocation = props.details.location;
 
   
   // const ContactsArray = object.contacts;
@@ -80,9 +80,10 @@ export default function Tabination(props) {
         Address:
         <br/>
         {object.roomNumber}
-        {/* {objectLocation.building}
         <br/>
-        {objectLocation.city} {objectLocation.state} {objectLocation.zip} */}
+        {objectLocation?.building}
+        <br/>
+        {objectLocation?.city} {objectLocation?.state} {objectLocation?.zip}
       </TabPanel>
       
       <TabPanel value={value} index={2}>
