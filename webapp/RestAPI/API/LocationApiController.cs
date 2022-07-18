@@ -1,6 +1,7 @@
 ﻿using Geocoding;
 using Geocoding.Google;
 using Instool.Dtos;
+using Instool.RestAPI.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -28,17 +29,24 @@ namespace Instool.RestAPI.API
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         public async Task<ActionResult<IEnumerable<LocationDTO>>> Locate([FromQuery] string address)
         {
-            IEnumerable<Address> addresses = await geocoder.GeocodeAsync(address);
-            var first = addresses.FirstOrDefault();
-            if (first == null)
+            try
             {
-                return NotFound();
+                IEnumerable<Address> addresses = await geocoder.GeocodeAsync(address);
+                var first = addresses.FirstOrDefault();
+                if (first == null)
+                {
+                    return NotFound();
+                }
+                return Ok(new LocationDTO
+                {
+                    Latitude = first.Coordinates.Latitude,
+                    Longitude = first.Coordinates.Longitude,
+                });
             }
-            return Ok(new LocationDTO
-            {
-                Latitude = first.Coordinates.Latitude,
-                Longitude = first.Coordinates.Longitude,
-            });
+            catch (GoogleGeocodingException e) {
+                throw new HttpResponseException(StatusCodes.Status500InternalServerError, e.Status);
+            }
+
         }
     }
 }

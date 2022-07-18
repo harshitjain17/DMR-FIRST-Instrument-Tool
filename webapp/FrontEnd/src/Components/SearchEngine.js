@@ -12,7 +12,7 @@ import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 
 import InstoolApi from '../Api/InstoolApi';
-import GoogleApi from '../Api/GoogleApi';
+// import GoogleApi from '../Api/GoogleApi';
 
 import log from 'loglevel';
 
@@ -98,14 +98,14 @@ export default function SearchEngine(props) {
     // We only search once the user hits submit - handled here
     const submitHandler = async (event) => {
         event.preventDefault();
-        var coordinates = await GoogleApi.getCoordinates(enteredAddress);
-        log.info(`Found coordinates (${coordinates[0]}, ${coordinates[1]}) for ${enteredAddress}`);
+        var coordinates = await InstoolApi.get(`/locate?address=${enteredAddress}`);
+        log.info(`Found coordinates (${coordinates.data.latitude}, ${coordinates.data.longitude}) for ${enteredAddress}`);
 
         // search criteria as expected by the server
         const userInput = {
             location: {
-                latitude: coordinates[0],
-                longitude: coordinates[1],
+                latitude: coordinates.data.latitude,
+                longitude: coordinates.data.longitude,
                 maxDistance: enteredDistance
             },
             instrumentType: enteredInstrumentType?.value ?? '',
