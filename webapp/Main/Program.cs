@@ -52,34 +52,39 @@ namespace Instool
 
         public static IHostBuilder CreateHostBuilder(ILoggerFactory loggerFactory, string[] args)
         {
+            
+
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     var env = webBuilder.GetSetting("environment");
-                    var configuration = GetConfiguration(env);
+                    webBuilder.ConfigureAppConfiguration((context, config) =>
+                    {
+                        AddConfigurationFiles(config, env);
+                    });
+
+                    var configuration = AddConfigurationFiles(new ConfigurationBuilder(), env).Build();
                     var url = configuration.GetSection("Main").Get<ServerStartupConfig>().GetUrl();
 
                     webBuilder.UseUrls(url);
                     webBuilder.ConfigureLogging(ConfigureLogger);
                     webBuilder.UseNLog();
                     webBuilder.UseStartup(context => new Startup(configuration, loggerFactory));
-
                 });
         }
 
 
-        static IConfiguration GetConfiguration(string env)
+        static IConfigurationBuilder AddConfigurationFiles(IConfigurationBuilder builder, string env)
         {
             Console.WriteLine("Loading config " + GetConfigPath($"appsettings.{env}.json"));
 
-            var builder = new ConfigurationBuilder()
+            return builder
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile(GetConfigPath($"appsettings.json"), optional: false, reloadOnChange: true)
                 .AddJsonFile(GetConfigPath($"appsettings.{env}.json"), optional: true, reloadOnChange: true)
                 .AddJsonFile($"{Directory.GetCurrentDirectory()}/build.json", optional: true)
                 .AddJsonFile($"{Directory.GetCurrentDirectory()}/branch.json", optional: true)
                 .AddEnvironmentVariables();
-            return builder.Build();
         }
 
         static void ConfigureLogger(WebHostBuilderContext ctx, ILoggingBuilder logging)

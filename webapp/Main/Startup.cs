@@ -124,7 +124,7 @@ namespace Instool
         {
             if (env.IsDevelopment())
             {
-                app.UseExceptionHandler("/error-development");
+                app.UseExceptionHandler("/error");
             }
             else
             {
