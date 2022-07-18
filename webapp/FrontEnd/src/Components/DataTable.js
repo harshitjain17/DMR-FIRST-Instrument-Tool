@@ -4,20 +4,21 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import "./DataTable.css";
 import InstoolApi from '../Api/InstoolApi';
-import ModalBox from './ModalBox';
 import LinearProgress from '@mui/material/LinearProgress';
+import InstrumentPage from './InstrumentPage';
+
 
 const columns = [
   { field: 'id', headerName: 'ID', type: 'number', width: 0 },
-  { field: 'institution', headerName: 'Institution', width: 190 },
+  { field: 'institution', headerName: 'Institution', width: 175 },
   { field: 'type', headerName: 'Instrument Type', width: 140 },
-  { field: 'name', headerName: 'Instrument Name', width: 150 },
+  { field: 'name', headerName: 'Instrument Name', width: 175 },
   { field: 'doi', headerName: 'DOI', width: 160 },
-  { field: 'location', headerName: 'Location', width: 90 },
+  { field: 'location', headerName: 'Location ID', width: 95 },
   { field: 'city', headerName: 'City', width: 150 },
-  { field: 'state', headerName: 'State', width: 100 },
+  { field: 'state', headerName: 'State', width: 80 },
   { field: 'award', headerName: 'Award', width: 150 },
-  { field: 'status', headerName: 'Status', width: 100 },
+  { field: 'status', headerName: 'Status', width: 90 },
 ];
 
 // styling for No Rows Overlay
@@ -123,7 +124,7 @@ export default function DataTable(props) {
     } : {
       items: []
     };
-
+  
   const handleOnRowClick = (params) => {
     InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
       setInstrumentData(response.data);
@@ -138,7 +139,7 @@ export default function DataTable(props) {
   return (
     <div style={{ display: 'flex', height: '100%' }}>
 
-      {/* if loading, render skeleton rows */}
+      {/* if loading, render LinearProgress state */}
       {!props.minimumTimeElapsed || props.loading ? (
       <DataGrid
         rows={[]}
@@ -174,7 +175,6 @@ export default function DataTable(props) {
           rowsPerPageOptions={[5]}
           components={{
             Toolbar: GridToolbar,
-            // LoadingOverlay: LoadingSkeleton,
             NoRowsOverlay: CustomNoRowsOverlay
           }}
           componentsProps={{
@@ -186,7 +186,12 @@ export default function DataTable(props) {
           onRowClick={handleOnRowClick}
         />
       )}
-      <ModalBox openClose={open} handleClose={handleCloseModal} instrumentData={instrumentData} />
+      {/* <Router>
+        <Routes>
+          <Route exact path = "instruments/:id" element={<InstrumentPage instrumentData={instrumentData} />} />
+        </Routes>
+      </Router> */}
+      <InstrumentPage openClose={open} handleClose={handleCloseModal} instrumentData={instrumentData} />
     </div>
   );
 };

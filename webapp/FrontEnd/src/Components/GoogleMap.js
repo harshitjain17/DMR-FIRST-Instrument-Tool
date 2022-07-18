@@ -7,6 +7,7 @@ export function GoogleMap(props) {
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [activeMarker, setActiveMarker] = useState();
   const [selectedLocation, setSelectedLocation] = useState();
+  const [newZoom, setNewZoom] = useState(4);
 
   const searchResult = props.response.locations || [];
 
@@ -28,6 +29,7 @@ export function GoogleMap(props) {
       setSelectedLocation(searchResult.find(l => l.id.toString() === p.label));
       setActiveMarker(marker);
       setShowingInfoWindow(true);
+      setNewZoom(p.map.zoom); //bug: it sets the new value of zoom but <Map> component is not rendered after setting the value 
       props.onSelectLocation(p.label);
     }
   };
@@ -63,15 +65,15 @@ export function GoogleMap(props) {
       containerStyle={{ width: "34%", height: "37.5%" }}
       bounds={bounds}
       initialCenter={{lat: 37, lng: -95}}
-      zoom={4}
-  >
+      zoom={newZoom}
+    >
       {displayMarkers()}
       <InfoWindow
         marker={activeMarker}
         visible={showingInfoWindow}
         onClose={onMarkerDeselected}>
         <div>
-          <h5>{selectedLocation?.building ?? selectedLocation?.institition}</h5>
+          <h6>{selectedLocation?.building ?? selectedLocation?.institution}</h6>
           <p>{selectedLocation?.count} instrument(s)</p>
         </div>
       </InfoWindow>
