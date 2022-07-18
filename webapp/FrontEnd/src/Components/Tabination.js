@@ -45,7 +45,6 @@ export default function Tabination(props) {
     setValue(newValue);
   };
   const object = props.details;
-  console.log(object)
   const objectLocation = props.details.location;
 
   

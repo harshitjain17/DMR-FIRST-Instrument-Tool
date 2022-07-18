@@ -21,9 +21,9 @@ export default function SearchEngine(props) {
     // States for input given in the textbox (in search engine)
     const [enteredAddress, setEnteredAddress] = useState('');
     const [enteredDistance, setEnteredDistance] = useState('0');
-    const [instrumentTypeSearchText, setInstrumentTypeLabel] = useState('');
     const [enteredInstrumentCategory, setEnteredInstrumentCategory] = useState('');
-    const [enteredInstrumentType, setEnteredInstrumentType] = useState('');
+    const [instrumentTypeSearchText, setInstrumentTypeSearchText] = useState('');
+    const [enteredInstrumentType, setEnteredInstrumentType] = useState(null);
     const [enteredKeywords, setEnteredKeywords] = useState([]);
     const [enteredManufacturer, setEnteredManufacturer] = useState('');
     const [enteredAwardNumber, setEnteredAwardNumber] = useState('');
@@ -45,12 +45,8 @@ export default function SearchEngine(props) {
         setEnteredInstrumentCategory(event.target.value);
     };
 
-    const instrumentTypeLabelChangeHandler = (event, value) => {
-        setInstrumentTypeLabel(value);
-    }
-
     const instrumentTypeChangeHandler = (event, option) => {
-        setEnteredInstrumentType(option?.value);
+        setEnteredInstrumentType(option);
     };
 
     const keywordsChangeHandler = (event) => {
@@ -79,17 +75,16 @@ export default function SearchEngine(props) {
 
     // Autocompletion of instrument types
     React.useEffect(() => {
+        const fetchData = async () => {
+            const response = enteredInstrumentCategory ?
+                // Case - I (If the user selected the category)
+                await InstoolApi.get(`/instrument-types/${enteredInstrumentCategory}/dropdown`) :
+                // Case - II (If the user did not selected the category)
+                await InstoolApi.get(`/instrument-types/dropdown`);
 
-        if (enteredInstrumentCategory) { // Case - I (If the user selected the category)
-            InstoolApi.get(`/instrument-types/${enteredInstrumentCategory}/dropdown`).then((response) => {
-                setInstrumentTypes(response.data);
-            });
-
-        } else { // Case - II (If the user did not selected the category)
-            InstoolApi.get(`/instrument-types/dropdown`).then((response) => {
-                setInstrumentTypes(response.data);
-            });
-        }
+            setInstrumentTypes(response.data);
+        };
+        fetchData();
     }, [enteredInstrumentCategory]); // dependent on category selected
 
     // typography
@@ -113,7 +108,7 @@ export default function SearchEngine(props) {
                 longitude: coordinates[1],
                 maxDistance: enteredDistance
             },
-            instrumentType: enteredInstrumentType,
+            instrumentType: enteredInstrumentType?.value ?? '',
             keywords: enteredKeywords,
             manufacturer: enteredManufacturer,
             awardNumber: enteredAwardNumber,
@@ -170,7 +165,7 @@ export default function SearchEngine(props) {
         setEnteredAddress('');
         setEnteredDistance('0');
         setEnteredInstrumentCategory('');
-        setEnteredInstrumentType('');
+        setEnteredInstrumentType(null);
         setEnteredKeywords([]);
         setEnteredManufacturer('');
         setEnteredAwardNumber('');
@@ -251,11 +246,15 @@ export default function SearchEngine(props) {
                             fullWidth={true}
                             size="small"
                             options={instrumentTypes}
-                            isOptionEqualToValue={(option, value) => option.value === value.value}
+                            isOptionEqualToValue={(option, value) => option?.value === value?.value}
                             groupBy={(option) => option.categoryLabel}
-                            getOptionLabel={(option) => option.label}
+                            getOptionLabel={(option) => option.label ?? ''}
+
                             inputValue={instrumentTypeSearchText}
-                            onInputChange={instrumentTypeLabelChangeHandler}
+                            onInputChange={(event, newInputValue) => {
+                                setInstrumentTypeSearchText(newInputValue);
+                            }}
+                            value={enteredInstrumentType}
                             onChange={instrumentTypeChangeHandler}
                             renderInput={(params) => <TextField {...params} label="Instrument Type" />}
 

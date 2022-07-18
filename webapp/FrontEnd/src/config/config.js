@@ -1,18 +1,6 @@
-//static data to don't have to generate the conf_adata 2 times
-let config_data = null
-export default function config() {
-    // if the static data was already set. return it
-    if (config_data !== null && config_data !== undefined) {
-        return config_data
-    }
 
-    config_data = {}
-    //LOAD JSON
-    if (process.env.NODE_ENV === undefined || process.env.NODE_ENV === null || process.env.NODE_ENV === 'development') {
-        config_data = require('./config.development.json')
-    } else if (process.env.NODE_ENV === 'production') {
-        config_data = require('./config.production.json')
-    }
-
-    return config_data
+export const config = {
+    url: process.env.REACT_APP_BASE_URL,
+    apiKey: process.env.REACT_APP_GOOGLE_API,
+    signature: process.env.REACT_APP_GOOGLE_SIG
 }

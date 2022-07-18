@@ -15,10 +15,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import log from 'loglevel';
+import { config } from './config/config';
 
 import initLogging from './logging';
 // Initialize the loggin library, so that a user can toggle log levels with Ctrl-F12
 initLogging();
+log.debug(`Accesing server at ${config.url}`)
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -84,7 +87,7 @@ function App() {
   const responseDataHandler = (responseData) => {
     setResponse(responseData);
   };
-  
+
   const minimumTimeElapsedHandler = (params) => {
     setMinimumTimeElapsed(params);
   };
@@ -100,30 +103,30 @@ function App() {
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
-        <CssBaseline/>
-        
+        <CssBaseline />
+
         {/* navigation Bar */}
         <AppBar position="fixed">
-          <Toolbar sx={{pr: '24px'}} variant="dense">
+          <Toolbar sx={{ pr: '24px' }} variant="dense">
             <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
               Instrument Locator
             </Typography>
           </Toolbar>
         </AppBar>
-        
+
         {/* Search Form */}
-        <Drawer 
+        <Drawer
           variant="permanent"
           sx={{
-          width: "25%",
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: "100%",
-            boxSizing: 'border-box',
-          }
+            width: "25%",
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: "100%",
+              boxSizing: 'border-box',
+            }
           }}>
-            <DrawerHeader/>
-            <SearchEngine onSaveResponseData={responseDataHandler} minimumTimeElapsed={minimumTimeElapsedHandler} loading={loadingHandler}/>
+          <DrawerHeader />
+          <SearchEngine onSaveResponseData={responseDataHandler} minimumTimeElapsed={minimumTimeElapsedHandler} loading={loadingHandler} />
         </Drawer>
 
         {/* Right Section */}
@@ -139,10 +142,10 @@ function App() {
             overflow: 'auto',
           }}
         >
-          <Toolbar/>
+          <Toolbar />
           <Container maxWidth="lg" sx={{ mb: 2 }}>
             <Grid container spacing={2}>
-              
+
               {/* Datatable */}
               <Grid item xs={12} md={12} lg={12}>
                 <Paper
@@ -153,10 +156,10 @@ function App() {
                     height: '48vh',
                   }}
                 >
-                <DataTable response={response} selectedLocation={selectedLocation} minimumTimeElapsed={minimumTimeElapsed} loading={loading}/>
+                  <DataTable response={response} selectedLocation={selectedLocation} minimumTimeElapsed={minimumTimeElapsed} loading={loading} />
                 </Paper>
               </Grid>
-              
+
               {/* Google Maps */}
               <Grid item xs={12} md={7} lg={6}>
                 <Paper
@@ -167,7 +170,7 @@ function App() {
                     height: '40vh',
                   }}
                 >
-                  <GoogleMap response={response} onSelectLocation={selectLocationHandler}/>
+                  <GoogleMap response={response} onSelectLocation={selectLocationHandler} />
                 </Paper>
               </Grid>
             </Grid>
@@ -176,6 +179,6 @@ function App() {
         </Box>
       </Box>
     </ThemeProvider>
-  );  
+  );
 }
 export default App;
