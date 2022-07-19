@@ -2,25 +2,45 @@ import React, { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { config } from '../config/config';
 
-export function GoogleMap(props) {
+export function GoogleMap({response, onSelectLocation, google}) {
 
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [activeMarker, setActiveMarker] = useState();
   const [selectedLocation, setSelectedLocation] = useState();
-  const [newZoom, setNewZoom] = useState(4);
+  const [zoom, setZoom] = useState(4);
+  const [center, setCenter] = useState({ lat: 37, lng: -95 });
+  const [bounds, setBounds] = useState(undefined);
 
-  const searchResult = props.response.locations || [];
+  React.useEffect(() => {
+    // array is undefined or empty
+    if (!response.locations?.length) {
+      setBounds(undefined);
+      setCenter({ lat: 37, lng: -95 });
+      setZoom(4);
+    // Center if only one location
+    } else if (response.locations.length === 1) {
+      setBounds(undefined);
+      setCenter({ lat: response.locations[0].latitude, lng: response.locations[0].longitude });
+      setZoom(8);
+    // And only set bounds to show all markers if there are more than 2
+    } else {
+      // Gather all locations, and let google determine which part of the map to show
+      // so we see all of them.
+      const boundsCalc = new google.maps.LatLngBounds()
+      for (const l of (response.locations ?? [])) {
+        boundsCalc.extend({
+          lat: l.latitude,
+          lng: l.longitude
+        })
+      }
+      setBounds(boundsCalc);
+    }
+  // For some reaseon, eslint is complaining about the dependency on google.maps.LatLngBounds.
+  // That is a class we use here, it won't change
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response.locations]);
 
-  // Gather all locations, and let google determine which part of the map to show
-  // so we see all of them.
-  const bounds = new google.maps.LatLngBounds()
-  for (const l of searchResult) {
-    bounds.extend({
-        lat: l.latitude,
-        lng: l.longitude
-    })
-  }
-
+  const searchResult = response.locations || [];
   // Show an info window, and filter the table for instruments at that location
   const onMarkerClick = (p, marker) => {
     if (selectedLocation?.id.toString() === p.label) {
@@ -29,8 +49,7 @@ export function GoogleMap(props) {
       setSelectedLocation(searchResult.find(l => l.id.toString() === p.label));
       setActiveMarker(marker);
       setShowingInfoWindow(true);
-      setNewZoom(p.map.zoom); //bug: it sets the new value of zoom but <Map> component is not rendered after setting the value 
-      props.onSelectLocation(p.label);
+      onSelectLocation(p.label);
     }
   };
 
@@ -40,7 +59,7 @@ export function GoogleMap(props) {
     setSelectedLocation(null);
     setActiveMarker(null);
     setShowingInfoWindow(false);
-    props.onSelectLocation(null);
+    onSelectLocation(null);
   }
 
   const displayMarkers = () => {
@@ -60,12 +79,23 @@ export function GoogleMap(props) {
 
   return (
     <Map
-      google={props.google}
+      google={google}
       style={{ width: '100%', height: '100%', position: "static" }}
       containerStyle={{ width: "34%", height: "37.5%" }}
       bounds={bounds}
-      initialCenter={{lat: 37, lng: -95}}
-      zoom={newZoom}
+      center={center}
+      zoom={zoom}
+      onZoomChanged={(mapProps, event) => {
+        // Remove bounds once user interacts with the map. We keep whatever they wanted to see then
+        setBounds(undefined);
+        setZoom(event.zoom);
+      }}
+      onDragend={(mapProps, event) => {
+        // Remove bounds once user interacts with the map. We keep whatever they wanted to see then
+        setBounds(undefined);
+        setZoom(event.zoom);
+        setCenter(event.center);
+      }}
     >
       {displayMarkers()}
       <InfoWindow

@@ -7,7 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Link from '@mui/material/Link';
 
 export default function ContactsTable(props) { 
-    const ContactsArray = props.contacts;
+    const ContactsArray = props.contacts ?? [];
     return (
         <TableContainer style={{ maxHeight: 170 }}>
             <Table stickyHeader sx={{ minWidth: 425 }} aria-label="simple table">

@@ -94,13 +94,13 @@ function CustomNoRowsOverlay() {
   );
 };
 
-export default function DataTable(props) {
+export default function DataTable({response, selectedLocation, loading, minimumTimeElapsed}) {
   const [instrumentData, setInstrumentData] = React.useState('');
   const [open, setOpen] = React.useState(false);
   // const [filterModel, setFilterModel] = React.useState()
 
-  var searchResult = props.response.instruments ?
-    props.response.instruments.map(instrument => {
+  var searchResult = response.instruments ?
+    response.instruments.map(instrument => {
       return {
         id: instrument.label,
         institution: instrument.institution,
@@ -116,10 +116,10 @@ export default function DataTable(props) {
       };
     }) : [];
 
-  var filterModel = props.selectedLocation ?
+  var filterModel = selectedLocation ?
     {
       items: [
-        { id: 1, columnField: 'location', operatorValue: 'equals', value: props.selectedLocation }
+        { id: 1, columnField: 'location', operatorValue: 'equals', value: selectedLocation }
       ]
     } : {
       items: []
@@ -140,7 +140,7 @@ export default function DataTable(props) {
     <div style={{ display: 'flex', height: '100%' }}>
 
       {/* if loading, render LinearProgress state */}
-      {!props.minimumTimeElapsed || props.loading ? (
+      {!minimumTimeElapsed || loading ? (
       <DataGrid
         rows={[]}
         columns={columns}

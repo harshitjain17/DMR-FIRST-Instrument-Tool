@@ -98,25 +98,31 @@ export default function SearchEngine(props) {
     // We only search once the user hits submit - handled here
     const submitHandler = async (event) => {
         event.preventDefault();
-        var coordinates = await InstoolApi.get(`/locate?address=${enteredAddress}`);
-        log.info(`Found coordinates (${coordinates.data.latitude}, ${coordinates.data.longitude}) for ${enteredAddress}`);
-
-        // search criteria as expected by the server
-        const userInput = {
-            location: {
-                latitude: coordinates.data.latitude,
-                longitude: coordinates.data.longitude,
-                maxDistance: enteredDistance
-            },
-            instrumentType: enteredInstrumentType?.value ?? '',
-            keywords: enteredKeywords,
-            manufacturer: enteredManufacturer,
-            awardNumber: enteredAwardNumber,
-            includeRetired: enteredIRI
-        };
-
-        log.debug(userInput);
         try {
+            var result = enteredAddress ? await InstoolApi.get(`/locate?address=${enteredAddress}`) : undefined;
+            var coordinates = result ? result.data : {
+                latitude: 37,
+                longitude: -95
+            };
+
+            log.info(`Found coordinates (${coordinates.latitude}, ${coordinates.longitude}) for ${enteredAddress}`);
+
+            // search criteria as expected by the server
+            const userInput = {
+                location: {
+                    latitude: coordinates.latitude,
+                    longitude: coordinates.longitude,
+                    maxDistance: enteredDistance
+                },
+                instrumentType: enteredInstrumentType?.value ?? enteredInstrumentCategory,
+                keywords: enteredKeywords,
+                manufacturer: enteredManufacturer,
+                awardNumber: enteredAwardNumber,
+                includeRetired: enteredIRI
+            };
+
+            log.debug(userInput);
+
             const response = await InstoolApi.post(`/instruments/search`, userInput);
             log.info(`Server returned ${response.data.instruments?.length} instruments, and ${response.data.locations?.length} locations`)
             log.debug(response);

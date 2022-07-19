@@ -89,11 +89,18 @@ namespace Instool.DAL.Repositories.Impl
             }
             if (criteria.InstrumentTypeId != null)
             {
-                query = query.Where(i => i.InstrumentTypes.Any(t => t.InstrumentTypeId == criteria.InstrumentTypeId));
+                query = query.Where(i =>
+                    i.InstrumentTypes.Any(t => t.InstrumentTypeId == criteria.InstrumentTypeId ||
+                                               t.CategoryId == criteria.InstrumentTypeId ||
+                                               t.Category.CategoryId == criteria.InstrumentTypeId) 
+                );
             }
             if (!string.IsNullOrWhiteSpace(criteria.InstrumentType))
             {
-                query = query.Where(i => i.InstrumentTypes.Any(t => t.ShortName == criteria.InstrumentType || t.Uri == criteria.InstrumentType));
+                query = query.Where(i =>
+                    i.InstrumentTypes.Any(t => t.ShortName == criteria.InstrumentType || t.Uri == criteria.InstrumentType ||
+                                              t.Category.ShortName == criteria.InstrumentType || t.Category.Uri == criteria.InstrumentType ||
+                                              t.Category.Category.ShortName == criteria.InstrumentType || t.Category.Category.Uri == criteria.InstrumentType));
             }
             if (criteria.Keywords.Any())
             {
