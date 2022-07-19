@@ -8,7 +8,6 @@ import ContactsTable from './ContactsTable';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -40,14 +39,15 @@ function a11yProps(index) {
 }
 
 export default function Tabination(props) {
-  const [value, setValue] = React.useState(0);
 
+  const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  // Instrument Data
   const object = props.details;
   const objectLocation = props.details.location;
-  
   const ContactsArray = object.contacts ?? [];
 
   return (
@@ -70,19 +70,19 @@ export default function Tabination(props) {
       </Tabs>
 
       <TabPanel value={value} index={0}>
-        DOI: {object.doi}<br/>
-        Cited as: <br/>
-        Instrument Category: <br/>
-        Instrument Type: <br/>
-        Manufacturer: <br/>
+        <Typography variant="subtitle2" gutterBottom component="div">Digital Object Identifier (DOI):</Typography> <Typography variant="body2" gutterBottom>{object.doi} </Typography>
+        <Typography variant="subtitle2" gutterBottom component="div">Cited as: </Typography>
+        <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography>
+        <Typography variant="subtitle2" gutterBottom component="div">Instrument Type: </Typography>
+        <Typography variant="subtitle2" gutterBottom component="div">Manufacturer: </Typography>
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        Address:
-        <br/>
-        {object.roomNumber} {objectLocation?.building}
-        <br/>
-        {objectLocation?.city} {objectLocation?.state} {objectLocation?.zip}
+        <Typography variant="subtitle2" gutterBottom component="div">Address: </Typography>
+        <Typography variant="body2" gutterBottom component="div">
+          {object.roomNumber} {objectLocation?.building}<br/>
+          {objectLocation?.city} {objectLocation?.state} {objectLocation?.zip}
+        </Typography>
       </TabPanel>
       
       <TabPanel value={value} index={2}>
@@ -94,8 +94,8 @@ export default function Tabination(props) {
       </TabPanel>
       
       <TabPanel value={value} index={4}>
-        Acquisition Date: {object.acquisitionDate} <br/>
-        Completion Date: {object.completionDate}
+        <Typography variant="subtitle2" gutterBottom component="div">Acquisition Date: </Typography>{object.acquisitionDate}
+        <Typography variant="subtitle2" gutterBottom component="div">Completion Date: </Typography>{object.completionDate}
       </TabPanel>
       
     </Box>
