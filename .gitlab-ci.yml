@@ -30,16 +30,11 @@ build:
     ErrorActionPreference: stop
   stage: build
   script:
-    #- Set-Location client
-    #- npm ci --cache .npm --prefer-offline
-    #- npm run clean
-    #- npm run recipe
-    #- npm run build
     - Set-Location webapp
     - npm ci --cache .npm --prefer-offline
     - npm run clean
     - echo $env:BRANCH > branch.json
-    - copy c:/gitlab-runner/FrontEndConfig/* FrontEnd/src/config
+    - copy c:/gitlab-runner/FrontEndConfig/* FrontEnd/
     - npm run release
     - New-Item -ItemType Directory -Force -Path c:/gitlab-runner/versions/instool/$env:CI_COMMIT_REF_SLUG
     - Move-Item instool.zip c:/gitlab-runner/versions/instool/$env:CI_COMMIT_REF_SLUG/$((Get-Date).tostring("yyyy-MM-dd__hh-mm"))__$env:CI_COMMIT_SHORT_SHA.zip
