@@ -80,8 +80,8 @@ const mdTheme = createTheme();
 
 function App() {
   const [response, setResponse] = useState([]);
-  const [minimumTimeElapsed, setMinimumTimeElapsed] = useState();
-  const [loading, setLoading] = useState();
+  const [isMinimumTimeElapsed, onMinimumTimeElapsed] = useState();
+  const [isLoading, setLoading] = useState();
   const [selectedLocation, selectLocation] = useState();
 
   const responseDataHandler = (responseData) => {
@@ -89,7 +89,7 @@ function App() {
   };
 
   const minimumTimeElapsedHandler = (params) => {
-    setMinimumTimeElapsed(params);
+    onMinimumTimeElapsed(params);
   };
 
   const loadingHandler = (params) => {
@@ -126,7 +126,10 @@ function App() {
             }
           }}>
           <DrawerHeader />
-          <SearchEngine onSaveResponseData={responseDataHandler} minimumTimeElapsed={minimumTimeElapsedHandler} loading={loadingHandler} />
+          <SearchEngine 
+              onSearchResponseAvailable={responseDataHandler} 
+              onMinimumTimeElapsed={minimumTimeElapsedHandler} 
+              onSetLoading={loadingHandler} />
         </Drawer>
 
         {/* Right Section */}
@@ -156,7 +159,11 @@ function App() {
                     height: '48vh',
                   }}
                 >
-                  <DataTable response={response} selectedLocation={selectedLocation} minimumTimeElapsed={minimumTimeElapsed} loading={loading} />
+                  <DataTable 
+                      response={response} 
+                      selectedLocation={selectedLocation} 
+                      minimumTimeElapsed={isMinimumTimeElapsed} 
+                      loading={isLoading} />
                 </Paper>
               </Grid>
 

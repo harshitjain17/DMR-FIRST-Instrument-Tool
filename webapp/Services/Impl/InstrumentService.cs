@@ -132,8 +132,14 @@ namespace Instool.Services.Impl
             if (locationCriteria == null || locationCriteria.MaxDistance <= 0)
             {
                 var instruments = await _repo.List(request, sortColumn, sortOrder, start, length);
+                var instrumentsWithDistance = instruments.Select((i) =>
+                {
+                    var distance = locationCriteria == null ? 0 :
+                                   GetDistance(locationCriteria.Latitude, locationCriteria.Longitude, i.Location);
+                    return new InstrumentWithDistance(i, distance);
+                });
                 return new PaginatedList<InstrumentWithDistance>(
-                    instruments.Select(i => new InstrumentWithDistance(i, 0)),
+                    instrumentsWithDistance,
                     instruments.RecordsTotal,
                     instruments.RecordsFiltered
                 );
@@ -158,8 +164,7 @@ namespace Instool.Services.Impl
                 if (item.Location.Longitude != null && item.Location.Latitude != null)
                 {
                     int dist = GetDistance(locationCriteria.Latitude, locationCriteria.Longitude,
-                        item.Location.Latitude.Value,
-                        item.Location.Longitude.Value);
+                                           item.Location);
 
                     if (dist < locationCriteria.MaxDistance)
                     {
@@ -172,12 +177,16 @@ namespace Instool.Services.Impl
             return new PaginatedList<InstrumentWithDistance>(instrumentsFound,  found.RecordsTotal, instrumentsFound.Count());
         }
 
-        private int GetDistance(double lat1, double long1, double lat2, double long2)
+        private int GetDistance(double lat1, double long1, Location location)
         {
+            if (location == null || location.Latitude == null || location.Longitude == null)
+            {
+                return 0;
+            }
             double long1rad = long1 / 180 * Math.PI;
-            double long2rad = long2 / 180 * Math.PI;
+            double long2rad = location.Longitude.Value / 180 * Math.PI;
             double lat1rad = lat1 / 180 * Math.PI;
-            double lat2rad = lat2 / 180 * Math.PI;
+            double lat2rad = location.Latitude.Value / 180 * Math.PI;
 
             double distRad = Math.Acos(
                 Math.Sin(lat1rad) * Math.Sin(lat2rad) +

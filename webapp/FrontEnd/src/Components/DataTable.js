@@ -15,6 +15,7 @@ const columns = [
   { field: 'name', headerName: 'Instrument Name', width: 175 },
   { field: 'doi', headerName: 'DOI', width: 160 },
   { field: 'location', headerName: 'Location ID', width: 95 },
+  { field: 'distance', headerName: 'Distance', width: 80 },
   { field: 'city', headerName: 'City', width: 150 },
   { field: 'state', headerName: 'State', width: 80 },
   { field: 'award', headerName: 'Award', width: 150 },
@@ -94,15 +95,15 @@ function CustomNoRowsOverlay() {
   );
 };
 
-export default function DataTable({response, selectedLocation, loading, minimumTimeElapsed}) {
+export default function DataTable({ response, selectedLocation, loading, minimumTimeElapsed }) {
   const [instrumentData, setInstrumentData] = React.useState('');
-  const [open, setOpen] = React.useState(false);
-  // const [filterModel, setFilterModel] = React.useState()
+  const [isOpen, setOpen] = React.useState(false);
 
   var searchResult = response.instruments ?
     response.instruments.map(instrument => {
       return {
         id: instrument.label,
+        distance: `${instrument.distance} mi`,
         institution: instrument.institution,
         location: instrument.location,
         type: instrument.type,
@@ -124,7 +125,13 @@ export default function DataTable({response, selectedLocation, loading, minimumT
     } : {
       items: []
     };
-  
+
+  var visibilityModel = {
+    id: false,
+    // Show only if an address has been entered
+    distance: !!response.searchLocation?.address
+  };
+
   const handleOnRowClick = (params) => {
     InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
       setInstrumentData(response.data);
@@ -141,30 +148,24 @@ export default function DataTable({response, selectedLocation, loading, minimumT
 
       {/* if loading, render LinearProgress state */}
       {!minimumTimeElapsed || loading ? (
-      <DataGrid
-        rows={[]}
-        columns={columns}
-        density="compact"
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        loading
-        components={{ 
-          Toolbar: GridToolbar,
-          LoadingOverlay: LinearProgress, 
-         }}
-        componentsProps={{
-          toolbar: { showQuickFilter: true },
-        }}
-        initialState={{
-          columns: {
-            columnVisibilityModel: {
-              id: false
-            },
-          },
-        }}
-        checkboxSelection
-        disableSelectionOnClick
-      />
+        <DataGrid
+          rows={[]}
+          columns={columns}
+          density="compact"
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          loading
+          components={{
+            Toolbar: GridToolbar,
+            LoadingOverlay: LinearProgress,
+          }}
+          componentsProps={{
+            toolbar: { showQuickFilter: true },
+          }}
+          columnVisibilityModel={visibilityModel}
+          checkboxSelection
+          disableSelectionOnClick
+        />
 
       ) : (
         <DataGrid
@@ -180,6 +181,7 @@ export default function DataTable({response, selectedLocation, loading, minimumT
           componentsProps={{
             toolbar: { showQuickFilter: true },
           }}
+          columnVisibilityModel={visibilityModel}
           filterModel={filterModel}
           checkboxSelection
           disableSelectionOnClick
@@ -191,7 +193,7 @@ export default function DataTable({response, selectedLocation, loading, minimumT
           <Route exact path = "instruments/:id" element={<InstrumentPage instrumentData={instrumentData} />} />
         </Routes>
       </Router> */}
-      <InstrumentPage openClose={open} handleClose={handleCloseModal} instrumentData={instrumentData} />
+      <InstrumentPage isOpen={isOpen} handleClose={handleCloseModal} instrumentData={instrumentData} />
     </div>
   );
 };
