@@ -25,7 +25,7 @@ export default function QuickSpec(props) {
             {/* <Typography variant="subtitle2" gutterBottom component="div">Cited as: </Typography> */}
             {/* <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography> */}
             <Typography variant="subtitle2" gutterBottom component="div">Instrument Type: </Typography>
-            <List dense="true">
+            <List dense={true}>
                 {allTypes?.filter(t => !!t).map(type =>
                     <ListItem disableGutters sx={{ display: 'list-item' }} disablePadding={true} key={type} >
                         <ListItemText primary={type}/>
