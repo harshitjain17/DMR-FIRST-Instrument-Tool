@@ -50,6 +50,15 @@ export default function Tabination(props) {
   const objectLocation = props.details.location;
   const ContactsArray = object.contacts ?? [];
 
+  // Displaying Instrument Types
+  function InstrumentTypes() {
+    var arr = [];
+    for (var i = 0; i < object.instrumentTypes?.length; i++) {
+      arr.push(object.instrumentTypes[i]?.label)
+    };
+    return arr.join(', ');
+  };
+
   return (
     <Box
       sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
@@ -70,17 +79,19 @@ export default function Tabination(props) {
       </Tabs>
 
       <TabPanel value={value} index={0}>
-        <Typography variant="subtitle2" gutterBottom component="div">Digital Object Identifier (DOI):</Typography> <Typography variant="body2" gutterBottom>{object.doi} </Typography>
+        <Typography variant="subtitle2" gutterBottom component="div">Digital Object Identifier (DOI): {object?.doi} </Typography>
         <Typography variant="subtitle2" gutterBottom component="div">Cited as: </Typography>
         <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography>
-        <Typography variant="subtitle2" gutterBottom component="div">Instrument Type: </Typography>
-        <Typography variant="subtitle2" gutterBottom component="div">Manufacturer: </Typography>
+        <Typography >Instrument Type: {InstrumentTypes()} </Typography>
+        <Typography variant="subtitle2" gutterBottom component="div">Manufacturer: {object?.manufacturer} </Typography>
+        <Typography variant="subtitle2" gutterBottom component="div">Model Number: {object?.modelNumber} </Typography>
+        <Typography variant="subtitle2" gutterBottom component="div">Serial Number: {object?.serialNumber} </Typography>
+        <Typography variant="subtitle2" gutterBottom component="div">Status: {object?.status} </Typography>
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        <Typography variant="subtitle2" gutterBottom component="div">Address: </Typography>
-        <Typography variant="body2" gutterBottom component="div">
-          {object.roomNumber} {objectLocation?.building}<br/>
+        <Typography variant="subtitle2" gutterBottom component="div">Address: <br/>
+          {object?.roomNumber} {objectLocation?.building}<br/>
           {objectLocation?.city} {objectLocation?.state} {objectLocation?.zip}
         </Typography>
       </TabPanel>
@@ -94,8 +105,8 @@ export default function Tabination(props) {
       </TabPanel>
       
       <TabPanel value={value} index={4}>
-        <Typography variant="subtitle2" gutterBottom component="div">Acquisition Date: </Typography>{object.acquisitionDate}
-        <Typography variant="subtitle2" gutterBottom component="div">Completion Date: </Typography>{object.completionDate}
+        <Typography variant="subtitle2" gutterBottom component="div">Acquisition Date: {object?.acquisitionDate} </Typography>
+        <Typography variant="subtitle2" gutterBottom component="div">Completion Date: {object?.completionDate} </Typography>
       </TabPanel>
       
     </Box>
