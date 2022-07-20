@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 export default function QuickSpec(props) {
-    const { instrumentTypes, doi, manufacturer } = props;
+    const { instrumentTypes, doi, manufacturer, modelNumber, serialNumber } = props;
     // gather all types and their categories
     const allTypes = instrumentTypes?.map(t => t?.category?.category)
         .concat(instrumentTypes?.map(t => t?.category))
@@ -33,6 +33,10 @@ export default function QuickSpec(props) {
             </List> */}
             <Typography variant="subtitle2" gutterBottom component="div">Manufacturer: </Typography>
             <Typography variant="body2" gutterBottom>{manufacturer} </Typography>
+            <Typography variant="subtitle2" gutterBottom component="div">Model number: </Typography>
+            <Typography variant="body2" gutterBottom>{modelNumber} </Typography>
+            <Typography variant="subtitle2" gutterBottom component="div">Serial number: </Typography>
+            <Typography variant="body2" gutterBottom>{serialNumber} </Typography>
         </Box>
     )
 }

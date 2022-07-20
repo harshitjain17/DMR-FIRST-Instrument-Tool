@@ -73,7 +73,13 @@ export default function Tabination(props) {
       </Tabs>
 
       <TabPanel value={value} index={0}>
-        <QuickSpec doi={instrumentDetails.doi} manufacturer={instrumentDetails.manufacturer} instrumentTypes={instrumentTypes}></QuickSpec>
+        <QuickSpec 
+          doi={instrumentDetails.doi} 
+          manufacturer={instrumentDetails.manufacturer} 
+          instrumentTypes={instrumentTypes}
+          modelNumber={instrumentDetails.modelNumber}
+          serialNumber={instrumentDetails.serialNumber}
+          ></QuickSpec>
       </TabPanel>
 
       <TabPanel value={value} index={1}>

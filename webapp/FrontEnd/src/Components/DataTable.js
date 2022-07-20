@@ -11,6 +11,7 @@ import InstrumentPage from './InstrumentPage';
 const columns = [
   { field: 'id', headerName: 'ID', type: 'number', width: 0 },
   { field: 'institution', headerName: 'Institution', width: 175 },
+  { field: 'facility', headerName: 'Facility', width: 175 },
   { field: 'type', headerName: 'Instrument Type', width: 140 },
   { field: 'name', headerName: 'Instrument Name', width: 175 },
   { field: 'doi', headerName: 'DOI', width: 160 },
@@ -105,6 +106,7 @@ export default function DataTable({ response, selectedLocation, loading, minimum
         id: instrument.label,
         distance: `${instrument.distance} mi`,
         institution: instrument.institution,
+        facility: instrument.facility,
         location: instrument.location,
         type: instrument.type,
         name: instrument.name,
