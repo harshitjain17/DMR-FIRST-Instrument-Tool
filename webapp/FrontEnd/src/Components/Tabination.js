@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ContactsTable from './ContactsTable';
 import QuickSpec from './QuickSpecTab';
+import LocationTab from './LocationTab';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -76,11 +77,7 @@ export default function Tabination(props) {
       </TabPanel>
 
       <TabPanel value={value} index={1}>
-        <Typography variant="subtitle2" gutterBottom component="div">Address: </Typography>
-        <Typography variant="body2" gutterBottom component="div">
-          {instrumentDetails.roomNumber} {objectLocation?.building}<br />
-          {objectLocation?.city} {objectLocation?.state} {objectLocation?.zip}
-        </Typography>
+        <LocationTab instrumentDetails={instrumentDetails} objectLocation={objectLocation}/>
       </TabPanel>
 
       <TabPanel value={value} index={2}>

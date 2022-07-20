@@ -48,7 +48,7 @@ export default function InstrumentPage({isOpen, instrumentData, handleClose}) {
                     {instrumentData.name}
                 </Typography>
                 <Button autoFocus color="inherit" onClick={handleClose}>
-                    save
+                    Open in new tab
                 </Button>
             </Toolbar>
             </AppBar>
