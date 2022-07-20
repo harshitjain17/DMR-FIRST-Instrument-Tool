@@ -53,15 +53,6 @@ export default function Tabination(props) {
   const contactsArray = instrumentDetails.contacts ?? [];
   const instrumentTypes = instrumentDetails.instrumentTypes ?? [];
 
-  // Displaying Instrument Types
-  function InstrumentTypes() {
-    var arr = [];
-    for (var i = 0; i < object.instrumentTypes?.length; i++) {
-      arr.push(object.instrumentTypes[i]?.label)
-    };
-    return arr.join(', ');
-  };
-
   return (
     <Box
       sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
