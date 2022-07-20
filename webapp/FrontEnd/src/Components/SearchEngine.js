@@ -16,7 +16,7 @@ import InstoolApi from '../Api/InstoolApi';
 
 import log from 'loglevel';
 
-export default function SearchEngine(props) {
+export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeElapsed, onSetLoading}) {
 
     // States for input given in the textbox (in search engine)
     const [enteredAddress, setEnteredAddress] = useState('');
@@ -99,21 +99,21 @@ export default function SearchEngine(props) {
     const submitHandler = async (event) => {
         event.preventDefault();
         try {
-            var result = enteredAddress ? await InstoolApi.get(`/locate?address=${enteredAddress}`) : undefined;
-            var coordinates = result ? result.data : {
-                latitude: 37,
-                longitude: -95
-            };
-
-            log.info(`Found coordinates (${coordinates.latitude}, ${coordinates.longitude}) for ${enteredAddress}`);
+            let location = undefined;
+            if (enteredAddress) {
+                var result = await InstoolApi.get(`/locate?address=${enteredAddress}`);
+                location = {
+                    address: enteredAddress,
+                    latitude: result.data.latitude,
+                    longitude: result.data.longitude,
+                    maxDistance: enteredDistance
+                };
+                log.info(`Found coordinates (${location.latitude}, ${location.longitude}) for ${enteredAddress}`);
+            }
 
             // search criteria as expected by the server
             const userInput = {
-                location: {
-                    latitude: coordinates.latitude,
-                    longitude: coordinates.longitude,
-                    maxDistance: enteredDistance
-                },
+                location: location,
                 instrumentType: enteredInstrumentType?.value ?? enteredInstrumentCategory,
                 keywords: enteredKeywords,
                 manufacturer: enteredManufacturer,
@@ -128,7 +128,7 @@ export default function SearchEngine(props) {
             log.debug(response);
             // Let other components update using both the results we got from the server,
             // as well as the search location, which is needed to center the map
-            props.onSaveResponseData({
+            onSearchResponseAvailable({
                 instruments: response.data.instruments,
                 locations: response.data.locations,
                 searchLocation: userInput.location
@@ -141,13 +141,13 @@ export default function SearchEngine(props) {
 
     // Another Submit handler (for handling loading states)
     // const [minimumTime, setMinimumTime] = useState(500);
-    const [minimumTimeElapsed, setMinimumTimeElapsed] = useState(true);
-    const [loading, setLoading] = useState(false);
+    const [isMinimumTimeElapsed, setMinimumTimeElapsed] = useState(true);
+    const [isLoading, setLoading] = useState(false);
 
     const restartTimeout = useCallback(() => {
         setMinimumTimeElapsed(false);
         setLoading(true);
-        const randomLoadTime = 4000;
+        const randomLoadTime = 400;
 
         setTimeout(() => {
             setMinimumTimeElapsed(true);
@@ -157,12 +157,12 @@ export default function SearchEngine(props) {
             setLoading(false);
         }, randomLoadTime);
 
-    }, [setMinimumTimeElapsed, setLoading]);
+    }, []);
 
     React.useEffect(() => {
-        props.minimumTimeElapsed(minimumTimeElapsed);
-        props.loading(loading);
-    }, [props, minimumTimeElapsed, loading]);
+        onMinimumTimeElapsed(isMinimumTimeElapsed);
+        onSetLoading(isLoading);
+    }, [onMinimumTimeElapsed, onSetLoading, isMinimumTimeElapsed, isLoading]);
 
     // Reset handling
     const resetHandler = async (event) => {
@@ -192,6 +192,8 @@ export default function SearchEngine(props) {
                             value={enteredAddress}
                             label="Find instruments near"
                             variant="outlined"
+                            required={enteredDistance > 0}
+                            data-error="Required when maximum Distance is set"
                         />
                     </Form.Group>
                 </div>

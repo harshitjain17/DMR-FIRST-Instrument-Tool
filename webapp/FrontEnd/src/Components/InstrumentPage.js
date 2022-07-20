@@ -19,20 +19,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function InstrumentPage(props) {
-    const handleClose = () => {
-        props.handleClose(false);
+export default function InstrumentPage({isOpen, instrumentData, handleClose}) {
+    const onClose = () => {
+        handleClose(false);
     };
 
-    const object = props.instrumentData;
-    log.debug(object);
+    log.debug(instrumentData);
 
     return (
         <div>
         <Dialog
             fullScreen
-            open={props.openClose}
-            onClose={handleClose}
+            open={isOpen}
+            onClose={onClose}
             TransitionComponent={Transition}
         >
             <AppBar sx={{ position: 'relative' }}>
@@ -46,7 +45,7 @@ export default function InstrumentPage(props) {
                     <CloseIcon />
                     </IconButton>
                 <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                    {object.name}
+                    {instrumentData.name}
                 </Typography>
                 <Button autoFocus color="inherit" onClick={handleClose}>
                     save
@@ -78,7 +77,7 @@ export default function InstrumentPage(props) {
                             >
                                 <div style={{ overflowY: 'scroll' }}>
                                 <Typography variant="h6" gutterBottom component="div"> DESCRIPTION </Typography>
-                                <Typography variant="subtitle2" paragraph align='justify'>{object.description}</Typography>
+                                <Typography variant="subtitle2" paragraph align='justify'>{instrumentData.description}</Typography>
                                 </div>
                             </Paper>
                         </Grid>
@@ -93,7 +92,7 @@ export default function InstrumentPage(props) {
                                     height: '40vh',
                                 }}
                             >
-                                <Tabination details={props.instrumentData}/>
+                                <Tabination details={instrumentData}/>
                                 </Paper>
                         </Grid>
                     </Grid>

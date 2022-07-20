@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ContactsTable from './ContactsTable';
+import QuickSpec from './QuickSpecTab';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,9 +47,10 @@ export default function Tabination(props) {
   };
 
   // Instrument Data
-  const object = props.details;
+  const instrumentDetails = props.details;
   const objectLocation = props.details.location;
-  const ContactsArray = object.contacts ?? [];
+  const contactsArray = instrumentDetails.contacts ?? [];
+  const instrumentTypes = instrumentDetails.instrumentTypes ?? [];
 
   return (
     <Box
@@ -70,34 +72,30 @@ export default function Tabination(props) {
       </Tabs>
 
       <TabPanel value={value} index={0}>
-        <Typography variant="subtitle2" gutterBottom component="div">Digital Object Identifier (DOI):</Typography> <Typography variant="body2" gutterBottom>{object.doi} </Typography>
-        <Typography variant="subtitle2" gutterBottom component="div">Cited as: </Typography>
-        <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography>
-        <Typography variant="subtitle2" gutterBottom component="div">Instrument Type: </Typography>
-        <Typography variant="subtitle2" gutterBottom component="div">Manufacturer: </Typography>
+        <QuickSpec doi={instrumentDetails.doi} manufacturer={instrumentDetails.manufacturer} instrumentTypes={instrumentTypes}></QuickSpec>
       </TabPanel>
 
       <TabPanel value={value} index={1}>
         <Typography variant="subtitle2" gutterBottom component="div">Address: </Typography>
         <Typography variant="body2" gutterBottom component="div">
-          {object.roomNumber} {objectLocation?.building}<br/>
+          {instrumentDetails.roomNumber} {objectLocation?.building}<br />
           {objectLocation?.city} {objectLocation?.state} {objectLocation?.zip}
         </Typography>
       </TabPanel>
-      
+
       <TabPanel value={value} index={2}>
-        <ContactsTable contacts = {ContactsArray}/>
+        <ContactsTable contacts={contactsArray} />
       </TabPanel>
-      
+
       <TabPanel value={value} index={3}>
         Awards
       </TabPanel>
-      
+
       <TabPanel value={value} index={4}>
-        <Typography variant="subtitle2" gutterBottom component="div">Acquisition Date: </Typography>{object.acquisitionDate}
-        <Typography variant="subtitle2" gutterBottom component="div">Completion Date: </Typography>{object.completionDate}
+        <Typography variant="subtitle2" gutterBottom component="div">Acquisition Date: </Typography>{instrumentDetails.acquisitionDate}
+        <Typography variant="subtitle2" gutterBottom component="div">Completion Date: </Typography>{instrumentDetails.completionDate}
       </TabPanel>
-      
+
     </Box>
   );
 }
