@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { config } from '../config/config';
+import { config } from '../../config/config';
 
 export default function LocationTab({instrumentDetails, objectLocation}) {
     return (
