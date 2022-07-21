@@ -7,13 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import Tabination from './Tabination';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
-import log from 'loglevel';
+import Tabination from './Tabination';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -23,8 +22,6 @@ export default function InstrumentPage({isOpen, instrumentData, handleClose}) {
     const onClose = () => {
         handleClose(false);
     };
-
-    log.debug(instrumentData);
 
     return (
         <div>

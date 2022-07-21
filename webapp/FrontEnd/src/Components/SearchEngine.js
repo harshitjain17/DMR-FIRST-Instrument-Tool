@@ -12,7 +12,6 @@ import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 
 import InstoolApi from '../Api/InstoolApi';
-// import GoogleApi from '../Api/GoogleApi';
 
 import log from 'loglevel';
 

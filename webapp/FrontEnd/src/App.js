@@ -1,82 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import SearchEngine from './Components/SearchEngine';
-import GoogleMap from './Components/GoogleMap';
-import DataTable from './Components/DataTable';
-
 import React, { useState } from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
+import { ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
+import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+
 import log from 'loglevel';
-import { config } from './config/config';
-
 import initLogging from './logging';
-// Initialize the loggin library, so that a user can toggle log levels with Ctrl-F12
+
+import { config } from './config/config';
+import './App.css';
+import SearchEngine from './Components/SearchEngine';
+import GoogleMap from './Components/GoogleMap';
+import DataTable from './Components/Table/DataTable';
+import {AppBar, Drawer, DrawerHeader, mdTheme} from './Customizing';
+
+// Initialize the logging library, so that a user can toggle log levels with Ctrl-F12
 initLogging();
-log.debug(`Accesing server at ${config.url}`)
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: "25%",
-    width: `calc(75%)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: "25%",
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
-
-const mdTheme = createTheme();
+log.debug(`Accessing server at ${config.url}`)
 
 function App() {
   const [response, setResponse] = useState([]);
@@ -187,7 +132,7 @@ function App() {
                     height: '40vh',
                   }}
                 >
-                  <GoogleMap response={response} onSelectLocation={selectLocationHandler} />
+                  <GoogleMap locations={response?.locations} onSelectLocation={selectLocationHandler} />
                 </Paper>
               </Grid>
             </Grid>

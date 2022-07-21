@@ -50,7 +50,7 @@ namespace Instool.DAL.Results
         public string Status { get; set; } = string.Empty;
 
         public string Institution { get; set; } = string.Empty;
-
+        public string Facility { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
 
         public int? Location { get; set; }
@@ -72,6 +72,7 @@ namespace Instool.DAL.Results
             Label = label.ToString();
             Status = i.StatusEnum.Label;
             Institution = i.Institution?.Name ?? String.Empty;
+            Facility = i.Institution?.Facility ?? String.Empty;
             Location = location;
             City = i.Location?.City ?? String.Empty;
             State = i.Location?.State ?? String.Empty;
