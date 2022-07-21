@@ -13,7 +13,6 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
 import Tabination from './Tabination';
-import log from 'loglevel';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -23,8 +22,6 @@ export default function InstrumentPage({isOpen, instrumentData, handleClose}) {
     const onClose = () => {
         handleClose(false);
     };
-
-    log.debug(instrumentData);
 
     return (
         <div>

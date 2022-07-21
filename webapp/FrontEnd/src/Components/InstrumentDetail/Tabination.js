@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import ContactsTable from './ContactsTable';
 import QuickSpec from './QuickSpecTab';
 import LocationTab from './LocationTab';
+import AwardTab from './AwardTab';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -91,7 +92,7 @@ export default function Tabination(props) {
       </TabPanel>
 
       <TabPanel value={value} index={3}>
-        Awards
+        <AwardTab awards={instrumentDetails.awards}/>
       </TabPanel>
 
       <TabPanel value={value} index={4}>

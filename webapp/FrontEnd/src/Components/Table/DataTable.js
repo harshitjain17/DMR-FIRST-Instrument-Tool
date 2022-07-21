@@ -1,4 +1,6 @@
 import React from 'react';
+import log from 'loglevel';
+
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import "./DataTable.css";
 import InstoolApi from '../../Api/InstoolApi';
@@ -25,7 +27,7 @@ const columns = [
 export default function DataTable({ response, selectedLocation, loading, minimumTimeElapsed }) {
   const [instrumentData, setInstrumentData] = React.useState('');
   const [isOpen, setOpen] = React.useState(false);
-  const [filterModel, setFilterModel] = React.useState({items: []});
+  const [filterModel, setFilterModel] = React.useState({ items: [] });
   const [visibilityModel, setVisibilityModel] = React.useState({ id: false, distance: false });
 
   var searchResult = response.instruments ?
@@ -68,6 +70,7 @@ export default function DataTable({ response, selectedLocation, loading, minimum
 
   const handleOnRowClick = (params) => {
     InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
+      log.debug(`Server retrun instrument details:\n${response.data}`); 
       setInstrumentData(response.data);
     });
     setOpen(true);
