@@ -122,7 +122,7 @@ function App() {
                     height: '40vh',
                   }}
                 >
-                  <GoogleMap response={response} onSelectLocation={selectLocationHandler} />
+                  <GoogleMap locations={response?.locations} onSelectLocation={selectLocationHandler} />
                 </Paper>
               </Grid>
             </Grid>

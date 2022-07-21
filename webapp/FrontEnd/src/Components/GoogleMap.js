@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { config } from '../config/config';
 
-export function GoogleMap({response, onSelectLocation, google}) {
+export function GoogleMap({locations, onSelectLocation, google}) {
 
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [activeMarker, setActiveMarker] = useState();
@@ -11,23 +11,25 @@ export function GoogleMap({response, onSelectLocation, google}) {
   const [center, setCenter] = useState({ lat: 37, lng: -95 });
   const [bounds, setBounds] = useState(undefined);
 
+  // Watch locations, whenever a new search is done, we set bounds again.
+  // Bounds get removed once users start to zoom or drag the map around.
   React.useEffect(() => {
     // array is undefined or empty
-    if (!response.locations?.length) {
+    if (!locations?.length) {
       setBounds(undefined);
       setCenter({ lat: 37, lng: -95 });
       setZoom(4);
     // Center if only one location
-    } else if (response.locations.length === 1) {
+    } else if (locations.length === 1) {
       setBounds(undefined);
-      setCenter({ lat: response.locations[0].latitude, lng: response.locations[0].longitude });
+      setCenter({ lat: locations[0].latitude, lng: locations[0].longitude });
       setZoom(8);
     // And only set bounds to show all markers if there are more than 2
     } else {
       // Gather all locations, and let google determine which part of the map to show
       // so we see all of them.
       const boundsCalc = new google.maps.LatLngBounds()
-      for (const l of (response.locations ?? [])) {
+      for (const l of (locations ?? [])) {
         boundsCalc.extend({
           lat: l.latitude,
           lng: l.longitude
@@ -38,15 +40,14 @@ export function GoogleMap({response, onSelectLocation, google}) {
   // For some reaseon, eslint is complaining about the dependency on google.maps.LatLngBounds.
   // That is a class we use here, it won't change
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response.locations]);
+  }, [locations]);
 
-  const searchResult = response.locations || [];
   // Show an info window, and filter the table for instruments at that location
   const onMarkerClick = (p, marker) => {
     if (selectedLocation?.id.toString() === p.label) {
       onMarkerDeselected();
     } else {
-      setSelectedLocation(searchResult.find(l => l.id.toString() === p.label));
+      setSelectedLocation(locations?.find(l => l.id.toString() === p.label));
       setActiveMarker(marker);
       setShowingInfoWindow(true);
       onSelectLocation(p.label);
@@ -63,11 +64,12 @@ export function GoogleMap({response, onSelectLocation, google}) {
   }
 
   const displayMarkers = () => {
-    return searchResult.map((location, index) => {
+    return locations?.map((location, index) => {
       return <Marker
         key={index}
         id={index}
         label={location.id.toString()}
+        title={`${location.building ? location.building + " @ ":""}${location.institution}, ${location.count} instrument(s)`}
         position={{
           lat: location.latitude,
           lng: location.longitude
