@@ -5,7 +5,8 @@ import Box from '@mui/material/Box';
 import "./DataTable.css";
 import InstoolApi from '../Api/InstoolApi';
 import LinearProgress from '@mui/material/LinearProgress';
-import InstrumentPage from './InstrumentPage';
+import InstrumentPageNewTab from './InstrumentPageNewTab';
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 
 
 const columns = [
@@ -95,9 +96,21 @@ function CustomNoRowsOverlay() {
   );
 };
 
-export default function DataTable({ response, selectedLocation, loading, minimumTimeElapsed }) {
+// function Routing(props) {
+//   if (props.initiation) {
+//   return (
+//     <Router>
+//       <Routes>
+//         <Route exact strict path="/:InstrumentID" element={<InstrumentPageNewTab instrumentData={props.instrumentData}/>} />
+//       </Routes>
+//       {/* <Link to={`/${instrumentData?.instrumentId}`} target="_blank" /> */}
+//     </Router>
+//   )}
+// };
+
+export default function DataTable({ response, selectedLocation, loading, minimumTimeElapsed, getIdProp }) {
   const [instrumentData, setInstrumentData] = React.useState('');
-  const [isOpen, setOpen] = React.useState(false);
+  // const [isOpen, setOpen] = React.useState(false);
 
   var searchResult = response.instruments ?
     response.instruments.map(instrument => {
@@ -125,22 +138,27 @@ export default function DataTable({ response, selectedLocation, loading, minimum
     } : {
       items: []
     };
-
+  
+  // Show only if an address has been entered
   var visibilityModel = {
     id: false,
-    // Show only if an address has been entered
     distance: !!response.searchLocation?.address
   };
 
+
+  // routing with URL parameters
+  const navigate = useNavigate();
+  const locationURL = useLocation();
+  const queryParams = new URLSearchParams(locationURL.search); // gives key:value pair of parameters. Ex: {'id':'304'}
+  const getId = queryParams.get('id'); // gives value
+
   const handleOnRowClick = (params) => {
+    navigate('/?id=' + params.row.instrumentId.toString());
     InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
       setInstrumentData(response.data);
+      getIdProp(getId);
     });
-    setOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpen(false)
+    
   };
 
   return (
@@ -188,12 +206,13 @@ export default function DataTable({ response, selectedLocation, loading, minimum
           onRowClick={handleOnRowClick}
         />
       )}
-      {/* <Router>
-        <Routes>
-          <Route exact path = "instruments/:id" element={<InstrumentPage instrumentData={instrumentData} />} />
+        {/* <Routes>
+          <Route exact path='/:id' element={<InstrumentPageNewTab instrumentData={instrumentData}/>}/>
         </Routes>
-      </Router> */}
-      <InstrumentPage isOpen={isOpen} handleClose={handleCloseModal} instrumentData={instrumentData} />
+        {getId && (
+          <Navigate to={`/?id=${getId}`} />
+        )} */}
+      
     </div>
   );
 };

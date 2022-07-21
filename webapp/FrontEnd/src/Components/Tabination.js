@@ -54,13 +54,13 @@ export default function Tabination(props) {
   const instrumentTypes = instrumentDetails.instrumentTypes ?? [];
 
   // Displaying Instrument Types
-  function InstrumentTypes() {
-    var arr = [];
-    for (var i = 0; i < object.instrumentTypes?.length; i++) {
-      arr.push(object.instrumentTypes[i]?.label)
-    };
-    return arr.join(', ');
-  };
+  // function InstrumentTypes() {
+  //   var arr = [];
+  //   for (var i = 0; i < object.instrumentTypes?.length; i++) {
+  //     arr.push(object.instrumentTypes[i]?.label)
+  //   };
+  //   return arr.join(', ');
+  // };
 
   return (
     <Box

@@ -83,6 +83,8 @@ function App() {
   const [isMinimumTimeElapsed, onMinimumTimeElapsed] = useState();
   const [isLoading, setLoading] = useState();
   const [selectedLocation, selectLocation] = useState();
+  
+  // const [id, setId] = useState();
 
   const responseDataHandler = (responseData) => {
     setResponse(responseData);
@@ -100,6 +102,13 @@ function App() {
     selectLocation(params);
   };
 
+  // const idHandler = (params) => {
+  //   setId(params);
+  // };
+
+  // if (id){
+  //   return <InstrumentPageNewTab />
+  // } else {
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -163,7 +172,8 @@ function App() {
                       response={response} 
                       selectedLocation={selectedLocation} 
                       minimumTimeElapsed={isMinimumTimeElapsed} 
-                      loading={isLoading} />
+                      loading={isLoading}
+                      getIdProp={idHandler} />
                 </Paper>
               </Grid>
 
