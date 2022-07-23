@@ -1,11 +1,10 @@
 import React from 'react';
-import log from 'loglevel';
 
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import "./DataTable.css";
-import InstoolApi from '../../Api/InstoolApi';
+
 import LinearProgress from '@mui/material/LinearProgress';
-import InstrumentPage from '../InstrumentDetail/InstrumentPage';
+import InstrumentPopop from '../InstrumentDetail/InstrumentPopup';
 import { CustomNoRowsOverlay } from './Customizing';
 
 const columns = [
@@ -24,8 +23,10 @@ const columns = [
 ];
 
 
-export default function DataTable({ response, selectedLocation, loading, minimumTimeElapsed }) {
-  const [instrumentData, setInstrumentData] = React.useState('');
+export default function DataTable(
+  { response, selectedLocation, loading, minimumTimeElapsed }
+  ) {
+  const [instrumentId, setInstrumentId] = React.useState('');
   const [isOpen, setOpen] = React.useState(false);
   const [filterModel, setFilterModel] = React.useState({ items: [] });
   const [visibilityModel, setVisibilityModel] = React.useState({ id: false, distance: false });
@@ -69,10 +70,7 @@ export default function DataTable({ response, selectedLocation, loading, minimum
   }, [response.searchLocation])
 
   const handleOnRowClick = (params) => {
-    InstoolApi.get(`/instruments/${params.row.instrumentId}`).then((response) => {
-      log.debug(`Server retrun instrument details:\n${response.data}`); 
-      setInstrumentData(response.data);
-    });
+    setInstrumentId(params.row.instrumentId);
     setOpen(true);
   };
 
@@ -128,12 +126,7 @@ export default function DataTable({ response, selectedLocation, loading, minimum
           onRowClick={handleOnRowClick}
         />
       )}
-      {/* <Router>
-        <Routes>
-          <Route exact path = "instruments/:id" element={<InstrumentPage instrumentData={instrumentData} />} />
-        </Routes>
-      </Router> */}
-      <InstrumentPage isOpen={isOpen} handleClose={handleCloseModal} instrumentData={instrumentData} />
+      <InstrumentPopop isOpen={isOpen} handleClose={handleCloseModal} instrumentId={instrumentId} />
     </div>
   );
 };
