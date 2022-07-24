@@ -1,4 +1,4 @@
-import { styled, createTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
@@ -56,4 +56,3 @@ export const AppBar = styled(MuiAppBar, {
     justifyContent: 'flex-end',
   }));
   
-  export const mdTheme = createTheme();

@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 
-import InstoolApi from '../Api/InstoolApi';
+import InstoolApi from '../../Api/InstoolApi';
 
 import log from 'loglevel';
 
