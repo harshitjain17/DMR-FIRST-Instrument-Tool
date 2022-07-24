@@ -9,7 +9,7 @@ import initLogging from './logging';
 
 import { config } from './config/config';
 import SearchTool from './Components/SearchTool/SearchTool';
-import InstrumentPage from './Components/InstrumentPage';
+import InstrumentPage from './Components/InstrumentDetail/InstrumentPage';
 import './App.css';
 
 

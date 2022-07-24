@@ -4,10 +4,10 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-import InstoolApi from '../Api/InstoolApi';
+import InstoolApi from '../../Api/InstoolApi';
 import log from 'loglevel';
 
-import Content from './InstrumentDetail/Content';
+import Content from './Content';
 
 export default function InstrumentPage({ instrumentId }) {
     const [instrumentData, setInstrumentData] = React.useState({ undefined });
