@@ -48,6 +48,7 @@ deploy_dev:
     variables:
       ErrorActionPreference: stop
       GIT_STRATEGY: none
+    when: manual
     environment:
         name: dev
         url: https://m4-instool.vmhost.psu.edu
