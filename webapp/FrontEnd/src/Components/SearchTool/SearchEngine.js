@@ -10,6 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import InstoolApi from '../../Api/InstoolApi';
 
@@ -91,7 +92,8 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
         ...theme.typography.button,
         backgroundColor: theme.palette.background.paper,
         padding: theme.spacing(1),
-        textAlign: 'center'
+        textAlign: 'center',
+        fontSize: xlargeScreen ? 25 : 14
     }));
 
     // We only search once the user hits submit - handled here
@@ -177,6 +179,9 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
         setEnteredIRI(false);
     };
 
+    // breakpoints for responsiveness
+    const xlargeScreen = useMediaQuery('(min-width:2560px)');
+
     return (
 
         <div className="px-3 border" style={{ width: "100%", height: "100%" }}>
@@ -186,7 +191,7 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                     <Form.Group controlId="formAddress">
                         <TextField
                             fullWidth={true}
-                            size="small"
+                            size= {xlargeScreen ? "medium" : "small"}
                             onChange={addressChangeHandler}
                             value={enteredAddress}
                             label="Find instruments near"
@@ -198,11 +203,11 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className="mt-3">
+                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formDistance">
                         <TextField
                             fullWidth={true}
-                            size="small"
+                            size= {xlargeScreen ? "medium" : "small"}
                             select
                             label="Maximum Distance"
                             value={enteredDistance}
@@ -220,12 +225,12 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                     </Form.Group>
                 </div>
 
-                <div className="mt-3">
+                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formInstrumentCategory">
                         <TextField
                             options={instrumentCategories}
                             fullWidth={true}
-                            size="small"
+                            size= {xlargeScreen ? "medium" : "small"}
                             select
                             label="Instrument Category"
                             value={enteredInstrumentCategory}
@@ -240,7 +245,7 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                     </Form.Group>
                 </div>
 
-                <div className="mt-3">
+                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formInstrumentType">
                         <Autocomplete
                             renderOption={(props, option) => {
@@ -251,7 +256,7 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                                 )
                             }}
                             fullWidth={true}
-                            size="small"
+                            size= {xlargeScreen ? "medium" : "small"}
                             options={instrumentTypes}
                             isOptionEqualToValue={(option, value) => option?.value === value?.value}
                             groupBy={(option) => option.categoryLabel}
@@ -270,18 +275,18 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className="mt-3">
+                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formKeywords">
                         <Autocomplete
                             multiple
                             fullWidth={true}
-                            size="small"
+                            size= {xlargeScreen ? "medium" : "small"}
                             options={[]}
                             freeSolo
                             onChange={keywordsChangeHandler}
                             renderTags={(value, getTagProps) =>
                                 value.map((option, index) => (
-                                    <Chip size="small" label={option} {...getTagProps({ index })} />
+                                    <Chip size= {xlargeScreen ? "medium" : "small"} label={option} {...getTagProps({ index })} />
                                 ))
                             }
                             renderInput={(params) => (
@@ -296,11 +301,11 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className="mt-3">
+                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formManufacturer">
                         <TextField
                             fullWidth={true}
-                            size="small"
+                            size= {xlargeScreen ? "medium" : "small"}
                             onChange={manufacturerChangeHandler}
                             value={enteredManufacturer}
                             label="Manufacturer"
@@ -311,11 +316,11 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className="mt-3">
+                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formAwardNumber">
                         <TextField
                             fullWidth={true}
-                            size="small"
+                            size= {xlargeScreen ? "medium" : "small"}
                             value={enteredAwardNumber}
                             onChange={awardNumberChangeHandler}
                             label="Award Number"
@@ -325,7 +330,7 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                     </Form.Group>
                 </div>
 
-                <div className="mt-3">
+                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group className="mb-1" controlId="formIRI">
                         <FormControlLabel control={
                             <Checkbox
@@ -339,12 +344,12 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className="d-grid gap-2 mt-3">
-                    <Button endIcon={<SearchIcon />} onClick={() => { restartTimeout() }} type='submit' variant="contained" style={{ width: "90%", margin: "auto" }}>Search</Button>
+                <div className= {xlargeScreen ? "d-grid gap-2 mt-4" : "d-grid gap-2 mt-3"}>
+                    <Button size= {xlargeScreen ? "large" : "medium"} endIcon={<SearchIcon />} onClick={() => { restartTimeout() }} type='submit' variant="contained" style={{ width: "100%", margin: "auto" }}>Search</Button>
                 </div>
 
-                <div className="d-grid gap-2">
-                    <Button variant="secondary" type="reset" className="mt-2" style={{ width: "90%", margin: "auto" }}>Reset</Button>
+                <div className= {xlargeScreen ? "d-grid gap-2 mt-4" : "d-grid gap-2 mt-3"}>
+                    <Button size= {xlargeScreen ? "large" : "medium"} variant="secondary" type="reset" className="mt-2" style={{ width: "100%", margin: "auto" }}>Reset</Button>
                 </div>
             </Form>
         </div>

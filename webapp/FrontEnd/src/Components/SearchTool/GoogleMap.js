@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { config } from '../../config/config';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export function GoogleMap({locations, onSelectLocation, google}) {
 
@@ -37,7 +38,7 @@ export function GoogleMap({locations, onSelectLocation, google}) {
       }
       setBounds(boundsCalc);
     }
-  // For some reaseon, eslint is complaining about the dependency on google.maps.LatLngBounds.
+  // For some reason, eslint is complaining about the dependency on google.maps.LatLngBounds.
   // That is a class we use here, it won't change
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locations]);
@@ -79,11 +80,14 @@ export function GoogleMap({locations, onSelectLocation, google}) {
     })
   };
 
+  // breakpoints for responsiveness
+  const xlargeScreen = useMediaQuery('(min-width:2560px)');
+
   return (
     <Map
       google={google}
       style={{ width: '100%', height: '100%', position: "static" }}
-      containerStyle={{ width: "34%", height: "37.5%" }}
+      containerStyle={{ width: xlargeScreen ? "35.3%" : "34%", height: xlargeScreen ? "45.5%" : "37.5%" }}
       bounds={bounds}
       center={center}
       zoom={zoom}

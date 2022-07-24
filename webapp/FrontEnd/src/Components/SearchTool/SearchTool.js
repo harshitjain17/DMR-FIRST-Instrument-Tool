@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import SearchEngine from './SearchEngine';
 import GoogleMap from './GoogleMap';
@@ -35,6 +35,9 @@ export default function SearchTool({ onRowSelected }) {
     const selectLocationHandler = (params) => {
         selectLocation(params);
     };
+
+    // breakpoints for responsiveness
+    const xlargeScreen = useMediaQuery('(min-width:2560px)');
 
     return (
 
@@ -111,7 +114,7 @@ export default function SearchTool({ onRowSelected }) {
                                     p: 1,
                                     display: 'flex',
                                     flexDirection: 'column',
-                                    height: '40vh',
+                                    height: xlargeScreen ? '47vh' : '40vh',
                                 }}
                             >
                                 <GoogleMap locations={response?.locations} onSelectLocation={selectLocationHandler} />

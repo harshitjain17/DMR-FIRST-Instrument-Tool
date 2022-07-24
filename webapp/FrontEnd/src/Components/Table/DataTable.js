@@ -4,22 +4,23 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import "./DataTable.css";
 
 import LinearProgress from '@mui/material/LinearProgress';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import InstrumentPopop from '../InstrumentDetail/InstrumentPopup';
 import { CustomNoRowsOverlay } from './Customizing';
 
 const columns = [
-  { field: 'id', headerName: 'ID', type: 'number', width: 0 },
-  { field: 'institution', headerName: 'Institution', width: 175 },
-  { field: 'facility', headerName: 'Facility', width: 175 },
-  { field: 'type', headerName: 'Instrument Type', width: 140 },
-  { field: 'name', headerName: 'Instrument Name', width: 175 },
-  { field: 'doi', headerName: 'DOI', width: 160 },
-  { field: 'location', headerName: 'Location ID', width: 95 },
-  { field: 'distance', headerName: 'Distance', width: 80 },
-  { field: 'city', headerName: 'City', width: 150 },
-  { field: 'state', headerName: 'State', width: 80 },
-  { field: 'award', headerName: 'Award', width: 150 },
-  { field: 'status', headerName: 'Status', width: 90 },
+  { field: 'id', type: 'number', hide: true },
+  { field: 'institution', headerName: 'Institution', minWidth: 175, flex: 1 },
+  { field: 'facility', headerName: 'Facility', minWidth: 100, flex: 1 },
+  { field: 'type', headerName: 'Instrument Type', minWidth: 140, flex: 1 },
+  { field: 'name', headerName: 'Instrument Name', minWidth: 175, flex: 1 },
+  { field: 'doi', headerName: 'DOI', minWidth: 160, flex: 1 },
+  { field: 'location', headerName: 'Location ID', minWidth: 95, flex: 1 },
+  { field: 'distance', headerName: 'Distance', minWidth: 80, flex: 1 },
+  { field: 'city', headerName: 'City', minWidth: 150, flex: 1 },
+  { field: 'state', headerName: 'State', minWidth: 70, flex: 1 },
+  { field: 'award', headerName: 'Award', minWidth: 150, flex: 1 },
+  { field: 'status', headerName: 'Status', minWidth: 90, flex: 1 },
 ];
 
 
@@ -77,7 +78,10 @@ export default function DataTable(
   const handleCloseModal = () => {
     setOpen(false)
   };
-
+  
+  // breakpoints for responsiveness
+  const xlargeScreen = useMediaQuery('(min-width:2560px)');
+  
   return (
     <div style={{ display: 'flex', height: '100%' }}>
 
@@ -86,7 +90,6 @@ export default function DataTable(
         <DataGrid
           rows={[]}
           columns={columns}
-          density="compact"
           pageSize={5}
           rowsPerPageOptions={[5]}
           loading
@@ -108,8 +111,8 @@ export default function DataTable(
           rows={searchResult}
           columns={columns}
           density="compact"
-          pageSize={5}
-          rowsPerPageOptions={[5]}
+          pageSize={xlargeScreen ? 10 : 5}
+          rowsPerPageOptions={xlargeScreen ? [10] : [5]}
           components={{
             Toolbar: GridToolbar,
             NoRowsOverlay: CustomNoRowsOverlay
