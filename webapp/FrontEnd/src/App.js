@@ -118,7 +118,8 @@ function App() {
                       selectedLocation={selectedLocation} 
                       minimumTimeElapsed={isMinimumTimeElapsed} 
                       loading={isLoading}
-                      getIdProp={idHandler} />
+                      // getIdProp={idHandler}
+                      />
                 </Paper>
               </Grid>
 
