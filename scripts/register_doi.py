@@ -20,12 +20,25 @@ headers = {
 }
 
 def get_instrument(instrument_id):
-    result = requests.get(instool.url + '/instruments/' + instrument_id, headers=headers, verify=False)
+    result = requests.get("{}/instruments/{}".format(instool.url, instrument_id), headers=headers, verify=False)
     if result.status_code == 200:
-        print('Successfully got instrument data')
-        return json.loads(result.text)
+        data = json.loads(result.text)
+        print('Successfully got instrument data for {} ({})'.format(data.get('name'),instrument_id))
+        return data
     else: 
         print('Error getting instrument {}: {}'.format(instrument_id, result.text))
+        quit(-1)
+
+def get_instruments():
+    result = requests.post(instool.url + '/instruments/search', json={}, headers=headers, verify=False)
+    if result.status_code == 200:
+        all = json.loads(result.text)['instruments']
+        without_doi = [i for i in all if i.get('doi') == None]
+        print('Found {} instruments'.format(len(without_doi)))
+        return [i['instrumentId'] for i in without_doi]
+        
+    else: 
+        print('Error getting instruments: {}'.format(result.text))
         quit(-1)
 
 def update_instrument_set_doi(instrument_id, doi):
@@ -70,8 +83,17 @@ def update_doi_set_url(doi):
             print(result.text)
             quit;
 
+def register_doi_and_update_instrument(instrument_id):
+    instrument = get_instrument(instrument_id)
+    if ('doi' in instrument and instrument['doi']):
+        print(f"{instrument['name']} already has DOI {instrument['doi']}")
+        return
+    doi = register_doi(instrument)    
+    update_instrument_set_doi(instrument_id, doi)
+    update_doi_set_url(doi)
+
 def main(argv):
-    instrument_id = 6
+    instrument_id = None
     try:
         opts, args = getopt.getopt(argv, "hi:", ["instrument="])
     except getopt.GetoptError:
@@ -83,16 +105,12 @@ def main(argv):
             sys.exit()
         elif opt in ("-i", "--instrument"):
             instrument_id = arg
-        if instrument_id == -1:
-            print(help_message)
-            sys.exit()
-    instrument = get_instrument(instrument_id)
-    if ('doi' in instrument and instrument['doi']):
-        print(f"{instrument.name} already has DOI {instrument.doi}")
-        sys.exit()
-    doi = register_doi(instrument)    
-    update_instrument_set_doi(instrument_id, doi)
-    update_doi_set_url(doi)
+            register_doi_and_update_instrument(instrument_id)
+    if instrument_id == None:
+        all = get_instruments()
+        for instrument_id in all:
+            register_doi_and_update_instrument(instrument_id)
+    
 
 if __name__ == "__main__":
     main(sys.argv[1:])
