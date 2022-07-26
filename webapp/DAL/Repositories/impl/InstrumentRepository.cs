@@ -51,7 +51,8 @@ namespace Instool.DAL.Repositories.Impl
 
         public async Task SetDoi(int id, string doi)
         {
-            var instrument = await GetById(id);
+            var instrument = await _context.Instruments
+                                .Where(i => i.InstrumentId == id).SingleOrDefaultAsync();
             if (instrument == null) { return; }
             instrument.Doi = doi;
             await _context.SaveChangesAsync();

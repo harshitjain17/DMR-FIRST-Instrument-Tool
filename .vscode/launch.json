@@ -24,7 +24,7 @@
             "type": "python",
             "request": "launch",
             "program": "scripts/export_instruments.py",
-            "args": ["-i", "6", "-e", "DataCite"],
+            "args": ["-i", "831", "-e", "DataCite"],
             "console": "integratedTerminal",
             "justMyCode": true
         }, {
@@ -32,7 +32,7 @@
             "type": "python",
             "request": "launch",
             "program": "scripts/register_doi.py",
-            "args": ["-i", "6"],
+            "args": ["-i", "832"],
             "console": "integratedTerminal",
             "justMyCode": true
         }

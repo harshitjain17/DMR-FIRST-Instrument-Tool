@@ -18,8 +18,8 @@ def add_content(xml, name, content, type_attribute="", type=""):
 
 def create_xml(instrument):
         xml = ET.Element("instrument")
-        add_content(xml, "identifier", instrument.doi, "identifierType", "DOI")
-        add_content(xml, "landingPage", "https://m4-instool/instrument/{}".format(instrument.instrumentId))
+        add_content(xml, "identifier", instrument.get_value('doi'), "identifierType", "DOI")
+        add_content(xml, "landingPage", "https://m4-instool.vmshot.psu.edu/instrument/{}".format(instrument.get_value('instrumentId')))
         add_content(xml, "name", instrument.name)
         if (instrument.institution):
             owners = ET.SubElement(xml, "owners")

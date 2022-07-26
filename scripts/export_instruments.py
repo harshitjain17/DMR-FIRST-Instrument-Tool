@@ -1,25 +1,37 @@
 import json
-from sqlalchemy.orm import sessionmaker, joinedload
-from sqlalchemy.ext.declarative import declarative_base
+import requests
 import sys
 import getopt
 
-import config.db as dbconf
-import db.db as db
-from db.entities import Instrument, Award
+import config.datacite as datacite
+from export.data_cite import create_data_cite_json, write_json_file
+from export.pidinst import create_xml, write_xml_file
+
+from requests.auth import HTTPBasicAuth
+import requests
+import config.instool as instool
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 from export.data_cite import create_data_cite_json, write_json_file
 from export.pidinst import create_xml, write_xml_file
 
 help_message = "export_instrument.py -i instrumentId"
 
+headers = {
+    'Content-Type': 'application/json',
+    'X-API-Key': instool.auth
+}
 
 def get_instrument(id):
-    engine = db.connect(dbconf)
-
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    return session.query(Instrument).options(joinedload(Instrument.types)).filter_by(instrumentId=id).first()
+    result = requests.get(instool.url + '/instruments/' + id, headers=headers, verify=False)
+    if result.status_code == 200:
+        print('Successfully got instrument data')
+        return json.loads(result.text)
+    else: 
+        print('Error getting instrument {}: {}'.format(id, result.text))
+        quit(-1)
 
 
 def main(argv):
@@ -42,7 +54,7 @@ def main(argv):
             instrument = get_instrument(instrument_id)
             if arg == "DataCite":
                 dict = create_data_cite_json(instrument)
-                write_json_file(dict, "data/" + instrument.name)
+                write_json_file(dict, "data/" + instrument['name'])
             else:
                 xml = create_xml.pidinst(instrument)
                 write_xml_file(xml, "data/" + instrument.name)

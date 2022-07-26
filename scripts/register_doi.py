@@ -1,29 +1,74 @@
 import json
 import requests
-from requests.auth import HTTPBasicAuth
-from sqlalchemy.orm import sessionmaker, joinedload
-from sqlalchemy.ext.declarative import declarative_base
 import sys
 import getopt
+from requests.auth import HTTPBasicAuth
+import requests
+import config.instool as instool
 
-import config.db as dbconf
 import config.datacite as datacite
-import db.db as db
-from db.entities import Instrument, Award
-from export.data_cite import create_data_cite_json, write_json_file
-from export.pidinst import create_xml, write_xml_file
+from export.data_cite import register_doi_json, update_doi_json
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 help_message = "register_doi.py -i instrumentId"
 
+headers = {
+    'Content-Type': 'application/json',
+    'X-API-Key': instool.auth
+}
 
-def get_instrument(id):
-    engine = db.connect(dbconf)
+def get_instrument(instrument_id):
+    result = requests.get(instool.url + '/instruments/' + instrument_id, headers=headers, verify=False)
+    if result.status_code == 200:
+        print('Successfully got instrument data')
+        return json.loads(result.text)
+    else: 
+        print('Error getting instrument {}: {}'.format(instrument_id, result.text))
+        quit(-1)
 
-    Session = sessionmaker(bind=engine)
-    session = Session()
+def update_instrument_set_doi(instrument_id, doi):
+    result = requests.put("{}/instruments/{}/doi/{}".format(instool.url, instrument_id, doi), headers=headers, verify=False)
+    if result.status_code == 200 or result.status_code == 204:
+        print('Successfully updated instrument')
+    else: 
+        print('Error updating instrument {}: {}'.format(instrument_id, result.text))
+        quit(-1)
 
-    return session.query(Instrument).options(joinedload(Instrument.types)).filter_by(instrumentId=id).first()
+def register_doi(instrument):
+    data = {
+        "data": register_doi_json(instrument)
+    }
+    result = requests.post(datacite.url, json=data, headers=headers, auth = HTTPBasicAuth(datacite.user, datacite.password))
+    if result.status_code == 201:
+        try:
+            result = json.loads(result.text)
+            doi = result['data']['id']
+            print(f"Sucessfully registered, doi is {doi}")
+            return doi
+        except:
+            print(result.text)
+            quit();
+    else: 
+            print(result.text)
+            quit;
 
+def update_doi_set_url(doi):
+    data = {
+        "data": update_doi_json(doi)
+    }
+    result = requests.put(datacite.url + '/' + doi, json=data, headers=headers, auth = HTTPBasicAuth(datacite.user, datacite.password))
+    if result.status_code == 200:
+        try:
+            result = json.loads(result.text)
+            print(f"Sucessfully updated doi, url {doi}")
+        except:
+            print(result.text)
+            quit();
+    else: 
+            print(result.text)
+            quit;
 
 def main(argv):
     instrument_id = 6
@@ -42,26 +87,12 @@ def main(argv):
             print(help_message)
             sys.exit()
     instrument = get_instrument(instrument_id)
-    if (instrument.doi):
+    if ('doi' in instrument and instrument['doi']):
         print(f"{instrument.name} already has DOI {instrument.doi}")
         sys.exit()
-    data = {
-        "data": create_data_cite_json(instrument)
-    }
-    headers = {
-        "Content-Type": "application/vnd.api+json"
-    }
-    result = requests.post(datacite.url, json=data, headers=headers, auth = HTTPBasicAuth(datacite.user, datacite.password))
-    if result.status_code == 201:
-        try:
-            result = json.load(result)
-            doi = result.data.id
-            print(f"Sucessfully registered, doi is {doi}")
-            instrument.doi = doi
-        except:
-            print(result.text)
-    else: 
-            print(result.text)
+    doi = register_doi(instrument)    
+    update_instrument_set_doi(instrument_id, doi)
+    update_doi_set_url(doi)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
