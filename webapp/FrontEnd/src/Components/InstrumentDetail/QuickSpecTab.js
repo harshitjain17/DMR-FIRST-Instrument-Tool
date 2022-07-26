@@ -1,10 +1,9 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
-export default function QuickSpec(props) {
-    const { instrumentTypes, doi, manufacturer, modelNumber, serialNumber, status } = props;
+export default function QuickSpec({instrumentDetails}) {
+    
     // gather all types and their categories
     // const allTypes = instrumentTypes?.map(t => t?.category?.category)
     //     .concat(instrumentTypes?.map(t => t?.category))
@@ -18,8 +17,9 @@ export default function QuickSpec(props) {
     //     .filter((item, index, list) => list.indexOf(item) === index)
     //     .join(', ');
     
-    const allTypes = instrumentTypes?.map(t => t?.category?.category)
-        .concat(instrumentTypes?.map(t => t?.category))
+    // gather categories
+    const allTypes = instrumentDetails?.instrumentTypes?.map(t => t?.category?.category)
+        .concat(instrumentDetails?.instrumentTypes?.map(t => t?.category))
         // .concat(instrumentTypes)
         // Remove null (in case an instrument returns a level 1 or 2 type as it's type, so .category.category is null)
         .filter(type => !!type)
@@ -35,26 +35,26 @@ export default function QuickSpec(props) {
         <Box>
             {/* DOI */}
             <Grid container spacing={1}>
-                <Grid item>{doi && <Typography variant="subtitle2" gutterBottom component="div">Digital Object Identifier (DOI):</Typography>}</Grid>
-                <Grid item lg={8}>{doi && <Typography variant="body2" gutterBottom>{doi}</Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.doi && <Typography variant="subtitle2" gutterBottom component="div">Digital Object Identifier (DOI):</Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.doi && <Typography variant="body2" gutterBottom>{instrumentDetails?.doi}</Typography>}</Grid>
             </Grid>
             
             {/* Citation */}
             <Grid container spacing={1}>
-                <Grid item>{doi && <Typography variant="subtitle2" gutterBottom component="div">Cited as: </Typography>}</Grid>
-                <Grid item lg={8}>{doi && <Typography variant="body2" gutterBottom> https://... </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.doi && <Typography variant="subtitle2" gutterBottom component="div">Cited as: </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.doi && <Typography variant="body2" gutterBottom> https://dmr-first.org/{instrumentDetails?.doi} </Typography>}</Grid>
             </Grid>
             
             {/* Instrument Category */}
             <Grid container spacing={1}>
-                <Grid item xs="auto">{instrumentTypes[0]?.category?.category.label && <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography>}</Grid>
-                <Grid item xs="auto" >{instrumentTypes[0]?.category?.category.label && <Typography noWrap variant="body2" gutterBottom> {allTypes} </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.instrumentTypes[0]?.category?.category.label && <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography>}</Grid>
+                <Grid item xs="auto" >{instrumentDetails?.instrumentTypes[0]?.category?.category.label && <Typography variant="body2" gutterBottom> {allTypes} </Typography>}</Grid>
             </Grid>
 
             {/* Instrument Types */}
             <Grid container spacing={1} >
-                <Grid item>{instrumentTypes[0] && <Typography variant="subtitle2" gutterBottom component="div">Instrument Type: </Typography>}</Grid>
-                <Grid item lg={7} zeroMinWidth>{instrumentTypes[0] && <Typography noWrap variant="body2" gutterBottom> {instrumentTypes[0]?.label} </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.instrumentTypes[0] && <Typography variant="subtitle2" gutterBottom component="div">Instrument Type: </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.instrumentTypes[0] && <Typography variant="body2" gutterBottom> {instrumentDetails?.instrumentTypes[0]?.label} </Typography>}</Grid>
             </Grid>            
             {/* <List dense={true}>
                 {allTypes?.filter(t => !!t).map(type =>
@@ -66,26 +66,26 @@ export default function QuickSpec(props) {
 
             {/* Manufacturer */}
             <Grid container spacing={1}>
-                <Grid item>{manufacturer && <Typography variant="subtitle2" gutterBottom component="div">Manufacturer: </Typography>}</Grid>
-                <Grid item lg={8}>{manufacturer && <Typography variant="body2" gutterBottom>{manufacturer} </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.manufacturer && <Typography variant="subtitle2" gutterBottom component="div">Manufacturer: </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.manufacturer && <Typography variant="body2" gutterBottom>{instrumentDetails?.manufacturer} </Typography>}</Grid>
             </Grid>
 
             {/* Model Number */}
             <Grid container spacing={1}>
-                <Grid item>{modelNumber && <Typography variant="subtitle2" gutterBottom component="div">Model number: </Typography>}</Grid>
-                <Grid item lg={8}>{modelNumber && <Typography variant="body2" gutterBottom>{modelNumber} </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.modelNumber && <Typography variant="subtitle2" gutterBottom component="div">Model number: </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.modelNumber && <Typography variant="body2" gutterBottom>{instrumentDetails?.modelNumber} </Typography>}</Grid>
             </Grid>
 
             {/* Serial Number */}
             <Grid container spacing={1}>
-                <Grid item>{serialNumber && <Typography variant="subtitle2" gutterBottom component="div">Serial number: </Typography>}</Grid>
-                <Grid item lg={8}>{serialNumber && <Typography variant="body2" gutterBottom>{serialNumber} </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.serialNumber && <Typography variant="subtitle2" gutterBottom component="div">Serial number: </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.serialNumber && <Typography variant="body2" gutterBottom>{instrumentDetails?.serialNumber} </Typography>}</Grid>
             </Grid>
 
             {/* Status */}
             <Grid container spacing={1}>
-                <Grid item>{status && <Typography variant="subtitle2" gutterBottom component="div">Status: </Typography>}</Grid>
-                <Grid item lg={8}>{status && <Typography variant="body2" gutterBottom>{status==="A" ? "Active" : "Inactive" } </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.status && <Typography variant="subtitle2" gutterBottom component="div">Status: </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentDetails?.status && <Typography variant="body2" gutterBottom>{instrumentDetails?.status==="A" ? "Active" : "Inactive" } </Typography>}</Grid>
             </Grid>
             
         </Box>
