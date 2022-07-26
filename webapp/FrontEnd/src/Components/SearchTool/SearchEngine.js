@@ -10,6 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import InstoolApi from '../../Api/InstoolApi';
@@ -330,7 +331,7 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                     </Form.Group>
                 </div>
 
-                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
+                <div className= {xlargeScreen ? "mt-4" : "mt-2"}>
                     <Form.Group className="mb-1" controlId="formIRI">
                         <FormControlLabel control={
                             <Checkbox
@@ -344,12 +345,12 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className= {xlargeScreen ? "d-grid gap-2 mt-4" : "d-grid gap-2 mt-3"}>
+                <div className= {xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-3"}>
                     <Button size= {xlargeScreen ? "large" : "medium"} endIcon={<SearchIcon />} onClick={() => { restartTimeout() }} type='submit' variant="contained" style={{ width: "100%", margin: "auto" }}>Search</Button>
                 </div>
 
-                <div className= {xlargeScreen ? "d-grid gap-2 mt-4" : "d-grid gap-2 mt-3"}>
-                    <Button size= {xlargeScreen ? "large" : "medium"} variant="secondary" type="reset" className="mt-2" style={{ width: "100%", margin: "auto" }}>Reset</Button>
+                <div className= {xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-1"}>
+                    <Button size= {xlargeScreen ? "large" : "medium"} endIcon={<RestartAltIcon />} variant="secondary" type="reset" className="mt-2" style={{ width: "100%", margin: "auto" }}>Reset</Button>
                 </div>
             </Form>
         </div>
