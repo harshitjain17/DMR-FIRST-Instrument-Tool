@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
-export default function QuickSpec({instrumentDetails}) {
-    
+export default function QuickSpec({instrumentDetails, instrumentTypes}) {
     // gather all types and their categories
     // const allTypes = instrumentTypes?.map(t => t?.category?.category)
     //     .concat(instrumentTypes?.map(t => t?.category))
@@ -17,9 +17,8 @@ export default function QuickSpec({instrumentDetails}) {
     //     .filter((item, index, list) => list.indexOf(item) === index)
     //     .join(', ');
     
-    // gather categories
-    const allTypes = instrumentDetails?.instrumentTypes?.map(t => t?.category?.category)
-        .concat(instrumentDetails?.instrumentTypes?.map(t => t?.category))
+    const allTypes = instrumentTypes?.map(t => t?.category?.category)
+        .concat(instrumentTypes?.map(t => t?.category))
         // .concat(instrumentTypes)
         // Remove null (in case an instrument returns a level 1 or 2 type as it's type, so .category.category is null)
         .filter(type => !!type)
@@ -47,14 +46,14 @@ export default function QuickSpec({instrumentDetails}) {
             
             {/* Instrument Category */}
             <Grid container spacing={1}>
-                <Grid item xs="auto">{instrumentDetails?.instrumentTypes[0]?.category?.category.label && <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography>}</Grid>
-                <Grid item xs="auto" >{instrumentDetails?.instrumentTypes[0]?.category?.category.label && <Typography variant="body2" gutterBottom> {allTypes} </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentTypes[0]?.category?.category.label && <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography>}</Grid>
+                <Grid item xs="auto" >{instrumentTypes[0]?.category?.category.label && <Typography variant="body2" gutterBottom> {allTypes} </Typography>}</Grid>
             </Grid>
 
             {/* Instrument Types */}
             <Grid container spacing={1} >
-                <Grid item xs="auto">{instrumentDetails?.instrumentTypes[0] && <Typography variant="subtitle2" gutterBottom component="div">Instrument Type: </Typography>}</Grid>
-                <Grid item xs="auto">{instrumentDetails?.instrumentTypes[0] && <Typography variant="body2" gutterBottom> {instrumentDetails?.instrumentTypes[0]?.label} </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentTypes[0] && <Typography variant="subtitle2" gutterBottom component="div">Instrument Type: </Typography>}</Grid>
+                <Grid item xs="auto">{instrumentTypes[0] && <Typography variant="body2" gutterBottom> {instrumentTypes[0]?.label} </Typography>}</Grid>
             </Grid>            
             {/* <List dense={true}>
                 {allTypes?.filter(t => !!t).map(type =>
