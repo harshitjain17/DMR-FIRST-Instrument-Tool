@@ -25,12 +25,13 @@ export default function QuickSpec(props) {
                 <Grid item lg={8}>{doi && <Typography variant="body2" gutterBottom>https://doi.org/{doi}</Typography>}</Grid>
             </Grid>
             
-            {/* Citation */}
+            {/* Citation
             <Grid container spacing={1}>
                 <Grid item>{doi && <Typography variant="subtitle2" gutterBottom component="div">Cited as: </Typography>}</Grid>
                 <Grid item lg={8}>{doi && <Typography variant="body2" gutterBottom> https://... </Typography>}</Grid>
             </Grid>
-            
+             */}
+             
             {/* Instrument Category */}
             <Grid container spacing={1}>
                 <Grid item xs="auto">{instrumentTypes[0]?.category?.category.label && <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography>}</Grid>
