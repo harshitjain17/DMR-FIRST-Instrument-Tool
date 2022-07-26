@@ -1,4 +1,9 @@
 import { Form } from 'react-bootstrap';
+import Geocode from "react-geocode";
+import { config } from '../../config/config';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import './SearchEngine.css';
 import React, { useState, useCallback } from 'react';
 import TextField from '@mui/material/TextField';
@@ -8,8 +13,10 @@ import Chip from '@mui/material/Chip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
+import Link from '@mui/material/Link';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -94,7 +101,8 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
         backgroundColor: theme.palette.background.paper,
         padding: theme.spacing(1),
         textAlign: 'center',
-        fontSize: xlargeScreen ? 25 : 14
+        fontSize: xlargeScreen ? 25 : 14,
+        paddingBottom: 1
     }));
 
     // We only search once the user hits submit - handled here
@@ -124,6 +132,7 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
             };
 
             log.debug(userInput);
+            console.log(userInput)
 
             const response = await InstoolApi.post(`/instruments/search`, userInput);
             log.info(`Server returned ${response.data.instruments?.length} instruments, and ${response.data.locations?.length} locations`)
@@ -142,7 +151,6 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
     };
 
     // Another Submit handler (for handling loading states)
-    // const [minimumTime, setMinimumTime] = useState(500);
     const [isMinimumTimeElapsed, setMinimumTimeElapsed] = useState(true);
     const [isLoading, setLoading] = useState(false);
 
@@ -180,6 +188,48 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
         setEnteredIRI(false);
     };
 
+    // Snackbar
+    const [open, setOpen] = React.useState(false);
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpen(false);
+    };
+    const action = (
+        <React.Fragment>
+            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                <CloseIcon fontSize="small" />
+          </IconButton>
+        </React.Fragment>
+    );
+    
+    // Get Current Location 
+    Geocode.setApiKey(config.apiKey);
+    Geocode.setLocationType("ROOFTOP");
+    Geocode.enableDebug();
+    const [status, setStatus] = useState(null);
+    const getLocation = () => {
+        if (!navigator.geolocation) {
+			setOpen(true);
+            setStatus('Geolocation is not supported by your browser');
+		} else {
+            navigator.geolocation.getCurrentPosition((position) => {
+                Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
+                    (response) => {
+                        setEnteredAddress(response.results[0].formatted_address);
+                    },
+                    (error) => {
+                        console.error(error);
+                    }
+                );
+            }, () => {
+                setOpen(true);
+                setStatus('Unable to retrieve your location');
+            });
+        }
+    }
+
     // breakpoints for responsiveness
     const xlargeScreen = useMediaQuery('(min-width:2560px)');
 
@@ -188,6 +238,17 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
         <div className="px-3 border" style={{ width: "100%", height: "100%" }}>
             <Form onSubmit={submitHandler} onReset={resetHandler} style={{ width: "100%", height: "100%" }}>
                 <Div>{"SEARCH TOOL"}</Div>
+
+                <Box sx = {{display: 'flex', justifyContent: 'right', cursor:'pointer'}}>
+                    <Link underline="hover" onClick={getLocation} variant="caption"> {'Use my Current Location'}</Link>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={1000}
+                        onClose={handleClose}
+                        message={status}
+                        action={action}
+                    />
+                </Box>
                 <div>
                     <Form.Group controlId="formAddress">
                         <TextField
