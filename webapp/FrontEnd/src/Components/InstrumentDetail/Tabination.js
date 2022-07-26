@@ -50,6 +50,7 @@ export default function Tabination(props) {
 
   // Instrument Data
   const instrumentDetails = props.details;
+  console.log(instrumentDetails)
   const objectLocation = props.details.location;
   const contactsArray = instrumentDetails.contacts ?? [];
   const instrumentTypes = instrumentDetails.instrumentTypes ?? [];
@@ -75,11 +76,12 @@ export default function Tabination(props) {
 
       <TabPanel value={value} index={0}>
         <QuickSpec 
-          doi={instrumentDetails.doi} 
-          manufacturer={instrumentDetails.manufacturer} 
+          doi={instrumentDetails?.doi} 
+          manufacturer={instrumentDetails?.manufacturer} 
           instrumentTypes={instrumentTypes}
-          modelNumber={instrumentDetails.modelNumber}
-          serialNumber={instrumentDetails.serialNumber}
+          modelNumber={instrumentDetails?.modelNumber}
+          serialNumber={instrumentDetails?.serialNumber}
+          status={instrumentDetails?.status}
           ></QuickSpec>
       </TabPanel>
 

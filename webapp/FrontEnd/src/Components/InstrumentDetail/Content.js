@@ -18,13 +18,15 @@ export default function Content({ instrumentData }) {
                         ? theme.palette.grey[100]
                         : theme.palette.grey[900],
                 flexGrow: 1,
-                height: '100vh',
+                height: '80vh',
                 overflow: 'auto',
             }}
         >
 
-            <Container maxWidth="lg" sx={{ mb: 2 }}>
+            <Container maxWidth="xlg" sx={{ mb: 2 }}>
                 <Grid container spacing={2}>
+
+                    {/* Description */}
                     <Grid item xs={12} md={12} lg={12}>
                         <Paper
                             sx={{
@@ -41,14 +43,14 @@ export default function Content({ instrumentData }) {
                         </Paper>
                     </Grid>
 
-
+                    {/* Tabs (Quick Specs, Location, Awards, etc.) */}
                     <Grid item xs={12} md={12} lg={12}>
                         <Paper
                             sx={{
-                                p: 1,
+                                p: 0,
                                 display: 'flex',
                                 flexDirection: 'column',
-                                height: '40vh',
+                                height: '100%',
                             }}
                         >
                             <Tabination details={instrumentData} />

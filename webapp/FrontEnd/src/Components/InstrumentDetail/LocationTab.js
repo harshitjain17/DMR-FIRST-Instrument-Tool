@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { config } from '../../config/config';
+import './LocationTab.css';
 
 export default function LocationTab({instrumentDetails, objectLocation}) {
     return (
@@ -14,7 +15,7 @@ export default function LocationTab({instrumentDetails, objectLocation}) {
                 </Typography>
             </Box>
             <Box sx={{width: "67%"}}>
-                <iframe title="Map" width="600" height="250" frameBorder="0" allowFullScreen={true}
+                <iframe title="Map" width="500vw" height="200vh" frameBorder="0" allowFullScreen={true}
                         src={`https://www.google.com/maps/embed/v1/place?key=${config.apiKey}&q=${objectLocation?.building},${objectLocation?.street},${objectLocation?.city},${objectLocation?.state},${objectLocation?.country}`}>
                 </iframe>
             </Box>
