@@ -144,12 +144,15 @@ namespace Instool.API
         public async Task<ActionResult<ICollection<InstrumentTypeDropdownEntry>>> GetDropDownEntries(string idOrShortName)
         {
             var type = await LoadType(idOrShortName);
-            var categories = await _repo.LoadHierarchie(type.InstrumentTypeId);
-            var types = categories.SelectMany((cat, index) => 
-                                cat.InverseCategory.Select(type => 
-                                    InstrumentTypeDropdownEntry.FromEntity(type, cat, index))
+            var types = await _repo.LoadHierarchie(type.InstrumentTypeId);
+            return Ok(
+                    ToHierarchie(types, category: type.InstrumentTypeId)
+                    .Select((t, index) => InstrumentTypeDropdownEntry.FromEntity(
+                        t, 
+                        t.Category.InstrumentType, 
+                        index)
+                    )
             );
-            return Ok(types);
         }
 
         [HttpGet("dropdown")]
@@ -159,13 +162,16 @@ namespace Instool.API
         [HasPrivilege(PrivilegeEnum.InstrumentType)]
         public async Task<ActionResult<ICollection<InstrumentTypeDropdownEntry>>> GetDropDownEntries()
         {
-            var categories = await _repo.LoadHierarchie();
-            var types = categories.SelectMany(cat => cat.InverseCategory.SelectMany((subCat, index) =>
-                                subCat.InverseCategory.Select(type => 
-                                       InstrumentTypeDropdownEntry.FromEntity(type, cat, subCat, index))
-                        )
-            );
-            return Ok(types);
+            var types = await _repo.LoadHierarchie();
+            var withCategory = ToHierarchie(types, category: null);
+            var dtos = withCategory.Where(t => t.Category.Category != null)
+                                   .Select((t, index) => 
+                                        InstrumentTypeDropdownEntry.FromEntity(
+                                            t,
+                                            t.Category.Category.InstrumentType,
+                                            t.Category.InstrumentType,
+                                            index));
+            return Ok(dtos);
         }
 
         [HttpGet]
@@ -179,25 +185,16 @@ namespace Instool.API
             return Ok(types.Select(i => InstrumentTypeDTO.WithCategory(i)));
         }
 
-        [HttpGet("hierarchie")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        [HasPrivilege(PrivilegeEnum.InstrumentType)]
-        public async Task<ActionResult<ICollection<InstrumentTypeDTO>>> GetInstrumentTypeHierarchie()
-        {
-            var types = await _repo.LoadHierarchie();
-            return Ok(types.Select(i => InstrumentTypeDTO.WithSubTypes(i)));
-        }
 
         /// <summary>
         ///     Load the entity or throw an 404 if not in the DB.
         /// </summary>
         /// <param name="idOrName">internal (numeric) ID or shrot name</param>
         /// <returns></returns>
-        private async Task<InstrumentType> LoadType(string idOrName) {
-            var entity = int.TryParse(idOrName, out int id) ? 
-                        await _repo.GetById(id) : 
+        private async Task<InstrumentType> LoadType(string idOrName)
+        {
+            var entity = int.TryParse(idOrName, out int id) ?
+                        await _repo.GetById(id) :
                         await LoadTypeByShortName(idOrName);
             if (entity == null)
             {
@@ -215,6 +212,26 @@ namespace Instool.API
         private Task<InstrumentType?> LoadTypeByShortName(string shortName)
         {
             return _repo.GetByShortname(shortName.Split("#")[0]);
+        }
+
+
+        private List<InstrumentTypeWithUsage> ToHierarchie(ICollection<InstrumentTypeWithUsage> types, int? category = null)
+        {
+            var map = new Dictionary<int, InstrumentTypeWithUsage>();
+            foreach (var type in types)
+            {
+                map.Add(type.Id, type);
+            };
+            var result = new List<InstrumentTypeWithUsage>();
+            foreach (var type in map.Values)
+            {
+                if (type.CategoryId.HasValue && type.CategoryId != category)
+                {
+                    type.Category = map[type.CategoryId.Value];
+                    result.Add(type);
+                }
+            }
+            return result;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Instool.DAL.Models;
+using Instool.DAL.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace Instool.DAL.Repositories.Impl
@@ -64,30 +65,19 @@ namespace Instool.DAL.Repositories.Impl
             return await query.AsSingleQuery().ToListAsync();
         }
 
-        public async Task<ICollection<InstrumentType>> LoadHierarchie(int? category = null)
+        public async Task<ICollection<InstrumentTypeWithUsage>> LoadHierarchie(int? category = null)
         {
             IQueryable<InstrumentType> query = _context.InstrumentTypes.OrderBy(i => i.InstrumentTypeId);
             if (category != null)
             {
                 query = query.Where(i => i.CategoryId == category || i.Category!.CategoryId == category);
             }
-
-            var map = new Dictionary<int, InstrumentType>();
-            foreach (var type in await query.AsNoTracking().ToListAsync()) {
-                map.Add(type.InstrumentTypeId, type);
-            };
-            var result = new List<InstrumentType>();
-            foreach (var type in map.Values)
-            {
-                if (type.CategoryId == null || type.CategoryId == category)
-                {
-                    result.Add(type);
-                } else
-                {
-                    map[type.CategoryId.Value].InverseCategory.Add(type);
-                }
-            }
-            return result;
+            return await query
+                            .AsNoTracking()
+                            .Select(i => new InstrumentTypeWithUsage { 
+                                    InstrumentType = i,
+                                    Count = i.Instruments.Count()  
+                             }).ToListAsync();
         }
     }
 }

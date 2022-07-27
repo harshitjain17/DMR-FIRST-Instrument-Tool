@@ -40,7 +40,7 @@ namespace Instool.DAL.Repositories.Impl
                                //.Include(i => i.InstrumentCapabilities)
                                .Include(i => i.InstrumentContacts).ThenInclude(c => c.Investigator)
                                .Include(i => i.Location)
-                               .Include(i => i.InstrumentTypes).ThenInclude(t => t.Category).ThenInclude(t => t.Category);
+                               .Include(i => i.InstrumentTypes).ThenInclude(t => t.Category).ThenInclude(t => t!.Category);
         }
 
         public async Task Create(Instrument instrument)
@@ -93,15 +93,15 @@ namespace Instool.DAL.Repositories.Impl
                 query = query.Where(i =>
                     i.InstrumentTypes.Any(t => t.InstrumentTypeId == criteria.InstrumentTypeId ||
                                                t.CategoryId == criteria.InstrumentTypeId ||
-                                               t.Category.CategoryId == criteria.InstrumentTypeId) 
+                                               t!.Category!.CategoryId == criteria.InstrumentTypeId) 
                 );
             }
             if (!string.IsNullOrWhiteSpace(criteria.InstrumentType))
             {
                 query = query.Where(i =>
                     i.InstrumentTypes.Any(t => t.ShortName == criteria.InstrumentType || t.Uri == criteria.InstrumentType ||
-                                              t.Category.ShortName == criteria.InstrumentType || t.Category.Uri == criteria.InstrumentType ||
-                                              t.Category.Category.ShortName == criteria.InstrumentType || t.Category.Category.Uri == criteria.InstrumentType));
+                                              t!.Category!.ShortName == criteria.InstrumentType || t.Category.Uri == criteria.InstrumentType ||
+                                              t!.Category!.Category!.ShortName == criteria.InstrumentType || t.Category.Category.Uri == criteria.InstrumentType));
             }
             if (criteria.Keywords.Any())
             {
