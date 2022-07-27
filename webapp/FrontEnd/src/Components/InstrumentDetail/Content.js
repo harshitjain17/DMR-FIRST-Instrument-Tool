@@ -8,6 +8,9 @@ import Box from '@mui/material/Box';
 
 import Tabination from './Tabination';
 
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+
 export default function Content({ instrumentData }) {
     return (
         <Box
@@ -38,7 +41,9 @@ export default function Content({ instrumentData }) {
                         >
                             <div style={{ overflowY: 'scroll' }}>
                                 <Typography variant="h6" gutterBottom component="div"> DESCRIPTION </Typography>
-                                <Typography variant="subtitle2" paragraph align='justify'>{instrumentData.description}</Typography>
+                                <Typography variant="subtitle2" paragraph align='justify'>
+                                    <ReactMarkdown rehypePlugins={[rehypeRaw]} children={instrumentData.description}/>
+                                </Typography>
                             </div>
                         </Paper>
                     </Grid>
