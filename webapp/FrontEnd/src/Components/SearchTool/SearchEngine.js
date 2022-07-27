@@ -14,7 +14,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import DeviceLocation  from './DeviceLocation';
+
+import DeviceLocation from './DeviceLocation';
+import InstrumentTypeDropDowns from './InstrumentTypeDropdowns';
 import InstoolApi from '../../Api/InstoolApi';
 
 import log from 'loglevel';
@@ -25,16 +27,11 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
     const [enteredAddress, setEnteredAddress] = useState('');
     const [enteredDistance, setEnteredDistance] = useState('0');
     const [enteredInstrumentCategory, setEnteredInstrumentCategory] = useState('');
-    const [instrumentTypeSearchText, setInstrumentTypeSearchText] = useState('');
     const [enteredInstrumentType, setEnteredInstrumentType] = useState(null);
     const [enteredKeywords, setEnteredKeywords] = useState([]);
     const [enteredManufacturer, setEnteredManufacturer] = useState('');
     const [enteredAwardNumber, setEnteredAwardNumber] = useState('');
     const [enteredIRI, setEnteredIRI] = useState(false);
-
-    // States for dropdowns (in search engine)
-    const [instrumentCategories, setInstrumentCategories] = useState([]);
-    const [instrumentTypes, setInstrumentTypes] = useState([]);
 
     const addressChangeHandler = (event) => {
         setEnteredAddress(event.target.value);
@@ -42,14 +39,6 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
     const distanceChangeHandler = (event) => {
         setEnteredDistance(event.target.value);
-    };
-
-    const instrumentCategoryChangeHandler = (event) => {
-        setEnteredInstrumentCategory(event.target.value);
-    };
-
-    const instrumentTypeChangeHandler = (event, option) => {
-        setEnteredInstrumentType(option);
     };
 
     const keywordsChangeHandler = (event) => {
@@ -69,26 +58,6 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
         setEnteredIRI(!enteredIRI);
     };
 
-    // Instrument Categories Dropdown List
-    React.useEffect(() => {
-        InstoolApi.get(`/instrument-types`).then((response) => {
-            setInstrumentCategories(response.data);
-        });
-    }, []);
-
-    // Autocompletion of instrument types
-    React.useEffect(() => {
-        const fetchData = async () => {
-            const response = enteredInstrumentCategory ?
-                // Case - I (If the user selected the category)
-                await InstoolApi.get(`/instrument-types/${enteredInstrumentCategory}/dropdown`) :
-                // Case - II (If the user did not selected the category)
-                await InstoolApi.get(`/instrument-types/dropdown`);
-
-            setInstrumentTypes(response.data);
-        };
-        fetchData();
-    }, [enteredInstrumentCategory]); // dependent on category selected
 
     // typography
     const Div = styled('div')(({ theme }) => ({
@@ -183,7 +152,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
         setEnteredIRI(false);
     };
 
-   
+
 
     // breakpoints for responsiveness
     const xlargeScreen = useMediaQuery('(min-width:2560px)');
@@ -194,7 +163,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
             <Form onSubmit={submitHandler} onReset={resetHandler} style={{ width: "100%", height: "100%" }}>
                 <Div>{"SEARCH TOOL"}</Div>
 
-                <DeviceLocation onAddressFound={setEnteredAddress}/>
+                <DeviceLocation onAddressFound={setEnteredAddress} />
                 <div>
                     <Form.Group controlId="formAddress">
                         <TextField
@@ -233,54 +202,12 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                     </Form.Group>
                 </div>
 
-                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                    <Form.Group controlId="formInstrumentCategory">
-                        <TextField
-                            options={instrumentCategories}
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            select
-                            label="Instrument Category"
-                            value={enteredInstrumentCategory}
-                            onChange={instrumentCategoryChangeHandler}
-                        >
-                            {instrumentCategories.map((option) => (
-                                <MenuItem key={option.name} value={option.name}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                    </Form.Group>
-                </div>
-
-                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                    <Form.Group controlId="formInstrumentType">
-                        <Autocomplete
-                            renderOption={(props, option) => {
-                                return (
-                                    <li {...props} key={option.value}>
-                                        {option.label}
-                                    </li>
-                                )
-                            }}
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            options={instrumentTypes}
-                            isOptionEqualToValue={(option, value) => option?.value === value?.value}
-                            groupBy={(option) => option.categoryLabel}
-                            getOptionLabel={(option) => option.label ?? ''}
-
-                            inputValue={instrumentTypeSearchText}
-                            onInputChange={(event, newInputValue) => {
-                                setInstrumentTypeSearchText(newInputValue);
-                            }}
-                            value={enteredInstrumentType}
-                            onChange={instrumentTypeChangeHandler}
-                            renderInput={(params) => <TextField {...params} label="Instrument Type" />}
-
-                        />
-                    </Form.Group>
-                </div>
+                <InstrumentTypeDropDowns
+                    xlargeScreen={xlargeScreen}
+                    enteredInstrumentCategory={enteredInstrumentCategory}
+                    enteredInstrumentType={enteredInstrumentType}
+                    onInstrumentCategorySelected={setEnteredInstrumentCategory}
+                    onInstrumentTypeSelected={setEnteredInstrumentType} />
 
 
                 <div className={xlargeScreen ? "mt-4" : "mt-3"}>
