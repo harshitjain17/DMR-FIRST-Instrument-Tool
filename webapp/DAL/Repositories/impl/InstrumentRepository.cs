@@ -109,7 +109,7 @@ namespace Instool.DAL.Repositories.Impl
                 foreach (var keyword in criteria.Keywords)
                 {
                     keywordFilter = keywordFilter.Or(i => i.Description.Contains(keyword)
-                    //|| i.Capabilities.Contains(keyword)
+                                                       || i.Capabilities!.Contains(keyword)
                     );
                 }
                 query = query.Where(keywordFilter);
