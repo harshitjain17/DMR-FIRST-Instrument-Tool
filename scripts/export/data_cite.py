@@ -92,10 +92,6 @@ def register_doi_json(instrument):
             "publisher": conf.doi_publisher,
             "publicationYear": currentDate.year,
             "subjects": instrumentTypes,
-            "dates": [{
-                "date": str(instrument.get('completionDate')),
-                "dateType": "Available"
-            }],
             "types": {
                 "resourceType": "Instrument",
                 "resourceTypeGeneral": "Other"
@@ -109,6 +105,11 @@ def register_doi_json(instrument):
             "schemaVersion": "http://datacite.org/schema/kernel-4"
         }
     }
+    if 'completionDate' in instrument:
+        json_dict["dates"] = [{
+            "date": str(instrument['completionDate']),
+            "dateType": "Available"
+        }],
     relatedIdentifiers = get_related_identifiers(instrument)
     if relatedIdentifiers:
         json_dict["attributes"]["relatedIdentifiers"] = relatedIdentifiers

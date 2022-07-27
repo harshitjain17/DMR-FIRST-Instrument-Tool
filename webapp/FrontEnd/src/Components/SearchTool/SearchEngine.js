@@ -1,9 +1,5 @@
 import { Form } from 'react-bootstrap';
-import Geocode from "react-geocode";
-import { config } from '../../config/config';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+
 import './SearchEngine.css';
 import React, { useState, useCallback } from 'react';
 import TextField from '@mui/material/TextField';
@@ -13,18 +9,17 @@ import Chip from '@mui/material/Chip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
-import Link from '@mui/material/Link';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
+import DeviceLocation  from './DeviceLocation';
 import InstoolApi from '../../Api/InstoolApi';
 
 import log from 'loglevel';
 
-export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeElapsed, onSetLoading}) {
+export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeElapsed, onSetLoading }) {
 
     // States for input given in the textbox (in search engine)
     const [enteredAddress, setEnteredAddress] = useState('');
@@ -188,47 +183,7 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
         setEnteredIRI(false);
     };
 
-    // Snackbar
-    const [open, setOpen] = React.useState(false);
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-        setOpen(false);
-    };
-    const action = (
-        <React.Fragment>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-                <CloseIcon fontSize="small" />
-          </IconButton>
-        </React.Fragment>
-    );
-    
-    // Get Current Location 
-    Geocode.setApiKey(config.apiKey);
-    Geocode.setLocationType("ROOFTOP");
-    Geocode.enableDebug();
-    const [status, setStatus] = useState(null);
-    const getLocation = () => {
-        if (!navigator.geolocation) {
-			setOpen(true);
-            setStatus('Geolocation is not supported by your browser');
-		} else {
-            navigator.geolocation.getCurrentPosition((position) => {
-                Geocode.fromLatLng(position.coords.latitude, position.coords.longitude).then(
-                    (response) => {
-                        setEnteredAddress(response.results[0].formatted_address);
-                    },
-                    (error) => {
-                        console.error(error);
-                    }
-                );
-            }, () => {
-                setOpen(true);
-                setStatus('Unable to retrieve your location');
-            });
-        }
-    }
+   
 
     // breakpoints for responsiveness
     const xlargeScreen = useMediaQuery('(min-width:2560px)');
@@ -239,21 +194,12 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
             <Form onSubmit={submitHandler} onReset={resetHandler} style={{ width: "100%", height: "100%" }}>
                 <Div>{"SEARCH TOOL"}</Div>
 
-                <Box sx = {{display: 'flex', justifyContent: 'right', cursor:'pointer'}}>
-                    <Link underline="hover" onClick={getLocation} variant="caption"> {'Use my Current Location'}</Link>
-                    <Snackbar
-                        open={open}
-                        autoHideDuration={1000}
-                        onClose={handleClose}
-                        message={status}
-                        action={action}
-                    />
-                </Box>
+                <DeviceLocation onAddressFound={setEnteredAddress}/>
                 <div>
                     <Form.Group controlId="formAddress">
                         <TextField
                             fullWidth={true}
-                            size= {xlargeScreen ? "medium" : "small"}
+                            size={xlargeScreen ? "medium" : "small"}
                             onChange={addressChangeHandler}
                             value={enteredAddress}
                             label="Find instruments near"
@@ -265,11 +211,11 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
+                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formDistance">
                         <TextField
                             fullWidth={true}
-                            size= {xlargeScreen ? "medium" : "small"}
+                            size={xlargeScreen ? "medium" : "small"}
                             select
                             label="Maximum Distance"
                             value={enteredDistance}
@@ -287,12 +233,12 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                     </Form.Group>
                 </div>
 
-                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
+                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formInstrumentCategory">
                         <TextField
                             options={instrumentCategories}
                             fullWidth={true}
-                            size= {xlargeScreen ? "medium" : "small"}
+                            size={xlargeScreen ? "medium" : "small"}
                             select
                             label="Instrument Category"
                             value={enteredInstrumentCategory}
@@ -307,7 +253,7 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                     </Form.Group>
                 </div>
 
-                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
+                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formInstrumentType">
                         <Autocomplete
                             renderOption={(props, option) => {
@@ -318,7 +264,7 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                                 )
                             }}
                             fullWidth={true}
-                            size= {xlargeScreen ? "medium" : "small"}
+                            size={xlargeScreen ? "medium" : "small"}
                             options={instrumentTypes}
                             isOptionEqualToValue={(option, value) => option?.value === value?.value}
                             groupBy={(option) => option.categoryLabel}
@@ -337,18 +283,18 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
+                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formKeywords">
                         <Autocomplete
                             multiple
                             fullWidth={true}
-                            size= {xlargeScreen ? "medium" : "small"}
+                            size={xlargeScreen ? "medium" : "small"}
                             options={[]}
                             freeSolo
                             onChange={keywordsChangeHandler}
                             renderTags={(value, getTagProps) =>
                                 value.map((option, index) => (
-                                    <Chip size= {xlargeScreen ? "medium" : "small"} label={option} {...getTagProps({ index })} />
+                                    <Chip size={xlargeScreen ? "medium" : "small"} label={option} {...getTagProps({ index })} />
                                 ))
                             }
                             renderInput={(params) => (
@@ -363,11 +309,11 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
+                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formManufacturer">
                         <TextField
                             fullWidth={true}
-                            size= {xlargeScreen ? "medium" : "small"}
+                            size={xlargeScreen ? "medium" : "small"}
                             onChange={manufacturerChangeHandler}
                             value={enteredManufacturer}
                             label="Manufacturer"
@@ -378,11 +324,11 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className= {xlargeScreen ? "mt-4" : "mt-3"}>
+                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formAwardNumber">
                         <TextField
                             fullWidth={true}
-                            size= {xlargeScreen ? "medium" : "small"}
+                            size={xlargeScreen ? "medium" : "small"}
                             value={enteredAwardNumber}
                             onChange={awardNumberChangeHandler}
                             label="Award Number"
@@ -392,7 +338,7 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                     </Form.Group>
                 </div>
 
-                <div className= {xlargeScreen ? "mt-4" : "mt-2"}>
+                <div className={xlargeScreen ? "mt-4" : "mt-2"}>
                     <Form.Group className="mb-1" controlId="formIRI">
                         <FormControlLabel control={
                             <Checkbox
@@ -406,12 +352,12 @@ export default function SearchEngine({onSearchResponseAvailable, onMinimumTimeEl
                 </div>
 
 
-                <div className= {xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-3"}>
-                    <Button size= {xlargeScreen ? "large" : "medium"} endIcon={<SearchIcon />} onClick={() => { restartTimeout() }} type='submit' variant="contained" style={{ width: "100%", margin: "auto" }}>Search</Button>
+                <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-3"}>
+                    <Button size={xlargeScreen ? "large" : "medium"} endIcon={<SearchIcon />} onClick={() => { restartTimeout() }} type='submit' variant="contained" style={{ width: "100%", margin: "auto" }}>Search</Button>
                 </div>
 
-                <div className= {xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-1"}>
-                    <Button size= {xlargeScreen ? "large" : "medium"} endIcon={<RestartAltIcon />} variant="secondary" type="reset" className="mt-2" style={{ width: "100%", margin: "auto" }}>Reset</Button>
+                <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-1"}>
+                    <Button size={xlargeScreen ? "large" : "medium"} endIcon={<RestartAltIcon />} variant="secondary" type="reset" className="mt-2" style={{ width: "100%", margin: "auto" }}>Reset</Button>
                 </div>
             </Form>
         </div>

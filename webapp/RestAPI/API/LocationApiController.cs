@@ -27,7 +27,7 @@ namespace Instool.RestAPI.API
         [ApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<IEnumerable<LocationDTO>>> Locate([FromQuery] string address)
+        public async Task<ActionResult<LocationDTO>> Locate([FromQuery] string address)
         {
             try
             {
@@ -43,7 +43,32 @@ namespace Instool.RestAPI.API
                     Longitude = first.Coordinates.Longitude,
                 });
             }
-            catch (GoogleGeocodingException e) {
+            catch (GoogleGeocodingException e)
+            {
+                throw new HttpResponseException(StatusCodes.Status500InternalServerError, e.Status);
+            }
+
+        }
+
+        [HttpGet("address")]
+        [ApiVersion("1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<string>> GetAddress([FromQuery] double lng, [FromQuery] double lat)
+        {
+            try
+            {
+                var location = new Location(lat, lng);
+                IEnumerable<Address> addresses = await geocoder.ReverseGeocodeAsync(location);
+                var first = addresses.FirstOrDefault();
+                if (first == null)
+                {
+                    return NotFound();
+                }
+                return Ok(first.FormattedAddress);
+            }
+            catch (GoogleGeocodingException e)
+            {
                 throw new HttpResponseException(StatusCodes.Status500InternalServerError, e.Status);
             }
 

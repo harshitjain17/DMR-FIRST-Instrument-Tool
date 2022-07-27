@@ -30,7 +30,7 @@ export default function InstrumentPopup({ isOpen, instrumentId, handleClose }) {
                 log.error(`Fetching instrument details failed: ${error}`);
             }
         };
-        fetchData();
+        instrumentId && fetchData();
     }, [instrumentId]);
 
     return (
