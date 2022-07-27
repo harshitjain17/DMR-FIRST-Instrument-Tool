@@ -39,6 +39,8 @@ namespace Instool.DAL.Models
             }
         }
         public string Description { get; set; } = null!;
+
+        public string? Capabilities { get; set; }
         public int LocationId { get; set; }
         public string? RoomNumber { get; set; }
         public int InstitutionId { get; set; }
