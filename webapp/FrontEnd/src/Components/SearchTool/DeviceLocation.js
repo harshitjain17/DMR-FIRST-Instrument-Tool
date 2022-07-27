@@ -27,10 +27,6 @@ export default function DeviceLocation({onAddressFound}) {
         </React.Fragment>
     );
 
-    // // Get Current Location 
-    // Geocode.setApiKey(config.apiKey);
-    // Geocode.setLocationType("ROOFTOP");
-    // Geocode.enableDebug();
     const [status, setStatus] = useState(null);
     const getLocation = async () => {
         if (!navigator.geolocation) {
