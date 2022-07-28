@@ -41,9 +41,10 @@ export default function InstrumentTypeDrowns({
                 await InstoolApi.get(`/instrument-types/dropdown`);
 
             setInstrumentTypes(response.data);
+            onInstrumentTypeSelected(null);
         };
         fetchData();
-    }, [enteredInstrumentCategory]); // dependent on category selected
+    }, [enteredInstrumentCategory, onInstrumentTypeSelected]); // dependent on category selected
 
 
     return (

@@ -60,7 +60,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
 
     // typography
-    const Div = styled('div')(({ theme }) => ({
+    const SearchToolHeader = styled('div')(({ theme }) => ({
         ...theme.typography.button,
         backgroundColor: theme.palette.background.paper,
         padding: theme.spacing(1),
@@ -161,8 +161,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
         <div className="px-3 border" style={{ width: "100%", height: "100%" }}>
             <Form onSubmit={submitHandler} onReset={resetHandler} style={{ width: "100%", height: "100%" }}>
-                <Div>{"SEARCH TOOL"}</Div>
-
+                <SearchToolHeader>{"SEARCH TOOL"}</SearchToolHeader>
                 <DeviceLocation onAddressFound={setEnteredAddress} />
                 <div>
                     <Form.Group controlId="formAddress">
@@ -280,11 +279,19 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
 
                 <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-3"}>
-                    <Button size={xlargeScreen ? "large" : "medium"} endIcon={<SearchIcon />} onClick={() => { restartTimeout() }} type='submit' variant="contained" style={{ width: "100%", margin: "auto" }}>Search</Button>
+                    <Button size={xlargeScreen ? "large" : "medium"}
+                        endIcon={<SearchIcon />}
+                        onClick={() => { restartTimeout() }}
+                        type='submit' variant="contained"
+                        style={{ width: "100%", margin: "auto" }}>Search</Button>
                 </div>
 
                 <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-1"}>
-                    <Button size={xlargeScreen ? "large" : "medium"} endIcon={<RestartAltIcon />} variant="secondary" type="reset" className="mt-2" style={{ width: "100%", margin: "auto" }}>Reset</Button>
+                    <Button size={xlargeScreen ? "large" : "medium"} 
+                    endIcon={<RestartAltIcon />} 
+                                        type="reset"  
+                    className="mt-2" 
+                    style={{ width: "100%", margin: "auto" }}>Reset</Button>
                 </div>
             </Form>
         </div>
