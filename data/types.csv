@@ -90,6 +90,7 @@ Synthesis,,,
 ,,furnace,Furnace
 ,Thin Film Deposition,,
 ,,ald,Atomic Layer Deposition (ALD)
+,,chet,Confinement Heteroepitaxy (CHet)
 ,,cvd,Chemical Vapor Deposition (CVD)
 ,,eva,Evaporation
 ,,mbe,Molecular-Beam Epitaxy (MBE)

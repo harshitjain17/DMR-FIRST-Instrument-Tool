@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
-export default function Content({ description }) {
+export default function Content({ description, capabilities }) {
     return (
         <Grid item xs={12} md={12} lg={12} >
             <Paper
@@ -18,10 +18,13 @@ export default function Content({ description }) {
                     height: '55vh',
                 }}
             >
-                <div style={{ overflowY: 'scroll' }}>
-                    <Typography variant="h6" gutterBottom component="div"> DESCRIPTION </Typography>
-                    <Typography variant="subtitle2" paragraph align='justify'>
+                <div style={{ overflowY: 'auto' }}>
+                    <Typography variant="body" component="div" align='justify'>
                         <ReactMarkdown rehypePlugins={[rehypeRaw]} children={description} />
+                    </Typography>
+                    <Typography variant="h6" gutterBottom component="div">{capabilities && "Capabilities"}</Typography>
+                    <Typography variant="body" component="div" align='justify'>
+                        {capabilities && <ReactMarkdown rehypePlugins={[rehypeRaw]} children={capabilities} />}
                     </Typography>
                 </div>
             </Paper>

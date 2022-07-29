@@ -26,7 +26,7 @@ export default function InstrumentDetails({ instrumentData }) {
             <Container maxWidth="xlg" sx={{ mb: 2 }}>
                 <Grid container spacing={2}>
 
-                    <Description description={instrumentData?.description} />
+                    <Description description={instrumentData?.description} capabilities={instrumentData?.capabilities}/>
 
                     {/* Tabs (Quick Specs, Location, Awards, etc.) */}
                     <Grid item xs={12} md={12} lg={12}>

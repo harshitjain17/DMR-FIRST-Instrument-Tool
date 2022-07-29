@@ -11,31 +11,42 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def create_json(row):
     json_dict = {
-        "name": row[0],
-        "description": row[9],
-        "manufacturer": row[2],
-        "modelNumber": row[3],
-        "serialNumber": row[4],
-        "roomNumber": row[5].strip(),
+        "name": row["Name"],
+        "doi": row["doi"],
+        "description": row["Description"],
+        "capabilities": row["Capabilities"],
+        "manufacturer": row["Manufacturer"],
+        "modelNumber": row["Model Number"],
+        "serialNumber": row["Serial Number"],
+        "roomNumber": row["Room"].strip(),
         "status": 'A',
         "location" : {
-            "building": row[11]
+            "building": row["Location"]
         },
         "institution" : {
-            "facility": row[10]
+            "facility": row["Facility"]
         }
     }
     instrumentTypes = []
-    for t in row[1].split(','):
+    for t in row["Technique"].split(','):
         if t:
             instrumentTypes.append({"name": t})
     if len(instrumentTypes) > 0:
         json_dict["instrumentTypes"] = instrumentTypes
     contacts = []
-    for i in range(12, len(row)):
-        if (row[i]):
+    for i in range(1, 2):
+        value = row.get("Faculty Contact {}".format(i))
+        if (value):
             contacts.append({
-                "eppn": row[i]
+                "eppn": value,
+                "role": "F"
+            })
+    for i in range(1, 3):
+        value = row.get("Technical Contact {}".format(i))
+        if (value):
+            contacts.append({
+                "eppn": value,
+                "role": "T"
             })
     if len(contacts) > 0:
         json_dict["contacts"] = contacts
@@ -48,19 +59,15 @@ headers = {
 }
 
 with open('data/instruments.csv', encoding='utf-8-sig') as csvfile:
-    reader = csv.reader(csvfile, dialect='excel')
-    inHeader = True
+    reader = csv.DictReader(csvfile, dialect='excel')
     for row in reader:
-        if inHeader:
-            inHeader = False
-            continue
         data = create_json(row)
 
         result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False)
         if result.status_code == 201 or result.status_code == 200:
                 print('Sucessful')
         else: 
-                print('Error {} inserting {}: {}'.format(result.status_code, row[0], result.text))
+                print('Error {} inserting {}: {}'.format(result.status_code, row["Name"], result.text))
 
 
 

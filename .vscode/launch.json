@@ -8,8 +8,9 @@
             "name": "Launch Edge",
             "request": "launch",
             "type": "msedge",
-            "url": "httpss://localhost:44322",
-            "webRoot": "${workspaceFolder}"
+            "url": "https://localhost:44322",
+            "webRoot": "${workspaceFolder}",
+            "version": "beta",
         },
         {
             "name": "Python: Current File",
@@ -32,7 +33,6 @@
             "type": "python",
             "request": "launch",
             "program": "scripts/register_doi.py",
-            "args": ["-i", "832"],
             "console": "integratedTerminal",
             "justMyCode": true
         }
