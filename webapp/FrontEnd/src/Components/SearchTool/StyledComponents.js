@@ -11,6 +11,7 @@ export const AppBar = styled(MuiAppBar, {
 
 export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
+    width: "25%",
     flexShrink: 0,
     '& .MuiDrawer-paper': {
       position: 'relative',
