@@ -99,7 +99,7 @@ export default function SearchTool({ onRowSelected }) {
                         </Grid>
 
                         {/* Google Maps */}
-                        <Grid item xs={12} md={7} lg={6}>
+                        <Grid item xs={12} md={6} lg={6}>
                             <Paper
                                 sx={{
                                     p: 1,
