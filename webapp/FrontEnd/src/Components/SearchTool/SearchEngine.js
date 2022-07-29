@@ -96,7 +96,6 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
             };
 
             log.debug(userInput);
-            console.log(userInput)
 
             const response = await InstoolApi.post(`/instruments/search`, userInput);
             log.info(`Server returned ${response.data.instruments?.length} instruments, and ${response.data.locations?.length} locations`)

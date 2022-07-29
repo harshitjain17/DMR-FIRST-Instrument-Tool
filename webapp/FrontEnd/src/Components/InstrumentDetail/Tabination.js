@@ -56,7 +56,7 @@ export default function Tabination(props) {
 
   return (
     <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
+      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '40vh' }}
     >
       <Tabs
         orientation="vertical"
@@ -77,7 +77,7 @@ export default function Tabination(props) {
         <QuickSpec 
           instrumentDetails={instrumentDetails}
           instrumentTypes={instrumentTypes}
-          ></QuickSpec>
+        />
       </TabPanel>
 
       <TabPanel value={value} index={1}>
