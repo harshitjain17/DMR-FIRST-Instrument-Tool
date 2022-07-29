@@ -9,7 +9,6 @@ import Tabination from './Tabination';
 import Content from './Description';
 
 export default function InstrumentDetails({ instrumentData }) {
-    console.log(instrumentData)
     return (
         <Box
             component="main"

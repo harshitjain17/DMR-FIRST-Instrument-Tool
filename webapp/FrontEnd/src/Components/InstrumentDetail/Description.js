@@ -38,12 +38,11 @@ export default function Content({ description, capabilities, image }) {
                     </Grid>}
                     <Grid item xs={image ? 8 : 12} md={image ? 8 : 12} lg={image ? 8 : 12} sm container>
                         <div style={{ overflowY: 'auto' }}>
-                            <Typography variant="h6" gutterBottom component="div">{description && "DESCRIPTION"}</Typography>
                             <Typography variant="body2" component="div" align='justify'>
                                 <ReactMarkdown rehypePlugins={[rehypeRaw]} children={description} />
                             </Typography>
 
-                            <Typography variant="h6" gutterBottom component="div">{capabilities && "CAPABILITIES"}</Typography>
+                            <Typography variant="h6" gutterBottom component="div">{capabilities && "Capabilities"}</Typography>
                             <Typography variant="body2" component="div" align='justify'>
                                 {capabilities && <ReactMarkdown rehypePlugins={[rehypeRaw]} children={capabilities} />}
                             </Typography>
