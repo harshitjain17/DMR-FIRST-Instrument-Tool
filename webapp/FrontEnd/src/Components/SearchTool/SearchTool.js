@@ -99,17 +99,8 @@ export default function SearchTool({ onRowSelected }) {
                         </Grid>
 
                         {/* Google Maps */}
-                        <Grid item xs={12} md={7} lg={6}>
-                            <Paper
-                                sx={{
-                                    p: 1,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    height: xlargeScreen ? '47vh' : '40vh',
-                                }}
-                            >
-                                <GoogleMap locations={response?.locations} onSelectLocation={selectLocationHandler} />
-                            </Paper>
+                        <Grid item xs={6} md={6} lg={6}>
+                            <GoogleMap locations={response?.locations} onSelectLocation={selectLocationHandler} />
                         </Grid>
                     </Grid>
                     {/* <Copyright sx={{ pt: 4 }} /> */}

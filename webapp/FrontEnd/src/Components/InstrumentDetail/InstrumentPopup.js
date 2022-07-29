@@ -40,21 +40,20 @@ export default function InstrumentPopup({ isOpen, instrumentId, handleClose }) {
             >
                 <AppBar sx={{ position: 'relative' }}>
                     <Toolbar variant="dense">
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleClose}
-                            aria-label="close"
-                        >
+
+                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
                             <CloseIcon />
                         </IconButton>
-                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+
+                        <Typography textAlign = "center" sx={{ ml: 'auto', flex: 1 }} variant="h6" component="div">
                             {instrumentData.name}
                         </Typography>
+
                         <Button autoFocus color="inherit" onClick={() =>
                             window.open(`/?instrumentId=${instrumentId}`, "_blank")}>
                             Open in new Tab
                         </Button>
+
                     </Toolbar>
                 </AppBar>
                 <InstrumentDetails instrumentData={instrumentData} />
