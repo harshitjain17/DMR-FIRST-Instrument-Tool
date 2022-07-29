@@ -14,6 +14,7 @@ namespace Instool.Services.Impl
         private readonly IInvestigatorRepository _investigatorRepo;
         private readonly IInstrumentTypeRepository _instrumentTypeRepo;
         private readonly ITransactionSupport _transaction;
+        private readonly IAwardRepository _awardRepo;
 
         private readonly ILogger<InstrumentService> _logger;
 
@@ -21,25 +22,29 @@ namespace Instool.Services.Impl
             IInstrumentRepository repo,
             IInvestigatorRepository investigatorRepo,
             IInstrumentTypeRepository instrumentTypeRepo,
-            ILogger<InstrumentService> logger)
+            ILogger<InstrumentService> logger,
+            IAwardRepository awardRepo)
         {
             _transaction = transaction;
             _repo = repo;
             _investigatorRepo = investigatorRepo;
             _instrumentTypeRepo = instrumentTypeRepo;
             _logger = logger;
+            _awardRepo = awardRepo;
         }
 
         public async Task<Instrument> CreateInstrument(
             Instrument entity,
             IEnumerable<InstrumentContact> contacts,
-            IEnumerable<InstrumentType> types)
+            IEnumerable<InstrumentType> types,
+            IEnumerable<Award> awards)
         {
             await _transaction.ExecuteInTransaction(async () =>
             {
                 await GetOrCreateInvestigators(entity, contacts);
                 await _repo.Create(entity);
                 await SetInstrumentTypes(entity, types);
+                await SetAwards(entity, awards);
             });
             return (await _repo.GetById(entity.InstrumentId))!;
         }
@@ -57,6 +62,22 @@ namespace Instool.Services.Impl
                 typeEntity.Category = null;
                 typeEntity.InverseCategory.Clear();
                 await _repo.SetType(entity, typeEntity);
+            }
+        }
+
+        private async Task SetAwards(Instrument entity, IEnumerable<Award> awards)
+        {
+            foreach (var award in awards)
+            {
+                var awardEntity = await _awardRepo.GetByAwardNumber(award.AwardNumber);
+                if (awardEntity == null)
+                {
+                    throw new IncompleteDataException("Instrument Type", award.AwardNumber);
+                }
+                awardEntity.Instruments.Clear();
+                awardEntity.InvestigatorOnAwards.Clear();
+
+                await _repo.SetAward(entity, awardEntity);
             }
         }
 

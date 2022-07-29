@@ -20,13 +20,21 @@ def create_json(row):
         "serialNumber": row["Serial Number"],
         "roomNumber": row["Room"].strip(),
         "status": 'A',
-        "location" : {
-            "building": row["Location"]
-        },
         "institution" : {
             "facility": row["Facility"]
         }
     }
+    if (row["Location"]):
+        json_dict["location"] = {
+            "building": row["Location"]
+        }
+    awards = []
+    for a in row["Award"].split(','):
+        if a:
+            awards.append({"awardNumber": a})
+    if len(awards) > 0:
+        json_dict["awards"] = awards        
+
     instrumentTypes = []
     for t in row["Technique"].split(','):
         if t:
@@ -65,7 +73,7 @@ with open('data/instruments.csv', encoding='utf-8-sig') as csvfile:
 
         result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False)
         if result.status_code == 201 or result.status_code == 200:
-                print('Sucessful')
+                print('Sucessfully added {}'.format(row["Name"]))
         else: 
                 print('Error {} inserting {}: {}'.format(result.status_code, row["Name"], result.text))
 

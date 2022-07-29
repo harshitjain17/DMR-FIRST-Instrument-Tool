@@ -72,10 +72,10 @@ Current Process Capabilities:
 - Knudsen thermal effusion cells: Bi, Cr, Fe, Sb, and Te
 - Cracker cells: Se
 - Electron-beam sources: Al, Mo, Nb, Ta, V, and W",2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,,arr19@psu.edu,,
-MBE2,,mbe,DCA,,,N118A ,A,,,"The 2DCC Hybrid Chalcogenide Molecular Beam Epitaxial (MBE) system is an MBE system dedicated to the growth of chalcogenide thin films. The hybrid MBE approach in particular enables the synthesis of chalcogenide materials containing refractory metallic components through the addition of a gas injector system allowing to supply these elements in a molecular form, giving access to a different growth kinetics, potentially favorable for refractory transition metal elements with low vapor pressures. To guarantee the highest degree of control down to a single layer and excellent reproducibility the chalcogenide MBE reactor is equipped with a series of state of the art in-situ monitoring capabilities, such as reflection high energy electron diffraction, ion gauge beam flux monitor, residual gas analyzer, heated quartz crystal monitor, and a spectroscopic ellipsometer. The hybrid chalcogenide MBE can handle wafers up to 3 inches. The chalcogenide MBE reactor is connected via a UHV transfer line with a oxide MBE reactor and a sputter deposition system. The in-vacuo transfer between the components of the cluster enables the integration of chemically dissimilar materials, such as growth of chalcogenide films on oxide thin films, as well as capping chalcogenide thin films using sputter deposition tool or integrate top electrodes via shadow mask onto the film without breaking vacuum to minimize potential contamination of film surfaces. In-vacuo sample exchange routine between the hybrid chalcogenide MBE and the 2DCC MIP thin film characterization cluster located in Davey Laboratory at the Pennsylvania State University with surface sensitive characterization techniques, such as angle resolved photoelectron emission spectroscopy, scanning tunneling microscopy and transport measurements.","- Up to 3\&quot; diameter substrates, adapter for (10x10)mm substrates, adapter for samples on Omicron T flag style holders
-- Ultra-high vacuum shuttle for post growth characterization with up to 3 flag style holder sample storage capacity, base pressure 5�10<sup>-10</sup> Torr, equipped with a NexTorr pump keeping this vacuum for weeks without power supply
+MBE2,,mbe,DCA,,,N118A ,A,,,"The 2DCC Hybrid Chalcogenide Molecular Beam Epitaxial (MBE) system is an MBE system dedicated to the growth of chalcogenide thin films. The hybrid MBE approach in particular enables the synthesis of chalcogenide materials containing refractory metallic components through the addition of a gas injector system allowing to supply these elements in a molecular form, giving access to a different growth kinetics, potentially favorable for refractory transition metal elements with low vapor pressures. To guarantee the highest degree of control down to a single layer and excellent reproducibility the chalcogenide MBE reactor is equipped with a series of state of the art in-situ monitoring capabilities, such as reflection high energy electron diffraction, ion gauge beam flux monitor, residual gas analyzer, heated quartz crystal monitor, and a spectroscopic ellipsometer. The hybrid chalcogenide MBE can handle wafers up to 3 inches. The chalcogenide MBE reactor is connected via a UHV transfer line with a oxide MBE reactor and a sputter deposition system. The in-vacuo transfer between the components of the cluster enables the integration of chemically dissimilar materials, such as growth of chalcogenide films on oxide thin films, as well as capping chalcogenide thin films using sputter deposition tool or integrate top electrodes via shadow mask onto the film without breaking vacuum to minimize potential contamination of film surfaces. In-vacuo sample exchange routine between the hybrid chalcogenide MBE and the 2DCC MIP thin film characterization cluster located in Davey Laboratory at the Pennsylvania State University with surface sensitive characterization techniques, such as angle resolved photoelectron emission spectroscopy, scanning tunneling microscopy and transport measurements.","- Up to 3&quot; diameter substrates, adapter for (10x10)mm substrates, adapter for samples on Omicron T flag style holders
+- Ultra-high vacuum shuttle for post growth characterization with up to 3 flag style holder sample storage capacity, base pressure 5&times;10<sup>-10</sup> Torr, equipped with a NexTorr pump keeping this vacuum for weeks without power supply
 - Reflection high energy electron diffraction (RHEED) system 15kV, with RHEED analysis software kSA 400 version 5.50
-- Spectroscopic ellipsometer, spectral range of 210-1690nm
+- Spectroscopic ellipsometer, spectral range of 210 - 1690nm
 - Residual gas analyzer for real-time background gas analysis
 - Fully automated ion gauge beam flux monitor
 - Fully automated heated quartz crystal monitor (room temperature to 500&deg;C)
@@ -111,7 +111,7 @@ The MOCVD reactor and gas panel are housed in a ventilated enclosure. The gas so
 - Wafer scale process developed: WS2, WSe<sub>2</sub> and MoS<sub>2</sub> monolayers on 2 c-plane sapphire
 - Metal Precursors: Mo(CO)<sub>6</sub>, W(CO)<sub>6</sub>
 - Chalcogen Precursors: H<sub>2</sub>S, H<sub>2</sub>Se, Diethyl Sulfide
-- Carrier gas: Purified hydrogen or nitrogen",2DCC,Millenium Science Complex,DMR-1539916,jmr31@psu.edu,,cuc33@psu.edu,,,,,,,,,,,,
+- Carrier gas: Purified hydrogen or nitrogen",2DCC,Millenium Science Complex,DMR-1539916,jmr31@psu.edu,,cuc33@psu.edu,,
 MOCVD2,,mocvd,,,,N125A ,A,,,"MOCVD2 is a custom designed multi-module system from CVD Equipment Corporation. The system includes a load lock and high vacuum robotic transfer stage with three additional ports. A stainless-steel chamber for metalorganic chemical vapor deposition (MOCVD) of chalcogenides is connected to one of the ports. The chamber consists of temperature-controlled wall and flanges, removable quartz liners and a rotating, resistively heated 2&quot; diameter substrate holder for substrate temperatures up to 1000 oC. The MOCVD reactor includes two purged optical ports for in situ spectroscopic ellipsometry and a third for sample viewing.
 
 The chamber exhaust includes cold-finger traps for chalcogen removal and a chemically resistant rotary vane pump that enables system operation from 10 to 700 Torr. The gas manifold is comprised of welded stainless-steel tubing with metal gasket seal fittings, pneumatically controlled valves, pressure controllers and mass flow controllers. Six bubbler manifolds are available for liquid or solid precursors two of which include double dilution and two which can be maintained at elevated temperature (up to 200oC) for low vapor pressure sources. Three pressure balanced vent/run manifolds are available for metal, chalcogen and dopant precursors. 
@@ -163,11 +163,11 @@ The cryogenic ARPES module features a high intensity helium plasma source and mo
 ARP2,,arpes,,,,35,A,,,,,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,,arr19@psu.edu,,
 RMN3,,raman,Witec,,,N-125,A,,,,,2DCC,Millenium Science Complex,DMR-1539916,jmr31@psu.edu,,cuc33@psu.edu,,
 FMR1,,st-fmr,,,,356,A,,,,,2DCC,Davey Lab,,nxs16@psu.edu,,arr19@psu.edu,,
-ICP1,,icp-aes,,Thermo iCAP 6500,,,A,,,,,2DCC,,,,,,,
+ICP1,,icp-aes,,Thermo iCAP 6500,,,A,,,,,2DCC,Millenium Science Complex,,,,,,
 SQD1,,squid,Quantum Design ,MPMS SQUID,,329,A,,,,,2DCC,Davey Lab,,,,,,
 SQD2,,squid,Quantum Design ,MPMS SQUID,,301,A,,,,,2DCC,Davey Lab,,,,,,
 STM1,,stm,ScientaOmicron,LT-Nanoprobe,,35,A,,,,,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,,arr19@psu.edu,,
-STM2,,stm,Snipe,,,,,,,,,2DCC,,,ewh10@psu.edu,,,,
+STM2,,stm,Snipe,,,S8,,,,,,2DCC,Osmond Lab,,ewh10@psu.edu,,,,
 UVV1,,uv-vis-nir,Perkin-Elmer,Lambda 950,,,A,,,Lambda 950 UV-Vis-NIR Spectrophotometer and Agilent/Cary 7000 with UMA,,2DCC,Millenium Science Complex,,jmr31@psu.edu,,,,
 AFM3,,afm,,,,6F,A,,,,,2DCC,Osmond Lab,,,,,,
 PHI 670 with 680 motorized stage,,aes,,,,,A,,,,,MCL,Millenium Science Complex,,,,rwh133@psu.edu,jxs124@psu.edu,
@@ -175,7 +175,7 @@ Bruker Dimension Icon I,,afm,,,,,A,,,,,MCL,Millenium Science Complex,,,,tbt1@psu
 Bruker Dimension Icon II,,afm,,,,,A,,,,,MCL,Millenium Science Complex,,,,tbt1@psu.edu,snk3@psu.edu,
 Asylum Research Cypher VRS,,afm,OXFORD ASYLUM,CYPHER,19338,N018,A,,,,,MCL,Millenium Science Complex,,,,tbt1@psu.edu,snk3@psu.edu,
 Bruker BioScope Resolve,,afm,,,,,A,,,,,MCL,Millenium Science Complex,,,,tbt1@psu.edu,snk3@psu.edu,
-Automated Goniometer/ Tensiometer with Environmental Chamber Support (ram�-hart Model 295),,,FAMEHART INSTRU,295-F4,130301,N007,A,,,,,MCL,Millenium Science Complex,,,,mtw5027@psu.edu,,
+Automated Goniometer/ Tensiometer with Environmental Chamber Support (ram&eacute;-hart Model 295),,,FAMEHART INSTRU,295-F4,130301,N007,A,,,,,MCL,Millenium Science Complex,,,,mtw5027@psu.edu,,
 Micromeritics Accupyc II 1340,,pycno,MICROMERITIC,ACCUPYC1340,2295,N030K,A,,,,,MCL,Millenium Science Complex,,,,nmw10@psu.edu,glt5009@psu.edu,
 Oxford Symmetry,,,OXFORD INSTRUME,SYMMETRY,915759,N030K,A,,,,,MCL,Millenium Science Complex,,,,jma14@psu.edu,tec11@psu.edu,
 Oxford Nordlys Max2,,,,,,,A,,,,,MCL,Millenium Science Complex,,,,jma14@psu.edu,tec11@psu.edu,
@@ -228,6 +228,6 @@ Ecopia HMS-3000,,pauw,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,a
 100 kN MTS Criterion load frame,,ten-compr,MTS,100KN,17001053,N001,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
 3D DIC Camera,,dic,,,,,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
 TA Instruments Q800 DMA,,dma,TA INSTRUMENTS,Q800,0800-2108,N007,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
-Qness�Q60 A+�microindenter,,m-indent,QNESS,Q60A+,Q1381/0618,N031D,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
+Qness Q60 A+ microindenter,,m-indent,QNESS,Q60A+,Q1381/0618,N031D,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
 Netzsch 402 F1/F3 Hyperion TMA,,tma,NETZSCH INSTRUM,TMA402,206028049,N007,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
 SEM1,,sem,Vortex,,,35,A,,,,,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,,arr19@psu.edu,,

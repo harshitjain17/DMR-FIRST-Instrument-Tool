@@ -21,5 +21,6 @@ namespace Instool.DAL.Repositories
             InstrumentSearchRequest request,
             string? sortColumn, string? sortOrder, LocationFrame frame);
         Task SetType(Instrument entity, InstrumentType type);
+        Task SetAward(Instrument entity, Award awardEntity);
     }
 }

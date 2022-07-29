@@ -63,6 +63,12 @@ namespace Instool.DAL.Repositories.Impl
             await _context.SaveChangesAsync();
         }
 
+        public async Task SetAward(Instrument instrument, Award award)
+        {
+            instrument.Awards.Add(award);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<PaginatedList<Instrument>> List(
             InstrumentSearchRequest request,
             string? sortColumn, string? sortOrder, int start, int length)
