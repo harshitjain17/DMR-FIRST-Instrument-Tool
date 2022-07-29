@@ -7,12 +7,12 @@ namespace Instool.Dtos
     {
         public int? InvestigatorId { get; set; }
         public string? Eppn { get; set; }
-        public string? FirstName { get; set; } = null!;
+        public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
-        public string? LastName { get; set; } = null!;
-        public string? Email { get; set; } = null!;
-        public string? Phone { get; set; } = null!;
-        public string? Role { get; private set; }
+        public string? LastName { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
+        public string? Role { get; set; }
 
         internal static InvestigatorDTO FromEntity(Investigator i, string role)
         {
