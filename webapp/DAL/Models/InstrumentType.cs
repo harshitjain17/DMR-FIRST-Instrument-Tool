@@ -19,5 +19,6 @@
         public virtual ICollection<InstrumentType> InverseCategory { get; set; }
 
         public virtual ICollection<Instrument> Instruments { get; set; }
+
     }
 }

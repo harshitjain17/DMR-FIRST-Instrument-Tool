@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import InstoolApi from '../../Api/InstoolApi';
 import log from 'loglevel';
 
-import Content from './Content';
+import InstrumentDetails from './InstrumentDetails';
 
 export default function InstrumentPage({ instrumentId }) {
     const [instrumentData, setInstrumentData] = React.useState({ undefined });
@@ -35,7 +35,7 @@ export default function InstrumentPage({ instrumentId }) {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Content instrumentData={instrumentData} />
+                <InstrumentDetails instrumentData={instrumentData} />
             </Box>
         </div>
     );

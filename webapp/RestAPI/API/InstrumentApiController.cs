@@ -123,9 +123,10 @@ namespace Instool.API
                 Role = c.Role ?? InvestigatorRole.Technical.ID
             });
             var types = dto.InstrumentTypes.Select(t => t.GetEntity());
+            var awards = dto.Awards.Select(a => a.GetEntity());
             try
             {
-                var created = await _service.CreateInstrument(instrument, contacts, types);
+                var created = await _service.CreateInstrument(instrument, contacts, types, awards);
                 return InstrumentDTO.FromEntity(created);
             }
             catch (IncompleteDataException e) {

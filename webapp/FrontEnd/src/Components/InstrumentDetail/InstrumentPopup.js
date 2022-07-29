@@ -11,7 +11,7 @@ import Slide from '@mui/material/Slide';
 import InstoolApi from '../../Api/InstoolApi';
 import log from 'loglevel';
 
-import Content from './Content';
+import InstrumentDetails from './InstrumentDetails';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -57,7 +57,7 @@ export default function InstrumentPopup({ isOpen, instrumentId, handleClose }) {
                         </Button>
                     </Toolbar>
                 </AppBar>
-                <Content instrumentData={instrumentData} />
+                <InstrumentDetails instrumentData={instrumentData} />
             </Dialog>
         </div>
     );

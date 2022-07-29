@@ -12,7 +12,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import SearchEngine from './SearchEngine';
 import GoogleMap from './GoogleMap';
 import DataTable from '../Table/DataTable';
-import { AppBar, Drawer, DrawerHeader } from './Customizing';
+import { AppBar, Drawer, DrawerHeader } from './StyledComponents';
 
 export default function SearchTool({ onRowSelected }) {
     const [response, setResponse] = useState([]);
@@ -54,16 +54,7 @@ export default function SearchTool({ onRowSelected }) {
             </AppBar>
 
             {/* Search Form */}
-            <Drawer
-                variant="permanent"
-                sx={{
-                    width: "25%",
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: "100%",
-                        boxSizing: 'border-box',
-                    }
-                }}>
+            <Drawer variant="permanent">
                 <DrawerHeader />
                 <SearchEngine
                     onSearchResponseAvailable={responseDataHandler}

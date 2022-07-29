@@ -1,179 +1,233 @@
-Name,Technique in database,Manufacturer,Model Number,Serial Number,Room,Status,Acquisition Date,Completion Date,Description,Facility,Location,Award,Experts,,
-2DCC Bridgman 1,brm,,,,N129A ,A,,,"The 2DCC Vertical Bridgman Bulk Growth System is a three-zone furnace with a maximum temperature of 1250 °C. The furnace bore will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. Programmatic control allows for linear translation, ampoule rotation, and data logging of growth conditions throughout each growth run.
+Name,doi,Technique,Manufacturer,Model Number,Serial Number,Room,Status,Acquisition Date,Completion Date,Description,Capabilities,Facility,Location,Award,Faculty Contact 1,Faculty Contact 2,Technical Contact 1,Technical Contact 2,Technical Contact 3
+Vertical Bridgman,,brm,,,,N129A ,A,,,"The 2DCC Vertical Bridgman Bulk Growth System is a three-zone furnace with a maximum temperature of 1250 &deg;C. The furnace bore will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. Programmatic control allows for linear translation, ampoule rotation, and data logging of growth conditions throughout each growth run.","- Three zones
+- Maximum temperature of 1250 &deg;C
+- Ampoule diameter up to 2 inches
+- Crucible rotation
+- Programmable linear translation and data logging",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+Mao Bridgman 2,10.82278/b160-dp29,brm,,,,,A,,,,,2DCC,ARL Freeport,,zim1@psu.edu,,shl12@psu.edu,,
+CHET,,chet,,,,N037 ,A,,,Confinement Heteroepitaxy (CHet) Furnace,"- Temperature  up to 1200 &eg;C 
+- Pressure: 10<sup>-2</sup> - 700 Torr",2DCC,Millenium Science Complex,,jar403@psu.edu,,cud263@psu.edu,,
+New Chet,,chet,,,,N135 ,A,,,,,2DCC,Millenium Science Complex,DMR-1539916,jar403@psu.edu,,cud263@psu.edu,,
+Wafer-scale CHET,,chet,,,,N129 ,A,,,,,2DCC,Millenium Science Complex,DMR-1539916,jar403@psu.edu,,cud263@psu.edu,,
+Compounding Furnace 1,,melt-flux,,,,N129A ,A,,,The 2DCC compounding furnace is a single zone furnace with a maximum temperature of 1250 &deg;C that is used to compound source powders for later use in our Vertical Bridgman or one of our Chemical Vapor Transport Furnaces for bulk crystal growth. The furnace will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. This furnace tilts back and forth during compounding to improve mixing and uniformity of source materials.,"- Single zone
+- Maximum temperature of 1250 &deg;C
+- Ampoule diameter up to 2 inches
+- Tilting of furnace to improve mixing and uniformity of source materials",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+Box Furnace,,melt-flux,,,,N129A ,A,,,,,2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+Muffle Furnace 3,,melt-flux,,,,347,A,,,"The 2DCC currently possess six Muffle Furnaces with maximum temperatures of 1200&deg;C that are being utilized for conventional melt growth, flux growth, and solid-state reaction. One of the Muffle Furnace is placed inside the fume hood in which allows us to grow material that contains toxic elements, such as lead and arsenic. Each furnace will accept an ampoule of maximum length up to 15cm or multiple ampoules with shorter length. Programmatic control allows for multiple segment ramp and dwell temperature profiles.","- Maximum temperature of 1200&deg;C
+- Ampoule length up to 15 cm
+- Digital single-program, eight-segment programmable control
+",2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+Muffle Furnace 4,,melt-flux,,,,347,A,,,"The 2DCC currently possess six Muffle Furnaces with maximum temperatures of 1200&deg;C that are being utilized for conventional melt growth, flux growth, and solid-state reaction. One of the Muffle Furnace is placed inside the fume hood in which allows us to grow material that contains toxic elements, such as lead and arsenic. Each furnace will accept an ampoule of maximum length up to 15cm or multiple ampoules with shorter length. Programmatic control allows for multiple segment ramp and dwell temperature profiles.","- Maximum temperature of 1200&deg;C
+- Ampoule length up to 15 cm
+- Digital single-program, eight-segment programmable control
+",2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+Muffle Furnace 5,,melt-flux,,,,347,A,,,"The 2DCC currently possess six Muffle Furnaces with maximum temperatures of 1200&deg;C that are being utilized for conventional melt growth, flux growth, and solid-state reaction. One of the Muffle Furnace is placed inside the fume hood in which allows us to grow material that contains toxic elements, such as lead and arsenic. Each furnace will accept an ampoule of maximum length up to 15cm or multiple ampoules with shorter length. Programmatic control allows for multiple segment ramp and dwell temperature profiles.","- Maximum temperature of 1200&deg;C
+- Ampoule length up to 15 cm
+- Digital single-program, eight-segment programmable control
+",2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+Muffle Furnace 6,,melt-flux,,,,347,A,,,"The 2DCC currently possess six Muffle Furnaces with maximum temperatures of 1200&deg;C that are being utilized for conventional melt growth, flux growth, and solid-state reaction. One of the Muffle Furnace is placed inside the fume hood in which allows us to grow material that contains toxic elements, such as lead and arsenic. Each furnace will accept an ampoule of maximum length up to 15cm or multiple ampoules with shorter length. Programmatic control allows for multiple segment ramp and dwell temperature profiles.","- Maximum temperature of 1200&deg;C
+- Ampoule length up to 15 cm
+- Digital single-program, eight-segment programmable control
+",2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+Muffle Furnace 7,,melt-flux,,,,347,A,,,"The 2DCC currently possess six Muffle Furnaces with maximum temperatures of 1200&deg;C that are being utilized for conventional melt growth, flux growth, and solid-state reaction. One of the Muffle Furnace is placed inside the fume hood in which allows us to grow material that contains toxic elements, such as lead and arsenic. Each furnace will accept an ampoule of maximum length up to 15cm or multiple ampoules with shorter length. Programmatic control allows for multiple segment ramp and dwell temperature profiles.","- Maximum temperature of 1200&deg;C
+- Ampoule length up to 15 cm
+- Digital single-program, eight-segment programmable control
+",2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+CVD1,,cvd,,,,,A,,,,,2DCC,230 Building Innovation Park,,jmr31@psu.edu,,cuc33@psu.edu,,
+4-Zone CVT1,,cvt,,,,N129A ,A,,,The 2DCC four-zone furnace with maximum temperatures of 1100 &deg;C is being utilized for chemical vapor transport (CVT). Each furnace bore will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. Programmatic control allows for multiple segment ramp and dwell temperature profiles and data logging of growth conditions throughout each growth run.  ,"- Four zones
+- Max temperature of 1100 &deg;C
+- Ampoule diameter up to 2 inches",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+4-Zone CVT2,,cvt,,,,N129A ,A,,,The 2DCC four-zone furnace with maximum temperatures of 1100 &deg;C is being utilized for chemical vapor transport (CVT). Each furnace bore will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. Programmatic control allows for multiple segment ramp and dwell temperature profiles and data logging of growth conditions throughout each growth run.  ,"- Four zones
+- Max temperature of 1100 &deg;C
+- Ampoule diameter up to 2 inches",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+2-Zone CVT3,,cvt,,,,N129A ,A,,,The 2DCC two-zone furnace with maximum temperatures of 1100 &deg;C is being utilized for chemical vapor transport (CVT). Each furnace bore will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. Programmatic control allows for multiple segment ramp and dwell temperature profiles and data logging of growth conditions throughout each growth run.  ,"- Two  zones
+- Max temperature of 1100 &deg;C
+- Ampoule diameter up to 2 inches",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+2-Zone CVT4,,cvt,,,,N129A ,A,,,The 2DCC two-zone furnace with maximum temperatures of 1100 &deg;C is being utilized for chemical vapor transport (CVT). Each furnace bore will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. Programmatic control allows for multiple segment ramp and dwell temperature profiles and data logging of growth conditions throughout each growth run.  ,"- Two  zones
+- Max temperature of 1100 &deg;C
+- Ampoule diameter up to 2 inches",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+HPCVD1,,cvd,,,,N125A ,A,,,HPCVD furnace for TMDs,"- Temperature  up to 1500 &eg;C 
+- Pressure: 10<sup>-2</sup> - 700 Torr",2DCC,Millenium Science Complex,,jmr31@psu.edu,,cuc33@psu.edu,,
+High Temp Muffle 1,,melt-flux,,,,347,A,,,The 2DCC High-Temperature Muffle Furnace with maximum 1800&deg;C continuous operating temperature is utilized for the single crystal growth that melting point of crystal higher than 1100&deg;C. The furnace chamber will accept a sample of maximum 6ï¿½ x 6ï¿½ x 6ï¿½ (w x h x t). Programmatic control allows for ï¿½1&deg;C temperature accuracy.,"- 1800&deg;C continuous operating temperature with ï¿½5&deg;C heat uniformity
+- Maximum heating rate of 15&deg;C/min
+- &#177;1&deg;C temperature accuracy
+- Double shell design to ensure low temperature outside furnace
+- Over-temperature protection",2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,,shl12@psu.edu,,
+MBE1,,mbe,,,,35,A,,,"The 2DCC Multi-Module characterization cluster consists of a Molecular Beam Epitaxy (MBE) system connected with in-situ cryogenic Angle Resolved Photoemission Spectroscopy (ARPES) and four-tip Scanning Tunneling Microscopy (STM) tools. Samples can be transferred directly into the characterization tools, without exposing them to atmosphere, allowing the properties of pristine surfaces to be studied. This allows the quickly characterization of sampleï¿½s inherent properties and the rapidly development and optimization of new 2D materials and heterostructures. Ports for seven thermal effusion cells and a six pocket e-beam evaporator allow a wide range of materials to be fabricated. In-situ Reflection High Energy Electron Diffraction (RHEED) and spectroscopic ellipsometry allow real-time characterization of films as they grow. The MBE system can grow on up to 2 inch wafers. An adaptor to flag style holders allows growth on up to 1 cm<sup>2</sup> substrates that can be transferred in the ARPES and STM modules. The nanoprobe STM features 4 independent tips that can be used for 4-point in-situ electrical transport measurements down to 4.5 K. The integrated scanning electron microscope (SEM) can be used to position each tip independently over chosen features of the sample with a resolution better than 1 micron. Each tip is capable of scanning tunneling measurements although currently only one tip can be used for STM at a time. A small superconducting coil under the sample stage can produce magnetic fields up to 200 gauss. Argon sputtering is available for tip and sample cleaning and preparation. ","- 2&quot; diameter substrates, with adaptor for smaller 1 cm2 substrates on Omicron T flag style holders for analysis in ARPES and STM
+- Se cracker
+- 6 pocket e-beam source for transition metals
+- 15kV Reflection High Energy Electron Diffraction (RHEED) system, with kSA 400 RHEED analysis software
+- Ellipsometry for real-time film growth monitoring
+- Base pressure of 3 x 10<sup>-10</sup> mBar
+- In-vacuo cryogenic STM with 4 independent probe tips
+- In-vacuo cryogenic ARPES (energy resolution 1.8 meV at 2 eV pass energy
+- Monochromator with He 1 (21.2 eV) and He 2 (40.8 eV) excitations
+ 
 
-Capabilities:
-Three zones
-Maximum temperature of 1250 °C
-Ampoule diameter up to 2 inches
-Crucible rotation
-Programmable linear translation and data logging",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-Mao Bridgman 2,brm,,,,,A,,,,2DCC,ARL Freeport,,zim1@psu.edu,shl12@psu.edu,
-CHET,,,,,N037 ,A,,,,2DCC,Millenium Science Complex,,jar403@psu.edu,cud263@psu.edu,
-New Chet,,,,,N135 ,A,,,,2DCC,Millenium Science Complex,DMR-1539916,jar403@psu.edu,cud263@psu.edu,
-Wafer-scale CHET,,,,,N129 ,A,,,,2DCC,Millenium Science Complex,DMR-1539916,jar403@psu.edu,cud263@psu.edu,
-2DCC Compounding Furnace 1,melt-flux,,,,N129A ,A,,,"The 2DCC compounding furnace is a single zone furnace with a maximum temperature of 1250 °C that is used to compound source powders for later use in our Vertical Bridgman or one of our Chemical Vapor Transport Furnaces for bulk crystal growth. The furnace will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. This furnace tilts back and forth during compounding to improve mixing and uniformity of source materials.
+Current Process Capabilities:
+- Topological insulators: Bi<sub>2</sub>Se<sub>3</sub>, Bi<sub>2</sub>Te<sub>3</sub>, (Bi,Sb)<sub>2</sub>Te<sub>3</sub>, etc.
+- TMDs: MoSe<sub>2</sub>, MoTe<sub>2</sub>, NbSe<sub>2</sub>, WSe<sub>2</sub>, WTe<sub>2</sub>, etc
+- FeSe
+- Knudsen thermal effusion cells: Bi, Cr, Fe, Sb, and Te
+- Cracker cells: Se
+- Electron-beam sources: Al, Mo, Nb, Ta, V, and W",2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,,arr19@psu.edu,,
+MBE2,,mbe,DCA,,,N118A ,A,,,"The 2DCC Hybrid Chalcogenide Molecular Beam Epitaxial (MBE) system is an MBE system dedicated to the growth of chalcogenide thin films. The hybrid MBE approach in particular enables the synthesis of chalcogenide materials containing refractory metallic components through the addition of a gas injector system allowing to supply these elements in a molecular form, giving access to a different growth kinetics, potentially favorable for refractory transition metal elements with low vapor pressures. To guarantee the highest degree of control down to a single layer and excellent reproducibility the chalcogenide MBE reactor is equipped with a series of state of the art in-situ monitoring capabilities, such as reflection high energy electron diffraction, ion gauge beam flux monitor, residual gas analyzer, heated quartz crystal monitor, and a spectroscopic ellipsometer. The hybrid chalcogenide MBE can handle wafers up to 3 inches. The chalcogenide MBE reactor is connected via a UHV transfer line with a oxide MBE reactor and a sputter deposition system. The in-vacuo transfer between the components of the cluster enables the integration of chemically dissimilar materials, such as growth of chalcogenide films on oxide thin films, as well as capping chalcogenide thin films using sputter deposition tool or integrate top electrodes via shadow mask onto the film without breaking vacuum to minimize potential contamination of film surfaces. In-vacuo sample exchange routine between the hybrid chalcogenide MBE and the 2DCC MIP thin film characterization cluster located in Davey Laboratory at the Pennsylvania State University with surface sensitive characterization techniques, such as angle resolved photoelectron emission spectroscopy, scanning tunneling microscopy and transport measurements.","- Up to 3&quot; diameter substrates, adapter for (10x10)mm substrates, adapter for samples on Omicron T flag style holders
+- Ultra-high vacuum shuttle for post growth characterization with up to 3 flag style holder sample storage capacity, base pressure 5&times;10<sup>-10</sup> Torr, equipped with a NexTorr pump keeping this vacuum for weeks without power supply
+- Reflection high energy electron diffraction (RHEED) system 15kV, with RHEED analysis software kSA 400 version 5.50
+- Spectroscopic ellipsometer, spectral range of 210 - 1690nm
+- Residual gas analyzer for real-time background gas analysis
+- Fully automated ion gauge beam flux monitor
+- Fully automated heated quartz crystal monitor (room temperature to 500&deg;C)
+- Pyrometer for remote sample temperature measurements (in conjunction with in-situ spectroscopic ellipsometer)
+- Chalcogenide reactor base pressure of 1&times;10<sup>-10</sup> Torr
+- Radio frequency plasma source to be used for oxygen, argon and nitrogen
+- 8 effusion cells (3 low temperature cells, 2 high temperature cells, 2 dual temperature cells, 1 cracker cell) 
+- 4-pocket electron-beam evaporator source for high refractory metals with long throw distance to minimize thermal load on sample during e-beam operation
+- Adapter to a 4-line gas-injector inlet system of metal-organic precursors
+- All components are gate valve isolated to maximize uptime and allow maintenance during operation
+ 
 
-Capabilities:
-Single zone
-Maximum temperature of 1250 °C
-Ampoule diameter up to 2 inches
-Tilting of furnace to improve mixing and uniformity of source materials",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-2DCC Box Furnace,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-2DCC Muffle Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-2DCC Muffle Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-2DCC Muffle Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-2DCC Muffle Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-2DCC Muffle Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-CVD1,cvd,,,,,A,,,,2DCC,230 Building Innovation Park,,jmr31@psu.edu,cuc33@psu.edu,
-2DCC CVT1,cvt,,,,N129A ,A,,,"The 2DCC currently possess two four-zone and two two-zone furnaces with maximum temperatures of 1100 °C that are being utilized for chemical vapor transport (CVT). Each furnace bore will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. Programmatic control allows for multiple segment ramp and dwell temperature profiles and data logging of growth conditions throughout each growth run.  
+Current Process Capabilities:
 
-Capabilities:
-Four zones and two zones
-Max temperature of 1100 °C
-Ampoule diameter up to 2 inches",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-2DCC CVT2,cvt,,,,N129A ,A,,,"The 2DCC currently possess two four-zone and two two-zone furnaces with maximum temperatures of 1100 °C that are being utilized for chemical vapor transport (CVT). Each furnace bore will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. Programmatic control allows for multiple segment ramp and dwell temperature profiles and data logging of growth conditions throughout each growth run.  
-
-Capabilities:
-Four zones and two zones
-Max temperature of 1100 °C
-Ampoule diameter up to 2 inches",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-2DCC CVT3,cvt,,,,N129A ,A,,,"The 2DCC currently possess two four-zone and two two-zone furnaces with maximum temperatures of 1100 °C that are being utilized for chemical vapor transport (CVT). Each furnace bore will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. Programmatic control allows for multiple segment ramp and dwell temperature profiles and data logging of growth conditions throughout each growth run.  
-
-Capabilities:
-Four zones and two zones
-Max temperature of 1100 °C
-Ampoule diameter up to 2 inches",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-2DCC CVT4,cvt,,,,N129A ,A,,,"The 2DCC currently possess two four-zone and two two-zone furnaces with maximum temperatures of 1100 °C that are being utilized for chemical vapor transport (CVT). Each furnace bore will accept an ampoule of maximum diameter of two inches or multiple ampoules of smaller diameter. Programmatic control allows for multiple segment ramp and dwell temperature profiles and data logging of growth conditions throughout each growth run.  
-
-Capabilities:
-Four zones and two zones
-Max temperature of 1100 °C
-Ampoule diameter up to 2 inches",2DCC,Millenium Science Complex,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-HPCVD1,cvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,,jmr31@psu.edu,cuc33@psu.edu,
-2DCC High Temp Muffle 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,DMR-1539916,zim1@psu.edu,shl12@psu.edu,
-MBE1,mbe,,,,35,A,,,"The 2DCC Multi-Module characterization cluster consists of a Molecular Beam Epitaxy (MBE) system connected with in-situ cryogenic Angle Resolved Photoemission Spectroscopy (ARPES) and four-tip Scanning Tunneling Microscopy (STM) tools. Samples can be transferred directly into the characterization tools, without exposing them to atmosphere, allowing the properties of pristine surfaces to be studied. This allows the quickly characterization of sample’s inherent properties and the rapidly development and optimization of new 2D materials and heterostructures. Ports for seven thermal effusion cells and a six pocket e-beam evaporator allow a wide range of materials to be fabricated. In-situ Reflection High Energy Electron Diffraction (RHEED) and spectroscopic ellipsometry allow real-time characterization of films as they grow. The MBE system can grow on up to 2 inch wafers. An adaptor to flag style holders allows growth on up to 1 cm2 substrates that can be transferred in the ARPES and STM modules. The nanoprobe STM features 4 independent tips that can be used for 4-point in-situ electrical transport measurements down to 4.5 K. The integrated scanning electron microscope (SEM) can be used to position each tip independently over chosen features of the sample with a resolution better than 1 micron. Each tip is capable of scanning tunneling measurements although currently only one tip can be used for STM at a time. A small superconducting coil under the sample stage can produce magnetic fields up to 200 gauss. Argon sputtering is available for tip and sample cleaning and preparation. ",2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,arr19@psu.edu,
-MBE2,mbe,DCA,,,N118A ,A,,,"The 2DCC Hybrid Chalcogenide Molecular Beam Epitaxial (MBE) system is an MBE system dedicated to the growth of chalcogenide thin films. The hybrid MBE approach in particular enables the synthesis of chalcogenide materials containing refractory metallic components through the addition of a gas injector system allowing to supply these elements in a molecular form, giving access to a different growth kinetics, potentially favorable for refractory transition metal elements with low vapor pressures. To guarantee the highest degree of control down to a single layer and excellent reproducibility the chalcogenide MBE reactor is equipped with a series of state of the art in-situ monitoring capabilities, such as reflection high energy electron diffraction, ion gauge beam flux monitor, residual gas analyzer, heated quartz crystal monitor, and a spectroscopic ellipsometer. The hybrid chalcogenide MBE can handle wafers up to 3 inches. The chalcogenide MBE reactor is connected via a UHV transfer line with a oxide MBE reactor and a sputter deposition system. The in-vacuo transfer between the components of the cluster enables the integration of chemically dissimilar materials, such as growth of chalcogenide films on oxide thin films, as well as capping chalcogenide thin films using sputter deposition tool or integrate top electrodes via shadow mask onto the film without breaking vacuum to minimize potential contamination of film surfaces. In-vacuo sample exchange routine between the hybrid chalcogenide MBE and the 2DCC MIP thin film characterization cluster located in Davey Laboratory at the Pennsylvania State University with surface sensitive characterization techniques, such as angle resolved photoelectron emission spectroscopy, scanning tunneling microscopy and transport measurements.",2DCC,Millenium Science Complex,DMR-1539916,sal6149@psu.edu,mxh752@psu.edu,
-MBE4,mbe,,,,N118A ,A,,,,2DCC,Millenium Science Complex,,sal6149@psu.edu,mxh752@psu.edu,
-MBE5,mbe,,,,144,A,,,,2DCC,Davey Lab,,nxs16@psu.edu,arr19@psu.edu,
-MBE6,mbe,,,,144,A,,,,2DCC,Davey Lab,,nxs16@psu.edu,arr19@psu.edu,
-MBF3,melt-flux,,,,N129A ,A,,,,2DCC,Millenium Science Complex,,zim1@psu.edu,shl12@psu.edu,
-MOCVD1,mocvd,,,,N125A ,A,,,"The MOCVD1 system includes a cold wall horizontal metalorganic chemical vapor deposition (MOCVD) reactor from CVD Equipment Corp. with an inductively heated SiC-coated graphite susceptor that can accommodate a single wafer up to 2 inches in diameter at temperatures up to 1000 oC. Water circulation through the outer quartz jacket maintains a constant wall temperature. To increase uniformity across the wafer, gas foil rotation of the wafer holder is employed. The reactor loads and unloads through a nitrogen-purged glovebox to minimize exposure to ambient air. 
+Solid source: Se, In, Bi, Fe, Te, Sn, Eu, Ga
+Electron-beam source: Pt, Si, Ge, Pd",2DCC,Millenium Science Complex,DMR-1539916,nxs16@psu.edu,sal6149@psu.edu,mxh752@psu.edu,,
+MBE4,,mbe,,,,N118A ,A,,,,,2DCC,Millenium Science Complex,,,sal6149@psu.edu,mxh752@psu.edu,,
+MBE5,,mbe,,,,144,A,,,,,2DCC,Davey Lab,,nxs16@psu.edu,,arr19@psu.edu,,
+MBE6,,mbe,,,,144,A,,,,,2DCC,Davey Lab,,nxs16@psu.edu,,arr19@psu.edu,,
+MBF3,,melt-flux,,,,N129A ,A,,,,,2DCC,Millenium Science Complex,,zim1@psu.edu,,shl12@psu.edu,,
+MOCVD1,,mocvd,,,,N125A ,A,,,"The MOCVD1 system includes a cold wall horizontal metalorganic chemical vapor deposition (MOCVD) reactor from CVD Equipment Corp. with an inductively heated SiC-coated graphite susceptor that can accommodate a single wafer up to 2 inches in diameter at temperatures up to 1000 &deg;C. Water circulation through the outer quartz jacket maintains a constant wall temperature. To increase uniformity across the wafer, gas foil rotation of the wafer holder is employed. The reactor loads and unloads through a nitrogen-purged glovebox to minimize exposure to ambient air. 
 
 The system includes a welded stainless steel gas panel with metal gasket seal fittings, pneumatic valves, mass flow controllers, pressure controllers, etc. that are operated remotely via custom LabView software. Six bubbler manifolds are available for solid or liquid precursors and gas source lines are available for hydrogen selenide and hydrogen sulfide. A separate connection is available for chloride precursors. Purified hydrogen and nitrogen are available as process gases. A chemically resistant rotary vane pump, capacitance manometer, Pirani gauge, throttle valve controller and additional valves are used to maintain reactor pressures in the range from 10-700 Torr.
 
-The MOCVD reactor and gas panel are housed in a ventilated enclosure. The gas sources are housed within ventilated gas cabinets and are connected to the main system enclosure via double-walled tubing. An exhaust gas scrubber that includes a pyrolysis stage and a packed tower with sodium hydroxide neutralization system is available to treat the reactor effluents to safe limits. A 16-point Honeywell Vertex M chemcassette system is used to monitor for toxic gases at various points on the system and throughout the lab. The MOCVD system is interlocked with the gas detection unit and other sensors to enable safe shutdown in the event of equipment failure.",2DCC,Millenium Science Complex,DMR-1539916,jmr31@psu.edu,cuc33@psu.edu,
-MOCVD2,mocvd,,,,N125A ,A,,,"MOCVD2 is a custom designed multi-module system from CVD Equipment Corporation. The system includes a load lock and high vacuum robotic transfer stage with three additional ports. A stainless-steel chamber for metalorganic chemical vapor deposition (MOCVD) of chalcogenides is connected to one of the ports. The chamber consists of temperature-controlled wall and flanges, removable quartz liners and a rotating, resistively heated 2” diameter substrate holder for substrate temperatures up to 1000 oC. The MOCVD reactor includes two purged optical ports for in situ spectroscopic ellipsometry and a third for sample viewing.
+The MOCVD reactor and gas panel are housed in a ventilated enclosure. The gas sources are housed within ventilated gas cabinets and are connected to the main system enclosure via double-walled tubing. An exhaust gas scrubber that includes a pyrolysis stage and a packed tower with sodium hydroxide neutralization system is available to treat the reactor effluents to safe limits. A 16-point Honeywell Vertex M chemcassette system is used to monitor for toxic gases at various points on the system and throughout the lab. The MOCVD system is interlocked with the gas detection unit and other sensors to enable safe shutdown in the event of equipment failure.","- Cold wall reactor for 2&quot; diameter substrates with adapter for 10 mm x 10 mm substrates
+- Gas foil rotation of wafer holder with argon for uniformity
+- Induction heating for graphite susceptor heating
+- Dual wavelength fiber optic pyrometer for monitoring substrate temperature
+- Toxic gas monitoring by integrated gas detection/exhaust and scrubber/safety system
+- Controlled atmosphere sample loading/unloading
+- 6 bubblers for liquid/solid sources and 4 gas source lines (H<sub>2</sub>Se, H<sub>2</sub>S)
+##### Current Process Capabilities: #####
+- Wafer scale process developed: WS2, WSe<sub>2</sub> and MoS<sub>2</sub> monolayers on 2 c-plane sapphire
+- Metal Precursors: Mo(CO)<sub>6</sub>, W(CO)<sub>6</sub>
+- Chalcogen Precursors: H<sub>2</sub>S, H<sub>2</sub>Se, Diethyl Sulfide
+- Carrier gas: Purified hydrogen or nitrogen",2DCC,Millenium Science Complex,DMR-1539916,jmr31@psu.edu,,cuc33@psu.edu,,
+MOCVD2,,mocvd,,,,N125A ,A,,,"MOCVD2 is a custom designed multi-module system from CVD Equipment Corporation. The system includes a load lock and high vacuum robotic transfer stage with three additional ports. A stainless-steel chamber for metalorganic chemical vapor deposition (MOCVD) of chalcogenides is connected to one of the ports. The chamber consists of temperature-controlled wall and flanges, removable quartz liners and a rotating, resistively heated 2&quot; diameter substrate holder for substrate temperatures up to 1000 oC. The MOCVD reactor includes two purged optical ports for in situ spectroscopic ellipsometry and a third for sample viewing.
 
 The chamber exhaust includes cold-finger traps for chalcogen removal and a chemically resistant rotary vane pump that enables system operation from 10 to 700 Torr. The gas manifold is comprised of welded stainless-steel tubing with metal gasket seal fittings, pneumatically controlled valves, pressure controllers and mass flow controllers. Six bubbler manifolds are available for liquid or solid precursors two of which include double dilution and two which can be maintained at elevated temperature (up to 200oC) for low vapor pressure sources. Three pressure balanced vent/run manifolds are available for metal, chalcogen and dopant precursors. 
 
 System operation is controlled by CVD WinPrCTMsoftware which includes recipe-driven control and data logging. The system has an interlocked safety system including toxic gas monitoring, H2 detection and other alarms for safe operation.  A pyrolyzer/water scrubber equipped with a sodium hydroxide neutralization system treats the reactor effluents to safe limits. 
 
-A robotic transfer stage enables transfer of samples directly from the MOCVD growth chamber into a custom designed Mbraun glovebox for optical characterization. Samples can also be loaded into the glovebox through a vacuum purged antechamber. A WITec Apyron confocal microscope is housed in the glovebox to enable ambient-controlled Raman and photoluminescence measurement. The Witec microscope is fully automated with joystick controller to enabling automated change of lasers (532 nm and 633nm), gratings (300, 600, and 1800 grooves/mm), objective lenses (x5, x10, x50, x100), focus (z height) and stage motion (x-y location), etc. The small footprint of the glovebox analysis chamber (50 in. x 35 in.) was enabled by vertical integration of the WITec microscope and optical fiber coupling with the laser sources and UHTS 600 spectrometer located on top of the glovebox.",2DCC,Millenium Science Complex,DMR-1539916,jmr31@psu.edu,cuc33@psu.edu,
-MOCVD3,mocvd,,,,N037 ,A,,,,2DCC,Millenium Science Complex,,jar403@psu.edu,,
-Nitride MOCVD ,mocvd,,,,N125A ,A,,,,2DCC,Millenium Science Complex,,jmr31@psu.edu,cuc33@psu.edu,
-Mao CVT 1,cvt,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao CVT 2,cvt,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao CVT 3,cvt,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao CVT 4,cvt,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao CVT 5,cvt,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao CVT 6,cvt,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao CVT 7,cvt,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Powder Vaporization 1,eva,,,,N037 ,A,,,,2DCC,Millenium Science Complex,,jar403@psu.edu,,
-Powder Vaporization 2,eva,,,,N037 ,A,,,,2DCC,Millenium Science Complex,,jar403@psu.edu,,
-PVD1,pvd,,,,N037 ,A,,,,2DCC,Millenium Science Complex,,jar403@psu.edu,,
-SiCG (Frank),,,,,N037 ,A,,,,2DCC,Millenium Science Complex,DMR-1539916,jar403@psu.edu,cud263@psu.edu,
-SiCG II (Francesca),,,,,N135A ,A,,,,2DCC,Millenium Science Complex,DMR-1539916,jar403@psu.edu,cud263@psu.edu,
-Sputtering1,sput,,,,N118A ,A,,,,2DCC,Millenium Science Complex,DMR-1539916,sal6149@psu.edu,mxh752@psu.edu,
-TBF3,melt-flux,,,,,A,,,,2DCC,South Frear Building,,zim1@psu.edu,shl12@psu.edu,
-Mao Crucible Furnace 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Crucible Furnace 2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Crucible Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Crucible Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Crucible Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Crucible Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Crucible Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-ZFZ1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-ZFZ2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 1,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 10,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 11,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 2,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 3,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 4,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 5,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 6,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 7,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 8,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-Mao Muffle Furnace 9,melt-flux,,,,347,A,,,,2DCC,Davey Lab,,zim1@psu.edu,shl12@psu.edu,
-ARP1,arpes,ScientaOmicron,DA30-L ARPES,,35,A,,,,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,arr19@psu.edu,
-ARP2,arpes,,,,35,A,,,,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,arr19@psu.edu,
-RMN3,raman,Witec,,,N-125,A,,,,2DCC,Millenium Science Complex,DMR-1539916,jmr31@psu.edu,cuc33@psu.edu,
-FMR1,st-fmr,,,,356,A,,,,2DCC,Davey Lab,,nxs16@psu.edu,arr19@psu.edu,
-ICP1,icp-aes,,Thermo iCAP 6500,,,A,,,,2DCC,,,,,
-SQD1,squid,Quantum Design ,MPMS SQUID,,329,A,,,,2DCC,Davey Lab,,,,
-SQD2,squid,Quantum Design ,MPMS SQUID,,301,A,,,,2DCC,Davey Lab,,,,
-STM1,stm,ScientaOmicron,LT-Nanoprobe,,35,A,,,,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,arr19@psu.edu,
-STM2,stm,Snipe,,,,,,,,2DCC,,,ewh10,,
-UVV1,uv-vis-nir,Perkin-Elmer,Lambda 950,,,A,,,Lambda 950 UV-Vis-NIR Spectrophotometer and Agilent/Cary 7000 with UMA,2DCC,Millenium Science Complex,,jmr31@psu.edu,,
-AFM3,afm,,,,6F,A,,,,2DCC,Osmond Lab,,,,
-PHI 670 with 680 motorized stage,aes,,,,,A,,,,MCL,Millenium Science Complex,,rwh133@psu.edu,jxs124@psu.edu,
-Bruker Dimension Icon I,afm,,,,,A,,,,MCL,Millenium Science Complex,,tbt1@psu.edu,snk3@psu.edu,
-Bruker Dimension Icon II,afm,,,,,A,,,,MCL,Millenium Science Complex,,tbt1@psu.edu,snk3@psu.edu,
-Asylum Research Cypher VRS,afm,OXFORD ASYLUM,CYPHER,19338,N018,A,,,,MCL,Millenium Science Complex,,tbt1@psu.edu,snk3@psu.edu,
-Bruker BioScope Resolve,afm,,,,,A,,,,MCL,Millenium Science Complex,,tbt1@psu.edu,snk3@psu.edu,
-Automated Goniometer/ Tensiometer with Environmental Chamber Support (ramï¿½-hart Model 295),,FAMEHART INSTRU,295-F4,130301,N007,A,,,,MCL,Millenium Science Complex,,mtw5027@psu.edu,,
-Micromeritics Accupyc II 1340,pycno,MICROMERITIC,ACCUPYC1340,2295,N030K,A,,,,MCL,Millenium Science Complex,,nmw10@psu.edu,glt5009@psu.edu,
-Oxford Symmetry,,OXFORD INSTRUME,SYMMETRY,915759,N030K,A,,,,MCL,Millenium Science Complex,,jma14@psu.edu,tec11@psu.edu,
-Oxford Nordlys Max2,,,,,,A,,,,MCL,Millenium Science Complex,,jma14@psu.edu,tec11@psu.edu,
-Energy Dispersive Spectrometer,eds,,,,,A,,,,MCL,Millenium Science Complex,,jma14@psu.edu,,
-Helios 660,fib-lit,FEI,1037473,9922583,N031A,A,,,,MCL,Millenium Science Complex,,tec11@psu.edu,wua101@psu.edu,huw19@psu.edu
-Scios 2,fib-lit,FEI,SCIOS2,99503422,,A,,,,MCL,Millenium Science Complex,,tec11@psu.edu,wua101@psu.edu,huw19@psu.edu
-Micromeritics AutoPore V Model 9620 (120),porosity,MICROMERITICS,9620,120,N004,A,,,,MCL,Millenium Science Complex,,jma14@psu.edu,,
-Bruker Hysitron TI-980,n-indent,HYSITRON INC,TI 9810,15947,N030D,A,,,,MCL,Millenium Science Complex,,tbt1@psu.edu,,
-Zygo Nexview 3D Optical Surface Profiler (1433-80044),op,ZYGO,NEXVIEW 3D,1433-80044,N030A,A,,,,MCL,Millenium Science Complex,,tbt1@psu.edu,,
-"LabRAM HR ""VlabiNIR"" (1149)",raman,HORIBA SCIENTIF,LABRAM HR EV,1149,N007,A,,,,MCL,Millenium Science Complex,,mtw5027@psu.edu,,
-"LabRAM HR ""Lucy"" (1129)",raman,HORIBA SCIENTIF,LABRAM HR EV,1129,N007,A,,,,MCL,Millenium Science Complex,,mtw5027@psu.edu,,
-Xplora Plus (72410),raman,HORIBA SCIENTIF,XPLORA PLUS,72410,N007,A,,,,MCL,Millenium Science Complex,,mtw5027@psu.edu,,
-XPS-Auger (6),aes,UIVAC-PHI,PHI5000 VERSA PROBE III,6,N031D,A,,,,MCL,Millenium Science Complex,,,,
-XPS (1124114),xps,ULVAC PHI INC,PHI5000,1124114,N031D,A,,,,MCL,Millenium Science Complex,,jxs124@psu.edu,tjz127@psu.edu,
-Verios G4 (9952413),sem,THERMO SCIENTIF,VERIOS G4,9952413,N030K,A,,,,MCL,Millenium Science Complex,,jma14@psu.edu,wua101@psu.edu,
-Apreo S (9952411),sem,THERMO SCIENTIF,APREO,9952411,N030K,A,,,,MCL,Millenium Science Complex,,jma14@psu.edu,wua101@psu.edu,
-ESEM Q250 (9950352),sem,THERMA SCIENTIF,Q250,9950352,N030K,A,,,,MCL,Millenium Science Complex,,jma14@psu.edu,wua101@psu.edu,
-ASAP 2020,surface,MICROMETRICS,ASAP 2020,411,N007,A,,,,MCL,Millenium Science Complex,,nmw10@psu.edu,jma14@psu.edu,glt5009@psu.edu
-Autopore V,surface,MICROMETRICS,9620,120,N007,A,,,,MCL,Millenium Science Complex,,nmw10@psu.edu,jma14@psu.edu,glt5009@psu.edu
-ASAP 2420,surface,MICROMETRICS,ASAP 2420,,N004,A,,,,MCL,Millenium Science Complex,,nmw10@psu.edu,jma14@psu.edu,glt5009@psu.edu
-Tecnai G2,tem,FEI COMPANY,G2 20X TWIN,D2315,N030J,A,,,,MCL,Millenium Science Complex,,jlg375@psu.edu,kuw13@psu.edu,
-Talos F200C,tem,FEI COMPANY,F200C,,N031E,A,,,,MCL,Millenium Science Complex,,jlg375@psu.edu,kuw13@psu.edu,
-Talos F200X,tem,FEI COMPANY,FX200X,D6326,N030G,A,,,,MCL,Millenium Science Complex,,jlg375@psu.edu,kuw13@psu.edu,
-Titan? G2,tem,,,,,A,,,,MCL,Millenium Science Complex,,jlg375@psu.edu,kuw13@psu.edu,
-Discovery TGA-MS,,TA INSTRUMENTS,TGA5500,55000124,,A,,,,MCL,Millenium Science Complex,,glt5009@psu.edu,,
-TA Q2000 DSC,calori,TA INSTRUMENTS,DSCQ2000,29131,N007,A,,,,MCL,Millenium Science Complex,,glt5009@psu.edu,,
-STA 449 F3,,NETZSCH,STA 449F3 JUPITER,STA449F3B-0232-M,N007,A,,,,MCL,Millenium Science Complex,,glt5009@psu.edu,,
-PHI nanoTOF II,tof-sims,ULVAC PHI INC,PHITRIFTV,500815,N030D,A,,,,MCL,Millenium Science Complex,,huc24@psu.edu,,
-Perkin-Elmer Lambda 950 UV-Vis-NIR Spectrophotometer,uv-vis-nir,PERKIN ELMER,950,950N7123003,N007,A,,,,MCL,Millenium Science Complex,,jjs366@psu.edu,,
-Agilent/Cary 7000 with UMA,uv-vis-nir,,,,,A,,,,MCL,Millenium Science Complex,,jjs366@psu.edu,,
-Malvern Panalytical Empyrean I / II / III,xrd,,,,,A,,,,MCL,Millenium Science Complex,,nmw10@psu.edu,,
-Malvern Panalytical XPert Pro MPD,xrd,,,,,A,,,,MCL,Millenium Science Complex,,nmw10@psu.edu,,
-Malvern Panalytical X'Pert3ï¿½MRD,xrd,PANALYTICAL INC,XPERT3,DY5383,N008,A,,,,MCL,Millenium Science Complex,,nmw10@psu.edu,,
-XENOCS Xeuss 2.0 SAXS/WAXS,xrd,XENOCS,XEUSS 2.0,16410410,N008,A,,,,MCL,Millenium Science Complex,,nmw10@psu.edu,,
-Multiwire Laue,xrd,MULTIWIRE,MWL120,288,N008,A,,,,MCL,Millenium Science Complex,,nmw10@psu.edu,,
-Trek 30kV Amplifier,dielect,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-Linear Variable Differential Tranformer (LVDT),displace,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-Modulab XM,ec-impedance,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-Agilent E4980A,ec-impedance,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-Agilent 4294A,ec-impedance,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-FormFactor 11000B,ec-impedance,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-Keysight P9374A PNA,5g,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-Anritsu 37369D,5g,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-Keysight PNA-X N5247B,5g,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-pA meter,tsdc,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-amplifier and oven / furnace combinations,tsdc,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-Linseis LSR - 3,th-seebeck,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-Ecopia HMS-3000,pauw,,,,,A,,,,MCL,Millenium Science Complex,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
-50 kN MTS Criterion load frame,ten-compr,MTS,50KN,17006557,N001,A,,,,MCL,Millenium Science Complex,,gzc5305@psu.edu,,
-100 kN MTS Criterion load frame,ten-compr,MTS,100KN,17001053,N001,A,,,,MCL,Millenium Science Complex,,gzc5305@psu.edu,,
-3D DIC Camera,dic,,,,,A,,,,MCL,Millenium Science Complex,,gzc5305@psu.edu,,
-TA Instruments Q800 DMA,dma,TA INSTRUMENTS,Q800,0800-2108,N007,A,,,,MCL,Millenium Science Complex,,gzc5305@psu.edu,,
-Qnessï¿½Q60 A+ï¿½microindenter,m-indent,QNESS,Q60A+,Q1381/0618,N031D,A,,,,MCL,Millenium Science Complex,,gzc5305@psu.edu,,
-Netzsch 402 F1/F3 Hyperion TMA,tma,NETZSCH INSTRUM,TMA402,206028049,N007,A,,,,MCL,Millenium Science Complex,,gzc5305@psu.edu,,
-SEM1,sem,Vortex,,,35,A,,,,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,arr19@psu.edu,
+A robotic transfer stage enables transfer of samples directly from the MOCVD growth chamber into a custom designed Mbraun glovebox for optical characterization. Samples can also be loaded into the glovebox through a vacuum purged antechamber. A WITec Apyron confocal microscope is housed in the glovebox to enable ambient-controlled Raman and photoluminescence measurement. The Witec microscope is fully automated with joystick controller to enabling automated change of lasers (532 nm and 633nm), gratings (300, 600, and 1800 grooves/mm), objective lenses (x5, x10, x50, x100), focus (z height) and stage motion (x-y location), etc. The small footprint of the glovebox analysis chamber (50 in. x 35 in.) was enabled by vertical integration of the WITec microscope and optical fiber coupling with the laser sources and UHTS 600 spectrometer located on top of the glovebox.",,2DCC,Millenium Science Complex,DMR-1539916,jmr31@psu.edu,,cuc33@psu.edu,,
+MOCVD3,,mocvd,,,,N037 ,A,,,MOCVD/PV Furnace for Sulfides,"- Temperature  up to 1500 &eg;C 
+- Pressure: 10<sup>-2</sup> - 700 Torr",2DCC,Millenium Science Complex,,jar403@psu.edu,,,,
+Nitride MOCVD ,,mocvd,,,,N125A ,A,,,,,2DCC,Millenium Science Complex,,jmr31@psu.edu,,cuc33@psu.edu,,
+Mao CVT 1,,cvt,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao CVT 2,,cvt,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao CVT 3,,cvt,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao CVT 4,,cvt,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao CVT 5,,cvt,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao CVT 6,,cvt,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao CVT 7,,cvt,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Powder Vaporization 1,,eva,,,,N037 ,A,,,,,2DCC,Millenium Science Complex,,jar403@psu.edu,,,,
+Powder Vaporization 2,,eva,,,,N037 ,A,,,,,2DCC,Millenium Science Complex,,jar403@psu.edu,,,,
+PVD1,,pvd,,,,N037 ,A,,,,,2DCC,Millenium Science Complex,,jar403@psu.edu,,,,
+SiCG (Frank),,,,,,N037 ,A,,,Epitaxial Graphene Furnace,"- Temperature  up to 2400 &eg;C 
+- Pressure: 10<sup>-6</sup> -700 Torr",2DCC,Millenium Science Complex,DMR-1539916,jar403@psu.edu,,cud263@psu.edu,,
+SiCG II (Francesca),,,,,,N135A ,A,,,,,2DCC,Millenium Science Complex,DMR-1539916,jar403@psu.edu,,cud263@psu.edu,,
+Sputtering1,,sput,,,,N118A ,A,,,,,2DCC,Millenium Science Complex,DMR-1539916,sal6149@psu.edu,,mxh752@psu.edu,,
+TBF3,,melt-flux,,,,,A,,,,,2DCC,South Frear Building,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Crucible Furnace 1,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Crucible Furnace 2,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Crucible Furnace 3,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Crucible Furnace 4,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Crucible Furnace 5,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Crucible Furnace 6,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Crucible Furnace 7,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+ZFZ1,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+ZFZ2,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 1,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 10,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 11,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 2,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 3,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 4,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 5,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 6,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 7,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 8,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+Mao Muffle Furnace 9,,melt-flux,,,,347,A,,,,,2DCC,Davey Lab,,zim1@psu.edu,,shl12@psu.edu,,
+ARP1,,arpes,ScientaOmicron,DA30-L ARPES,,35,A,,,"Yi-Fi Laser Light Source for ARPES
+
+The cryogenic ARPES module features a high intensity helium plasma source and monochromator, allowing energy- and momentum-resolved electronic structure characterization of thin films and single crystals with He 1 (21.22 eV, 23.08 eV), or He 2 (41.81 eV) photon excitation down to a sample temperature below 20 K. The DA-30L spherical analyzer can resolve down to 1.8 meV using a 2 eV pass energy. In addition to the helium light source, the ARPES module is also equipped with a tunable-wavelength Y-Fi laser light source. This system uses high harmonic generation to access four excitation energies in the range of 7.2-10.8 eV with high intensity, while still maintaining energy resolution down to a few meV. Base pressure is 3 x 10<sup>-10</sup>&nbsp;mBar.",,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,,arr19@psu.edu,ypo5017@psu.edu,
+ARP2,,arpes,,,,35,A,,,,,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,,arr19@psu.edu,,
+RMN3,,raman,Witec,,,N-125,A,,,,,2DCC,Millenium Science Complex,DMR-1539916,jmr31@psu.edu,,cuc33@psu.edu,,
+FMR1,,st-fmr,,,,356,A,,,,,2DCC,Davey Lab,,nxs16@psu.edu,,arr19@psu.edu,,
+ICP1,,icp-aes,,Thermo iCAP 6500,,,A,,,,,2DCC,Millenium Science Complex,,,,,,
+SQD1,,squid,Quantum Design ,MPMS SQUID,,329,A,,,,,2DCC,Davey Lab,,,,,,
+SQD2,,squid,Quantum Design ,MPMS SQUID,,301,A,,,,,2DCC,Davey Lab,,,,,,
+STM1,,stm,ScientaOmicron,LT-Nanoprobe,,35,A,,,,,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,,arr19@psu.edu,,
+STM2,,stm,Snipe,,,S8,,,,,,2DCC,Osmond Lab,,ewh10@psu.edu,,,,
+UVV1,,uv-vis-nir,Perkin-Elmer,Lambda 950,,,A,,,Lambda 950 UV-Vis-NIR Spectrophotometer and Agilent/Cary 7000 with UMA,,2DCC,Millenium Science Complex,,jmr31@psu.edu,,,,
+AFM3,,afm,,,,6F,A,,,,,2DCC,Osmond Lab,,,,,,
+PHI 670 with 680 motorized stage,,aes,,,,,A,,,,,MCL,Millenium Science Complex,,,,rwh133@psu.edu,jxs124@psu.edu,
+Bruker Dimension Icon I,,afm,,,,,A,,,,,MCL,Millenium Science Complex,,,,tbt1@psu.edu,snk3@psu.edu,
+Bruker Dimension Icon II,,afm,,,,,A,,,,,MCL,Millenium Science Complex,,,,tbt1@psu.edu,snk3@psu.edu,
+Asylum Research Cypher VRS,,afm,OXFORD ASYLUM,CYPHER,19338,N018,A,,,,,MCL,Millenium Science Complex,,,,tbt1@psu.edu,snk3@psu.edu,
+Bruker BioScope Resolve,,afm,,,,,A,,,,,MCL,Millenium Science Complex,,,,tbt1@psu.edu,snk3@psu.edu,
+Automated Goniometer/ Tensiometer with Environmental Chamber Support (ram&eacute;-hart Model 295),,,FAMEHART INSTRU,295-F4,130301,N007,A,,,,,MCL,Millenium Science Complex,,,,mtw5027@psu.edu,,
+Micromeritics Accupyc II 1340,,pycno,MICROMERITIC,ACCUPYC1340,2295,N030K,A,,,,,MCL,Millenium Science Complex,,,,nmw10@psu.edu,glt5009@psu.edu,
+Oxford Symmetry,,,OXFORD INSTRUME,SYMMETRY,915759,N030K,A,,,,,MCL,Millenium Science Complex,,,,jma14@psu.edu,tec11@psu.edu,
+Oxford Nordlys Max2,,,,,,,A,,,,,MCL,Millenium Science Complex,,,,jma14@psu.edu,tec11@psu.edu,
+Energy Dispersive Spectrometer,,eds,,,,,A,,,,,MCL,Millenium Science Complex,,,,jma14@psu.edu,,
+Helios 660,,fib-lit,FEI,1037473,9922583,N031A,A,,,,,MCL,Millenium Science Complex,,,,tec11@psu.edu,wua101@psu.edu,huw19@psu.edu
+Scios 2,,fib-lit,FEI,SCIOS2,99503422,,A,,,,,MCL,Millenium Science Complex,,,,tec11@psu.edu,wua101@psu.edu,huw19@psu.edu
+Micromeritics AutoPore V Model 9620 (120),,porosity,MICROMERITICS,9620,120,N004,A,,,,,MCL,Millenium Science Complex,,,,jma14@psu.edu,,
+Bruker Hysitron TI-980,,n-indent,HYSITRON INC,TI 9810,15947,N030D,A,,,,,MCL,Millenium Science Complex,,,,tbt1@psu.edu,,
+Zygo Nexview 3D Optical Surface Profiler (1433-80044),,op,ZYGO,NEXVIEW 3D,1433-80044,N030A,A,,,,,MCL,Millenium Science Complex,,,,tbt1@psu.edu,,
+"LabRAM HR ""VlabiNIR"" (1149)",,raman,HORIBA SCIENTIF,LABRAM HR EV,1149,N007,A,,,,,MCL,Millenium Science Complex,,,,mtw5027@psu.edu,,
+"LabRAM HR ""Lucy"" (1129)",,raman,HORIBA SCIENTIF,LABRAM HR EV,1129,N007,A,,,,,MCL,Millenium Science Complex,,,,mtw5027@psu.edu,,
+Xplora Plus (72410),,raman,HORIBA SCIENTIF,XPLORA PLUS,72410,N007,A,,,,,MCL,Millenium Science Complex,,,,mtw5027@psu.edu,,
+XPS-Auger (6),,aes,UIVAC-PHI,PHI5000 VERSA PROBE III,6,N031D,A,,,,,MCL,Millenium Science Complex,,,,,,
+XPS (1124114),,xps,ULVAC PHI INC,PHI5000,1124114,N031D,A,,,,,MCL,Millenium Science Complex,,,,jxs124@psu.edu,tjz127@psu.edu,
+Verios G4 (9952413),,sem,THERMO SCIENTIF,VERIOS G4,9952413,N030K,A,,,,,MCL,Millenium Science Complex,,,,jma14@psu.edu,wua101@psu.edu,
+Apreo S (9952411),,sem,THERMO SCIENTIF,APREO,9952411,N030K,A,,,,,MCL,Millenium Science Complex,,,,jma14@psu.edu,wua101@psu.edu,
+ESEM Q250 (9950352),,sem,THERMA SCIENTIF,Q250,9950352,N030K,A,,,,,MCL,Millenium Science Complex,,,,jma14@psu.edu,wua101@psu.edu,
+ASAP 2020,,surface,MICROMETRICS,ASAP 2020,411,N007,A,,,,,MCL,Millenium Science Complex,,,,nmw10@psu.edu,jma14@psu.edu,glt5009@psu.edu
+Autopore V,,surface,MICROMETRICS,9620,120,N007,A,,,,,MCL,Millenium Science Complex,,,,nmw10@psu.edu,jma14@psu.edu,glt5009@psu.edu
+ASAP 2420,,surface,MICROMETRICS,ASAP 2420,,N004,A,,,,,MCL,Millenium Science Complex,,,,nmw10@psu.edu,jma14@psu.edu,glt5009@psu.edu
+Tecnai G2,,tem,FEI COMPANY,G2 20X TWIN,D2315,N030J,A,,,,,MCL,Millenium Science Complex,,,,jlg375@psu.edu,kuw13@psu.edu,
+Talos F200C,,tem,FEI COMPANY,F200C,,N031E,A,,,,,MCL,Millenium Science Complex,,,,jlg375@psu.edu,kuw13@psu.edu,
+Talos F200X,,tem,FEI COMPANY,FX200X,D6326,N030G,A,,,,,MCL,Millenium Science Complex,,,,jlg375@psu.edu,kuw13@psu.edu,
+Titan? G2,,tem,,,,,A,,,,,MCL,Millenium Science Complex,,,,jlg375@psu.edu,kuw13@psu.edu,
+Discovery TGA-MS,,,TA INSTRUMENTS,TGA5500,55000124,,A,,,,,MCL,Millenium Science Complex,,,,glt5009@psu.edu,,
+TA Q2000 DSC,,calori,TA INSTRUMENTS,DSCQ2000,29131,N007,A,,,,,MCL,Millenium Science Complex,,,,glt5009@psu.edu,,
+STA 449 F3,,,NETZSCH,STA 449F3 JUPITER,STA449F3B-0232-M,N007,A,,,,,MCL,Millenium Science Complex,,,,glt5009@psu.edu,,
+PHI nanoTOF II,,tof-sims,ULVAC PHI INC,PHITRIFTV,500815,N030D,A,,,,,MCL,Millenium Science Complex,,,,huc24@psu.edu,,
+Perkin-Elmer Lambda 950 UV-Vis-NIR Spectrophotometer,,uv-vis-nir,PERKIN ELMER,950,950N7123003,N007,A,,,,,MCL,Millenium Science Complex,,,,jjs366@psu.edu,,
+Agilent/Cary 7000 with UMA,,uv-vis-nir,,,,,A,,,,,MCL,Millenium Science Complex,,,,jjs366@psu.edu,,
+Malvern Panalytical Empyrean I / II / III,,xrd,,,,,A,,,,,MCL,Millenium Science Complex,,,,nmw10@psu.edu,,
+Malvern Panalytical XPert Pro MPD,,xrd,,,,,A,,,,,MCL,Millenium Science Complex,,,,nmw10@psu.edu,,
+Malvern Panalytical X'Pert3ï¿½MRD,,xrd,PANALYTICAL INC,XPERT3,DY5383,N008,A,,,,,MCL,Millenium Science Complex,,,,nmw10@psu.edu,,
+XENOCS Xeuss 2.0 SAXS/WAXS,,xrd,XENOCS,XEUSS 2.0,16410410,N008,A,,,,,MCL,Millenium Science Complex,,,,nmw10@psu.edu,,
+Multiwire Laue,,xrd,MULTIWIRE,MWL120,288,N008,A,,,,,MCL,Millenium Science Complex,,,,nmw10@psu.edu,,
+Trek 30kV Amplifier,,dielect,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Linear Variable Differential Tranformer (LVDT),,displace,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Modulab XM,,ec-impedance,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Agilent E4980A,,ec-impedance,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Agilent 4294A,,ec-impedance,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+FormFactor 11000B,,ec-impedance,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Keysight P9374A PNA,,5g,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Anritsu 37369D,,5g,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Keysight PNA-X N5247B,,5g,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+pA meter,,tsdc,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+amplifier and oven / furnace combinations,,tsdc,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Linseis LSR - 3,,th-seebeck,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+Ecopia HMS-3000,,pauw,,,,,A,,,,,MCL,Millenium Science Complex,,,,jal13@psu.edu,aum33@psu.edu,wuz14@psu.edu
+50 kN MTS Criterion load frame,,ten-compr,MTS,50KN,17006557,N001,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
+100 kN MTS Criterion load frame,,ten-compr,MTS,100KN,17001053,N001,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
+3D DIC Camera,,dic,,,,,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
+TA Instruments Q800 DMA,,dma,TA INSTRUMENTS,Q800,0800-2108,N007,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
+Qness Q60 A+ microindenter,,m-indent,QNESS,Q60A+,Q1381/0618,N031D,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
+Netzsch 402 F1/F3 Hyperion TMA,,tma,NETZSCH INSTRUM,TMA402,206028049,N007,A,,,,,MCL,Millenium Science Complex,,,,gzc5305@psu.edu,,
+SEM1,,sem,Vortex,,,35,A,,,,,2DCC,Davey Lab,DMR-1539916,nxs16@psu.edu,,arr19@psu.edu,,

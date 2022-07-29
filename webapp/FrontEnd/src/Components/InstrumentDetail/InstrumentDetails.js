@@ -3,15 +3,12 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import Tabination from './Tabination';
+import Description from './Description';
 
-import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
-
-export default function Content({ instrumentData }) {
+export default function InstrumentDetails({ instrumentData }) {
     return (
         <Box
             component="main"
@@ -29,24 +26,7 @@ export default function Content({ instrumentData }) {
             <Container maxWidth="xlg" sx={{ mb: 2 }}>
                 <Grid container spacing={2}>
 
-                    {/* Description */}
-                    <Grid item xs={12} md={12} lg={12}>
-                        <Paper
-                            sx={{
-                                p: 2,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                height: '55vh',
-                            }}
-                        >
-                            <div style={{ overflowY: 'scroll' }}>
-                                <Typography variant="h6" gutterBottom component="div"> DESCRIPTION </Typography>
-                                <Typography variant="subtitle2" paragraph align='justify'>
-                                    <ReactMarkdown rehypePlugins={[rehypeRaw]} children={instrumentData.description}/>
-                                </Typography>
-                            </div>
-                        </Paper>
-                    </Grid>
+                    <Description description={instrumentData?.description} capabilities={instrumentData?.capabilities}/>
 
                     {/* Tabs (Quick Specs, Location, Awards, etc.) */}
                     <Grid item xs={12} md={12} lg={12}>

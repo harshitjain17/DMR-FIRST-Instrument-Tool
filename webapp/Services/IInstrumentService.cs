@@ -11,7 +11,8 @@ namespace Instool.Services
         Task<Instrument> CreateInstrument(
             Instrument entity, 
             IEnumerable<InstrumentContact> contacts, 
-            IEnumerable<InstrumentType> types);
+            IEnumerable<InstrumentType> types,
+            IEnumerable<Award> awards);
         Task<Instrument?> GetByDoi(string v);
         Task<Instrument?> GetById(int numericalId);
 

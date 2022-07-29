@@ -17,6 +17,8 @@ namespace Instool.Dtos
         public DateTime? CompletionDate { get; set; }
         public string Status { get; set; } = null!;
         public string Description { get; set; } = null!;
+
+        public string? Capabilities { get; set; }
         public string? RoomNumber { get; set; }
         public string Name { get; set; } = null!;
         public string? SerialNumber { get; set; }
@@ -38,6 +40,7 @@ namespace Instool.Dtos
                 Awards = i.Awards.Select(a => AwardDTO.FromEntity(a)).ToList(),
                 CompletionDate = i.CompletionDate,
                 Description = i.Description,
+                Capabilities = i.Capabilities,
                 Doi = i.Doi,
                 InstrumentId = i.InstrumentId,
                 InstrumentTypes = i.InstrumentTypes.Select(t => InstrumentTypeDTO.WithCategory(t)).ToList(),
@@ -60,6 +63,7 @@ namespace Instool.Dtos
                 AcquisitionDate = AcquisitionDate,
                 CompletionDate = CompletionDate,
                 Description = Description,
+                Capabilities = Capabilities,    
                 Doi = Doi,
                 InstrumentId = InstrumentId ?? 0,
                 //InstrumentTypes = i.InstrumentTypes.Select(t => InstrumentTypeDTO.FromEntity(t)).ToList(),
