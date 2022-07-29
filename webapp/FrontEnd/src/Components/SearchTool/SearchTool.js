@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 import SearchEngine from './SearchEngine';
 import GoogleMap from './GoogleMap';
