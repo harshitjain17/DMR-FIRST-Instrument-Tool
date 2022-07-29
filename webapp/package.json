@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "del-cli instool.zip Release Main/bin Main/obj Main/Release Main/FrontEnd",
-    "copy-frontend": "copyfiles \"FrontEnd/build/**/*\" Release" ,
+    "copy-frontend": "copyfiles \"FrontEnd/build/**/*\" Release",
     "build": "npm run last-commit && dotnet build",
     "release": "npm run last-commit && dotnet publish -c Release --output Release . && npm run copy-frontend && npm run zip",
     "test:cs": "cd ../Test && dotnet test",
@@ -18,9 +18,9 @@
     "bestzip": "^2.2.0",
     "copyfiles": "^2.4.1",
     "current-git-branch": "^1.1.0",
-    "del-cli": "^4.0.0",
+    "del-cli": "^5.0.0",
     "git-last": "^1.2.14",
-    "node": "^17.7.2",
-    "npm": "^8.12.1"
+    "node": "^18.7.0",
+    "npm": "^8.15.1"
   }
 }

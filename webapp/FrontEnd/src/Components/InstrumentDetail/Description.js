@@ -14,7 +14,7 @@ const Img = styled('img')({
     display: 'block',
     maxWidth: '100%',
     maxHeight: '100%',
-  });
+});
 
 export default function Content({ description, capabilities, image }) {
     return (
@@ -26,19 +26,18 @@ export default function Content({ description, capabilities, image }) {
                     flexDirection: 'column',
                     height: '55vh',
                     backgroundColor: (theme) =>
-                    theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+                        theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
                 }}
             >
                 <Grid container spacing={1}>
-                    {image && 
-                    <Grid item xs={4} md={4} lg={4}>
-                        <ButtonBase sx={{ width: 128, height: 128 }}>
-                            <Img alt="Image Not Found" src="" />
-                        </ButtonBase>
-                    </Grid>}
+                    {image &&
+                        <Grid item xs={4} md={4} lg={4}>
+                            <ButtonBase sx={{ width: 128, height: 128 }}>
+                                <Img alt="Image Not Found" src="" />
+                            </ButtonBase>
+                        </Grid>}
                     <Grid item xs={image ? 8 : 12} md={image ? 8 : 12} lg={image ? 8 : 12} sm container>
-                        <div style={{ overflowY: 'auto' }}>
-                            <Typography variant="h6" gutterBottom component="div">{description && "DESCRIPTION"}</Typography>
+                    <div style={{ overflowY: 'auto' }}>
                             <Typography variant="body2" component="div" align='justify'>
                                 <ReactMarkdown rehypePlugins={[rehypeRaw]} children={description} />
                             </Typography>

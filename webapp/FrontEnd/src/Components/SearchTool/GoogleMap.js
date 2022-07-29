@@ -15,12 +15,12 @@ export function GoogleMap({locations, onSelectLocation, google}) {
   // Watch locations, whenever a new search is done, we set bounds again.
   // Bounds get removed once users start to zoom or drag the map around.
   React.useEffect(() => {
-    // array is undefined or empty
+    // array is undefined or empty -> show map of usa
     if (!locations?.length) {
       setBounds(undefined);
       setCenter({ lat: 37, lng: -95 });
       setZoom(4);
-    // Center if only one location
+    // Center if only one location, zoom in
     } else if (locations.length === 1) {
       setBounds(undefined);
       setCenter({ lat: locations[0].latitude, lng: locations[0].longitude });
@@ -117,7 +117,9 @@ export function GoogleMap({locations, onSelectLocation, google}) {
   );
 }
 
-export default GoogleApiWrapper({
-  apiKey: config.apiKey,
-  signature: config.signature
-})(GoogleMap)
+export default GoogleApiWrapper(
+  () => ({
+    apiKey: config.apiKey,
+    signature: config.signature
+  })
+)(GoogleMap)
