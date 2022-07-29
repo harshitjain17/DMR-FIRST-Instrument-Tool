@@ -36,9 +36,6 @@ export default function SearchTool({ onRowSelected }) {
         selectLocation(params);
     };
 
-    // breakpoints for responsiveness
-    const xlargeScreen = useMediaQuery('(min-width:2560px)');
-
     return (
 
         <Box sx={{ display: 'flex' }}>
