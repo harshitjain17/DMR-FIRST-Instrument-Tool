@@ -42,14 +42,14 @@ def create_json(row):
     if len(instrumentTypes) > 0:
         json_dict["instrumentTypes"] = instrumentTypes
     contacts = []
-    for i in range(1, 2):
+    for i in range(1, 3):
         value = row.get("Faculty Contact {}".format(i))
         if (value):
             contacts.append({
                 "eppn": value,
                 "role": "F"
             })
-    for i in range(1, 3):
+    for i in range(1, 4):
         value = row.get("Technical Contact {}".format(i))
         if (value):
             contacts.append({
