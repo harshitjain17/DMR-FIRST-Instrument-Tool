@@ -13,6 +13,7 @@ namespace Instool.DAL.Models
             Awards = new HashSet<Award>();
             InstrumentTypes = new HashSet<InstrumentType>();
             Publications = new HashSet<Publication>();
+            Images = new HashSet<File>();
         }
 
         public int InstrumentId { get; set; }
@@ -60,5 +61,6 @@ namespace Instool.DAL.Models
         public virtual ICollection<Award> Awards { get; set; }
         public virtual ICollection<InstrumentType> InstrumentTypes { get; set; }
         public virtual ICollection<Publication> Publications { get; set; }
+        public virtual ICollection<File> Images { get; set; }
     }
 }

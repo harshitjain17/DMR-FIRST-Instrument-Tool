@@ -153,6 +153,15 @@ CREATE TABLE [dbo].[ApiKey](
  CONSTRAINT [FK_ApiKey_Role] FOREIGN KEY (RoleId) REFERENCES Role (RoleId),
 );
 
+CREATE TABLE [dbo].[FILE](
+    [FileId] [int] IDENTITY(1,1) NOT NULL,
+    [Filename] [varchar](255) NOT NULL,
+    [Content] [varchar](max) NOT NULL,
+    [InstrumentID] [int] NOT NULL,
+    CONSTRAINT [PK_File] PRIMARY KEY CLUSTERED (FileID),
+    CONSTRAINT [FK_File_Instrument] FOREIGN KEY (InstrumentID) REFERENCES Instrument (InstrumentID)
+)
+
 set identity_insert Role on;
 insert into Role (RoleID, Name) values (1, 'Community');
 insert into Role (RoleID, Name) values (2, 'Admin');

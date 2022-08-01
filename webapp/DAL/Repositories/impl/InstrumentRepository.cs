@@ -40,6 +40,7 @@ namespace Instool.DAL.Repositories.Impl
                                //.Include(i => i.InstrumentCapabilities)
                                .Include(i => i.InstrumentContacts).ThenInclude(c => c.Investigator)
                                .Include(i => i.Location)
+                               .Include(i => i.Images)
                                .Include(i => i.InstrumentTypes).ThenInclude(t => t.Category).ThenInclude(t => t!.Category);
         }
 

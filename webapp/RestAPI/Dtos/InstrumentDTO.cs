@@ -30,7 +30,9 @@ namespace Instool.Dtos
         public ICollection<AwardDTO> Awards { get; set; } = new List<AwardDTO>();
         public ICollection<InstrumentTypeDTO> InstrumentTypes { get; set; } = new List<InstrumentTypeDTO>();
 
-        public ICollection<InvestigatorDTO> Contacts { get; set; } = new List<InvestigatorDTO>();   
+        public ICollection<InvestigatorDTO> Contacts { get; set; } = new List<InvestigatorDTO>();
+
+        public ICollection<string> Images { get; set; } = new List<string>();
 
         internal static InstrumentDTO FromEntity(Instrument i)
         {
@@ -52,7 +54,8 @@ namespace Instool.Dtos
                 Status = i.Status,
                 SerialNumber = i.SerialNumber,
                 Location = LocationDTO.FromEntity(i.Location),
-                Institution = InstitutionDTO.FromEntity(i.Institution)
+                Institution = InstitutionDTO.FromEntity(i.Institution),
+                Images = i.Images.Select(i => $"/api/v1/files/{i.FileId}").ToList()
             };
         }
 

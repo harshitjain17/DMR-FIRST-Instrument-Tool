@@ -33,7 +33,7 @@ export default function Content({ description, capabilities, image }) {
                     {image &&
                         <Grid item xs={4} md={4} lg={4}>
                             <ButtonBase sx={{ width: 128, height: 128 }}>
-                                <Img alt="Image Not Found" src="" />
+                                <Img alt="Image Not Found" src={image} />
                             </ButtonBase>
                         </Grid>}
                     <Grid item xs={image ? 8 : 12} md={image ? 8 : 12} lg={image ? 8 : 12} sm container>

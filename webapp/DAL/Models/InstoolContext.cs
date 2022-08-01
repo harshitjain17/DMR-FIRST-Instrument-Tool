@@ -28,8 +28,10 @@ namespace Instool.DAL.Models
         public virtual DbSet<InvestigatorOnAward> InvestigatorOnAwards { get; set; } = null!;
         public virtual DbSet<Location> Locations { get; set; } = null!;
         public virtual DbSet<Publication> Publications { get; set; } = null!;
+        public virtual DbSet<Models.File> Files { get; set; } = null!;
 
         public DbSet<DataProtectionKey> DataProtectionKeys { get; set; } = null!;
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -379,6 +381,12 @@ namespace Instool.DAL.Models
                 .HasOne(p => p.Role)
                 .WithMany(r => r.Privileges);
 
+            modelBuilder.Entity<File>()
+                .ToTable("File");
+            modelBuilder.Entity<File>()
+                .HasOne(f => f.Instrument)
+                .WithMany(i => i.Images);
+;
 
         }
     }

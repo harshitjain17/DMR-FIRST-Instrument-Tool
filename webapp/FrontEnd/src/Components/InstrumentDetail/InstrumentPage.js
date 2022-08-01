@@ -16,7 +16,7 @@ export default function InstrumentPage({ instrumentId }) {
         const fetchData = async () => {
             try {
                 var response = await InstoolApi.get(`/instruments/${instrumentId}`)
-                log.debug(`Server returned instrument details:\n${response.data}`);
+                log.debug(response.data);
                 setInstrumentData(response.data);
             } catch (error) {
                 log.error(`Fetching instrument details failed: ${error}`);
