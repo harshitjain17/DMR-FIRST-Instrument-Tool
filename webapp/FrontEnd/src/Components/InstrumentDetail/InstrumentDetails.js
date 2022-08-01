@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 
 import Tabination from './Tabination';
-import Content from './Description';
+import Description from './Description';
 
 export default function InstrumentDetails({ instrumentData }) {
     return (
@@ -26,7 +26,7 @@ export default function InstrumentDetails({ instrumentData }) {
             <Container maxWidth="xlg" sx={{ mb: 2 }}>
                 <Grid container spacing={2}>
 
-                    <Content description={instrumentData?.description} capabilities={instrumentData?.capabilities} image={instrumentData?.image}/>
+                    <Description description={instrumentData?.description} capabilities={instrumentData?.capabilities} image={instrumentData?.image}/>
 
                     {/* Tabs (Quick Specs, Location, Awards, etc.) */}
                     <Grid item xs={12} md={12} lg={12}>

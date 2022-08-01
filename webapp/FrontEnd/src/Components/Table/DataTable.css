@@ -1,3 +1,13 @@
 .MuiDataGrid-root .MuiDataGrid-cell:focus-within {
     outline: none !important;
 }
+
+.MuiDataGrid-row {
+    cursor: pointer;
+}
+
+.table-cell-trucate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

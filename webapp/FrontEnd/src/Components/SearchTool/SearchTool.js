@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import ExploreIcon from '@mui/icons-material/Explore';
 
 import SearchEngine from './SearchEngine';
 import GoogleMap from './GoogleMap';
@@ -44,7 +45,7 @@ export default function SearchTool({ onRowSelected }) {
             <AppBar position="fixed">
                 <Toolbar sx={{ pr: '24px' }} variant="dense">
                     <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                        Instrument Locator
+                    <ExploreIcon/> Instrument Locator 
                     </Typography>
                 </Toolbar>
             </AppBar>

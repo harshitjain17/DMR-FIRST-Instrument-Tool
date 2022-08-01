@@ -10,8 +10,8 @@ import Typography from '@mui/material/Typography';
 export default function ContactsTable(props) { 
     const ContactsArray = props.contacts ?? [];
     return (
-        <TableContainer style={{ maxHeight: 170 }}>
-            <Table stickyHeader sx={{ minWidth: 425 }} aria-label="simple table">
+        <TableContainer style={{ maxHeight: '35vh' }}>
+            <Table stickyHeader sx={{ minWidth: '35vw' }} aria-label="simple table">
                 <TableHead>
                 <TableRow>
                     <TableCell align="center"><Typography variant="subtitle2">Name</Typography></TableCell>
