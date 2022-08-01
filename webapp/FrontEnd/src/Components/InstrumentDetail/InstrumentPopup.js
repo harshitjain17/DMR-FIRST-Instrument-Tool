@@ -33,7 +33,7 @@ export default function InstrumentPopup({ isOpen, instrumentId, handleClose }) {
         instrumentId && fetchData();
     }, [instrumentId]);
 
-    return (
+    return ( 
         <div>
             <Dialog fullScreen open={isOpen}
                 onClose={() => handleClose(false)} TransitionComponent={Transition}
