@@ -39,7 +39,7 @@ with open('data/instruments.csv', encoding='utf-8-sig') as csvfile:
             headers=uploadHeaders, 
             verify=False)
         if result.status_code == 204:
-                print('Sucessfully uploaded {}'.format(row['image']))
+                print('Sucessfully uploaded {}'.format(row['Image']))
         else: 
                 print('Error {} uploading {}: {}'.format(result.status_code, row['Image'], result.text))
 
