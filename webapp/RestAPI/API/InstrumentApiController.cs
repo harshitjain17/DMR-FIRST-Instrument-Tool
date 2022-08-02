@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Instool.RestAPI.Exceptions;
+using System.Net.Http.Headers;
 
 namespace Instool.API
 {
@@ -27,16 +28,20 @@ namespace Instool.API
         private readonly ILocationRepository _locationRepo;
         private readonly IInstitutionRepository _institutionRepo;
 
+        private readonly IFileRepository _fileRepo;
+
         public InstrumentApiController(
             IAuthorizationService authService,
             IInstrumentService service,
             ILocationRepository locationRepo,
-            IInstitutionRepository institutionRepo)
+            IInstitutionRepository institutionRepo,
+            IFileRepository fileRepo)
         {
             _authService = authService;
             _service = service;
             _locationRepo = locationRepo;
             _institutionRepo = institutionRepo;
+            _fileRepo = fileRepo;
         }
 
         [HttpGet("{*idOrDoi}")]
@@ -129,11 +134,70 @@ namespace Instool.API
                 var created = await _service.CreateInstrument(instrument, contacts, types, awards);
                 return InstrumentDTO.FromEntity(created);
             }
-            catch (IncompleteDataException e) {
+            catch (IncompleteDataException e)
+            {
                 throw new HttpResponseException(StatusCodes.Status412PreconditionFailed, e.Message);
             }
+        }
 
-            
+        [HttpPost("{instrumentId}/images"), DisableRequestSizeLimit]
+        public async Task<IActionResult> Upload(int instrumentId)
+        {
+            try
+            {
+                var file = Request.Form.Files[0];
+                if (file.Length > 0)
+                {
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        file.CopyTo(stream);
+                        var bytes = stream.ToArray();
+
+                        var dbFile = new DAL.Models.File()
+                        {
+                            Filename = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName?.Trim('"') ?? "image.jpeg",
+                            InstrumentId = instrumentId,
+                            Content = Convert.ToBase64String(bytes)
+                        };
+                        await _fileRepo.Create(dbFile);
+                    }
+                    return NoContent();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
+
+        [HttpGet("{instrumentId}/files/{fileId}")]
+        public async Task<FileStreamResult> GetFile([FromRoute] int fileId)
+        {
+            var file = await _fileRepo.Get(fileId);
+            if (file == null)
+            {
+                throw new HttpResponseException(StatusCodes.Status404NotFound);
+            }
+            try
+            {
+
+                byte[] imageBytes = Convert.FromBase64String(file.Content);
+                MemoryStream stream = new(imageBytes, 0, imageBytes.Length);
+
+                // Convert byte[] to Image
+                stream.Write(imageBytes, 0, imageBytes.Length);
+                stream.Position = 0;
+
+                return File(stream, "image/jpeg", file.Filename);
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(StatusCodes.Status500InternalServerError, e.Message);
+            }
         }
 
         private async Task<int> LookupInstitution(InstitutionDTO institution)

@@ -55,7 +55,7 @@ namespace Instool.Dtos
                 SerialNumber = i.SerialNumber,
                 Location = LocationDTO.FromEntity(i.Location),
                 Institution = InstitutionDTO.FromEntity(i.Institution),
-                Images = i.Images.Select(i => $"/api/v1/files/{i.FileId}").ToList()
+                Images = i.Images.Select(i => $"/api/v1/instruments/{i.InstrumentId}/files/{i.FileId}").ToList()
             };
         }
 
