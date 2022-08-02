@@ -4,23 +4,82 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import "./DataTable.css";
 
 import LinearProgress from '@mui/material/LinearProgress';
+import Tooltip from '@mui/material/Tooltip';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import InstrumentPopop from '../InstrumentDetail/InstrumentPopup';
 import { CustomNoRowsOverlay } from './Customizing';
 
 const columns = [
+  // ID (hidden)
   { field: 'id', type: 'number', hide: true },
-  { field: 'institution', headerName: 'Institution', minWidth: 175, flex: 1 },
-  { field: 'facility', headerName: 'Facility', minWidth: 100, flex: 1 },
-  { field: 'type', headerName: 'Instrument Type', minWidth: 140, flex: 1 },
-  { field: 'name', headerName: 'Instrument Name', minWidth: 175, flex: 1 },
-  { field: 'doi', headerName: 'DOI', minWidth: 160, flex: 1 },
-  { field: 'location', headerName: 'Location ID', minWidth: 95, flex: 1 },
-  { field: 'distance', headerName: 'Distance', minWidth: 80, flex: 1 },
-  { field: 'city', headerName: 'City', minWidth: 150, flex: 1 },
-  { field: 'state', headerName: 'State', minWidth: 70, flex: 1 },
-  { field: 'award', headerName: 'Award', minWidth: 150, flex: 1 },
-  { field: 'status', headerName: 'Status', minWidth: 90, flex: 1 },
+
+  // INSTITUTION
+  { field: 'institution', headerName: 'Institution', minWidth: 175, flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params.value.toString()} >
+        <span className="table-cell-trucate">{params.value.toString()}</span>
+      </Tooltip>)
+  },
+
+  // FACILITY
+  { field: 'facility', headerName: 'Facility', minWidth: 100, flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params.value.toString()} >
+        <span className="table-cell-trucate">{params.value.toString()}</span>
+      </Tooltip>)
+  },
+
+  // INSTRUMENT TYPE
+  { field: 'type', headerName: 'Instrument Type', minWidth: 140, flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params.value.toString()} >
+        <span className="table-cell-trucate">{params.value.toString()}</span>
+      </Tooltip>)
+  },
+
+  // INSTRUMENT NAME
+  { field: 'name', headerName: 'Instrument Name', minWidth: 175, flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params.value.toString()} >
+        <span className="table-cell-trucate">{params.value.toString()}</span>
+      </Tooltip>)
+  },
+
+  // DOI
+  { field: 'doi', headerName: 'DOI', minWidth: 160, flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params.value.toString()} >
+        <span className="table-cell-trucate">{params.value.toString()}</span>
+      </Tooltip>)
+  },
+
+  // LOCATION ID (for filtering table through map)
+  { field: 'location', headerName: 'Location ID', minWidth: 95, flex: 1},
+
+  // DISTANCE
+  { field: 'distance', headerName: 'Distance', minWidth: 80, flex: 1},
+
+  // CITY
+  { field: 'city', headerName: 'City', minWidth: 150, flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params.value.toString()} >
+        <span className="table-cell-trucate">{params.value.toString()}</span>
+      </Tooltip>)
+  },
+
+  // STATE
+  { field: 'state', headerName: 'State', minWidth: 70, flex: 1},
+
+  // AWARD
+  { field: 'award', headerName: 'Award', minWidth: 150, flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params.value.toString()} >
+        <span className="table-cell-trucate">{params.value.toString()}</span>
+      </Tooltip>)
+  },
+
+  // STATUS
+  { field: 'status', headerName: 'Status', minWidth: 90, flex: 1},
 ];
 
 
@@ -111,8 +170,8 @@ export default function DataTable(
           rows={searchResult}
           columns={columns}
           density="compact"
-          pageSize={xlargeScreen ? 10 : 5}
-          rowsPerPageOptions={xlargeScreen ? [10] : [5]}
+          pageSize={xlargeScreen ? 15 : 5}
+          rowsPerPageOptions={xlargeScreen ? [15] : [5]}
           components={{
             Toolbar: GridToolbar,
             NoRowsOverlay: CustomNoRowsOverlay

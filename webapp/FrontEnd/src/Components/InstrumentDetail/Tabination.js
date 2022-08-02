@@ -56,7 +56,7 @@ export default function Tabination(props) {
 
   return (
     <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '40vh' }}
+      sx={{ display: 'flex', flexGrow: 1, bgcolor: 'background.paper', height: '40vh' }}
     >
       <Tabs
         orientation="vertical"

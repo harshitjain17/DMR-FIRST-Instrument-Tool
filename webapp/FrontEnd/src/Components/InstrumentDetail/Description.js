@@ -16,7 +16,7 @@ const Img = styled('img')({
     maxHeight: '100%',
 });
 
-export default function Content({ description, capabilities, image }) {
+export default function Description({ description, capabilities, image }) {
     return (
         <Grid item xs={12} md={12} lg={12} >
             <Paper
@@ -37,13 +37,13 @@ export default function Content({ description, capabilities, image }) {
                             </ButtonBase>
                         </Grid>}
                     <Grid item xs={image ? 8 : 12} md={image ? 8 : 12} lg={image ? 8 : 12} sm container>
-                        <div style={{ overflowY: 'auto' }}>
-                            <Typography variant="body2" component="div" align='justify'>
+                        <div style={{ height: '50vh', overflowY: 'auto' }}>
+                            <Typography variant="body2" align='justify' component="div">
                                 <ReactMarkdown rehypePlugins={[rehypeRaw]} children={description} />
                             </Typography>
 
                             <Typography variant="h6" gutterBottom component="div">{capabilities && "Capabilities"}</Typography>
-                            <Typography variant="body2" component="div" align='justify'>
+                            <Typography variant="body2" align='justify' component="div">
                                 {capabilities && <ReactMarkdown rehypePlugins={[rehypeRaw]} children={capabilities} />}
                             </Typography>
                         </div>

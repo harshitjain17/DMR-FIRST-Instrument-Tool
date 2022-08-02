@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
 import InstoolApi from '../../Api/InstoolApi';
 import log from 'loglevel';
@@ -33,7 +34,7 @@ export default function InstrumentPopup({ isOpen, instrumentId, handleClose }) {
         instrumentId && fetchData();
     }, [instrumentId]);
 
-    return (
+    return ( 
         <div>
             <Dialog fullScreen open={isOpen}
                 onClose={() => handleClose(false)} TransitionComponent={Transition}
@@ -48,11 +49,12 @@ export default function InstrumentPopup({ isOpen, instrumentId, handleClose }) {
                         <Typography textAlign = "center" sx={{ ml: 'auto', flex: 1 }} variant="h6" component="div">
                             {instrumentData.name}
                         </Typography>
-
+                        
                         <Button autoFocus color="inherit" onClick={() =>
                             window.open(`/?instrumentId=${instrumentId}`, "_blank")}>
                             Open in new Tab
                         </Button>
+                        <DoubleArrowIcon />
 
                     </Toolbar>
                 </AppBar>

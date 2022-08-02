@@ -8,8 +8,8 @@ import Typography from '@mui/material/Typography';
 
 export default function Awards({awards}) {
     return (
-        <TableContainer style={{ maxHeight: 170 }}>
-            <Table stickyHeader sx={{ minWidth: 425 }} aria-label="simple table">
+        <TableContainer style={{ maxHeight: '35vh' }}>
+            <Table stickyHeader sx={{ minWidth: '35vw' }} aria-label="simple table">
                 <TableHead>
                 <TableRow>
                     <TableCell align="center"><Typography variant="subtitle2">Award number</Typography></TableCell>
