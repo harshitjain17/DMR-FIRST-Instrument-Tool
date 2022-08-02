@@ -17,10 +17,8 @@
   "devDependencies": {
     "bestzip": "^2.2.0",
     "copyfiles": "^2.4.1",
-    "current-git-branch": "^1.1.0",
     "del-cli": "^5.0.0",
     "git-last": "^1.2.14",
-    "node": "^18.7.0",
     "npm": "^8.15.1"
   }
 }
