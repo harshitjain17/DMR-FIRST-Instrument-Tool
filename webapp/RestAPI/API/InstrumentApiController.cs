@@ -63,6 +63,25 @@ namespace Instool.API
             return Ok(InstrumentDTO.FromEntity(instrument));
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [HasPrivilege(PrivilegeEnum.Instrument)]
+        public async Task<ActionResult<InstrumentDTO>> GetInstrumentByDoi([FromQuery] string idOrDoi)
+        {
+            var decoded = DoiHelper.DecodeDoi(idOrDoi);
+            var instrument = decoded.IsDoi ?
+                                await _service.GetByDoi(decoded.Doi!) :
+                                await _service.GetById(decoded.NumericalId);
+            if (instrument == null)
+            {
+                return NotFound();
+            }
+            return Ok(InstrumentDTO.FromEntity(instrument));
+        }
+
         [HttpPost("search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]

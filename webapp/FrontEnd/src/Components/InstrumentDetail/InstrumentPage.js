@@ -15,7 +15,7 @@ export default function InstrumentPage({ instrumentId }) {
     React.useEffect(() => {
         const fetchData = async () => {
             try {
-                var response = await InstoolApi.get(`/instruments/${instrumentId}`)
+                var response = await InstoolApi.get(`/instruments?idOrDoi=${instrumentId}`)
                 log.debug(response.data);
                 setInstrumentData(response.data);
             } catch (error) {

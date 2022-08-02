@@ -25,7 +25,7 @@ with open('data/instruments.csv', encoding='utf-8-sig') as csvfile:
             continue
 
         doi = row['doi']
-        instrumentResult = requests.get(instool.url + '/instruments/{}'.format(doi), headers=headers, verify=False)
+        instrumentResult = requests.get(instool.url + '/instruments?idOrDoi={}'.format(doi), headers=headers, verify=False)
         if (instrumentResult.status_code != 200):
             print('Error {}, could not get instrument with doi {}: {}'.format(instrumentResult.status_code, row['doi'], instrumentResult.text))
             continue
