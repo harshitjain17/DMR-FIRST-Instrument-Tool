@@ -20,7 +20,7 @@ const mdTheme = createTheme();
 
 function App() {
   const queryParams = new URLSearchParams(window.location.search);
-  const instrumentId = queryParams.get("id") ?? queryParams.get("instrumentId");
+  const instrumentId = queryParams.get("id") ?? queryParams.get("doi");
 
   return (<ThemeProvider theme={mdTheme}>
     {instrumentId ? <InstrumentPage instrumentId={instrumentId} /> : <SearchTool />}

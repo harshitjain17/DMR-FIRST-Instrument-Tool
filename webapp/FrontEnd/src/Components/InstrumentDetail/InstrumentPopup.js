@@ -51,7 +51,7 @@ export default function InstrumentPopup({ isOpen, instrumentId, handleClose }) {
                         </Typography>
                         
                         <Button autoFocus color="inherit" onClick={() =>
-                            window.open(`/?instrumentId=${instrumentId}`, "_blank")}>
+                            window.open(`/?doi=${instrumentId}`, "_blank")}>
                             Open in new Tab
                         </Button>
                         <DoubleArrowIcon />
