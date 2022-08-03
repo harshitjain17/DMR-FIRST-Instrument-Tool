@@ -86,7 +86,7 @@ const columns = [
 export default function DataTable(
   { response, selectedLocation, loading, minimumTimeElapsed }
   ) {
-  const [instrumentId, setInstrumentId] = React.useState('');
+  const [doi, setDoi] = React.useState('');
   const [isOpen, setOpen] = React.useState(false);
   const [filterModel, setFilterModel] = React.useState({ items: [] });
   const [visibilityModel, setVisibilityModel] = React.useState({ id: false, distance: false });
@@ -130,7 +130,7 @@ export default function DataTable(
   }, [response.searchLocation])
 
   const handleOnRowClick = (params) => {
-    setInstrumentId(params.row.instrumentId);
+    setDoi(params.row.doi ?? params.row.instrumentId);
     setOpen(true);
   };
 
@@ -188,7 +188,7 @@ export default function DataTable(
           onRowClick={handleOnRowClick}
         />
       )}
-      <InstrumentPopop isOpen={isOpen} handleClose={handleCloseModal} instrumentId={instrumentId} />
+      <InstrumentPopop isOpen={isOpen} handleClose={handleCloseModal} doi={doi} />
     </div>
   );
 };

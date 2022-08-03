@@ -9,13 +9,13 @@ import log from 'loglevel';
 
 import InstrumentDetails from './InstrumentDetails';
 
-export default function InstrumentPage({ instrumentId }) {
+export default function InstrumentPage({ doi }) {
     const [instrumentData, setInstrumentData] = React.useState({ undefined });
 
     React.useEffect(() => {
         const fetchData = async () => {
             try {
-                var response = await InstoolApi.get(`/instruments?idOrDoi=${instrumentId}`)
+                var response = await InstoolApi.get(`/instruments/${doi}`)
                 log.debug(response.data);
                 setInstrumentData(response.data);
             } catch (error) {
@@ -23,7 +23,7 @@ export default function InstrumentPage({ instrumentId }) {
             }
         };
         fetchData();
-    }, [instrumentId]);
+    }, [doi]);
 
     return (
         <div>

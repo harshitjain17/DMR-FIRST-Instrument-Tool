@@ -18,21 +18,21 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function InstrumentPopup({ isOpen, instrumentId, handleClose }) {
+export default function InstrumentPopup({ isOpen, doi, handleClose }) {
     const [instrumentData, setInstrumentData] = React.useState({ undefined });
 
     React.useEffect(() => {
         const fetchData = async () => {
             try {
-                var response = await InstoolApi.get(`/instruments/${instrumentId}`)
+                var response = await InstoolApi.get(`/instruments/${doi}`)
                 log.debug(response.data);
                 setInstrumentData(response.data);
             } catch (error) {
                 log.error(`Fetching instrument details failed: ${error}`);
             }
         };
-        instrumentId && fetchData();
-    }, [instrumentId]);
+        doi && fetchData();
+    }, [doi]);
 
     return ( 
         <div>
@@ -51,7 +51,7 @@ export default function InstrumentPopup({ isOpen, instrumentId, handleClose }) {
                         </Typography>
                         
                         <Button autoFocus color="inherit" onClick={() =>
-                            window.open(`/?doi=${instrumentId}`, "_blank")}>
+                            window.open(`/doi/${doi}`, "_blank")}>
                             Open in new Tab
                         </Button>
                         <DoubleArrowIcon />

@@ -19,11 +19,14 @@ log.debug(`Accessing server at ${config.url}`)
 const mdTheme = createTheme();
 
 function App() {
-  const queryParams = new URLSearchParams(window.location.search);
-  const instrumentId = queryParams.get("id") ?? queryParams.get("doi");
+  let doi = window.location.pathname.startsWith("/doi/") ? window.location.pathname.substring(5) : undefined;
+  if (!doi) {
+    const queryParams = new URLSearchParams(window.location.search);
+    doi = queryParams.get("id") ?? queryParams.get("doi");
+  }
 
   return (<ThemeProvider theme={mdTheme}>
-    {instrumentId ? <InstrumentPage instrumentId={instrumentId} /> : <SearchTool />}
+    {doi ? <InstrumentPage doi={doi} /> : <SearchTool />}
   </ThemeProvider>);
 
 }
