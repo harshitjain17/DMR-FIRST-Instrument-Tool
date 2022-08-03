@@ -19,13 +19,13 @@ namespace Instool.DAL
         public static IServiceCollection ConfigureDataBase(this IServiceCollection services, IConfiguration config)
         {
             var logger = ApplicationLogging.CreateLogger<IConfiguration>();
-            var section = config.GetSection("DataBase");
+            var section = config.GetSection("Database");
 
             var enableSensitiveDataLogging = section.GetValue("EnableSensitiveDataLogging", false);
-            if (section.GetConnectionString("database") != null)
+            if (section.GetConnectionString("Database") != null)
             {
 
-                var dbConfig = section.GetConnectionString("database").Split(";");
+                var dbConfig = section.GetConnectionString("Database").Split(";");
                 Console.WriteLine("Using sqlserver " +
                     dbConfig.FirstOrDefault(conf => conf.StartsWith("Server")) + ", " +
                     dbConfig.FirstOrDefault(conf => conf.StartsWith("Database")));
@@ -33,7 +33,7 @@ namespace Instool.DAL
                     dbConfig.FirstOrDefault(conf => conf.StartsWith("Server")) + ", " +
                     dbConfig.FirstOrDefault(conf => conf.StartsWith("Database")));
 
-                services.AddDbContext<InstoolContext>(options => options.UseSqlServer(section.GetConnectionString("database"))
+                services.AddDbContext<InstoolContext>(options => options.UseSqlServer(section.GetConnectionString("Database"))
                     .EnableSensitiveDataLogging(enableSensitiveDataLogging)
                     .ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
                     .ConfigureWarnings(w => w.Ignore(CoreEventId.RowLimitingOperationWithoutOrderByWarning))
