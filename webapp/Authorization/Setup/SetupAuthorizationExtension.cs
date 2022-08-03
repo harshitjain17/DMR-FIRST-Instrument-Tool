@@ -69,7 +69,7 @@ namespace Instool.Authorization.Setup
             // Only ApiKeys are supported for now
             app.UseMiddleware<ApiKeyMiddleware>();
             // Or an anonymous user, if the configuration allows that. An anonymous user allows gets certain default privileges populated into the claims
-            app.UseMiddleware<AnonymousAccessMiddleware>(configuration.GetValue<bool>("allowAnonymous", false));
+            app.UseMiddleware<AnonymousAccessMiddleware>(configuration.GetValue<bool>("AllowAnonymous", false));
 
             // The Authorization Middleware then uses the User Claims, Priviliges, Assigned Techniques, etc.
             app.UseAuthorization();
