@@ -241,7 +241,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                             size={xlargeScreen ? "medium" : "small"}
                             onChange={manufacturerChangeHandler}
                             value={enteredManufacturer}
-                            label="Manufacturer"
+                            label="Manufacturer / Model"
                             variant="outlined"
 
                         />

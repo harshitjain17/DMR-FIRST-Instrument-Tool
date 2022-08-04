@@ -14,7 +14,8 @@ const columns = [
   { field: 'id', type: 'number', hide: true },
 
   // INSTITUTION
-  { field: 'institution', headerName: 'Institution', minWidth: 175, flex: 1,
+  {
+    field: 'institution', headerName: 'Institution', minWidth: 175, flex: 1,
     renderCell: (params) => (
       <Tooltip title={params.value.toString()} >
         <span className="table-cell-trucate">{params.value.toString()}</span>
@@ -22,7 +23,8 @@ const columns = [
   },
 
   // FACILITY
-  { field: 'facility', headerName: 'Facility', minWidth: 100, flex: 1,
+  {
+    field: 'facility', headerName: 'Facility', minWidth: 100, flex: 1,
     renderCell: (params) => (
       <Tooltip title={params.value.toString()} >
         <span className="table-cell-trucate">{params.value.toString()}</span>
@@ -30,7 +32,8 @@ const columns = [
   },
 
   // INSTRUMENT TYPE
-  { field: 'type', headerName: 'Instrument Type', minWidth: 140, flex: 1,
+  {
+    field: 'type', headerName: 'Instrument Type', minWidth: 140, flex: 1,
     renderCell: (params) => (
       <Tooltip title={params.value.toString()} >
         <span className="table-cell-trucate">{params.value.toString()}</span>
@@ -38,15 +41,26 @@ const columns = [
   },
 
   // INSTRUMENT NAME
-  { field: 'name', headerName: 'Instrument Name', minWidth: 175, flex: 1,
+  {
+    field: 'name', headerName: 'Instrument Name', minWidth: 175, flex: 1,
     renderCell: (params) => (
       <Tooltip title={params.value.toString()} >
         <span className="table-cell-trucate">{params.value.toString()}</span>
       </Tooltip>)
   },
 
-  // DOI
-  { field: 'doi', headerName: 'DOI', minWidth: 160, flex: 1,
+  // Manufacturer
+  {
+    field: 'manufacturer', headerName: 'Manufacturer', minWidth: 175, flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params.value.toString()} >
+        <span className="table-cell-trucate">{params.value.toString()}</span>
+      </Tooltip>)
+  },
+
+  // Model
+  {
+    field: 'model', headerName: 'Model', minWidth: 160, flex: 1,
     renderCell: (params) => (
       <Tooltip title={params.value.toString()} >
         <span className="table-cell-trucate">{params.value.toString()}</span>
@@ -54,13 +68,14 @@ const columns = [
   },
 
   // LOCATION ID (for filtering table through map)
-  { field: 'location', headerName: 'Location ID', minWidth: 95, flex: 1},
+  { field: 'location', headerName: 'Location ID', minWidth: 95, flex: 1 },
 
   // DISTANCE
-  { field: 'distance', headerName: 'Distance', minWidth: 80, flex: 1},
+  { field: 'distance', headerName: 'Distance', minWidth: 80, flex: 1 },
 
   // CITY
-  { field: 'city', headerName: 'City', minWidth: 150, flex: 1,
+  {
+    field: 'city', headerName: 'City', minWidth: 150, flex: 1,
     renderCell: (params) => (
       <Tooltip title={params.value.toString()} >
         <span className="table-cell-trucate">{params.value.toString()}</span>
@@ -68,10 +83,11 @@ const columns = [
   },
 
   // STATE
-  { field: 'state', headerName: 'State', minWidth: 70, flex: 1},
+  { field: 'state', headerName: 'State', minWidth: 70, flex: 1 },
 
   // AWARD
-  { field: 'award', headerName: 'Award', minWidth: 150, flex: 1,
+  {
+    field: 'award', headerName: 'Award', minWidth: 150, flex: 1,
     renderCell: (params) => (
       <Tooltip title={params.value.toString()} >
         <span className="table-cell-trucate">{params.value.toString()}</span>
@@ -79,13 +95,13 @@ const columns = [
   },
 
   // STATUS
-  { field: 'status', headerName: 'Status', minWidth: 90, flex: 1},
+  { field: 'status', headerName: 'Status', minWidth: 90, flex: 1 },
 ];
 
 
 export default function DataTable(
   { response, selectedLocation, loading, minimumTimeElapsed }
-  ) {
+) {
   const [doi, setDoi] = React.useState('');
   const [isOpen, setOpen] = React.useState(false);
   const [filterModel, setFilterModel] = React.useState({ items: [] });
@@ -106,7 +122,9 @@ export default function DataTable(
         state: instrument.state,
         award: instrument.award,
         status: instrument.status,
-        instrumentId: instrument.instrumentId
+        instrumentId: instrument.instrumentId,
+        manufacturer: instrument.manufacturer,
+        model: instrument.model
       };
     }) : [];
 
@@ -137,10 +155,10 @@ export default function DataTable(
   const handleCloseModal = () => {
     setOpen(false)
   };
-  
+
   // breakpoints for responsiveness
   const xlargeScreen = useMediaQuery('(min-width:2560px)');
-  
+
   return (
     <div style={{ display: 'flex', height: '100%' }}>
 

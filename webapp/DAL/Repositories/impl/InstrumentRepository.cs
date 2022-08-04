@@ -129,9 +129,22 @@ namespace Instool.DAL.Repositories.Impl
             {
                 query = query.Where(i => i.Awards.Any(a => a.AwardNumber == criteria.AwardNumber));
             }
-            if (!string.IsNullOrWhiteSpace(criteria.Manufacturer))
+            var manufacturerOrModel = criteria.ManufacturerOrModel ?? criteria.Manufacturer;
+            if (!string.IsNullOrWhiteSpace(manufacturerOrModel))
             {
-                query = query.Where(i => i.Manufacturer == criteria.Manufacturer);
+                var keywords = manufacturerOrModel
+                                .Split(new char[] { ' ', '-' })
+                                .Select(k => k.Trim())
+                                .Where(k => !string.IsNullOrWhiteSpace(k));
+
+                var keywordFilter = PredicateBuilder.New<Instrument>();
+                foreach (var keyword in keywords)
+                {
+                    keywordFilter = keywordFilter.And(i => i.ModelNumber!.Contains(keyword)
+                                                       || i.Manufacturer!.Contains(keyword)
+                    );
+                }
+                query = query.Where(keywordFilter);
             }
             return query;
         }

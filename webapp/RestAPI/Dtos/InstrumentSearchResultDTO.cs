@@ -61,6 +61,8 @@ namespace Instool.DAL.Results
 
         public string? Manufacturer { get; set; }
 
+        public string? Model { get; set; }
+
         public InstrumentRow(Instrument i, int label, int? location, int? distance)
         {
             var types = i.InstrumentTypes;
@@ -77,6 +79,7 @@ namespace Instool.DAL.Results
             City = i.Location?.City ?? String.Empty;
             State = i.Location?.State ?? String.Empty;
             Manufacturer = i.Manufacturer;
+            Model = i.ModelNumber;
             Distance = distance;
             Award = string.Join(", ", i.Awards.Select(a => a.AwardNumber));
             Type = string.Join(", ", mostSpecific.Select(t => t.Label));

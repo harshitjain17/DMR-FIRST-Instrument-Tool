@@ -16,6 +16,8 @@
 
         public string? Manufacturer { get; set; }
 
+        public string? ManufacturerOrModel { get; set; }
+
         public bool? IncludeRetired { get; set; }
 
     }
