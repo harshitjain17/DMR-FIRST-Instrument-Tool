@@ -148,7 +148,7 @@ export default function DataTable(
   }, [response.searchLocation])
 
   const handleOnRowClick = (params) => {
-    setDoi(params.row.doi ?? params.row.instrumentId);
+    setDoi(params.row.doi || params.row.instrumentId);
     setOpen(true);
   };
 
