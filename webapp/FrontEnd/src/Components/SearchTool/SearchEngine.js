@@ -17,7 +17,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import DeviceLocation from './DeviceLocation';
 import InstrumentTypeDropDowns from './InstrumentTypeDropdowns';
-import InstoolApi from '../../Api/InstoolApi';
+import { LocationApi } from "../../Api/LocationApi";
 
 import log from 'loglevel';
 
@@ -75,11 +75,11 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
         try {
             let location = undefined;
             if (enteredAddress) {
-                var result = await InstoolApi.get(`/locate?address=${enteredAddress}`);
+                var coord = await LocationApi.getCoordinates(enteredAddress);
                 location = {
                     address: enteredAddress,
-                    latitude: result.data.latitude,
-                    longitude: result.data.longitude,
+                    latitude: coord.latitude,
+                    longitude: coord.longitude,
                     maxDistance: enteredDistance
                 };
                 log.info(`Found coordinates (${location.latitude}, ${location.longitude}) for ${enteredAddress}`);
@@ -286,11 +286,11 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                 </div>
 
                 <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-1"}>
-                    <Button size={xlargeScreen ? "large" : "medium"} 
-                    endIcon={<RestartAltIcon />} 
-                                        type="reset"  
-                    className="mt-2" 
-                    style={{ width: "100%", margin: "auto" }}>Reset</Button>
+                    <Button size={xlargeScreen ? "large" : "medium"}
+                        endIcon={<RestartAltIcon />}
+                        type="reset"
+                        className="mt-2"
+                        style={{ width: "100%", margin: "auto" }}>Reset</Button>
                 </div>
             </Form>
         </div>

@@ -1,19 +1,25 @@
 
-import React, { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import Snackbar from '@mui/material/Snackbar';
+import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 
 import { GetDeviceLocation } from '../../Utils/Helper';
-import InstoolApi from '../../Api/InstoolApi';
+import { LocationApi } from "../../Api/LocationApi";
 
-export default function DeviceLocation({onAddressFound}) {
+interface DeviceLocationProps {
+    onAddressFound: (address: string) => void
+}
+
+export default function DeviceLocation({ onAddressFound }: DeviceLocationProps) {
     // Snackbar
     const [open, setOpen] = React.useState(false);
-    const handleClose = (event, reason) => {
+    const [status, setStatus] = useState<string>('');
+
+    const handleClose = (event: Event | React.SyntheticEvent, reason: SnackbarCloseReason) => {
         if (reason === 'clickaway') {
             return;
         }
@@ -21,13 +27,13 @@ export default function DeviceLocation({onAddressFound}) {
     };
     const action = (
         <React.Fragment>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+            <IconButton size="small" aria-label="close" color="inherit" onClick={(event) => {setOpen(false); }}>
                 <CloseIcon fontSize="small" />
             </IconButton>
         </React.Fragment>
     );
 
-    const [status, setStatus] = useState(null);
+
     const getLocation = async () => {
         if (!navigator.geolocation) {
             setOpen(true);
@@ -35,8 +41,8 @@ export default function DeviceLocation({onAddressFound}) {
         } else {
             try {
                 const position = await GetDeviceLocation();
-                const address = await InstoolApi.get(`/locate/address?lat=${position.coords.latitude}&lng=${position.coords.longitude}`);
-                onAddressFound(address.data);
+                const address = await LocationApi.getAddress(position.coords);
+                onAddressFound(address);
             } catch (error) {
                 setOpen(true);
                 setStatus('Unable to retrieve your location');
