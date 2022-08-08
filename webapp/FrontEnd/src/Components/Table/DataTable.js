@@ -17,8 +17,8 @@ const columns = [
   {
     field: 'institution', headerName: 'Institution', minWidth: 175, flex: 1,
     renderCell: (params) => (
-      <Tooltip title={params.value.toString()} >
-        <span className="table-cell-trucate">{params.value.toString()}</span>
+      <Tooltip title={params?.value?.toString()} >
+        <span className="table-cell-trucate">{params?.value?.toString()}</span>
       </Tooltip>)
   },
 
@@ -26,8 +26,8 @@ const columns = [
   {
     field: 'facility', headerName: 'Facility', minWidth: 100, flex: 1,
     renderCell: (params) => (
-      <Tooltip title={params.value.toString()} >
-        <span className="table-cell-trucate">{params.value.toString()}</span>
+      <Tooltip title={params?.value?.toString()} >
+        <span className="table-cell-trucate">{params?.value?.toString()}</span>
       </Tooltip>)
   },
 
@@ -35,8 +35,8 @@ const columns = [
   {
     field: 'type', headerName: 'Instrument Type', minWidth: 140, flex: 1,
     renderCell: (params) => (
-      <Tooltip title={params.value.toString()} >
-        <span className="table-cell-trucate">{params.value.toString()}</span>
+      <Tooltip title={params?.value?.toString()} >
+        <span className="table-cell-trucate">{params?.value?.toString()}</span>
       </Tooltip>)
   },
 
@@ -44,26 +44,26 @@ const columns = [
   {
     field: 'name', headerName: 'Instrument Name', minWidth: 175, flex: 1,
     renderCell: (params) => (
-      <Tooltip title={params.value.toString()} >
-        <span className="table-cell-trucate">{params.value.toString()}</span>
+      <Tooltip title={params?.value?.toString()} >
+        <span className="table-cell-trucate">{params?.value?.toString()}</span>
       </Tooltip>)
   },
 
-  // Manufacturer
+  // MANUFACTURER
   {
     field: 'manufacturer', headerName: 'Manufacturer', minWidth: 175, flex: 1,
     renderCell: (params) => (
-      <Tooltip title={params.value.toString()} >
-        <span className="table-cell-trucate">{params.value.toString()}</span>
+      <Tooltip title={params?.value?.toString()} >
+        <span className="table-cell-trucate">{params?.value?.toString()}</span>
       </Tooltip>)
   },
 
-  // Model
+  // MODEL
   {
     field: 'model', headerName: 'Model', minWidth: 160, flex: 1,
     renderCell: (params) => (
-      <Tooltip title={params.value.toString()} >
-        <span className="table-cell-trucate">{params.value.toString()}</span>
+      <Tooltip title={params?.value?.toString()} >
+        <span className="table-cell-trucate">{params?.value?.toString()}</span>
       </Tooltip>)
   },
 
@@ -77,8 +77,8 @@ const columns = [
   {
     field: 'city', headerName: 'City', minWidth: 150, flex: 1,
     renderCell: (params) => (
-      <Tooltip title={params.value.toString()} >
-        <span className="table-cell-trucate">{params.value.toString()}</span>
+      <Tooltip title={params?.value?.toString()} >
+        <span className="table-cell-trucate">{params?.value?.toString()}</span>
       </Tooltip>)
   },
 
@@ -89,8 +89,8 @@ const columns = [
   {
     field: 'award', headerName: 'Award', minWidth: 150, flex: 1,
     renderCell: (params) => (
-      <Tooltip title={params.value.toString()} >
-        <span className="table-cell-trucate">{params.value.toString()}</span>
+      <Tooltip title={params?.value?.toString()} >
+        <span className="table-cell-trucate">{params?.value?.toString()}</span>
       </Tooltip>)
   },
 

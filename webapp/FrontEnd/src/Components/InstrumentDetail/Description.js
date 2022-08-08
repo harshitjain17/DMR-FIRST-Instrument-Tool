@@ -9,6 +9,8 @@ import ButtonBase from '@mui/material/ButtonBase';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
+import { config } from '../../config/config';
+
 const Img = styled('img')({
     margin: 'auto',
     display: 'block',
@@ -32,8 +34,8 @@ export default function Description({ description, capabilities, image }) {
                 <Grid container spacing={1}>
                     {image &&
                         <Grid item xs={4} md={4} lg={4}>
-                            <ButtonBase sx={{ width: 128, height: 128 }}>
-                                <Img alt="Image Not Found" src={image} />
+                            <ButtonBase sx={{ width: '100%', height: '50vh' }}>
+                                <Img alt="Image Not Found" src={`${config.url}${image}`} />
                             </ButtonBase>
                         </Grid>}
                     <Grid item xs={image ? 8 : 12} md={image ? 8 : 12} lg={image ? 8 : 12} sm container>
