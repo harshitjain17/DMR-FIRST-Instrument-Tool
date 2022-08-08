@@ -4,7 +4,8 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
 
-import InstrumentTypeApi, { IInstrumentTypeDropdownEntry, IInstrumentType } from '../../Api/InstrumentTypeApi';
+import InstrumentTypeApi from '../../Api/InstrumentTypeApi';
+import { InstrumentType, InstrumentTypeDropdownEntry } from '../../Api/Model';
 
 // We do need <null> here instead of <undefined>, the MUI autocompleted
 // only allows <null> set reset the field, whereas <undefined> would switch to uncontrolled mode,
@@ -12,9 +13,9 @@ import InstrumentTypeApi, { IInstrumentTypeDropdownEntry, IInstrumentType } from
 interface IInstrumentTypeDropdownProps {
     xlargeScreen: boolean,
     enteredInstrumentCategory: string | null,
-    enteredInstrumentType: IInstrumentTypeDropdownEntry | null,
+    enteredInstrumentType: InstrumentTypeDropdownEntry | null,
     onInstrumentCategorySelected: (value: string | null) => void,
-    onInstrumentTypeSelected: (value: IInstrumentTypeDropdownEntry | null) => void
+    onInstrumentTypeSelected: (value: InstrumentTypeDropdownEntry | null) => void
 }
 
 export default function InstrumentTypeDrowns({
@@ -22,8 +23,8 @@ export default function InstrumentTypeDrowns({
     enteredInstrumentCategory, enteredInstrumentType,
     onInstrumentCategorySelected, onInstrumentTypeSelected }: IInstrumentTypeDropdownProps) {
 
-    const [instrumentCategories, setInstrumentCategories] = useState<IInstrumentType[]>([]);
-    const [instrumentTypes, setInstrumentTypes] = useState<IInstrumentTypeDropdownEntry[]>([]);
+    const [instrumentCategories, setInstrumentCategories] = useState<InstrumentType[]>([]);
+    const [instrumentTypes, setInstrumentTypes] = useState<InstrumentTypeDropdownEntry[]>([]);
     const [instrumentTypeSearchText, setInstrumentTypeSearchText] = useState<string>('');
 
 
@@ -77,14 +78,13 @@ export default function InstrumentTypeDrowns({
 
             <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                 <Form.Group controlId="formInstrumentType">
-                    <Autocomplete
-                        renderOption={(props, option) => {
-                            return (
-                                <li {...props} key={option.value}>
-                                    {option.label}
-                                </li>
-                            )
-                        }}
+                    <Autocomplete renderOption={(props, option) => {
+                        return (
+                            <li {...props} key={option.value}>
+                                {option.label}
+                            </li>
+                        )
+                    }}
                         fullWidth={true}
                         size={xlargeScreen ? "medium" : "small"}
                         options={instrumentTypes}

@@ -7,8 +7,12 @@ import Box from '@mui/material/Box';
 
 import Tabination from './Tabination';
 import Description from './Description';
+import { Instrument } from '../../Api/Model';
 
-export default function InstrumentDetails({ instrumentData }) {
+interface InstrumentDetailProps {
+    instrument: Instrument
+}
+export default function InstrumentDetails({ instrument }: InstrumentDetailProps) {
     return (
         <Box
             component="main"
@@ -23,13 +27,13 @@ export default function InstrumentDetails({ instrumentData }) {
             }}
         >
 
-            <Container maxWidth="xlg" sx={{ mb: 2 }}>
+            <Container maxWidth="xl" sx={{ mb: 2 }}>
                 <Grid container spacing={2}>
 
                     <Description 
-                            description={instrumentData?.description} 
-                            capabilities={instrumentData?.capabilities} 
-                            image={instrumentData?.images?.[0]}/>
+                            description={instrument?.description} 
+                            capabilities={instrument?.capabilities} 
+                            image={instrument?.images?.[0]}/>
 
                     {/* Tabs (Quick Specs, Location, Awards, etc.) */}
                     <Grid item xs={12} md={12} lg={12}>
@@ -41,7 +45,7 @@ export default function InstrumentDetails({ instrumentData }) {
                                 height: '100%',
                             }}
                         >
-                            <Tabination details={instrumentData} />
+                            <Tabination instrument={instrument}  />
                         </Paper>
                     </Grid>
                 </Grid>

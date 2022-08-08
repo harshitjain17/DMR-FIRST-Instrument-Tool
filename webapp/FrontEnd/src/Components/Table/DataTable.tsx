@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridColumns, GridColumnVisibilityModel, GridFilterModel, GridRowParams, GridToolbar } from '@mui/x-data-grid';
 import "./DataTable.css";
 
 import LinearProgress from '@mui/material/LinearProgress';
@@ -8,8 +8,9 @@ import Tooltip from '@mui/material/Tooltip';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import InstrumentPopop from '../InstrumentDetail/InstrumentPopup';
 import { CustomNoRowsOverlay } from './Customizing';
+import { InstrumentRow, SearchLocation } from '../../Api/Model';
 
-const columns = [
+const columns : GridColumns = [
   // ID (hidden)
   { field: 'id', type: 'number', hide: true },
 
@@ -99,13 +100,21 @@ const columns = [
 ];
 
 
+interface DataTableProps {
+  instruments: InstrumentRow[],
+  searchLocation: SearchLocation | undefined,
+  selectedLocation: SearchLocation | undefined,
+  loading: boolean,
+  minimumTimeElapsed: boolean
+}
+
 export default function DataTable(
-  { instruments, searchLocation, selectedLocation, loading, minimumTimeElapsed }
+  { instruments, searchLocation, selectedLocation, loading, minimumTimeElapsed } : DataTableProps
 ) {
-  const [doi, setDoi] = React.useState('');
-  const [isOpen, setOpen] = React.useState(false);
-  const [filterModel, setFilterModel] = React.useState({ items: [] });
-  const [visibilityModel, setVisibilityModel] = React.useState({ id: false, distance: false });
+  const [doi, setDoi] = React.useState<string>('');
+  const [isOpen, setOpen] = React.useState<boolean>(false);
+  const [filterModel, setFilterModel] = React.useState<GridFilterModel>({ items: [] });
+  const [visibilityModel, setVisibilityModel] = React.useState<GridColumnVisibilityModel>({ id: false, distance: false });
 
   var searchResult = instruments ?
     instruments.map(instrument => {
@@ -147,7 +156,7 @@ export default function DataTable(
     );
   }, [searchLocation])
 
-  const handleOnRowClick = (params) => {
+  const handleOnRowClick = (params: GridRowParams) => {
     setDoi(params.row.doi || params.row.instrumentId);
     setOpen(true);
   };
@@ -160,7 +169,7 @@ export default function DataTable(
   const xlargeScreen = useMediaQuery('(min-width:2560px)');
 
   return (
-    <div style={{ display: 'flex', height: '100%' }}>
+    <div className='instrument-table'>
 
       {/* if loading, render LinearProgress state */}
       {!minimumTimeElapsed || loading ? (
@@ -206,7 +215,7 @@ export default function DataTable(
           onRowClick={handleOnRowClick}
         />
       )}
-      <InstrumentPopop isOpen={isOpen} handleClose={handleCloseModal} doi={doi} />
+      <InstrumentPopop isOpen={isOpen} onPopupClose={handleCloseModal} doi={doi} />
     </div>
   );
 };

@@ -21,8 +21,7 @@ import LocationApi from "../../Api/LocationApi";
 import InstrumentApi from "../../Api/InstrumentApi";
 
 import log from 'loglevel';
-import { ILocationResult, InstrumentRow, SearchLocation } from '../../Utils/InstrumentSearchTypes';
-import { IInstrumentTypeDropdownEntry } from '../../Api/InstrumentTypeApi';
+import { ILocationResult, InstrumentRow, SearchLocation, InstrumentTypeDropdownEntry} from '../../Api/Model';
 
 export interface SearchResponse {
     instruments: InstrumentRow[],
@@ -43,7 +42,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
     const [enteredAddress, setEnteredAddress] = useState<string>('');
     const [enteredDistance, setEnteredDistance] = useState<string>('0');
     const [enteredInstrumentCategory, setEnteredInstrumentCategory] = useState<string | null>('');
-    const [enteredInstrumentType, setEnteredInstrumentType] = useState<IInstrumentTypeDropdownEntry | null>(null);
+    const [enteredInstrumentType, setEnteredInstrumentType] = useState<InstrumentTypeDropdownEntry | null>(null);
     const [enteredKeywords, setEnteredKeywords] = useState<string[]>([]);
     const [enteredManufacturer, setEnteredManufacturer] = useState<string>('');
     const [enteredAwardNumber, setEnteredAwardNumber] = useState<string>('');
@@ -172,9 +171,8 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
     const xlargeScreen = useMediaQuery('(min-width:2560px)');
 
     return (
-
-        <div className="px-3 border" style={{ width: "100%", height: "100%" }}>
-            <Form onSubmit={submitHandler} onReset={resetHandler} style={{ width: "100%", height: "100%" }}>
+        <div className="px-3 border search-engine">
+            <Form onSubmit={submitHandler} onReset={resetHandler}>
                 <SearchToolHeader>{"SEARCH TOOL"}</SearchToolHeader>
                 <DeviceLocation onAddressFound={setEnteredAddress} />
                 <div>

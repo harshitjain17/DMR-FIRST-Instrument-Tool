@@ -13,12 +13,12 @@ import SearchEngine, { SearchResponse } from './SearchEngine';
 import GoogleMap from './GoogleMap';
 import DataTable from '../Table/DataTable';
 import { AppBar, Drawer, DrawerHeader } from './StyledComponents';
-import { SearchLocation } from '../../Utils/InstrumentSearchTypes';
+import { SearchLocation } from '../../Api/Model';
 
 export default function SearchTool() {
     const [response, setResponse] = useState<SearchResponse | undefined>(undefined);
-    const [isMinimumTimeElapsed, setMinimumTimeElapsed] = useState<boolean>();
-    const [isLoading, setLoading] = useState<boolean>();
+    const [isMinimumTimeElapsed, setMinimumTimeElapsed] = useState<boolean>(false);
+    const [isLoading, setLoading] = useState<boolean>(false);
     const [selectedLocation, selectLocation] = useState<SearchLocation>();
 
     return (
@@ -72,7 +72,7 @@ export default function SearchTool() {
                                 }}
                             >
                                 <DataTable
-                                    instruments={response?.instruments}
+                                    instruments={response?.instruments || []}
                                     searchLocation={response?.searchLocation}
                                     selectedLocation={selectedLocation}
                                     minimumTimeElapsed={isMinimumTimeElapsed}

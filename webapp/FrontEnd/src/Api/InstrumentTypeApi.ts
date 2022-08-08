@@ -1,34 +1,20 @@
 import InstoolApi from './InstoolApi';
-
-export interface IInstrumentTypeDropdownEntry {
-  category: string,
-  categoryLabel: string,
-  subCategory: string,
-  subCategoryLabel: string,
-  value: string,
-  label: string
-}
-
-export interface IInstrumentType {
-  instrumentTypeId: number,
-  name: string,
-  label: string,
-  uri: string,
-  category: string
-}
+import { InstrumentType, InstrumentTypeDropdownEntry } from './Model';
 
 export default class InstrumentTypeApi {
-  static async getCategories(): Promise<IInstrumentType[]> {
+  static async getCategories(): Promise<InstrumentType[]> {
     const result = await InstoolApi.get(`/instrument-types`);
-    return result.data as IInstrumentType[];
+    type NewType = InstrumentType;
+
+    return result.data as NewType[];
   }
 
-  static async getDropdownEntries(category: string | null): Promise<IInstrumentTypeDropdownEntry[]> {
+  static async getDropdownEntries(category: string | null): Promise<InstrumentTypeDropdownEntry[]> {
     const result = category ?
       // Case - I (If the user selected the category)
       await InstoolApi.get(`/instrument-types/${category}/dropdown`) :
       // Case - II (If the user did not selected the category)
       await InstoolApi.get(`/instrument-types/dropdown`);
-    return result.data as IInstrumentTypeDropdownEntry[];
+    return result.data as InstrumentTypeDropdownEntry[];
   }
 };

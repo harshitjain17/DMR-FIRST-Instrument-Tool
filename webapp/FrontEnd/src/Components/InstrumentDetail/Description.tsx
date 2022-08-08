@@ -16,7 +16,13 @@ const Img = styled('img')({
     maxHeight: '100%',
 });
 
-export default function Description({ description, capabilities, image }) {
+interface DescriptionTabProps {
+    description?: string;
+    capabilities?: string,
+    image: string
+}
+
+export default function Description({ description, capabilities, image }: DescriptionTabProps) {
     return (
         <Grid item xs={12} md={12} lg={12} >
             <Paper
@@ -39,7 +45,7 @@ export default function Description({ description, capabilities, image }) {
                     <Grid item xs={image ? 8 : 12} md={image ? 8 : 12} lg={image ? 8 : 12} sm container>
                         <div style={{ height: '50vh', overflowY: 'auto' }}>
                             <Typography variant="body2" align='justify' component="div">
-                                <ReactMarkdown rehypePlugins={[rehypeRaw]} children={description} />
+                                <ReactMarkdown rehypePlugins={[rehypeRaw]} children={description ?? ""} />
                             </Typography>
 
                             <Typography variant="h6" gutterBottom component="div">{capabilities && "Capabilities"}</Typography>
