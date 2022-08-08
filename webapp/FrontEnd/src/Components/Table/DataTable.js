@@ -49,6 +49,9 @@ const columns = [
       </Tooltip>)
   },
 
+  // DOI
+  {field: 'doi', headerName: 'DOI', minWidth: 160, flex: 1},
+
   // MANUFACTURER
   {
     field: 'manufacturer', headerName: 'Manufacturer', minWidth: 175, flex: 1,
