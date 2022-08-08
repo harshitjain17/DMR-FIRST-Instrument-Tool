@@ -5,43 +5,47 @@ import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
 
 import InstoolApi from '../../Api/InstoolApi';
+import { InstrumentTypeApi, IDropdownEntry, IInstrumentType } from '../../Api/InstrumentTypeApi';
+
+interface IInstrumentTypeDropdownProps {
+    xlargeScreen: boolean,
+    enteredInstrumentCategory: string,
+    enteredInstrumentType: IDropdownEntry,
+    onInstrumentCategorySelected: (value: string | undefined) => void,
+    onInstrumentTypeSelected: (value: string | undefined) => void
+}
 
 export default function InstrumentTypeDrowns({ 
     xlargeScreen, 
     enteredInstrumentCategory, enteredInstrumentType,
-    onInstrumentCategorySelected, onInstrumentTypeSelected}) {
+    onInstrumentCategorySelected, onInstrumentTypeSelected}: IInstrumentTypeDropdownProps) {
 
-    const [instrumentCategories, setInstrumentCategories] = useState([]);
-    const [instrumentTypes, setInstrumentTypes] = useState([]);
-    const [instrumentTypeSearchText, setInstrumentTypeSearchText] = useState('');
+    const [instrumentCategories, setInstrumentCategories] = useState<IInstrumentType[]>([]);
+    const [instrumentTypes, setInstrumentTypes] = useState<IDropdownEntry[]>([]);
+    const [instrumentTypeSearchText, setInstrumentTypeSearchText] = useState<string>('');
 
     
-    const instrumentCategoryChangeHandler = (event) => {
+    const instrumentCategoryChangeHandler = (event: any) => {
         onInstrumentCategorySelected(event.target.value);
     };
 
-    const instrumentTypeChangeHandler = (event, option) => {
+    const instrumentTypeChangeHandler = (event: React.SyntheticEvent, option: any) => {
         onInstrumentTypeSelected(option);
     };
 
     // Instrument Categories Dropdown List
     React.useEffect(() => {
-        InstoolApi.get(`/instrument-types`).then((response) => {
-            setInstrumentCategories(response.data);
+        InstrumentTypeApi.getCategories().then((response) => {
+            setInstrumentCategories(response);
         });
     }, []);
 
     // Autocompletion of instrument types
     React.useEffect(() => {
         const fetchData = async () => {
-            const response = enteredInstrumentCategory ?
-                // Case - I (If the user selected the category)
-                await InstoolApi.get(`/instrument-types/${enteredInstrumentCategory}/dropdown`) :
-                // Case - II (If the user did not selected the category)
-                await InstoolApi.get(`/instrument-types/dropdown`);
-
-            setInstrumentTypes(response.data);
-            onInstrumentTypeSelected(null);
+            const response = await InstrumentTypeApi.getDropdownEntries(enteredInstrumentCategory);
+            setInstrumentTypes(response);
+            onInstrumentTypeSelected(undefined);
         };
         fetchData();
     }, [enteredInstrumentCategory, onInstrumentTypeSelected]); // dependent on category selected
@@ -52,7 +56,7 @@ export default function InstrumentTypeDrowns({
             <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                 <Form.Group controlId="formInstrumentCategory">
                     <TextField
-                        options={instrumentCategories}
+                        // options={instrumentCategories}
                         fullWidth={true}
                         size={xlargeScreen ? "medium" : "small"}
                         select
@@ -61,7 +65,7 @@ export default function InstrumentTypeDrowns({
                         onChange={instrumentCategoryChangeHandler}
                     >
                         {instrumentCategories.map((option) => (
-                            <MenuItem key={option.name} value={option.name}>
+                            <MenuItem key={option.instrumentTypeId} value={option.name}>
                                 {option.label}
                             </MenuItem>
                         ))}

@@ -18,6 +18,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import DeviceLocation from './DeviceLocation';
 import InstrumentTypeDropDowns from './InstrumentTypeDropdowns';
 import { LocationApi } from "../../Api/LocationApi";
+import InstoolApi from "../../Api/InstoolApi";
 
 import log from 'loglevel';
 
