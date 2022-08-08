@@ -9,6 +9,8 @@ import ButtonBase from '@mui/material/ButtonBase';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
+import { config } from '../../config/config';
+
 const Img = styled('img')({
     margin: 'auto',
     display: 'block',
