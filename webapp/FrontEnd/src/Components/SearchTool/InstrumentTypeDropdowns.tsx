@@ -1,30 +1,32 @@
-import React, { Fragment, useState} from 'react';
+import React, { Fragment, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
 
-import InstoolApi from '../../Api/InstoolApi';
-import { InstrumentTypeApi, IDropdownEntry, IInstrumentType } from '../../Api/InstrumentTypeApi';
+import InstrumentTypeApi, { IInstrumentTypeDropdownEntry, IInstrumentType } from '../../Api/InstrumentTypeApi';
 
+// We do need <null> here instead of <undefined>, the MUI autocompleted
+// only allows <null> set reset the field, whereas <undefined> would switch to uncontrolled mode,
+// where users can enter any value.  
 interface IInstrumentTypeDropdownProps {
     xlargeScreen: boolean,
-    enteredInstrumentCategory: string,
-    enteredInstrumentType: IDropdownEntry,
-    onInstrumentCategorySelected: (value: string | undefined) => void,
-    onInstrumentTypeSelected: (value: string | undefined) => void
+    enteredInstrumentCategory: string | null,
+    enteredInstrumentType: IInstrumentTypeDropdownEntry | null,
+    onInstrumentCategorySelected: (value: string | null) => void,
+    onInstrumentTypeSelected: (value: IInstrumentTypeDropdownEntry | null) => void
 }
 
-export default function InstrumentTypeDrowns({ 
-    xlargeScreen, 
+export default function InstrumentTypeDrowns({
+    xlargeScreen,
     enteredInstrumentCategory, enteredInstrumentType,
-    onInstrumentCategorySelected, onInstrumentTypeSelected}: IInstrumentTypeDropdownProps) {
+    onInstrumentCategorySelected, onInstrumentTypeSelected }: IInstrumentTypeDropdownProps) {
 
     const [instrumentCategories, setInstrumentCategories] = useState<IInstrumentType[]>([]);
-    const [instrumentTypes, setInstrumentTypes] = useState<IDropdownEntry[]>([]);
+    const [instrumentTypes, setInstrumentTypes] = useState<IInstrumentTypeDropdownEntry[]>([]);
     const [instrumentTypeSearchText, setInstrumentTypeSearchText] = useState<string>('');
 
-    
+
     const instrumentCategoryChangeHandler = (event: any) => {
         onInstrumentCategorySelected(event.target.value);
     };
@@ -45,7 +47,7 @@ export default function InstrumentTypeDrowns({
         const fetchData = async () => {
             const response = await InstrumentTypeApi.getDropdownEntries(enteredInstrumentCategory);
             setInstrumentTypes(response);
-            onInstrumentTypeSelected(undefined);
+            onInstrumentTypeSelected(null);
         };
         fetchData();
     }, [enteredInstrumentCategory, onInstrumentTypeSelected]); // dependent on category selected

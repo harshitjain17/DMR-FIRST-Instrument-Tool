@@ -8,7 +8,7 @@ import Link from '@mui/material/Link';
 import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 
 import { GetDeviceLocation } from '../../Utils/Helper';
-import { LocationApi } from "../../Api/LocationApi";
+import LocationApi from "../../Api/LocationApi";
 
 interface DeviceLocationProps {
     onAddressFound: (address: string) => void

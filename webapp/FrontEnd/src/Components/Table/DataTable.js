@@ -100,15 +100,15 @@ const columns = [
 
 
 export default function DataTable(
-  { response, selectedLocation, loading, minimumTimeElapsed }
+  { instruments, searchLocation, selectedLocation, loading, minimumTimeElapsed }
 ) {
   const [doi, setDoi] = React.useState('');
   const [isOpen, setOpen] = React.useState(false);
   const [filterModel, setFilterModel] = React.useState({ items: [] });
   const [visibilityModel, setVisibilityModel] = React.useState({ id: false, distance: false });
 
-  var searchResult = response.instruments ?
-    response.instruments.map(instrument => {
+  var searchResult = instruments ?
+    instruments.map(instrument => {
       return {
         id: instrument.label,
         distance: `${instrument.distance} mi`,
@@ -143,9 +143,9 @@ export default function DataTable(
     // use the current visibility, and only modify the distance column.
     // We have to clone and return a new object, if not react sees the same object ref and assumes no change
     setVisibilityModel((currentVisibility) =>
-      Object.assign({}, currentVisibility, { distance: !!response.searchLocation?.address })
+      Object.assign({}, currentVisibility, { distance: !!searchLocation?.address })
     );
-  }, [response.searchLocation])
+  }, [searchLocation])
 
   const handleOnRowClick = (params) => {
     setDoi(params.row.doi || params.row.instrumentId);
