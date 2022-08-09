@@ -6,17 +6,13 @@ cache:
 stages:
   - test
   - build
-  - deploy_test
-
+  - deploy
+  
 test:
   variables:
      BRANCH: '{ "branch": "${CI_COMMIT_REF_NAME}" }'
   stage: test
   script:
-    #- Set-Location  client
-    #- npm ci --cache .npm --prefer-offline
-    #- npm run clean
-    #- npm run recipe
     - Set-Location webapp/Test
     # Copy appsettings (how to connect to box). This is a server config file, available in /var/dotnet
     #- Copy-Item c:/gitlab-runner/testing-config/list/appsettings*.json .
@@ -24,35 +20,80 @@ test:
   tags:
     - m4-instool
 
-build:
+build_dev:
   variables:
     BRANCH: '{ "branch": "${CI_COMMIT_REF_NAME}" }'
     ErrorActionPreference: stop
   stage: build
+  except:
+    - main
+  environment:
+    name: dev
+    url: https://m4-instool.vmhost.psu.edu
   script:
     - Set-Location webapp
     - npm ci --cache .npm --prefer-offline
     - npm run clean
     - echo $env:BRANCH > branch.json
-    - copy c:/gitlab-runner/FrontEndConfig/* FrontEnd/
+    - copy c:/gitlab-runner/FrontEndConfig/.env.dev FrontEnd/.env.local
     - npm run release
     - New-Item -ItemType Directory -Force -Path c:/gitlab-runner/versions/instool/$env:CI_COMMIT_REF_SLUG
-    - Move-Item instool.zip c:/gitlab-runner/versions/instool/$env:CI_COMMIT_REF_SLUG/$((Get-Date).tostring("yyyy-MM-dd__hh-mm"))__$env:CI_COMMIT_SHORT_SHA.zip
+    - Move-Item instool.zip c:/gitlab-runner/versions/instool/$env:CI_COMMIT_REF_SLUG/$((Get-Date).tostring("yyyy-MM-dd__hh-mm"))__dev__$env:CI_COMMIT_SHORT_SHA.zip
     - npm run clean
   tags:
     - m4-instool
 
 deploy_dev:
-    cache: {}
-    stage: deploy_test
+    cache: {}    
     variables:
       ErrorActionPreference: stop
       GIT_STRATEGY: none
-    when: manual
+    stage: deploy
+    except:
+     - main
     environment:
         name: dev
         url: https://m4-instool.vmhost.psu.edu
     script:
-     - c:/gitlab-runner/scripts/deploy_version.ps1 -hash "$env:CI_COMMIT_SHORT_SHA" -app instool -site 'instool-dev'
+     - c:/gitlab-runner/scripts/deploy_version.ps1 -hash "__dev__$env:CI_COMMIT_SHORT_SHA" -app instool -site 'instool-dev'
+    tags:
+    - m4-instool
+
+build_staging:
+  variables:
+    BRANCH: '{ "branch": "${CI_COMMIT_REF_NAME}" }'
+    ErrorActionPreference: stop
+  stage: build
+  only:
+    - main
+  environment:
+    name: staging
+    url: https://m4-instool.vmhost.psu.edu
+  script:
+    - Set-Location webapp
+    - npm ci --cache .npm --prefer-offline
+    - npm run clean
+    - echo $env:BRANCH > branch.json
+    - copy c:/gitlab-runner/FrontEndConfig/.env.staging FrontEnd/.env.local
+    - npm run release
+    - New-Item -ItemType Directory -Force -Path c:/gitlab-runner/versions/instool/$env:CI_COMMIT_REF_SLUG
+    - Move-Item instool.zip c:/gitlab-runner/versions/instool/$env:CI_COMMIT_REF_SLUG/$((Get-Date).tostring("yyyy-MM-dd__hh-mm"))__staging__$env:CI_COMMIT_SHORT_SHA.zip
+    - npm run clean
+  tags:
+    - m4-instool
+
+deploy_staging:
+    cache: {}    
+    variables:
+      ErrorActionPreference: stop
+      GIT_STRATEGY: none
+    stage: deploy
+    only:
+     - main
+    environment:
+        name: staging
+        url: https://m4-instool.vmhost.psu.edu
+    script:
+     - c:/gitlab-runner/scripts/deploy_version.ps1 -hash "__staging__$env:CI_COMMIT_SHORT_SHA" -app instool -site 'instool-staging'
     tags:
     - m4-instool
