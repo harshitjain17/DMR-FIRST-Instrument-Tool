@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import React from 'react';
 
 // styling for No Rows Overlay
 const StyledGridOverlay = styled('div')(({ theme }) => ({
@@ -34,7 +35,7 @@ export function CustomNoRowsOverlay() {
           width="120"
           height="100"
           viewBox="0 0 184 152"
-          aria-hidden
+          aria-hidden="true"
           focusable="false"
         >
           <g fill="none" fillRule="evenodd">

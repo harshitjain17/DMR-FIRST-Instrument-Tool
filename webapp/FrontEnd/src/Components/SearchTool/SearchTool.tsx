@@ -9,32 +9,17 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import ExploreIcon from '@mui/icons-material/Explore';
 
-import SearchEngine from './SearchEngine';
+import SearchEngine, { SearchResponse } from './SearchEngine';
 import GoogleMap from './GoogleMap';
 import DataTable from '../Table/DataTable';
 import { AppBar, Drawer, DrawerHeader } from './StyledComponents';
+import { SearchLocation } from '../../Api/Model';
 
-export default function SearchTool({ onRowSelected }) {
-    const [response, setResponse] = useState([]);
-    const [isMinimumTimeElapsed, onMinimumTimeElapsed] = useState();
-    const [isLoading, setLoading] = useState();
-    const [selectedLocation, selectLocation] = useState();
-
-    const responseDataHandler = (responseData) => {
-        setResponse(responseData);
-    };
-
-    const minimumTimeElapsedHandler = (params) => {
-        onMinimumTimeElapsed(params);
-    };
-
-    const loadingHandler = (params) => {
-        setLoading(params);
-    };
-
-    const selectLocationHandler = (params) => {
-        selectLocation(params);
-    };
+export default function SearchTool() {
+    const [response, setResponse] = useState<SearchResponse | undefined>(undefined);
+    const [isMinimumTimeElapsed, setMinimumTimeElapsed] = useState<boolean>(false);
+    const [isLoading, setLoading] = useState<boolean>(false);
+    const [selectedLocation, selectLocation] = useState<SearchLocation>();
 
     return (
 
@@ -54,9 +39,9 @@ export default function SearchTool({ onRowSelected }) {
             <Drawer variant="permanent">
                 <DrawerHeader />
                 <SearchEngine
-                    onSearchResponseAvailable={responseDataHandler}
-                    onMinimumTimeElapsed={minimumTimeElapsedHandler}
-                    onSetLoading={loadingHandler} />
+                    onSearchResponseAvailable={(response) => setResponse(response)}
+                    onMinimumTimeElapsed={(timeElapsed) => setMinimumTimeElapsed(timeElapsed)}
+                    onSetLoading={(isLoading: boolean) => setLoading(isLoading)} />
             </Drawer>
 
             {/* Right Section */}
@@ -87,17 +72,17 @@ export default function SearchTool({ onRowSelected }) {
                                 }}
                             >
                                 <DataTable
-                                    response={response}
+                                    instruments={response?.instruments || []}
+                                    searchLocation={response?.searchLocation}
                                     selectedLocation={selectedLocation}
                                     minimumTimeElapsed={isMinimumTimeElapsed}
-                                    loading={isLoading}
-                                    onRowSelected={onRowSelected} />
+                                    loading={isLoading} />
                             </Paper>
                         </Grid>
 
                         {/* Google Maps */}
                         <Grid item xs={6} md={6} lg={6}>
-                            <GoogleMap locations={response?.locations} onSelectLocation={selectLocationHandler} />
+                            <GoogleMap locations={response?.locations} onSelectLocation={(loc: SearchLocation) => selectLocation(loc)} />
                         </Grid>
                     </Grid>
                     {/* <Copyright sx={{ pt: 4 }} /> */}

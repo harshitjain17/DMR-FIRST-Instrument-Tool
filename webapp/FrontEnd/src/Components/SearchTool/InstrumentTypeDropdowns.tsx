@@ -1,46 +1,53 @@
-import React, { Fragment, useState} from 'react';
+import React, { Fragment, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
 
-import InstoolApi from '../../Api/InstoolApi';
+import InstrumentTypeApi from '../../Api/InstrumentTypeApi';
+import { InstrumentType, InstrumentTypeDropdownEntry } from '../../Api/Model';
 
-export default function InstrumentTypeDrowns({ 
-    xlargeScreen, 
+// We do need <null> here instead of <undefined>, the MUI autocompleted
+// only allows <null> set reset the field, whereas <undefined> would switch to uncontrolled mode,
+// where users can enter any value.  
+interface IInstrumentTypeDropdownProps {
+    xlargeScreen: boolean,
+    enteredInstrumentCategory: string | null,
+    enteredInstrumentType: InstrumentTypeDropdownEntry | null,
+    onInstrumentCategorySelected: (value: string | null) => void,
+    onInstrumentTypeSelected: (value: InstrumentTypeDropdownEntry | null) => void
+}
+
+export default function InstrumentTypeDrowns({
+    xlargeScreen,
     enteredInstrumentCategory, enteredInstrumentType,
-    onInstrumentCategorySelected, onInstrumentTypeSelected}) {
+    onInstrumentCategorySelected, onInstrumentTypeSelected }: IInstrumentTypeDropdownProps) {
 
-    const [instrumentCategories, setInstrumentCategories] = useState([]);
-    const [instrumentTypes, setInstrumentTypes] = useState([]);
-    const [instrumentTypeSearchText, setInstrumentTypeSearchText] = useState('');
+    const [instrumentCategories, setInstrumentCategories] = useState<InstrumentType[]>([]);
+    const [instrumentTypes, setInstrumentTypes] = useState<InstrumentTypeDropdownEntry[]>([]);
+    const [instrumentTypeSearchText, setInstrumentTypeSearchText] = useState<string>('');
 
-    
-    const instrumentCategoryChangeHandler = (event) => {
+
+    const instrumentCategoryChangeHandler = (event: any) => {
         onInstrumentCategorySelected(event.target.value);
     };
 
-    const instrumentTypeChangeHandler = (event, option) => {
+    const instrumentTypeChangeHandler = (event: React.SyntheticEvent, option: any) => {
         onInstrumentTypeSelected(option);
     };
 
     // Instrument Categories Dropdown List
     React.useEffect(() => {
-        InstoolApi.get(`/instrument-types`).then((response) => {
-            setInstrumentCategories(response.data);
+        InstrumentTypeApi.getCategories().then((response) => {
+            setInstrumentCategories(response);
         });
     }, []);
 
     // Autocompletion of instrument types
     React.useEffect(() => {
         const fetchData = async () => {
-            const response = enteredInstrumentCategory ?
-                // Case - I (If the user selected the category)
-                await InstoolApi.get(`/instrument-types/${enteredInstrumentCategory}/dropdown`) :
-                // Case - II (If the user did not selected the category)
-                await InstoolApi.get(`/instrument-types/dropdown`);
-
-            setInstrumentTypes(response.data);
+            const response = await InstrumentTypeApi.getDropdownEntries(enteredInstrumentCategory);
+            setInstrumentTypes(response);
             onInstrumentTypeSelected(null);
         };
         fetchData();
@@ -52,7 +59,7 @@ export default function InstrumentTypeDrowns({
             <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                 <Form.Group controlId="formInstrumentCategory">
                     <TextField
-                        options={instrumentCategories}
+                        // options={instrumentCategories}
                         fullWidth={true}
                         size={xlargeScreen ? "medium" : "small"}
                         select
@@ -61,7 +68,7 @@ export default function InstrumentTypeDrowns({
                         onChange={instrumentCategoryChangeHandler}
                     >
                         {instrumentCategories.map((option) => (
-                            <MenuItem key={option.name} value={option.name}>
+                            <MenuItem key={option.instrumentTypeId} value={option.name}>
                                 {option.label}
                             </MenuItem>
                         ))}
@@ -71,14 +78,13 @@ export default function InstrumentTypeDrowns({
 
             <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                 <Form.Group controlId="formInstrumentType">
-                    <Autocomplete
-                        renderOption={(props, option) => {
-                            return (
-                                <li {...props} key={option.value}>
-                                    {option.label}
-                                </li>
-                            )
-                        }}
+                    <Autocomplete renderOption={(props, option) => {
+                        return (
+                            <li {...props} key={option.value}>
+                                {option.label}
+                            </li>
+                        )
+                    }}
                         fullWidth={true}
                         size={xlargeScreen ? "medium" : "small"}
                         options={instrumentTypes}

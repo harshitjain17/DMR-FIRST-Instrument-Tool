@@ -11,6 +11,7 @@ export function GoogleMap({locations, onSelectLocation, google}) {
   const [zoom, setZoom] = useState(4);
   const [center, setCenter] = useState({ lat: 37, lng: -95 });
   const [bounds, setBounds] = useState(undefined);
+  const [map, setMap] = useState(undefined);
 
   // Watch locations, whenever a new search is done, we set bounds again.
   // Bounds get removed once users start to zoom or drag the map around.
@@ -102,9 +103,10 @@ export function GoogleMap({locations, onSelectLocation, google}) {
         setZoom(event.zoom);
         setCenter(event.center);
       }}
+      onReady={(mapPropse, map) => setMap(map)}
     >
-      {displayMarkers()}
-      <InfoWindow
+      {map && displayMarkers()}
+      {map && <InfoWindow
         marker={activeMarker}
         visible={showingInfoWindow}
         onClose={onMarkerDeselected}>
@@ -112,7 +114,7 @@ export function GoogleMap({locations, onSelectLocation, google}) {
           <h6>{selectedLocation?.building ?? selectedLocation?.institution}</h6>
           <p>{selectedLocation?.count} instrument(s)</p>
         </div>
-      </InfoWindow>
+      </InfoWindow>}
     </Map>
   );
 }

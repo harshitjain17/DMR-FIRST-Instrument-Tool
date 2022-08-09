@@ -11,3 +11,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.instrument-table {
+    display: flex;
+    height: 100%;
+}

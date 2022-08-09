@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,7 +8,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
-export default function Awards({awards}) {
+import { Award } from '../../Api/Model';
+
+interface AwardTabProps {
+    awards: Award[]
+}
+
+export default function Awards({awards}: AwardTabProps) {
     return (
         <TableContainer style={{ maxHeight: '35vh' }}>
             <Table stickyHeader sx={{ minWidth: '35vw' }} aria-label="simple table">

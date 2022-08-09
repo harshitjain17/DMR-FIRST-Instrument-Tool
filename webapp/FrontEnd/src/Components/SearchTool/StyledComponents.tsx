@@ -5,7 +5,7 @@ import MuiAppBar from '@mui/material/AppBar';
 
 export const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
+})(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
 }));
 

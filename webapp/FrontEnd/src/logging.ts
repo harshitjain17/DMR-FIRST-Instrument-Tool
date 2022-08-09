@@ -12,7 +12,8 @@ export default function initLogging() {
       const loglevel = log.getLevel() === 0 ? 5 : log.getLevel() - 1;;
       log.setLevel(log.levels.INFO);
       log.info(`Logging turned to ${levels[loglevel]}`);
-      log.setLevel(loglevel);
+      // Also typscript doesn't like this, it also works with number. Easier to just cycle through
+      log.setLevel(loglevel as any);
     }
   });
 }

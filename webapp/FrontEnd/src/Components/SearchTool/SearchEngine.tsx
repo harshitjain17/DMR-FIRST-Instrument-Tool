@@ -1,7 +1,7 @@
 import { Form } from 'react-bootstrap';
 
 import './SearchEngine.css';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, FormEventHandler } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
@@ -17,40 +17,55 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import DeviceLocation from './DeviceLocation';
 import InstrumentTypeDropDowns from './InstrumentTypeDropdowns';
-import InstoolApi from '../../Api/InstoolApi';
+import LocationApi from "../../Api/LocationApi";
+import InstrumentApi from "../../Api/InstrumentApi";
 
 import log from 'loglevel';
+import { ILocationResult, InstrumentRow, SearchLocation, InstrumentTypeDropdownEntry} from '../../Api/Model';
 
-export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeElapsed, onSetLoading }) {
+export interface SearchResponse {
+    instruments: InstrumentRow[],
+    locations: ILocationResult[],
+    searchLocation?: SearchLocation
+}
+
+interface ISearchEngineProps {
+    onSearchResponseAvailable: (response: SearchResponse) => void,
+    onMinimumTimeElapsed: (isLoading: boolean) => void,
+    onSetLoading: (isLoading: boolean) => void
+}
+
+
+export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeElapsed, onSetLoading }: ISearchEngineProps) {
 
     // States for input given in the textbox (in search engine)
-    const [enteredAddress, setEnteredAddress] = useState('');
-    const [enteredDistance, setEnteredDistance] = useState('0');
-    const [enteredInstrumentCategory, setEnteredInstrumentCategory] = useState('');
-    const [enteredInstrumentType, setEnteredInstrumentType] = useState(null);
-    const [enteredKeywords, setEnteredKeywords] = useState([]);
-    const [enteredManufacturer, setEnteredManufacturer] = useState('');
-    const [enteredAwardNumber, setEnteredAwardNumber] = useState('');
-    const [enteredIRI, setEnteredIRI] = useState(false);
+    const [enteredAddress, setEnteredAddress] = useState<string>('');
+    const [enteredDistance, setEnteredDistance] = useState<string>('0');
+    const [enteredInstrumentCategory, setEnteredInstrumentCategory] = useState<string | null>('');
+    const [enteredInstrumentType, setEnteredInstrumentType] = useState<InstrumentTypeDropdownEntry | null>(null);
+    const [enteredKeywords, setEnteredKeywords] = useState<string[]>([]);
+    const [enteredManufacturer, setEnteredManufacturer] = useState<string>('');
+    const [enteredAwardNumber, setEnteredAwardNumber] = useState<string>('');
+    const [enteredIRI, setEnteredIRI] = useState<boolean>(false);
 
-    const addressChangeHandler = (event) => {
+    const addressChangeHandler = (event: any) => {
         setEnteredAddress(event.target.value);
     };
 
-    const distanceChangeHandler = (event) => {
+    const distanceChangeHandler = (event: any) => {
         setEnteredDistance(event.target.value);
     };
 
-    const keywordsChangeHandler = (event) => {
+    const keywordsChangeHandler = (event: any) => {
         enteredKeywords.push(event.target.value);
         setEnteredKeywords(enteredKeywords);
     };
 
-    const manufacturerChangeHandler = (event) => {
+    const manufacturerChangeHandler = (event: any) => {
         setEnteredManufacturer(event.target.value);
     };
 
-    const awardNumberChangeHandler = (event) => {
+    const awardNumberChangeHandler = (event: any) => {
         setEnteredAwardNumber(event.target.value);
     };
 
@@ -70,17 +85,17 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
     }));
 
     // We only search once the user hits submit - handled here
-    const submitHandler = async (event) => {
+    const submitHandler: FormEventHandler = async (event) => {
         event.preventDefault();
         try {
-            let location = undefined;
+            let location : SearchLocation | undefined = undefined;
             if (enteredAddress) {
-                var result = await InstoolApi.get(`/locate?address=${enteredAddress}`);
+                var coord = await LocationApi.getCoordinates(enteredAddress);
                 location = {
                     address: enteredAddress,
-                    latitude: result.data.latitude,
-                    longitude: result.data.longitude,
-                    maxDistance: enteredDistance
+                    latitude: coord.latitude,
+                    longitude: coord.longitude,
+                    maxDistance: Number(enteredDistance)
                 };
                 log.info(`Found coordinates (${location.latitude}, ${location.longitude}) for ${enteredAddress}`);
             }
@@ -88,7 +103,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
             // search criteria as expected by the server
             const userInput = {
                 location: location,
-                instrumentType: enteredInstrumentType?.value ?? enteredInstrumentCategory,
+                instrumentType: enteredInstrumentType?.value ?? enteredInstrumentCategory ?? undefined,
                 keywords: enteredKeywords,
                 manufacturer: enteredManufacturer,
                 awardNumber: enteredAwardNumber,
@@ -97,14 +112,13 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
             log.debug(userInput);
 
-            const response = await InstoolApi.post(`/instruments/search`, userInput);
-            log.info(`Server returned ${response.data.instruments?.length} instruments, and ${response.data.locations?.length} locations`)
-            log.debug(response);
+            const response = await InstrumentApi.search(userInput);
+
             // Let other components update using both the results we got from the server,
             // as well as the search location, which is needed to center the map
             onSearchResponseAvailable({
-                instruments: response.data.instruments,
-                locations: response.data.locations,
+                instruments: response.instruments,
+                locations: response.locations,
                 searchLocation: userInput.location
             })
         } catch (error) {
@@ -138,7 +152,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
     }, [onMinimumTimeElapsed, onSetLoading, isMinimumTimeElapsed, isLoading]);
 
     // Reset handling
-    const resetHandler = async (event) => {
+    const resetHandler = async (event: React.SyntheticEvent) => {
         event.preventDefault();
 
         setEnteredAddress('');
@@ -157,9 +171,8 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
     const xlargeScreen = useMediaQuery('(min-width:2560px)');
 
     return (
-
-        <div className="px-3 border" style={{ width: "100%", height: "100%" }}>
-            <Form onSubmit={submitHandler} onReset={resetHandler} style={{ width: "100%", height: "100%" }}>
+        <div className="px-3 border search-engine">
+            <Form onSubmit={submitHandler} onReset={resetHandler}>
                 <SearchToolHeader>{"SEARCH TOOL"}</SearchToolHeader>
                 <DeviceLocation onAddressFound={setEnteredAddress} />
                 <div>
@@ -171,7 +184,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                             value={enteredAddress}
                             label="Find instruments near"
                             variant="outlined"
-                            required={enteredDistance > 0}
+                            required={enteredDistance !== '0'}
                             data-error="Required when maximum Distance is set"
                         />
                     </Form.Group>
@@ -286,11 +299,11 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                 </div>
 
                 <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-1"}>
-                    <Button size={xlargeScreen ? "large" : "medium"} 
-                    endIcon={<RestartAltIcon />} 
-                                        type="reset"  
-                    className="mt-2" 
-                    style={{ width: "100%", margin: "auto" }}>Reset</Button>
+                    <Button size={xlargeScreen ? "large" : "medium"}
+                        endIcon={<RestartAltIcon />}
+                        type="reset"
+                        className="mt-2"
+                        style={{ width: "100%", margin: "auto" }}>Reset</Button>
                 </div>
             </Form>
         </div>
