@@ -1,14 +1,15 @@
 import log from 'loglevel';
-import { Instrument, InstrumentSearchCriteria, InstrumentSearchRespone } from './Model';
+import { Instrument, InstrumentSearchCriteria, InstrumentSearchRespone as InstrumentSearchResponse } from './Model';
 import InstoolApi from './InstoolApi';
 
 
 export default class InstrumentApi {
-  static async search(criteria: InstrumentSearchCriteria): Promise<InstrumentSearchRespone> {
+
+  static async search(criteria: InstrumentSearchCriteria): Promise<InstrumentSearchResponse> {
     const response = await InstoolApi.post(`/instruments/search`, criteria);
     log.info(`Server returned ${response.data.instruments?.length} instruments, and ${response.data.locations?.length} locations`)
     log.debug(response);
-    return response.data as InstrumentSearchRespone;
+    return response.data as InstrumentSearchResponse;
   }
 
   static async get(doi: string): Promise<Instrument | undefined> {

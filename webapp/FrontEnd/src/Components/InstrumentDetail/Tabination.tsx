@@ -84,7 +84,7 @@ export default function Tabination({ instrument }: TabinationProps) {
       </TabPanel>
 
       <TabPanel selectedIndex={selectedIndex} index={3}>
-        <AwardTab awards={instrument.awards} />
+        <AwardTab awards={instrument.contacts} />
       </TabPanel>
 
       <TabPanel selectedIndex={selectedIndex} index={4}>
