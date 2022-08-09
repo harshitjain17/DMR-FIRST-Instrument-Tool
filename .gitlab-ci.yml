@@ -6,9 +6,8 @@ cache:
 stages:
   - test
   - build
-  - deploy_dev
-  - deploy_staging
-
+  - deploy
+  
 test:
   variables:
      BRANCH: '{ "branch": "${CI_COMMIT_REF_NAME}" }'
