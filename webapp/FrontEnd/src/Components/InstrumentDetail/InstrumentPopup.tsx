@@ -6,50 +6,51 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
+import Slide, { SlideProps } from '@mui/material/Slide';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
-import InstoolApi from '../../Api/InstoolApi';
-import log from 'loglevel';
+import InstrumentApi from '../../Api/InstrumentApi';
 
 import InstrumentDetails from './InstrumentDetails';
+import { Instrument } from '../../Api/Model';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = React.forwardRef(function Transition(props: SlideProps, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function InstrumentPopup({ isOpen, doi, handleClose }) {
-    const [instrumentData, setInstrumentData] = React.useState({ undefined });
+interface InstrumentPopupProps {
+    isOpen: boolean,
+    doi: string,
+    onPopupClose: () => void
+}
+
+export default function InstrumentPopup({ isOpen, doi, onPopupClose }: InstrumentPopupProps) {
+    const [instrumentData, setInstrumentData] = React.useState<Instrument>();
 
     React.useEffect(() => {
         const fetchData = async () => {
-            try {
-                var response = await InstoolApi.get(`/instruments/${doi}`)
-                log.debug(response.data);
-                setInstrumentData(response.data);
-            } catch (error) {
-                log.error(`Fetching instrument details failed: ${error}`);
-            }
+                var response = await InstrumentApi.get(doi)
+                setInstrumentData(response);
         };
         doi && fetchData();
     }, [doi]);
 
-    return ( 
+    return (
         <div>
             <Dialog fullScreen open={isOpen}
-                onClose={() => handleClose(false)} TransitionComponent={Transition}
+                onClose={() => onPopupClose()} TransitionComponent={Transition}
             >
                 <AppBar sx={{ position: 'relative' }}>
                     <Toolbar variant="dense">
 
-                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+                        <IconButton edge="start" color="inherit" onClick={() => onPopupClose()} aria-label="close">
                             <CloseIcon />
                         </IconButton>
 
-                        <Typography textAlign = "center" sx={{ ml: 'auto', flex: 1 }} variant="h6" component="div">
-                            {instrumentData.name}
+                        <Typography textAlign="center" sx={{ ml: 'auto', flex: 1 }} variant="h6" component="div">
+                            {instrumentData?.name}
                         </Typography>
-                        
+
                         <Button autoFocus color="inherit" onClick={() =>
                             window.open(`/doi/${doi}`, "_blank")}>
                             Open in new Tab
@@ -58,7 +59,7 @@ export default function InstrumentPopup({ isOpen, doi, handleClose }) {
 
                     </Toolbar>
                 </AppBar>
-                <InstrumentDetails instrumentData={instrumentData} />
+                {instrumentData && <InstrumentDetails instrument={instrumentData} />}
             </Dialog>
         </div>
     );

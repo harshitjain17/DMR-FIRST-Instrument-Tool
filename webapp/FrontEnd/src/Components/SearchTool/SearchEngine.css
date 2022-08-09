@@ -1,10 +1,21 @@
-.form-control, .form-select, .form-check, .css-b62m3t-container {
+.form-control,
+.form-select,
+.form-check,
+.css-b62m3t-container {
     font-size: 0.9rem;
 }
+
 .form-label {
     font-size: 0.9rem;
     margin-bottom: 0.45rem;
 }
+
 .mt-3 {
     margin-top: 0.9rem !important;
+}
+
+.search-engine,
+.search-engine form {
+    width: 100%;
+    height: 100%;
 }
