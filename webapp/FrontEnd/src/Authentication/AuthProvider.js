@@ -12,7 +12,7 @@ const config = {
     storeAuthStateInCookie: true
   }
 };
- 
+  
 // Authentication Parameters
 const authenticationParameters = {
   scopes: [
