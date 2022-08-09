@@ -6,7 +6,8 @@ cache:
 stages:
   - test
   - build
-  - deploy_test
+  - deploy_dev
+  - deploy_staging
 
 test:
   variables:
