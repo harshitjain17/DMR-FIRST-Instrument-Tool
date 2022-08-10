@@ -10,4 +10,4 @@ export default class LocationApi {
     const result = await InstoolApi.get(`/locate?address=${address}`);
     return result.data as GeolocationCoordinates;
   }
-};
+}

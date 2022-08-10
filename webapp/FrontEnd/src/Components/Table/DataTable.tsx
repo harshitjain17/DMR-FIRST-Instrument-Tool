@@ -105,8 +105,8 @@ const columns : GridColumns = [
 
 interface DataTableProps {
   instruments: InstrumentRow[],
-  searchLocation: SearchLocation | undefined,
-  selectedLocation: SearchLocation | undefined,
+  searchLocation?: SearchLocation,
+  selectedLocation?: string,
   loading: boolean,
   minimumTimeElapsed: boolean
 }
@@ -119,7 +119,7 @@ export default function DataTable(
   const [filterModel, setFilterModel] = React.useState<GridFilterModel>({ items: [] });
   const [visibilityModel, setVisibilityModel] = React.useState<GridColumnVisibilityModel>({ id: false, distance: false });
 
-  var searchResult = instruments ?
+  const searchResult = instruments ?
     instruments.map(instrument => {
       return {
         id: instrument.label,
@@ -221,4 +221,4 @@ export default function DataTable(
       <InstrumentPopop isOpen={isOpen} onPopupClose={handleCloseModal} doi={doi} />
     </div>
   );
-};
+}

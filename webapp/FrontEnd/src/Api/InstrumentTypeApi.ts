@@ -17,4 +17,4 @@ export default class InstrumentTypeApi {
       await InstoolApi.get(`/instrument-types/dropdown`);
     return result.data as InstrumentTypeDropdownEntry[];
   }
-};
+}

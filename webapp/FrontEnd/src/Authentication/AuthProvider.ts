@@ -1,7 +1,8 @@
-import { MsalAuthProvider, LoginType } from 'react-aad-msal';
+import { AuthenticationParameters, Configuration } from 'msal';
+import { MsalAuthProvider, LoginType, IMsalAuthProviderConfig } from 'react-aad-msal';
  
 // Msal Configurations
-const config = {
+const config : Configuration= {
   auth: {
     authority: 'https://login.microsoftonline.com/common',
     clientId: '<Client ID>',
@@ -14,7 +15,7 @@ const config = {
 };
   
 // Authentication Parameters
-const authenticationParameters = {
+const authenticationParameters : AuthenticationParameters = {
   scopes: [
     '<property (i.e. user.read)>',
     'https://<your-tenant-name>.onmicrosoft.com/<your-application-name>/<scope (i.e. demo.read)>'
@@ -22,7 +23,7 @@ const authenticationParameters = {
 }
  
 // Options
-const options = {
+const options : IMsalAuthProviderConfig = {
   loginType: LoginType.Popup,
   tokenRefreshUri: window.location.origin + '/auth.html'
 }

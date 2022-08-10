@@ -29,7 +29,7 @@ export default function InstrumentPopup({ isOpen, doi, onPopupClose }: Instrumen
 
     React.useEffect(() => {
         const fetchData = async () => {
-                var response = await InstrumentApi.get(doi)
+                const response = await InstrumentApi.get(doi)
                 setInstrumentData(response);
         };
         doi && fetchData();
@@ -51,7 +51,7 @@ export default function InstrumentPopup({ isOpen, doi, onPopupClose }: Instrumen
                             {instrumentData?.name}
                         </Typography>
 
-                        <Button autoFocus color="inherit" onClick={() =>
+                        <Button color="inherit" onClick={() =>
                             window.open(`/doi/${doi}`, "_blank")}>
                             Open in new Tab
                         </Button>
