@@ -106,11 +106,11 @@ export interface InstrumentSearchCriteria {
 
 export interface InstrumentSearchRespone {
     instruments: InstrumentRow[],
-    locations: ILocationResult[]
+    locations: LocationResult[]
 }
 
 
-export interface ILocationResult {
+export interface LocationResult {
     id: number;
     dbId: number,
 

@@ -13,13 +13,12 @@ import SearchEngine, { SearchResponse } from './SearchEngine';
 import GoogleMap from './GoogleMap';
 import DataTable from '../Table/DataTable';
 import { AppBar, Drawer, DrawerHeader } from './StyledComponents';
-import { SearchLocation } from '../../Api/Model';
 
 export default function SearchTool() {
     const [response, setResponse] = useState<SearchResponse | undefined>(undefined);
     const [isMinimumTimeElapsed, setMinimumTimeElapsed] = useState<boolean>(false);
     const [isLoading, setLoading] = useState<boolean>(false);
-    const [selectedLocation, selectLocation] = useState<SearchLocation>();
+    const [selectedLocation, selectLocation] = useState<string | undefined>();
 
     return (
 
@@ -82,7 +81,7 @@ export default function SearchTool() {
 
                         {/* Google Maps */}
                         <Grid item xs={6} md={6} lg={6}>
-                            <GoogleMap locations={response?.locations} onSelectLocation={(loc: SearchLocation) => selectLocation(loc)} />
+                            <GoogleMap locations={response?.locations ?? []} onSelectLocation={(locationId?: string ) => selectLocation(locationId)} />
                         </Grid>
                     </Grid>
                     {/* <Copyright sx={{ pt: 4 }} /> */}

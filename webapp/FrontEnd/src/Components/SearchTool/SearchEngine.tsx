@@ -21,11 +21,11 @@ import LocationApi from "../../Api/LocationApi";
 import InstrumentApi from "../../Api/InstrumentApi";
 
 import log from 'loglevel';
-import { ILocationResult, InstrumentRow, SearchLocation, InstrumentTypeDropdownEntry} from '../../Api/Model';
+import { LocationResult, InstrumentRow, SearchLocation, InstrumentTypeDropdownEntry} from '../../Api/Model';
 
 export interface SearchResponse {
     instruments: InstrumentRow[],
-    locations: ILocationResult[],
+    locations: LocationResult[],
     searchLocation?: SearchLocation
 }
 
@@ -90,7 +90,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
         try {
             let location : SearchLocation | undefined = undefined;
             if (enteredAddress) {
-                var coord = await LocationApi.getCoordinates(enteredAddress);
+                const coord = await LocationApi.getCoordinates(enteredAddress);
                 location = {
                     address: enteredAddress,
                     latitude: coord.latitude,
@@ -309,4 +309,4 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
         </div>
 
     );
-};
+}

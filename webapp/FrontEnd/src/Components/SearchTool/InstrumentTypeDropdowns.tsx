@@ -105,4 +105,4 @@ export default function InstrumentTypeDrowns({
             </div>
         </Fragment>
     )
-};
+}
