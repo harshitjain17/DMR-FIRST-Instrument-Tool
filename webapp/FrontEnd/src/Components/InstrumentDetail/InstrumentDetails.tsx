@@ -22,7 +22,7 @@ export default function InstrumentDetails({ instrument }: InstrumentDetailProps)
                         ? theme.palette.grey[100]
                         : theme.palette.grey[900],
                 flexGrow: 1,
-                height: '80vh',
+                height: '100vh',
                 overflow: 'auto',
             }}
         >
@@ -42,7 +42,7 @@ export default function InstrumentDetails({ instrument }: InstrumentDetailProps)
                                 p: 0,
                                 display: 'flex',
                                 flexDirection: 'column',
-                                height: '100%',
+                                height: '36vh',
                             }}
                         >
                             <Tabination instrument={instrument}  />

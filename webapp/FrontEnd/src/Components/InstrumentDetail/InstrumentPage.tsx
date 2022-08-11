@@ -1,9 +1,10 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
+// import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+import Dialog from '@mui/material/Dialog';
 import InstrumentApi from '../../Api/InstrumentApi';
 
 import InstrumentDetails from './InstrumentDetails';
@@ -22,16 +23,16 @@ export default function InstrumentPage({ doi }: InstrumentPageProps) {
 
     return (
         <div>
-            <Box>
+            <Dialog fullScreen open={true}>
                 <AppBar sx={{ position: 'relative' }}>
                     <Toolbar variant="dense">
-                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                        <Typography textAlign="center" sx={{ ml: 'auto', flex: 1 }} variant="h6" component="div">
                             {instrumentData?.name}
                         </Typography>
                     </Toolbar>
                 </AppBar>
                 {instrumentData && <InstrumentDetails instrument={instrumentData} />}
-            </Box>
+            </Dialog>
         </div>
     );
 }
