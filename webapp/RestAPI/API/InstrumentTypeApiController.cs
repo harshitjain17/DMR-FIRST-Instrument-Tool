@@ -84,12 +84,12 @@ namespace Instool.API
         [HasPrivilege(PrivilegeEnum.InstrumentType, OperationEnum.Create)]
         public async Task<ActionResult<InstrumentTypeDTO>> CreateInstrumentType([FromBody] InstrumentTypeDTO dto)
         {
-            if (dto.InstrumentTypeId != 0)
+            if (dto.InstrumentTypeId != null)
             {
                 return BadRequest("InstrumentTypeID is set automatically and has to be empty");
             }
             var entity = dto.GetEntity();
-            if (dto.Category != null && dto.Category.InstrumentTypeId <= 0)
+            if (dto.Category != null && dto.Category.InstrumentTypeId == null)
             {
                 var category = await LoadType(dto.Category.Name);
                 entity.CategoryId = category.InstrumentTypeId;

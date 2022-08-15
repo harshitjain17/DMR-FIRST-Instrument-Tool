@@ -1,6 +1,6 @@
-import { Instrument, InstrumentType } from "./Model";
+import { Instrument, InstrumentType, InstrumentTypeDropdownEntry } from "./Model";
 
-export function getInstrumentTypeLabel(i: InstrumentType) {
+export function getInstrumentTypeLabel(i: InstrumentType | InstrumentTypeDropdownEntry) {
     return i.label + (i.abbreviation ? ` (${i.abbreviation})` : "");
 }
 

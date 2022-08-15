@@ -12,16 +12,19 @@ namespace Instool.Dtos
         public string? SubCategory { get; private set; }
         public string? SubCategoryLabel { get; private set; }
 
-        public string Value { get; private set; } = null!;
+        public string Shortname { get; private set; } = null!;
 
         public string Label { get; private set; } = null!;
+
+        public string? Abbreviation { get; private set; }
 
         internal static InstrumentTypeDropdownEntry FromEntity(InstrumentTypeWithUsage type, InstrumentType category, int index)
         {
             return new InstrumentTypeDropdownEntry
             {
-                Value = $"{type.InstrumentType.ShortName}#{index}",
+                Shortname = $"{type.InstrumentType.ShortName}#{index}",
                 Label = $"{type.InstrumentType.Label} [{type.Count}]",
+                Abbreviation = type.InstrumentType.Abbreviation,
                 Category = category.ShortName,
                 CategoryLabel = category.Label
             };
@@ -35,8 +38,9 @@ namespace Instool.Dtos
         {
             return new InstrumentTypeDropdownEntry
             {
-                Value = $"{type.InstrumentType.ShortName}#{index}",
+                Shortname = $"{type.InstrumentType.ShortName}#{index}",
                 Label = $"{type.InstrumentType.Label} [{type.Count}]",
+                Abbreviation = type.InstrumentType.Abbreviation,
                 Category = category.ShortName,
                 CategoryLabel = category.Label,
                 SubCategory = subcategory.ShortName,

@@ -60,7 +60,6 @@ export default function InstrumentTypeDrowns({
             <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                 <Form.Group controlId="formInstrumentCategory">
                     <TextField
-                        // options={instrumentCategories}
                         fullWidth={true}
                         size={xlargeScreen ? "medium" : "small"}
                         select
@@ -79,19 +78,13 @@ export default function InstrumentTypeDrowns({
 
             <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                 <Form.Group controlId="formInstrumentType">
-                    <Autocomplete renderOption={(props, option) => {
-                        return (
-                            <li {...props} key={option.value}>
-                                {option.label}
-                            </li>
-                        )
-                    }}
+                    <Autocomplete 
                         fullWidth={true}
                         size={xlargeScreen ? "medium" : "small"}
                         options={instrumentTypes}
-                        isOptionEqualToValue={(option, value) => option?.value === value?.value}
+                        isOptionEqualToValue={(option, value) => option?.shortname === value?.shortname}
                         groupBy={(option) => option.categoryLabel}
-                        getOptionLabel={(option) => option.label ?? ''}
+                        getOptionLabel={(option) => getInstrumentTypeLabel(option)}
 
                         inputValue={instrumentTypeSearchText}
                         onInputChange={(event, newInputValue) => {
