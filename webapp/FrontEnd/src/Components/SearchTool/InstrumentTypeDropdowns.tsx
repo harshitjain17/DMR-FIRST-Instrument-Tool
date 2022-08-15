@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import InstrumentTypeApi from '../../Api/InstrumentTypeApi';
 import { InstrumentType, InstrumentTypeDropdownEntry } from '../../Api/Model';
+import { getInstrumentTypeLabel } from '../../Api/ModelUtils';
 
 // We do need <null> here instead of <undefined>, the MUI autocompleted
 // only allows <null> set reset the field, whereas <undefined> would switch to uncontrolled mode,
@@ -59,7 +60,6 @@ export default function InstrumentTypeDrowns({
             <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                 <Form.Group controlId="formInstrumentCategory">
                     <TextField
-                        // options={instrumentCategories}
                         fullWidth={true}
                         size={xlargeScreen ? "medium" : "small"}
                         select
@@ -69,7 +69,7 @@ export default function InstrumentTypeDrowns({
                     >
                         {instrumentCategories.map((option) => (
                             <MenuItem key={option.instrumentTypeId} value={option.name}>
-                                {option.label}
+                                {getInstrumentTypeLabel(option)}
                             </MenuItem>
                         ))}
                     </TextField>
@@ -78,19 +78,13 @@ export default function InstrumentTypeDrowns({
 
             <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                 <Form.Group controlId="formInstrumentType">
-                    <Autocomplete renderOption={(props, option) => {
-                        return (
-                            <li {...props} key={option.value}>
-                                {option.label}
-                            </li>
-                        )
-                    }}
+                    <Autocomplete 
                         fullWidth={true}
                         size={xlargeScreen ? "medium" : "small"}
                         options={instrumentTypes}
-                        isOptionEqualToValue={(option, value) => option?.value === value?.value}
+                        isOptionEqualToValue={(option, value) => option?.shortname === value?.shortname}
                         groupBy={(option) => option.categoryLabel}
-                        getOptionLabel={(option) => option.label ?? ''}
+                        getOptionLabel={(option) => getInstrumentTypeLabel(option)}
 
                         inputValue={instrumentTypeSearchText}
                         onInputChange={(event, newInputValue) => {

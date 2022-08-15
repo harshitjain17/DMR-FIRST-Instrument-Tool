@@ -103,7 +103,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
             // search criteria as expected by the server
             const userInput = {
                 location: location,
-                instrumentType: enteredInstrumentType?.value ?? enteredInstrumentCategory ?? undefined,
+                instrumentType: enteredInstrumentType?.shortname ?? enteredInstrumentCategory ?? undefined,
                 keywords: enteredKeywords,
                 manufacturer: enteredManufacturer,
                 awardNumber: enteredAwardNumber,

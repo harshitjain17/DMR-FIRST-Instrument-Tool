@@ -82,7 +82,7 @@ namespace Instool.DAL.Results
             Model = i.ModelNumber;
             Distance = distance;
             Award = string.Join(", ", i.Awards.Select(a => a.AwardNumber));
-            Type = string.Join(", ", mostSpecific.Select(t => t.Label));
+            Type = string.Join(", ", mostSpecific.Select(t => string.IsNullOrWhiteSpace(t.Abbreviation) ? t.Label : t.Abbreviation));
         }
     }
 
