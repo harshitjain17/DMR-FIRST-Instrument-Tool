@@ -48,7 +48,9 @@ export default function InstrumentPopup({ isOpen, doi, onPopupClose }: Instrumen
                         </IconButton>
 
                         <Typography textAlign="center" sx={{ ml: 'auto', flex: 1 }} variant="h6" component="div">
-                            {instrumentData?.name}
+                            
+                            {instrumentData?.name} {instrumentData?.modelNumber ? ": " + instrumentData?.modelNumber : null}
+                            
                         </Typography>
 
                         <Button color="inherit" onClick={() =>

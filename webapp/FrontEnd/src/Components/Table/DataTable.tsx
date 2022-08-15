@@ -49,6 +49,15 @@ const columns : GridColumns = [
         <span className="table-cell-trucate">{params?.value?.toString()}</span>
       </Tooltip>)
   },
+  
+  // MODEL
+  {
+    field: 'model', headerName: 'Model', minWidth: 160, flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params?.value?.toString()} >
+        <span className="table-cell-trucate">{params?.value?.toString()}</span>
+      </Tooltip>)
+  },
 
   // DOI
   {field: 'doi', headerName: 'DOI', minWidth: 160, flex: 1},
@@ -56,15 +65,6 @@ const columns : GridColumns = [
   // MANUFACTURER
   {
     field: 'manufacturer', headerName: 'Manufacturer', minWidth: 175, flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params?.value?.toString()} >
-        <span className="table-cell-trucate">{params?.value?.toString()}</span>
-      </Tooltip>)
-  },
-
-  // MODEL
-  {
-    field: 'model', headerName: 'Model', minWidth: 160, flex: 1,
     renderCell: (params) => (
       <Tooltip title={params?.value?.toString()} >
         <span className="table-cell-trucate">{params?.value?.toString()}</span>
