@@ -6,6 +6,8 @@ namespace Instool.Dtos
     {
         public int? InstrumentTypeId { get; set; }
         public string Name { get; set; } = null!;
+
+        public string? Abbreviation { get; set; }
         public string? Label { get; set; }
         public string? Uri { get; set; }
         public InstrumentTypeDTO? Category { get; set; }
@@ -30,6 +32,7 @@ namespace Instool.Dtos
                 Name = type.ShortName,
                 Label = type.Label,
                 Uri = type.Uri,
+                Abbreviation = type.Abbreviation,
                 Category = !includeCategory || type.Category == null ? null : FromEntity(type.Category, true, false),
                 SubTypes = !includeSubTypes || !type.InverseCategory.Any() ? null : type.InverseCategory.Select(t =>         
                     FromEntity(t, false, true)).ToList()
@@ -41,6 +44,7 @@ namespace Instool.Dtos
             return new InstrumentType
             {
                 InstrumentTypeId = InstrumentTypeId ?? 0,
+                Abbreviation = Abbreviation,
                 ShortName = Name,
                 Label = Label ?? Name,
                 Uri = Uri,

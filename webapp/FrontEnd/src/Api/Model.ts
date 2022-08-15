@@ -53,6 +53,7 @@ export interface Instrument {
 
 export interface InstrumentType {
     instrumentTypeId: number,
+    abbreviation?: string,
     name: string,
     label: string,
     uri?: string,

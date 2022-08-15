@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 
 import InstrumentTypeApi from '../../Api/InstrumentTypeApi';
 import { InstrumentType, InstrumentTypeDropdownEntry } from '../../Api/Model';
+import { getInstrumentTypeLabel } from '../../Api/ModelUtils';
 
 // We do need <null> here instead of <undefined>, the MUI autocompleted
 // only allows <null> set reset the field, whereas <undefined> would switch to uncontrolled mode,
@@ -69,7 +70,7 @@ export default function InstrumentTypeDrowns({
                     >
                         {instrumentCategories.map((option) => (
                             <MenuItem key={option.instrumentTypeId} value={option.name}>
-                                {option.label}
+                                {getInstrumentTypeLabel(option)}
                             </MenuItem>
                         ))}
                     </TextField>
