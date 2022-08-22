@@ -292,7 +292,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
                 <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-3"}>
                     <Button size={xlargeScreen ? "large" : "medium"}
-                        endIcon={<SearchIcon />}
+                        startIcon={<SearchIcon />}
                         onClick={() => { restartTimeout() }}
                         type='submit' variant="contained"
                         style={{ width: "100%", margin: "auto" }}>Search</Button>
@@ -300,7 +300,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
                 <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-1"}>
                     <Button size={xlargeScreen ? "large" : "medium"}
-                        endIcon={<RestartAltIcon />}
+                        startIcon={<RestartAltIcon />}
                         type="reset"
                         className="mt-2"
                         style={{ width: "100%", margin: "auto" }}>Reset</Button>
