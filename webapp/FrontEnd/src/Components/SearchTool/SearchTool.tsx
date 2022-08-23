@@ -8,7 +8,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import ExploreIcon from '@mui/icons-material/Explore';
-import Button from '@mui/material/Button';
 
 import SearchEngine, { SearchResponse } from './SearchEngine';
 import GoogleMap from './GoogleMap';
@@ -25,14 +24,13 @@ export default function SearchTool() {
 
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            
+
             {/* navigation Bar */}
             <AppBar position="fixed">
                 <Toolbar sx={{ pr: '24px' }} variant="dense">
                     <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                     <ExploreIcon/> Instrument Locator 
                     </Typography>
-                    <Button sx={{'&:hover': {color: '#ffffff'}}} href="/.auth/login/aad" color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
 

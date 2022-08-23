@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide, { SlideProps } from '@mui/material/Slide';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 import InstrumentApi from '../../Api/InstrumentApi';
 
@@ -51,10 +52,16 @@ export default function InstrumentPopup({ isOpen, doi, onPopupClose }: Instrumen
                             {instrumentData?.name} {instrumentData?.modelNumber ? ": " + instrumentData?.modelNumber : null}
                             
                         </Typography>
-                        <Button color="inherit" onClick={() =>
-                            window.open(`/doi/${doi}`, "_blank")}>
-                            Open in new Tab
-                        </Button>
+                        
+                        <ButtonGroup color="inherit" variant="text" aria-label="text button group">
+                            <Button color="inherit" onClick={() =>
+                                window.open(`/doi/${doi}`, "_blank")}>
+                                Open in new Tab
+                            </Button>
+                            <Button sx={{'&:hover': {color: '#ffffff'}}} href="/.auth/login/aad" variant="text" color="inherit">Login</Button>
+                        </ButtonGroup>
+                        
+
                     </Toolbar>
                 </AppBar>
                 {instrumentData && <InstrumentDetails instrument={instrumentData} />}
