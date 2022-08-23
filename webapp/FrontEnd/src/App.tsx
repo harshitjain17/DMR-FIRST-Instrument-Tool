@@ -12,7 +12,7 @@ import InstrumentPage from './Components/InstrumentDetail/InstrumentPage';
 import './App.css';
 
 // import { authProvider } from './Authentication/AuthProvider';
-
+ 
 log.debug(`Accessing server at ${config.url}`)
 const mdTheme = createTheme();
 
