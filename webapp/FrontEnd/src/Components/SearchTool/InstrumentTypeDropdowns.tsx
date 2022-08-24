@@ -39,19 +39,16 @@ export default function InstrumentTypeDrowns({
 
     // Instrument Categories Dropdown List
     React.useEffect(() => {
-        InstrumentTypeApi.getCategories().then((response) => {
-            setInstrumentCategories(response);
-        });
+        InstrumentTypeApi
+            .getCategories()
+            .then((response) => setInstrumentCategories(response));
     }, []);
 
     // Autocompletion of instrument types
     React.useEffect(() => {
-        const fetchData = async () => {
-            const response = await InstrumentTypeApi.getDropdownEntries(enteredInstrumentCategory);
-            setInstrumentTypes(response);
-            onInstrumentTypeSelected(null);
-        };
-        fetchData();
+        InstrumentTypeApi
+        .getDropdownEntries(enteredInstrumentCategory)
+            .then((types) => setInstrumentTypes(types));
     }, [enteredInstrumentCategory, onInstrumentTypeSelected]); // dependent on category selected
 
 
@@ -78,7 +75,8 @@ export default function InstrumentTypeDrowns({
 
             <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                 <Form.Group controlId="formInstrumentType">
-                    <Autocomplete 
+                    <Autocomplete
+                        key={enteredInstrumentCategory}
                         fullWidth={true}
                         size={xlargeScreen ? "medium" : "small"}
                         options={instrumentTypes}

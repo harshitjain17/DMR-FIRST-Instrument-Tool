@@ -123,13 +123,15 @@ export interface InstrumentSearchCriteria {
     instrumentTypeId?: number;
     /** Optional, only one of instrumentTypeId and InstrumentType should be used */
     instrumentType?: string;
-    /** Do and AND-search for all keywords. Keywords can be part of description or capabilities */
+    /** Do an AND-search for all keywords. Keywords can be part of description, capabilities, instrument names, manufacturer, or model */
     keywords: string[];
     /** internal Instool database ID for awards */
     awardId?: number;
     /** The official NSF DRM award number */
     awardNumber: string;
     /** 
+     * @deprecated Use keywords only
+     * 
      * Search both manufacturer and model field. If several words are entered,
      * an AND-search is performed, where each word has to be found in either manufacturer or model
      */
