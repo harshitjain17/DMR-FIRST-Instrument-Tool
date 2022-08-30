@@ -3,7 +3,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import { Instrument } from '../../Api/Model';
+import { Instrument, InstrumentStatus } from '../../Api/Model';
 import { getCategories, getInstrumentTypeLabel } from '../../Api/ModelUtils';
 
 
@@ -11,7 +11,7 @@ interface QuickSpecTabProps {
     instrument: Instrument
 }
 
-export default function QuickSpec({instrument}: QuickSpecTabProps) {
+export default function QuickSpec({ instrument }: QuickSpecTabProps) {
     const categories = getCategories(instrument);
     const categoryAvailable = categories.length > 0;
 
@@ -25,14 +25,14 @@ export default function QuickSpec({instrument}: QuickSpecTabProps) {
                 <Grid item xs="auto">{instrument.doi && <Typography variant="subtitle2" gutterBottom component="div">Digital Object Identifier (DOI):</Typography>}</Grid>
                 <Grid item xs="auto">{instrument.doi && <Typography variant="body2" gutterBottom>{instrument.doi}</Typography>}</Grid>
             </Grid>
-            
+
             {/* Citation
             <Grid container spacing={1}>
                 <Grid item xs="auto">{instrumentDetails?.doi && <Typography variant="subtitle2" gutterBottom component="div">Cited as: </Typography>}</Grid>
                 <Grid item xs="auto">{instrumentDetails?.doi && <Typography variant="body2" gutterBottom> https://dmr-first.org/{instrumentDetails?.doi} </Typography>}</Grid>
             </Grid>
              */}
-             
+
             {/* Instrument Category */}
             <Grid container spacing={1}>
                 <Grid item xs="auto">{categoryAvailable && <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography>}</Grid>
@@ -43,7 +43,7 @@ export default function QuickSpec({instrument}: QuickSpecTabProps) {
             <Grid container spacing={1} >
                 <Grid item xs="auto">{instrumentTypeAvailable && <Typography variant="subtitle2" gutterBottom component="div">Instrument Type: </Typography>}</Grid>
                 <Grid item xs="auto">{instrumentTypeAvailable && <Typography variant="body2" gutterBottom> {instrumentTypeString} </Typography>}</Grid>
-            </Grid>            
+            </Grid>
 
             {/* Manufacturer */}
             <Grid container spacing={1}>
@@ -66,9 +66,9 @@ export default function QuickSpec({instrument}: QuickSpecTabProps) {
             {/* Status */}
             <Grid container spacing={1}>
                 <Grid item xs="auto">{instrument?.status && <Typography variant="subtitle2" gutterBottom component="div">Status: </Typography>}</Grid>
-                <Grid item xs="auto">{instrument?.status && <Typography variant="body2" gutterBottom>{instrument?.status==="A" ? "Active" : "Inactive" } </Typography>}</Grid>
+                <Grid item xs="auto">{instrument?.status && <Typography variant="body2" gutterBottom>{instrument?.status === InstrumentStatus.Active ? "Active" : "Inactive"} </Typography>}</Grid>
             </Grid>
-            
+
         </Box>
     )
 }

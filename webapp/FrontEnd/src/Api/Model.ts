@@ -27,7 +27,11 @@ export interface Institution {
     facility: string
 }
 
-
+export enum InstrumentStatus {
+    Active = 'A',
+    Retired = 'R',
+    InProgress = 'P'
+}
 
 export interface Instrument {
     instrumentId: number,
@@ -36,7 +40,7 @@ export interface Instrument {
     modelNumber?: string,
     acquisitionDate?: string,
     completionDate?: string,
-    status: string,
+    status: InstrumentStatus,
     description: string,
     capabilities?: string,
     roomNumber?: string,
@@ -174,8 +178,7 @@ export interface InstrumentRow {
     name: string,
     /** instrument type, abbrevation if available. Could be comma seperated list */
     type: string,
-    /** a - available, r - retired, or p - in progress */
-    status: string,
+    status: InstrumentStatus,
     institution?: string,
     facility?: string,
     city: string,
