@@ -105,7 +105,7 @@ export interface InstrumentTypeDropdownEntry {
  * 
  */
 export interface SearchLocation {
-    address: string,
+    address?: string,
     latitude: number,
     longitude: number,
     maxDistance: number
