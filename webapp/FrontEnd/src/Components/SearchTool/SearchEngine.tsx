@@ -1,18 +1,18 @@
-import { Form } from 'react-bootstrap';
-
 import './SearchEngine.css';
 import React, { useState, useCallback, FormEventHandler } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
 import Chip from '@mui/material/Chip';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl, { useFormControl } from '@mui/material/FormControl'; // for helper text
+import FormHelperText from '@mui/material/FormHelperText'; //for helper text
 
 
 import DeviceLocation from './DeviceLocation';
@@ -165,6 +165,16 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
         setEnteredIRI(false);
     };
 
+    function MyFormHelperText() {
+        const { focused } = useFormControl() || {};
+        const helperText = React.useMemo(() => {
+          if (focused) {
+            return 'This field is being focused';
+          }
+        }, [focused]);
+      
+        return <FormHelperText>{helperText}</FormHelperText>;
+      }
 
 
     // breakpoints for responsiveness
@@ -172,45 +182,43 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
     return (
         <div className="px-3 border search-engine">
-            <Form onSubmit={submitHandler} onReset={resetHandler}>
+            <form onSubmit={submitHandler} onReset={resetHandler}>
                 <SearchToolHeader>{"SEARCH TOOL"}</SearchToolHeader>
                 <DeviceLocation onAddressFound={setEnteredAddress} />
+                
                 <div>
-                    <Form.Group controlId="formAddress">
-                        <TextField
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            onChange={addressChangeHandler}
-                            value={enteredAddress}
-                            label="Find instruments near"
-                            variant="outlined"
-                            required={enteredDistance !== '0'}
-                            data-error="Required when maximum Distance is set"
-                        />
-                    </Form.Group>
+                    <TextField
+                        id="formAddress"
+                        fullWidth={true}
+                        size={xlargeScreen ? "medium" : "small"}
+                        onChange={addressChangeHandler}
+                        value={enteredAddress}
+                        label="Find instruments near"
+                        variant="outlined"
+                        required={enteredDistance !== '0'}
+                        data-error="Required when maximum Distance is set"
+                    />
                 </div>
 
 
                 <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                    <Form.Group controlId="formDistance">
-                        <TextField
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            select
-                            label="Maximum Distance"
-                            value={enteredDistance}
-                            onChange={distanceChangeHandler}
-
-                        >
-                            <MenuItem key="25" value="25">25 miles</MenuItem>
-                            <MenuItem key="50" value="50">50 miles</MenuItem>
-                            <MenuItem key="75" value="75">75 miles</MenuItem>
-                            <MenuItem key="100" value="100">100 miles</MenuItem>
-                            <MenuItem key="150" value="150">150 miles</MenuItem>
-                            <MenuItem key="200" value="200">200 miles</MenuItem>
-                            <MenuItem key="0" value="0">US</MenuItem>
-                        </TextField>
-                    </Form.Group>
+                    <TextField
+                        id="formDistance"
+                        fullWidth={true}
+                        size={xlargeScreen ? "medium" : "small"}
+                        select
+                        label="Maximum Distance"
+                        value={enteredDistance}
+                        onChange={distanceChangeHandler}
+                    >
+                        <MenuItem key="25" value="25">25 miles</MenuItem>
+                        <MenuItem key="50" value="50">50 miles</MenuItem>
+                        <MenuItem key="75" value="75">75 miles</MenuItem>
+                        <MenuItem key="100" value="100">100 miles</MenuItem>
+                        <MenuItem key="150" value="150">150 miles</MenuItem>
+                        <MenuItem key="200" value="200">200 miles</MenuItem>
+                        <MenuItem key="0" value="0">US</MenuItem>
+                    </TextField>
                 </div>
 
                 <InstrumentTypeDropDowns
@@ -222,71 +230,67 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
 
                 <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                    <Form.Group controlId="formKeywords">
-                        <Autocomplete
-                            multiple
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            options={[]}
-                            freeSolo
-                            onChange={keywordsChangeHandler}
-                            renderTags={(value, getTagProps) =>
-                                value.map((option, index) => (
-                                    <Chip size={xlargeScreen ? "medium" : "small"} label={option} {...getTagProps({ index })} />
-                                ))
-                            }
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Capabilities description keywords"
-                                />
-                            )}
+                    <Autocomplete
+                        id="formKeywords"
+                        multiple
+                        fullWidth={true}
+                        size={xlargeScreen ? "medium" : "small"}
+                        options={[]}
+                        freeSolo
+                        onChange={keywordsChangeHandler}
+                        renderTags={(value, getTagProps) =>
+                            value.map((option, index) => (
+                                <Chip size={xlargeScreen ? "medium" : "small"} label={option} {...getTagProps({ index })} />
+                            ))
+                        }
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Capabilities description keywords"
+                            />
+                        )}
 
-                        />
-                    </Form.Group>
+                    />
                 </div>
 
 
                 <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                    <Form.Group controlId="formManufacturer">
-                        <TextField
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            onChange={manufacturerChangeHandler}
-                            value={enteredManufacturer}
-                            label="Manufacturer / Model"
-                            variant="outlined"
-
-                        />
-                    </Form.Group>
+                    <TextField
+                        id="formManufacturer"
+                        fullWidth={true}
+                        size={xlargeScreen ? "medium" : "small"}
+                        onChange={manufacturerChangeHandler}
+                        value={enteredManufacturer}
+                        label="Manufacturer / Model"
+                        variant="outlined"
+                    />
                 </div>
 
 
                 <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                    <Form.Group controlId="formAwardNumber">
-                        <TextField
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            value={enteredAwardNumber}
-                            onChange={awardNumberChangeHandler}
-                            label="Award Number"
-                            variant="outlined"
-
-                        />
-                    </Form.Group>
+                    <TextField
+                        id="formAwardNumber"
+                        fullWidth={true}
+                        size={xlargeScreen ? "medium" : "small"}
+                        value={enteredAwardNumber}
+                        onChange={awardNumberChangeHandler}
+                        label="Award Number"
+                        variant="outlined"
+                    />
                 </div>
 
                 <div className={xlargeScreen ? "mt-4" : "mt-2"}>
-                    <Form.Group className="mb-1" controlId="formIRI">
-                        <FormControlLabel control={
+                    <FormControlLabel
+                        id="formIRI"
+                        control={
                             <Checkbox
                                 checked={enteredIRI}
                                 onChange={IRIChangeHandler}
                                 inputProps={{ 'aria-label': 'controlled' }}
                             />
-                        } label="Include retired instruments"
-                        />
-                    </Form.Group>
+                        }
+                        label="Include retired instruments"
+                    />
                 </div>
 
 
@@ -305,7 +309,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                         className="mt-2"
                         style={{ width: "100%", margin: "auto" }}>Reset</Button>
                 </div>
-            </Form>
+            </form>
         </div>
 
     );
