@@ -87,6 +87,9 @@ export default function SearchTool() {
                                     flexDirection: 'column',
                                     height: '48vh',
                                 }}
+                                elevation={4}
+                                square={false}
+
                             >
                                 <DataTable
                                     instruments={response?.instruments || []}
