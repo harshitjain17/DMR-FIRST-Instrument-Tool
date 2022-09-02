@@ -20,7 +20,7 @@ import LocationApi from "../../Api/LocationApi";
 import InstrumentApi from "../../Api/InstrumentApi";
 
 import log from 'loglevel';
-import { LocationResult, InstrumentRow, SearchLocation, InstrumentTypeDropdownEntry} from '../../Api/Model';
+import { LocationResult, InstrumentRow, SearchLocation, InstrumentTypeDropdownEntry, InstrumentSearchCriteria} from '../../Api/Model';
 
 export interface SearchResponse {
     instruments: InstrumentRow[],
@@ -100,11 +100,11 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
             }
 
             // search criteria as expected by the server
-            const userInput = {
+            const userInput: InstrumentSearchCriteria = {
                 location: location,
                 instrumentType: enteredInstrumentType?.shortname ?? enteredInstrumentCategory ?? undefined,
                 keywords: enteredKeywords,
-                manufacturer: enteredManufacturer,
+                manufacturerOrModel: enteredManufacturer,
                 awardNumber: enteredAwardNumber,
                 includeRetired: enteredIRI
             };

@@ -27,7 +27,11 @@ export interface Institution {
     facility: string
 }
 
-
+export enum InstrumentStatus {
+    Active = 'A',
+    Retired = 'R',
+    InProgress = 'P'
+}
 
 export interface Instrument {
     instrumentId: number,
@@ -36,7 +40,7 @@ export interface Instrument {
     modelNumber?: string,
     acquisitionDate?: string,
     completionDate?: string,
-    status: string,
+    status: InstrumentStatus,
     description: string,
     capabilities?: string,
     roomNumber?: string,
@@ -101,7 +105,7 @@ export interface InstrumentTypeDropdownEntry {
  * 
  */
 export interface SearchLocation {
-    address: string,
+    address?: string,
     latitude: number,
     longitude: number,
     maxDistance: number
@@ -123,13 +127,15 @@ export interface InstrumentSearchCriteria {
     instrumentTypeId?: number;
     /** Optional, only one of instrumentTypeId and InstrumentType should be used */
     instrumentType?: string;
-    /** Do and AND-search for all keywords. Keywords can be part of description or capabilities */
+    /** Do an AND-search for all keywords. Keywords can be part of description, capabilities, instrument names, manufacturer, or model */
     keywords: string[];
     /** internal Instool database ID for awards */
     awardId?: number;
     /** The official NSF DRM award number */
     awardNumber: string;
     /** 
+     * @deprecated Use keywords only
+     * 
      * Search both manufacturer and model field. If several words are entered,
      * an AND-search is performed, where each word has to be found in either manufacturer or model
      */
@@ -172,8 +178,7 @@ export interface InstrumentRow {
     name: string,
     /** instrument type, abbrevation if available. Could be comma seperated list */
     type: string,
-    /** a - available, r - retired, or p - in progress */
-    status: string,
+    status: InstrumentStatus,
     institution?: string,
     facility?: string,
     city: string,
