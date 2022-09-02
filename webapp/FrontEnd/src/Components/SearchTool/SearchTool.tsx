@@ -43,7 +43,7 @@ export default function SearchTool() {
             <AppBar position="fixed">
                 <Toolbar sx={{ pr: '24px' }} variant="dense">
                     <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                    <ExploreIcon/> Instrument Locator 
+                    <ExploreIcon/> DMR-FIRST Instrument Tool 
                     </Typography>
                     <Button sx={{'&:hover': {color: '#ffffff'}}} color="inherit" onClick={() => handleLogin("popup")}>Login</Button>
                     {/* href="/.auth/login/aad" */}
