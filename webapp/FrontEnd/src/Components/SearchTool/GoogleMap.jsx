@@ -88,7 +88,7 @@ export function GoogleMap({locations, onSelectLocation, google}) {
     <Map
       google={google}
       style={{ width: '100%', height: '100%', position: "static", border: xlargeScreen ? '8px solid white':'5px solid white' }}
-      containerStyle={{ width: "35vw", height: xlargeScreen ? '46vh' : '41vh' }}
+      containerStyle={{ width: "45vw", height: xlargeScreen ? '40vh' : '40vh' }}
       bounds={bounds}
       center={center}
       zoom={zoom}

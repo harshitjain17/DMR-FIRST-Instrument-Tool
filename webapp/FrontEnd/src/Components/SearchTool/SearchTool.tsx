@@ -45,6 +45,7 @@ export default function SearchTool() {
                     <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
                     <ExploreIcon/> DMR-FIRST Instrument Tool 
                     </Typography>
+                    
                     <Button sx={{'&:hover': {color: '#ffffff'}}} color="inherit" onClick={() => handleLogin("popup")}>Login</Button>
                     {/* href="/.auth/login/aad" */}
                 </Toolbar>
@@ -74,7 +75,7 @@ export default function SearchTool() {
             >
                 <Toolbar />
                 <Container maxWidth="lg" sx={{ mb: 2 }}>
-                    <Grid container spacing={2}>
+                    <Grid container justifyContent="center" spacing={2}>
 
                         {/* Datatable */}
                         <Grid item xs={12} md={12} lg={12}>
@@ -96,7 +97,7 @@ export default function SearchTool() {
                         </Grid>
 
                         {/* Google Maps */}
-                        <Grid item xs={6} md={6} lg={6}>
+                        <Grid item xs={8} md={8} lg={8}>
                             <GoogleMap locations={response?.locations ?? []} onSelectLocation={(locationId?: string ) => selectLocation(locationId)} />
                         </Grid>
                     </Grid>
