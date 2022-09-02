@@ -1,19 +1,18 @@
+import { Form } from 'react-bootstrap';
+
 import './SearchEngine.css';
 import React, { useState, useCallback, FormEventHandler } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import MenuItem from '@mui/material/MenuItem';
 import Chip from '@mui/material/Chip';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl, { useFormControl } from '@mui/material/FormControl'; // for helper text
-import FormHelperText from '@mui/material/FormHelperText'; //for helper text
-
 
 import DeviceLocation from './DeviceLocation';
 import InstrumentTypeDropDowns from './InstrumentTypeDropdowns';
@@ -165,24 +164,20 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
         setEnteredIRI(false);
     };
 
-    function MyFormHelperText() {
-        const { focused } = useFormControl() || {};
-        const helperText = React.useMemo(() => {
-          if (focused) {
-            return 'This field is being focused';
-          }
-        }, [focused]);
-      
-        return <FormHelperText>{helperText}</FormHelperText>;
-      }
-
-
     // breakpoints for responsiveness
     const xlargeScreen = useMediaQuery('(min-width:2560px)');
+ 
+    // focus states for helper text (below input boxes)
+    const [focus1, setFocus1] = useState(false);
+    const [focus2, setFocus2] = useState(false);
+    const [focus5, setFocus5] = useState(false);
+    const [focus6, setFocus6] = useState(false);
+    const [focus7, setFocus7] = useState(false);
+
 
     return (
         <div className="px-3 border search-engine">
-            <form onSubmit={submitHandler} onReset={resetHandler}>
+            <Form onSubmit={submitHandler} onReset={resetHandler}>
                 <SearchToolHeader>{"SEARCH TOOL"}</SearchToolHeader>
                 <DeviceLocation onAddressFound={setEnteredAddress} />
                 
@@ -195,6 +190,9 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                         value={enteredAddress}
                         label="Find instruments near"
                         variant="outlined"
+                        onFocus={() => {setFocus1(true)}}
+                        onBlur={() => {setFocus1(false)}}
+                        helperText={ focus1 ? "Enter the location near which you want to search for the instrument." : "" }
                         required={enteredDistance !== '0'}
                         data-error="Required when maximum Distance is set"
                     />
@@ -210,6 +208,9 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                         label="Maximum Distance"
                         value={enteredDistance}
                         onChange={distanceChangeHandler}
+                        onFocus={() => {setFocus2(true)}}
+                        onBlur={() => {setFocus2(false)}}
+                        helperText={ focus2 ? "Select the distance radius." : "" }
                     >
                         <MenuItem key="25" value="25">25 miles</MenuItem>
                         <MenuItem key="50" value="50">50 miles</MenuItem>
@@ -247,6 +248,9 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                             <TextField
                                 {...params}
                                 label="Capabilities description keywords"
+                                onFocus={() => {setFocus5(true)}}
+                                onBlur={() => {setFocus5(false)}}
+                                helperText={ focus5 ? "Enter any keywords which you think may be present in the description of the instrument." : "" }
                             />
                         )}
 
@@ -263,6 +267,9 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                         value={enteredManufacturer}
                         label="Manufacturer / Model"
                         variant="outlined"
+                        onFocus={() => {setFocus6(true)}}
+                        onBlur={() => {setFocus6(false)}}
+                        helperText={ focus6 ? "Enter the exact manufacturer/model (optional). You can also search all instruments from the same manufacturer." : "" }
                     />
                 </div>
 
@@ -276,21 +283,26 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                         onChange={awardNumberChangeHandler}
                         label="Award Number"
                         variant="outlined"
+                        onFocus={() => {setFocus7(true)}}
+                        onBlur={() => {setFocus7(false)}}
+                        helperText={ focus7 ? "Enter the exact award number (optional)." : "" }
                     />
                 </div>
 
                 <div className={xlargeScreen ? "mt-4" : "mt-2"}>
-                    <FormControlLabel
-                        id="formIRI"
-                        control={
-                            <Checkbox
-                                checked={enteredIRI}
-                                onChange={IRIChangeHandler}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                            />
-                        }
-                        label="Include retired instruments"
-                    />
+                    <Form.Group className="mb-1" controlId="formIRI">
+                        <FormControlLabel
+                            id="formIRI"
+                            control={
+                                <Checkbox
+                                    checked={enteredIRI}
+                                    onChange={IRIChangeHandler}
+                                    inputProps={{ 'aria-label': 'controlled' }}
+                                />
+                            }
+                            label="Include retired instruments"
+                        />
+                    </Form.Group>
                 </div>
 
 
@@ -309,7 +321,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
                         className="mt-2"
                         style={{ width: "100%", margin: "auto" }}>Reset</Button>
                 </div>
-            </form>
+            </Form>
         </div>
 
     );

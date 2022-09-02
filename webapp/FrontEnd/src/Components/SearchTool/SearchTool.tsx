@@ -68,7 +68,7 @@ export default function SearchTool() {
                             ? theme.palette.grey[100]
                             : theme.palette.grey[900],
                     flexGrow: 1,
-                    height: '105vh',
+                    maxHeight: '115vh',
                     overflow: 'auto',
                 }}
             >

@@ -54,6 +54,9 @@ export default function InstrumentTypeDrowns({
         fetchData();
     }, [enteredInstrumentCategory, onInstrumentTypeSelected]); // dependent on category selected
 
+    // focus states for helper text (below input boxes)
+    const [focus3, setFocus3] = useState(false);
+    const [focus4, setFocus4] = useState(false);
 
     return (
         <Fragment>
@@ -66,6 +69,9 @@ export default function InstrumentTypeDrowns({
                         label="Instrument Category"
                         value={enteredInstrumentCategory}
                         onChange={instrumentCategoryChangeHandler}
+                        onFocus={() => {setFocus3(true)}}
+                        onBlur={() => {setFocus3(false)}}
+                        helperText={ focus3 ? "Select the category (optional). If you do not select category here, then you can browse all techniques in the next Textfield. " : "" }
                     >
                         {instrumentCategories.map((option) => (
                             <MenuItem key={option.instrumentTypeId} value={option.name}>
@@ -92,7 +98,14 @@ export default function InstrumentTypeDrowns({
                         }}
                         value={enteredInstrumentType}
                         onChange={instrumentTypeChangeHandler}
-                        renderInput={(params) => <TextField {...params} label="Instrument Type" />}
+                        renderInput={(params) => 
+                        <TextField
+                            {...params}
+                            label="Instrument Type"
+                            onFocus={() => {setFocus4(true)}}
+                            onBlur={() => {setFocus4(false)}}
+                            helperText={ focus4 ? "Select the instrument technique (recommended)." : "" }
+                        />}
 
                     />
                 </Form.Group>
