@@ -176,7 +176,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
 
     return (
-        <div className="px-3 border search-engine">
+        <div className="px-3 search-engine">
             <Form onSubmit={submitHandler} onReset={resetHandler}>
                 <SearchToolHeader>{"SEARCH TOOL"}</SearchToolHeader>
                 <DeviceLocation onAddressFound={setEnteredAddress} />
