@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InstrumentTypeApi from '../../Api/InstrumentTypeApi';
 import { InstrumentType, InstrumentTypeDropdownEntry } from '../../Api/Model';
 import { getInstrumentTypeLabel } from '../../Api/ModelUtils';
+import Tooltip from '@mui/material/Tooltip';
 
 // We do need <null> here instead of <undefined>, the MUI autocompleted
 // only allows <null> set reset the field, whereas <undefined> would switch to uncontrolled mode,
@@ -56,57 +57,61 @@ export function InstrumentTypeDropDowns({
 
     return (
         <Fragment>
-            <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                <Form.Group controlId="formInstrumentCategory">
-                    <TextField
-                        fullWidth={true}
-                        size={xlargeScreen ? "medium" : "small"}
-                        select
-                        label="Instrument Category"
-                        value={instrumentCategory}
-                        onChange={instrumentCategoryChangeHandler}
-                        onFocus={() => { setCategoryFocues(true) }}
-                        onBlur={() => { setCategoryFocues(false) }}
-                        helperText={categoryFocused ? "Select the category (optional). If you do not select category here, then you can browse all techniques in the next Textfield. " : ""}
-                    >
-                        {instrumentCategories.map((option) => (
-                            <MenuItem key={option.instrumentTypeId} value={option.name}>
-                                {getInstrumentTypeLabel(option)}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Form.Group>
-            </div>
+            <Tooltip title="Select an instrument category, and show instrument types grouped by techniques in that category.">
+                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
+                    <Form.Group controlId="formInstrumentCategory">
+                        <TextField
+                            fullWidth={true}
+                            size={xlargeScreen ? "medium" : "small"}
+                            select
+                            label="Instrument Category"
+                            value={instrumentCategory}
+                            onChange={instrumentCategoryChangeHandler}
+                            onFocus={() => { setCategoryFocues(true) }}
+                            onBlur={() => { setCategoryFocues(false) }}
+                            helperText={categoryFocused ? "Select an instrument category, and show instrument types grouped by techniques in that category." : ""}
+                        >
+                            {instrumentCategories.map((option) => (
+                                <MenuItem key={option.instrumentTypeId} value={option.name}>
+                                    {getInstrumentTypeLabel(option)}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Form.Group>
+                </div>
+            </Tooltip>
 
-            <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                <Form.Group controlId="formInstrumentType">
-                    <Autocomplete
-                        key={instrumentCategory}
-                        fullWidth={true}
-                        size={xlargeScreen ? "medium" : "small"}
-                        options={instrumentTypes}
-                        isOptionEqualToValue={(option, value) => option?.shortname === value?.shortname}
-                        groupBy={(option) => option.categoryLabel}
-                        getOptionLabel={(option) => getInstrumentTypeLabel(option)}
+            <Tooltip title="Select an instrument type, i.e. the instrument technique.">
+                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
+                    <Form.Group controlId="formInstrumentType">
+                        <Autocomplete
+                            key={instrumentCategory}
+                            fullWidth={true}
+                            size={xlargeScreen ? "medium" : "small"}
+                            options={instrumentTypes}
+                            isOptionEqualToValue={(option, value) => option?.shortname === value?.shortname}
+                            groupBy={(option) => option.categoryLabel}
+                            getOptionLabel={(option) => getInstrumentTypeLabel(option)}
 
-                        inputValue={instrumentTypeSearchText}
-                        onInputChange={(event, newInputValue) => {
-                            setInstrumentTypeSearchText(newInputValue);
-                        }}
-                        value={instrumentType}
-                        onChange={instrumentTypeChangeHandler}
-                        renderInput={(params) =>
-                            <TextField
-                                {...params}
-                                label="Instrument Type"
-                                onFocus={() => { setTypeFocused(true) }}
-                                onBlur={() => { setTypeFocused(false) }}
-                                helperText={typeFocused ? "Select the instrument technique (recommended)." : ""}
-                            />}
+                            inputValue={instrumentTypeSearchText}
+                            onInputChange={(event, newInputValue) => {
+                                setInstrumentTypeSearchText(newInputValue);
+                            }}
+                            value={instrumentType}
+                            onChange={instrumentTypeChangeHandler}
+                            renderInput={(params) =>
+                                <TextField
+                                    {...params}
+                                    label="Instrument Type"
+                                    onFocus={() => { setTypeFocused(true) }}
+                                    onBlur={() => { setTypeFocused(false) }}
+                                    helperText={typeFocused ? "Select an instrument type, i.e. the instemnt technique." : ""}
+                                />}
 
-                    />
-                </Form.Group>
-            </div>
+                        />
+                    </Form.Group>
+                </div>
+            </Tooltip>
         </Fragment>
     )
 }

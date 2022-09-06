@@ -1,5 +1,6 @@
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
 import React, { KeyboardEvent, SyntheticEvent, useState } from "react"
 
 
@@ -44,28 +45,29 @@ export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKe
 
     return (
         <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-            <TextField
-                id="formKeywords"
-                label="Keywords (capabilities, manufacturer, model)"
-                fullWidth={true}
-                size={xlargeScreen ? "medium" : "small"}
-                value={inputValue}
-                onChange={inputChange}
-                InputProps={{
-                    startAdornment: inputValue || keywords.length ? keywords.map((item) => (
-                        <Chip
-                            key={item}
-                            label={item}
-                            size={xlargeScreen ? "medium" : "small"}
-                            onDelete={() => removeKeyword(item)} />
-                    )) : undefined,
-                }}
-                onFocus={() => { setFocused(true) }}
-                onBlur={handleBlur}
-                onKeyDown={handleKeyDown}
-                helperText={focused ? "Search for keywords in the instrument name, capabilities or description section, manufacturer and the model number." : ""}
-
-            />
+            <Tooltip title="Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number.">
+                <TextField
+                    id="formKeywords"
+                    label="Keywords (capabilities, manufacturer, model)"
+                    fullWidth={true}
+                    size={xlargeScreen ? "medium" : "small"}
+                    value={inputValue}
+                    onChange={inputChange}
+                    InputProps={{
+                        startAdornment: inputValue || keywords.length ? keywords.map((item) => (
+                            <Chip
+                                key={item}
+                                label={item}
+                                size={xlargeScreen ? "medium" : "small"}
+                                onDelete={() => removeKeyword(item)} />
+                        )) : undefined,
+                    }}
+                    onFocus={() => { setFocused(true) }}
+                    onBlur={handleBlur}
+                    onKeyDown={handleKeyDown}
+                    helperText={focused ? "Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number." : ""}
+                />
+            </Tooltip>
         </div>
     )
 }
