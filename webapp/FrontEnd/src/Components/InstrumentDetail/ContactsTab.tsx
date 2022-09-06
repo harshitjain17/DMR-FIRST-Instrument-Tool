@@ -14,7 +14,7 @@ interface ContactsTabProps {
     contacts: Investigator[];
 }
 
-export default function ContactsTable({ contacts }: ContactsTabProps) {
+export function ContactsTab({ contacts }: ContactsTabProps) {
     return (
         <TableContainer style={{ maxHeight: '35vh' }}>
             <Table stickyHeader sx={{ minWidth: '35vw' }} aria-label="simple table">

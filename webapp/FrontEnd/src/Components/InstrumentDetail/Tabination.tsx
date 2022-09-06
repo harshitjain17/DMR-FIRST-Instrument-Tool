@@ -3,10 +3,10 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import ContactsTable from './ContactsTable';
-import QuickSpec from './QuickSpecTab';
-import LocationTab from './LocationTab';
-import AwardTab from './AwardTab';
+import { ContactsTab } from './ContactsTab';
+import { QuickSpec } from './QuickSpecTab';
+import { LocationTab } from './LocationTab';
+import { AwardsTab } from './AwardTab';
 import { Instrument } from '../../Api/Model';
 
 interface TabPanelProps {
@@ -80,11 +80,11 @@ export default function Tabination({ instrument }: TabinationProps) {
       </TabPanel>
 
       <TabPanel selectedIndex={selectedIndex} index={2}>
-        <ContactsTable contacts={instrument.contacts ?? []} />
+        <ContactsTab contacts={instrument.contacts ?? []} />
       </TabPanel>
 
       <TabPanel selectedIndex={selectedIndex} index={3}>
-        <AwardTab awards={instrument.awards} />
+        <AwardsTab awards={instrument.awards} />
       </TabPanel>
 
       <TabPanel selectedIndex={selectedIndex} index={4}>

@@ -14,7 +14,7 @@ interface DeviceLocationProps {
     onAddressFound: (address: string) => void
 }
 
-export default function DeviceLocation({ onAddressFound }: DeviceLocationProps) {
+export function DeviceLocation({ onAddressFound }: DeviceLocationProps) {
     // Snackbar
     const [open, setOpen] = React.useState(false);
     const [status, setStatus] = useState<string>('');

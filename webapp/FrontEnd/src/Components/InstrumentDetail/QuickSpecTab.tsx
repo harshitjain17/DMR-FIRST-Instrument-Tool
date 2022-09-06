@@ -11,7 +11,7 @@ interface QuickSpecTabProps {
     instrument: Instrument
 }
 
-export default function QuickSpec({ instrument }: QuickSpecTabProps) {
+export function QuickSpec({ instrument }: QuickSpecTabProps) {
     const categories = getCategories(instrument);
     const categoryAvailable = categories.length > 0;
 

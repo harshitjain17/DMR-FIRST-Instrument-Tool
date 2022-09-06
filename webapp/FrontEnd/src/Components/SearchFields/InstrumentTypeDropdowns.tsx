@@ -13,21 +13,24 @@ import { getInstrumentTypeLabel } from '../../Api/ModelUtils';
 // where users can enter any value.  
 interface IInstrumentTypeDropdownProps {
     xlargeScreen: boolean,
-    enteredInstrumentCategory: string | null,
-    enteredInstrumentType: InstrumentTypeDropdownEntry | null,
+    instrumentCategory: string | null,
+    instrumentType: InstrumentTypeDropdownEntry | null,
     onInstrumentCategorySelected: (value: string | null) => void,
     onInstrumentTypeSelected: (value: InstrumentTypeDropdownEntry | null) => void
 }
 
-export default function InstrumentTypeDrowns({
+export function InstrumentTypeDropDowns({
     xlargeScreen,
-    enteredInstrumentCategory, enteredInstrumentType,
+    instrumentCategory, instrumentType,
     onInstrumentCategorySelected, onInstrumentTypeSelected }: IInstrumentTypeDropdownProps) {
 
     const [instrumentCategories, setInstrumentCategories] = useState<InstrumentType[]>([]);
     const [instrumentTypes, setInstrumentTypes] = useState<InstrumentTypeDropdownEntry[]>([]);
     const [instrumentTypeSearchText, setInstrumentTypeSearchText] = useState<string>('');
 
+    // focus states for helper text (below input boxes)
+    const [categoryFocused, setCategoryFocues] = useState(false);
+    const [typeFocused, setTypeFocused] = useState(false);
 
     const instrumentCategoryChangeHandler = (event: any) => {
         onInstrumentCategorySelected(event.target.value);
@@ -47,13 +50,9 @@ export default function InstrumentTypeDrowns({
     // Autocompletion of instrument types
     React.useEffect(() => {
         InstrumentTypeApi
-        .getDropdownEntries(enteredInstrumentCategory)
+            .getDropdownEntries(instrumentCategory)
             .then((types) => setInstrumentTypes(types));
-    }, [enteredInstrumentCategory, onInstrumentTypeSelected]); // dependent on category selected
-
-    // focus states for helper text (below input boxes)
-    const [focus3, setFocus3] = useState(false);
-    const [focus4, setFocus4] = useState(false);
+    }, [instrumentCategory, onInstrumentTypeSelected]); // dependent on category selected
 
     return (
         <Fragment>
@@ -64,11 +63,11 @@ export default function InstrumentTypeDrowns({
                         size={xlargeScreen ? "medium" : "small"}
                         select
                         label="Instrument Category"
-                        value={enteredInstrumentCategory}
+                        value={instrumentCategory}
                         onChange={instrumentCategoryChangeHandler}
-                        onFocus={() => {setFocus3(true)}}
-                        onBlur={() => {setFocus3(false)}}
-                        helperText={ focus3 ? "Select the category (optional). If you do not select category here, then you can browse all techniques in the next Textfield. " : "" }
+                        onFocus={() => { setCategoryFocues(true) }}
+                        onBlur={() => { setCategoryFocues(false) }}
+                        helperText={categoryFocused ? "Select the category (optional). If you do not select category here, then you can browse all techniques in the next Textfield. " : ""}
                     >
                         {instrumentCategories.map((option) => (
                             <MenuItem key={option.instrumentTypeId} value={option.name}>
@@ -82,7 +81,7 @@ export default function InstrumentTypeDrowns({
             <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                 <Form.Group controlId="formInstrumentType">
                     <Autocomplete
-                        key={enteredInstrumentCategory}
+                        key={instrumentCategory}
                         fullWidth={true}
                         size={xlargeScreen ? "medium" : "small"}
                         options={instrumentTypes}
@@ -94,16 +93,16 @@ export default function InstrumentTypeDrowns({
                         onInputChange={(event, newInputValue) => {
                             setInstrumentTypeSearchText(newInputValue);
                         }}
-                        value={enteredInstrumentType}
+                        value={instrumentType}
                         onChange={instrumentTypeChangeHandler}
-                        renderInput={(params) => 
-                        <TextField
-                            {...params}
-                            label="Instrument Type"
-                            onFocus={() => {setFocus4(true)}}
-                            onBlur={() => {setFocus4(false)}}
-                            helperText={ focus4 ? "Select the instrument technique (recommended)." : "" }
-                        />}
+                        renderInput={(params) =>
+                            <TextField
+                                {...params}
+                                label="Instrument Type"
+                                onFocus={() => { setTypeFocused(true) }}
+                                onBlur={() => { setTypeFocused(false) }}
+                                helperText={typeFocused ? "Select the instrument technique (recommended)." : ""}
+                            />}
 
                     />
                 </Form.Group>

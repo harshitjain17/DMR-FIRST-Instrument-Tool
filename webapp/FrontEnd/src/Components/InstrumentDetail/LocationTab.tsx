@@ -11,7 +11,7 @@ interface LocationTabProps {
     location?: Location
 }
 
-export default function LocationTab({instrument, location}: LocationTabProps) {
+export function LocationTab({instrument, location}: LocationTabProps) {
     return (
         <Box sx={{ display: 'flex' }}>
             <Box sx={{width: "33%"}}>
