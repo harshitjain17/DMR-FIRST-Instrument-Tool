@@ -19,5 +19,7 @@
 
         public bool? IncludeRetired { get; set; }
 
+        public string? SerialNumber { get; set; }
+
     }
 }

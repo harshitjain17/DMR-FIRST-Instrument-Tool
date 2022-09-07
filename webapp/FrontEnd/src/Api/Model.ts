@@ -140,6 +140,7 @@ export interface InstrumentSearchCriteria {
      * an AND-search is performed, where each word has to be found in either manufacturer or model
      */
     manufacturerOrModel?: string;
+    serialNumber?: string;
     includeRetired: boolean;
 }
 
