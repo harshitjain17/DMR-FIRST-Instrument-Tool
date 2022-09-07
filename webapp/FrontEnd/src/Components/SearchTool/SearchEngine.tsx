@@ -2,30 +2,27 @@ import { Form } from 'react-bootstrap';
 
 import './SearchEngine.css';
 import React, { useState, useCallback, FormEventHandler } from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import MenuItem from '@mui/material/MenuItem';
-import Chip from '@mui/material/Chip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-
-import DeviceLocation from './DeviceLocation';
-import InstrumentTypeDropDowns from './InstrumentTypeDropdowns';
+import { DeviceLocation } from '../SearchFields/DeviceLocation';
+import { InstrumentTypeDropDowns } from '../SearchFields/InstrumentTypeDropdowns';
 import LocationApi from "../../Api/LocationApi";
 import InstrumentApi from "../../Api/InstrumentApi";
 
 import log from 'loglevel';
-import { ILocationResult, InstrumentRow, SearchLocation, InstrumentTypeDropdownEntry} from '../../Api/Model';
+import { LocationResult, InstrumentRow, SearchLocation, InstrumentTypeDropdownEntry, InstrumentSearchCriteria } from '../../Api/Model';
+import { SearchAddressField, DistanceField } from '../SearchFields/LocationFields';
+import { KeywordsField } from '../SearchFields/KeywordsField';
+import { AwardField } from '../SearchFields/AwardField';
+import { FilterByStatus } from '../SearchFields/FilterByStatus';
 
 export interface SearchResponse {
     instruments: InstrumentRow[],
-    locations: ILocationResult[],
+    locations: LocationResult[],
     searchLocation?: SearchLocation
 }
 
@@ -48,30 +45,6 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
     const [enteredAwardNumber, setEnteredAwardNumber] = useState<string>('');
     const [enteredIRI, setEnteredIRI] = useState<boolean>(false);
 
-    const addressChangeHandler = (event: any) => {
-        setEnteredAddress(event.target.value);
-    };
-
-    const distanceChangeHandler = (event: any) => {
-        setEnteredDistance(event.target.value);
-    };
-
-    const keywordsChangeHandler = (event: any) => {
-        enteredKeywords.push(event.target.value);
-        setEnteredKeywords(enteredKeywords);
-    };
-
-    const manufacturerChangeHandler = (event: any) => {
-        setEnteredManufacturer(event.target.value);
-    };
-
-    const awardNumberChangeHandler = (event: any) => {
-        setEnteredAwardNumber(event.target.value);
-    };
-
-    const IRIChangeHandler = () => {
-        setEnteredIRI(!enteredIRI);
-    };
 
 
     // typography
@@ -88,9 +61,9 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
     const submitHandler: FormEventHandler = async (event) => {
         event.preventDefault();
         try {
-            let location : SearchLocation | undefined = undefined;
+            let location: SearchLocation | undefined = undefined;
             if (enteredAddress) {
-                var coord = await LocationApi.getCoordinates(enteredAddress);
+                const coord = await LocationApi.getCoordinates(enteredAddress);
                 location = {
                     address: enteredAddress,
                     latitude: coord.latitude,
@@ -101,11 +74,11 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
             }
 
             // search criteria as expected by the server
-            const userInput = {
+            const userInput: InstrumentSearchCriteria = {
                 location: location,
-                instrumentType: enteredInstrumentType?.value ?? enteredInstrumentCategory ?? undefined,
+                instrumentType: enteredInstrumentType?.shortname ?? enteredInstrumentCategory ?? undefined,
                 keywords: enteredKeywords,
-                manufacturer: enteredManufacturer,
+                manufacturerOrModel: enteredManufacturer,
                 awardNumber: enteredAwardNumber,
                 includeRetired: enteredIRI
             };
@@ -165,134 +138,38 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
         setEnteredIRI(false);
     };
 
-
-
     // breakpoints for responsiveness
     const xlargeScreen = useMediaQuery('(min-width:2560px)');
 
+
+
     return (
-        <div className="px-3 border search-engine">
+        <div className="px-3 search-engine">
             <Form onSubmit={submitHandler} onReset={resetHandler}>
                 <SearchToolHeader>{"SEARCH TOOL"}</SearchToolHeader>
+
                 <DeviceLocation onAddressFound={setEnteredAddress} />
-                <div>
-                    <Form.Group controlId="formAddress">
-                        <TextField
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            onChange={addressChangeHandler}
-                            value={enteredAddress}
-                            label="Find instruments near"
-                            variant="outlined"
-                            required={enteredDistance !== '0'}
-                            data-error="Required when maximum Distance is set"
-                        />
-                    </Form.Group>
-                </div>
 
+                <SearchAddressField address={enteredAddress} onAddressChanged={setEnteredAddress} xlargeScreen={xlargeScreen} distance={enteredDistance} />
 
-                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                    <Form.Group controlId="formDistance">
-                        <TextField
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            select
-                            label="Maximum Distance"
-                            value={enteredDistance}
-                            onChange={distanceChangeHandler}
-
-                        >
-                            <MenuItem key="25" value="25">25 miles</MenuItem>
-                            <MenuItem key="50" value="50">50 miles</MenuItem>
-                            <MenuItem key="75" value="75">75 miles</MenuItem>
-                            <MenuItem key="100" value="100">100 miles</MenuItem>
-                            <MenuItem key="150" value="150">150 miles</MenuItem>
-                            <MenuItem key="200" value="200">200 miles</MenuItem>
-                            <MenuItem key="0" value="0">US</MenuItem>
-                        </TextField>
-                    </Form.Group>
-                </div>
+                <DistanceField distance={enteredDistance} onDistanceChanged={setEnteredDistance} xlargeScreen={xlargeScreen} />
 
                 <InstrumentTypeDropDowns
                     xlargeScreen={xlargeScreen}
-                    enteredInstrumentCategory={enteredInstrumentCategory}
-                    enteredInstrumentType={enteredInstrumentType}
+                    instrumentCategory={enteredInstrumentCategory}
+                    instrumentType={enteredInstrumentType}
                     onInstrumentCategorySelected={setEnteredInstrumentCategory}
                     onInstrumentTypeSelected={setEnteredInstrumentType} />
 
+                <KeywordsField keywords={enteredKeywords} onKeywordsChanged={setEnteredKeywords} xlargeScreen={xlargeScreen}/>
 
-                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                    <Form.Group controlId="formKeywords">
-                        <Autocomplete
-                            multiple
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            options={[]}
-                            freeSolo
-                            onChange={keywordsChangeHandler}
-                            renderTags={(value, getTagProps) =>
-                                value.map((option, index) => (
-                                    <Chip size={xlargeScreen ? "medium" : "small"} label={option} {...getTagProps({ index })} />
-                                ))
-                            }
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Capabilities description keywords"
-                                />
-                            )}
+                <AwardField awardNumber={enteredAwardNumber} onAwardNumberChanged={setEnteredAwardNumber} xlargeScreen={xlargeScreen}/>
 
-                        />
-                    </Form.Group>
-                </div>
-
-
-                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                    <Form.Group controlId="formManufacturer">
-                        <TextField
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            onChange={manufacturerChangeHandler}
-                            value={enteredManufacturer}
-                            label="Manufacturer / Model"
-                            variant="outlined"
-
-                        />
-                    </Form.Group>
-                </div>
-
-
-                <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-                    <Form.Group controlId="formAwardNumber">
-                        <TextField
-                            fullWidth={true}
-                            size={xlargeScreen ? "medium" : "small"}
-                            value={enteredAwardNumber}
-                            onChange={awardNumberChangeHandler}
-                            label="Award Number"
-                            variant="outlined"
-
-                        />
-                    </Form.Group>
-                </div>
-
-                <div className={xlargeScreen ? "mt-4" : "mt-2"}>
-                    <Form.Group className="mb-1" controlId="formIRI">
-                        <FormControlLabel control={
-                            <Checkbox
-                                checked={enteredIRI}
-                                onChange={IRIChangeHandler}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                            />
-                        } label="Include retired instruments"
-                        />
-                    </Form.Group>
-                </div>
-
+                <FilterByStatus includeRetired={enteredIRI} onIncludeRetiredrChanged={setEnteredIRI} xlargeScreen={xlargeScreen} />
 
                 <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-3"}>
                     <Button size={xlargeScreen ? "large" : "medium"}
-                        endIcon={<SearchIcon />}
+                        startIcon={<SearchIcon />}
                         onClick={() => { restartTimeout() }}
                         type='submit' variant="contained"
                         style={{ width: "100%", margin: "auto" }}>Search</Button>
@@ -300,7 +177,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
                 <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-1"}>
                     <Button size={xlargeScreen ? "large" : "medium"}
-                        endIcon={<RestartAltIcon />}
+                        startIcon={<RestartAltIcon />}
                         type="reset"
                         className="mt-2"
                         style={{ width: "100%", margin: "auto" }}>Reset</Button>
@@ -309,4 +186,4 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
         </div>
 
     );
-};
+}

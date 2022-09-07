@@ -11,6 +11,8 @@ import SearchTool from './Components/SearchTool/SearchTool';
 import InstrumentPage from './Components/InstrumentDetail/InstrumentPage';
 import './App.css';
 
+// import { authProvider } from './Authentication/AuthProvider';
+ 
 log.debug(`Accessing server at ${config.url}`)
 const mdTheme = createTheme();
 
@@ -22,9 +24,11 @@ function App() {
   }
 
   return (
-    <ThemeProvider theme={mdTheme}>
-      {doi ? <InstrumentPage doi={doi} /> : <SearchTool />}
-    </ThemeProvider>
+    <div>
+      <ThemeProvider theme={mdTheme}>
+        {doi ? <InstrumentPage doi={doi} /> : <SearchTool />}
+      </ThemeProvider>
+    </div>
   );
 
 }

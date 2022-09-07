@@ -9,7 +9,7 @@ export default function initLogging() {
 
   document.addEventListener('keydown', e => {
     if (e.ctrlKey && e.code === 'F12') {
-      const loglevel = log.getLevel() === 0 ? 5 : log.getLevel() - 1;;
+      const loglevel = log.getLevel() === 0 ? 5 : log.getLevel() - 1;
       log.setLevel(log.levels.INFO);
       log.info(`Logging turned to ${levels[loglevel]}`);
       // Also typscript doesn't like this, it also works with number. Easier to just cycle through

@@ -71,7 +71,7 @@ with open('data/instruments.csv', encoding='utf-8-sig') as csvfile:
     for row in reader:
         data = create_json(row)
 
-        result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False)
+        result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False, timeout=60)
         if result.status_code == 201 or result.status_code == 200:
                 print('Sucessfully added {}'.format(row["Name"]))
         else: 

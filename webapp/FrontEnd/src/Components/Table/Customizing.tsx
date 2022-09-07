@@ -73,5 +73,5 @@ export function CustomNoRowsOverlay() {
         <Box sx={{ mt: 1 }}>No Rows</Box>
       </StyledGridOverlay>
     );
-  };
+  }
   

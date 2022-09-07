@@ -14,7 +14,7 @@ interface AwardTabProps {
     awards: Award[]
 }
 
-export default function Awards({awards}: AwardTabProps) {
+export function AwardsTab ({awards}: AwardTabProps) {
     return (
         <TableContainer style={{ maxHeight: '35vh' }}>
             <Table stickyHeader sx={{ minWidth: '35vw' }} aria-label="simple table">

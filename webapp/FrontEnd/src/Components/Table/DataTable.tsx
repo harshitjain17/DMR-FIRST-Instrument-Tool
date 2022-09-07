@@ -49,6 +49,15 @@ const columns : GridColumns = [
         <span className="table-cell-trucate">{params?.value?.toString()}</span>
       </Tooltip>)
   },
+  
+  // MODEL
+  {
+    field: 'model', headerName: 'Model', minWidth: 160, flex: 1,
+    renderCell: (params) => (
+      <Tooltip title={params?.value?.toString()} >
+        <span className="table-cell-trucate">{params?.value?.toString()}</span>
+      </Tooltip>)
+  },
 
   // DOI
   {field: 'doi', headerName: 'DOI', minWidth: 160, flex: 1},
@@ -56,15 +65,6 @@ const columns : GridColumns = [
   // MANUFACTURER
   {
     field: 'manufacturer', headerName: 'Manufacturer', minWidth: 175, flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params?.value?.toString()} >
-        <span className="table-cell-trucate">{params?.value?.toString()}</span>
-      </Tooltip>)
-  },
-
-  // MODEL
-  {
-    field: 'model', headerName: 'Model', minWidth: 160, flex: 1,
     renderCell: (params) => (
       <Tooltip title={params?.value?.toString()} >
         <span className="table-cell-trucate">{params?.value?.toString()}</span>
@@ -105,8 +105,8 @@ const columns : GridColumns = [
 
 interface DataTableProps {
   instruments: InstrumentRow[],
-  searchLocation: SearchLocation | undefined,
-  selectedLocation: SearchLocation | undefined,
+  searchLocation?: SearchLocation,
+  selectedLocation?: string,
   loading: boolean,
   minimumTimeElapsed: boolean
 }
@@ -119,7 +119,7 @@ export default function DataTable(
   const [filterModel, setFilterModel] = React.useState<GridFilterModel>({ items: [] });
   const [visibilityModel, setVisibilityModel] = React.useState<GridColumnVisibilityModel>({ id: false, distance: false });
 
-  var searchResult = instruments ?
+  const searchResult = instruments ?
     instruments.map(instrument => {
       return {
         id: instrument.label,
@@ -221,4 +221,4 @@ export default function DataTable(
       <InstrumentPopop isOpen={isOpen} onPopupClose={handleCloseModal} doi={doi} />
     </div>
   );
-};
+}

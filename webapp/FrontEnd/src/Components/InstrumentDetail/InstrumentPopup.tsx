@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide, { SlideProps } from '@mui/material/Slide';
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 import InstrumentApi from '../../Api/InstrumentApi';
 
@@ -29,7 +29,7 @@ export default function InstrumentPopup({ isOpen, doi, onPopupClose }: Instrumen
 
     React.useEffect(() => {
         const fetchData = async () => {
-                var response = await InstrumentApi.get(doi)
+                const response = await InstrumentApi.get(doi)
                 setInstrumentData(response);
         };
         doi && fetchData();
@@ -48,14 +48,19 @@ export default function InstrumentPopup({ isOpen, doi, onPopupClose }: Instrumen
                         </IconButton>
 
                         <Typography textAlign="center" sx={{ ml: 'auto', flex: 1 }} variant="h6" component="div">
-                            {instrumentData?.name}
+                            
+                            {instrumentData?.name} {instrumentData?.modelNumber ? ": " + instrumentData?.modelNumber : null}
+                            
                         </Typography>
-
-                        <Button autoFocus color="inherit" onClick={() =>
-                            window.open(`/doi/${doi}`, "_blank")}>
-                            Open in new Tab
-                        </Button>
-                        <DoubleArrowIcon />
+                        
+                        <ButtonGroup color="inherit" variant="text" aria-label="text button group">
+                            <Button color="inherit" onClick={() =>
+                                window.open(`/doi/${doi}`, "_blank")}>
+                                Open in new Tab
+                            </Button>
+                            <Button sx={{'&:hover': {color: '#ffffff'}}} href="/.auth/login/aad" variant="text" color="inherit">Login</Button>
+                        </ButtonGroup>
+                        
 
                     </Toolbar>
                 </AppBar>

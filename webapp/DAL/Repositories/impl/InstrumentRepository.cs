@@ -112,11 +112,15 @@ namespace Instool.DAL.Repositories.Impl
             }
             if (criteria.Keywords.Any())
             {
-                var keywordFilter = PredicateBuilder.New<Instrument>();
-                foreach (var keyword in criteria.Keywords)
+                var keywordFilter = PredicateBuilder.New<Instrument>(true);
+                foreach (var keyword in criteria.Keywords.Where(k => !string.IsNullOrWhiteSpace(k)))
                 {
-                    keywordFilter = keywordFilter.Or(i => i.Description.Contains(keyword)
+                    keywordFilter = keywordFilter.And(i => i.Description.Contains(keyword)
                                                        || i.Capabilities!.Contains(keyword)
+                                                       || i.Name.Contains(keyword)
+                                                       || i.ModelNumber!.Contains(keyword)
+                                                       || i.Manufacturer!.Contains(keyword)
+
                     );
                 }
                 query = query.Where(keywordFilter);
@@ -129,7 +133,13 @@ namespace Instool.DAL.Repositories.Impl
             {
                 query = query.Where(i => i.Awards.Any(a => a.AwardNumber == criteria.AwardNumber));
             }
-            var manufacturerOrModel = criteria.ManufacturerOrModel ?? criteria.Manufacturer;
+            if (!string.IsNullOrWhiteSpace(criteria.SerialNumber))
+            {
+                query = query.Where(i => i.SerialNumber == criteria.SerialNumber);
+            }
+#pragma warning disable CS0618 // Type or member is obsolete
+            var manufacturerOrModel = criteria.ManufacturerOrModel;
+#pragma warning restore CS0618 // Type or member is obsolete
             if (!string.IsNullOrWhiteSpace(manufacturerOrModel))
             {
                 var keywords = manufacturerOrModel

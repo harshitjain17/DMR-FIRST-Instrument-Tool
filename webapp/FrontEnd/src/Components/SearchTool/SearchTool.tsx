@@ -8,30 +8,47 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import ExploreIcon from '@mui/icons-material/Explore';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Button from '@mui/material/Button';
 
 import SearchEngine, { SearchResponse } from './SearchEngine';
 import GoogleMap from './GoogleMap';
 import DataTable from '../Table/DataTable';
 import { AppBar, Drawer, DrawerHeader } from './StyledComponents';
-import { SearchLocation } from '../../Api/Model';
+
+import { useMsal } from "@azure/msal-react";
+import { loginRequest } from "../../Authentication/AuthProvider";
 
 export default function SearchTool() {
     const [response, setResponse] = useState<SearchResponse | undefined>(undefined);
     const [isMinimumTimeElapsed, setMinimumTimeElapsed] = useState<boolean>(false);
     const [isLoading, setLoading] = useState<boolean>(false);
-    const [selectedLocation, selectLocation] = useState<SearchLocation>();
+    const [selectedLocation, selectLocation] = useState<string | undefined>();
+
+    // handling Sign in using popup
+    const { instance } = useMsal();
+    const handleLogin = (loginType: string) => {
+        if (loginType === "popup") {
+            instance.loginPopup(loginRequest).catch(e => {
+                console.log(e);
+            });
+        }
+    }
 
     return (
 
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-
+             
             {/* navigation Bar */}
             <AppBar position="fixed">
                 <Toolbar sx={{ pr: '24px' }} variant="dense">
                     <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                    <ExploreIcon/> Instrument Locator 
+                    <ExploreIcon/> DMR-FIRST Instrument Tool 
                     </Typography>
+                    <Button sx={{'&:hover': {color: '#ffffff'}}} color="inherit" onClick={() => handleLogin("popup")}>Login</Button>
+                    <AccountCircleIcon/>
+                    {/* href="/.auth/login/aad" */}
                 </Toolbar>
             </AppBar>
 
@@ -53,13 +70,13 @@ export default function SearchTool() {
                             ? theme.palette.grey[100]
                             : theme.palette.grey[900],
                     flexGrow: 1,
-                    height: '105vh',
+                    height: '115vh',
                     overflow: 'auto',
                 }}
             >
                 <Toolbar />
                 <Container maxWidth="lg" sx={{ mb: 2 }}>
-                    <Grid container spacing={2}>
+                    <Grid container justifyContent="center" spacing={2}>
 
                         {/* Datatable */}
                         <Grid item xs={12} md={12} lg={12}>
@@ -70,6 +87,9 @@ export default function SearchTool() {
                                     flexDirection: 'column',
                                     height: '48vh',
                                 }}
+                                elevation={4}
+                                square={false}
+
                             >
                                 <DataTable
                                     instruments={response?.instruments || []}
@@ -81,8 +101,8 @@ export default function SearchTool() {
                         </Grid>
 
                         {/* Google Maps */}
-                        <Grid item xs={6} md={6} lg={6}>
-                            <GoogleMap locations={response?.locations} onSelectLocation={(loc: SearchLocation) => selectLocation(loc)} />
+                        <Grid item xs={8} md={8} lg={8}>
+                            <GoogleMap locations={response?.locations ?? []} onSelectLocation={(locationId?: string ) => selectLocation(locationId)} />
                         </Grid>
                     </Grid>
                     {/* <Copyright sx={{ pt: 4 }} /> */}

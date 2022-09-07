@@ -14,11 +14,12 @@
 
         public string? AwardNumber { get; set; }
 
-        public string? Manufacturer { get; set; }
-
+        [Obsolete("Manufacturer and model are searched by keywords criterion")]
         public string? ManufacturerOrModel { get; set; }
 
         public bool? IncludeRetired { get; set; }
+
+        public string? SerialNumber { get; set; }
 
     }
 }
