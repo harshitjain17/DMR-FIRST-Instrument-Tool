@@ -17,22 +17,20 @@ export function FilterByStatus({ includeRetired, onIncludeRetiredrChanged, xlarg
     };
 
     return (
-        <Tooltip title="Also search for retired instruments">
-            <div className={xlargeScreen ? "mt-4" : "mt-2"}>
-                <Form.Group className="mb-1" controlId="formIRI">
-                    <FormControlLabel
-                        id="formIRI"
-                        control={
-                            <Checkbox
-                                checked={includeRetired}
-                                onChange={IRIChangeHandler}
-                                inputProps={{ 'aria-label': 'controlled' }}
-                            />
-                        }
-                        label="Include retired instruments"
-                    />
-                </Form.Group>
-            </div>
-        </Tooltip>
+        <div className={xlargeScreen ? "mt-4" : "mt-2"}>
+            <Form.Group className="mb-1" controlId="formIRI">
+                <FormControlLabel
+                    id="formIRI"
+                    control={
+                        <Checkbox
+                            checked={includeRetired}
+                            onChange={IRIChangeHandler}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                        />
+                    }
+                    label="Include retired instruments"
+                />
+            </Form.Group>
+        </div>
     );
 }
