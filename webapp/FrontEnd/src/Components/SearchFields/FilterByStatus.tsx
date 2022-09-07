@@ -1,7 +1,7 @@
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import React from "react";
-import { Form, Tooltip } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 interface IFilterByStatusProps {
     xlargeScreen: boolean,
