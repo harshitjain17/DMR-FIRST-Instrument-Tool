@@ -58,7 +58,6 @@ export default function InstrumentPopup({ isOpen, doi, onPopupClose }: Instrumen
                                 window.open(`/doi/${doi}`, "_blank")}>
                                 Open in new Tab
                             </Button>
-                            <Button sx={{'&:hover': {color: '#ffffff'}}} href="/.auth/login/aad" variant="text" color="inherit">Login</Button>
                         </ButtonGroup>
                         
 
