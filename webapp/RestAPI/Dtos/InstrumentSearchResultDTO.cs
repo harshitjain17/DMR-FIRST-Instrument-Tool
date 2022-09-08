@@ -46,6 +46,7 @@ namespace Instool.DAL.Results
         public string Name { get; set; } = string.Empty;
 
         public string Type { get; set; } = string.Empty;
+        public string TypeLabel { get; set; } = string.Empty;
 
         public string Status { get; set; } = string.Empty;
 
@@ -83,6 +84,7 @@ namespace Instool.DAL.Results
             Distance = distance;
             Award = string.Join(", ", i.Awards.Select(a => a.AwardNumber));
             Type = string.Join(", ", mostSpecific.Select(t => string.IsNullOrWhiteSpace(t.Abbreviation) ? t.Label : t.Abbreviation));
+            TypeLabel = string.Join(", ", mostSpecific.Select(t => t.Label));
         }
     }
 
