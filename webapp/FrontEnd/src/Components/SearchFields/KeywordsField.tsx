@@ -12,7 +12,7 @@ interface IKeywordsFieldProps {
 
 
 export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKeywordsFieldProps) {
-    const [focused, setFocused] = useState(false);
+    // const [focused, setFocused] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
     const inputChange = (event: any) => {
@@ -28,13 +28,13 @@ export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKe
         }
     }
 
-    const handleBlur = () => {
-        if (inputValue) {
-            onKeywordsChanged([...keywords, inputValue])
-            setInputValue('');
-        }
-        setFocused(false)
-    }
+    // const handleBlur = () => {
+    //     if (inputValue) {
+    //         onKeywordsChanged([...keywords, inputValue])
+    //         setInputValue('');
+    //     }
+    //     setFocused(false)
+    // }
 
 
     const removeKeyword = (keyword: string) => {
@@ -62,10 +62,10 @@ export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKe
                                 onDelete={() => removeKeyword(item)} />
                         )) : undefined,
                     }}
-                    onFocus={() => { setFocused(true) }}
-                    onBlur={handleBlur}
+                    // onFocus={() => { setFocused(true) }}
+                    // onBlur={handleBlur}
                     onKeyDown={handleKeyDown}
-                    helperText={focused ? "Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number." : ""}
+                    // helperText={focused ? "Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number." : ""}
                 />
             </Tooltip>
         </div>

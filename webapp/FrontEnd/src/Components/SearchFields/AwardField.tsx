@@ -10,7 +10,7 @@ interface IAwardNumberProps {
 
 
 export function AwardField({ xlargeScreen, awardNumber, onAwardNumberChanged }: IAwardNumberProps) {
-    const [focused, setFocus] = useState(false);
+    // const [focused, setFocus] = useState(false);
 
     const awardNumberChangeHandler = (event: any) => {
         onAwardNumberChanged(event.target.value);
@@ -27,9 +27,9 @@ export function AwardField({ xlargeScreen, awardNumber, onAwardNumberChanged }: 
                     onChange={awardNumberChangeHandler}
                     label="Award Number"
                     variant="outlined"
-                    onFocus={() => { setFocus(true) }}
-                    onBlur={() => { setFocus(false) }}
-                    helperText={focused ? "Filter by NSF Award Number." : ""}
+                    // onFocus={() => { setFocus(true) }}
+                    // onBlur={() => { setFocus(false) }}
+                    // helperText={focused ? "Filter by NSF Award Number." : ""}
                 />
             </Tooltip>
         </div>

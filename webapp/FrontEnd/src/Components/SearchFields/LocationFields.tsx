@@ -20,7 +20,7 @@ interface ISearchDistanceProps {
 
 export function SearchAddressField({ xlargeScreen, address: enteredAddress, onAddressChanged, distance }: ISearchAddressProps) {
 
-    const [focused, setFocues] = useState(false);
+    // const [focused, setFocues] = useState(false);
     const addressChangeHandler = (event: any) => {
         onAddressChanged(event.target.value);
     };
@@ -36,9 +36,9 @@ export function SearchAddressField({ xlargeScreen, address: enteredAddress, onAd
                     value={enteredAddress}
                     label="Find instruments near"
                     variant="outlined"
-                    onFocus={() => { setFocues(true) }}
-                    onBlur={() => { setFocues(false) }}
-                    helperText={focused ? "Location where you want to search for instruments." : ""}
+                    // onFocus={() => { setFocues(true) }}
+                    // onBlur={() => { setFocues(false) }}
+                    // helperText={focused ? "Location where you want to search for instruments." : ""}
                     required={distance !== '0'}
                     data-error="Required when Maximum Distance is set"
                 />
@@ -48,7 +48,7 @@ export function SearchAddressField({ xlargeScreen, address: enteredAddress, onAd
 }
 
 export function DistanceField({ xlargeScreen, distance: enteredDistance, onDistanceChanged }: ISearchDistanceProps) {
-    const [focused, setFocused] = useState(false);
+    // const [focused, setFocused] = useState(false);
     const distanceChangeHandler = (event: any) => {
         onDistanceChanged(event.target.value);
     };
@@ -64,9 +64,9 @@ export function DistanceField({ xlargeScreen, distance: enteredDistance, onDista
                     label="Maximum Distance"
                     value={enteredDistance}
                     onChange={distanceChangeHandler}
-                    onFocus={() => { setFocused(true) }}
-                    onBlur={() => { setFocused(false) }}
-                    helperText={focused ? "Select the maximum distance from the entered location. 'US' shows all instruments in the US." : ""}
+                    // onFocus={() => { setFocused(true) }}
+                    // onBlur={() => { setFocused(false) }}
+                    // helperText={focused ? "Select the maximum distance from the entered location. 'US' shows all instruments in the US." : ""}
                 >
                     <MenuItem key="25" value="25">25 miles</MenuItem>
                     <MenuItem key="50" value="50">50 miles</MenuItem>
