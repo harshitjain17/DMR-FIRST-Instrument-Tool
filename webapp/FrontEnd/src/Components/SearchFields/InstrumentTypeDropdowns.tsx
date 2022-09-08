@@ -30,8 +30,8 @@ export function InstrumentTypeDropDowns({
     const [instrumentTypeSearchText, setInstrumentTypeSearchText] = useState<string>('');
 
     // focus states for helper text (below input boxes)
-    const [categoryFocused, setCategoryFocues] = useState(false);
-    const [typeFocused, setTypeFocused] = useState(false);
+    // const [categoryFocused, setCategoryFocues] = useState(false);
+    // const [typeFocused, setTypeFocused] = useState(false);
 
     const instrumentCategoryChangeHandler = (event: any) => {
         onInstrumentCategorySelected(event.target.value);
@@ -67,9 +67,9 @@ export function InstrumentTypeDropDowns({
                             label="Instrument Category"
                             value={instrumentCategory}
                             onChange={instrumentCategoryChangeHandler}
-                            onFocus={() => { setCategoryFocues(true) }}
-                            onBlur={() => { setCategoryFocues(false) }}
-                            helperText={categoryFocused ? "Select an instrument category, and show instrument types grouped by techniques in that category." : ""}
+                            // onFocus={() => { setCategoryFocues(true) }}
+                            // onBlur={() => { setCategoryFocues(false) }}
+                            // helperText={categoryFocused ? "Select an instrument category, and show instrument types grouped by techniques in that category." : ""}
                         >
                             {instrumentCategories.map((option) => (
                                 <MenuItem key={option.instrumentTypeId} value={option.name}>
@@ -103,9 +103,9 @@ export function InstrumentTypeDropDowns({
                                 <TextField
                                     {...params}
                                     label="Instrument Type"
-                                    onFocus={() => { setTypeFocused(true) }}
-                                    onBlur={() => { setTypeFocused(false) }}
-                                    helperText={typeFocused ? "Select an instrument type, i.e. the instemnt technique." : ""}
+                                    // onFocus={() => { setTypeFocused(true) }}
+                                    // onBlur={() => { setTypeFocused(false) }}
+                                    // helperText={typeFocused ? "Select an instrument type, i.e. the instemnt technique." : ""}
                                 />}
 
                         />
