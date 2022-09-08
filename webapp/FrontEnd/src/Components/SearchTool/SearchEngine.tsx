@@ -165,7 +165,7 @@ export default function SearchEngine({ onSearchResponseAvailable, onMinimumTimeE
 
                 <AwardField awardNumber={enteredAwardNumber} onAwardNumberChanged={setEnteredAwardNumber} xlargeScreen={xlargeScreen}/>
 
-                {/* <FilterByStatus includeRetired={enteredIRI} onIncludeRetiredrChanged={setEnteredIRI} xlargeScreen={xlargeScreen} /> */}
+                <FilterByStatus includeRetired={enteredIRI} onIncludeRetiredrChanged={setEnteredIRI} xlargeScreen={xlargeScreen} />
  
                 <div className={xlargeScreen ? "d-grid gap-2 mt-3" : "d-grid gap-2 mt-3"}>
                     <Button size={xlargeScreen ? "large" : "medium"}
