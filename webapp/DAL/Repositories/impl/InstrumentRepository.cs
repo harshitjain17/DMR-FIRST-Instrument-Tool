@@ -133,6 +133,10 @@ namespace Instool.DAL.Repositories.Impl
             {
                 query = query.Where(i => i.Awards.Any(a => a.AwardNumber == criteria.AwardNumber));
             }
+            if (!string.IsNullOrWhiteSpace(criteria.SerialNumber))
+            {
+                query = query.Where(i => i.SerialNumber == criteria.SerialNumber);
+            }
 #pragma warning disable CS0618 // Type or member is obsolete
             var manufacturerOrModel = criteria.ManufacturerOrModel;
 #pragma warning restore CS0618 // Type or member is obsolete

@@ -1,8 +1,8 @@
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
-import React, { KeyboardEvent, useState } from "react";
-// , SyntheticEvent
+import React, { KeyboardEvent,  useState } from "react"
+
 
 interface IKeywordsFieldProps {
     xlargeScreen: boolean,

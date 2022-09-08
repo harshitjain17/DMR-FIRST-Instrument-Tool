@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DataGrid, GridColumns, GridColumnVisibilityModel, GridFilterModel, GridRowParams, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid, GridColumns, GridColumnVisibilityModel, GridFilterModel, GridRenderCellParams, GridRowParams, GridToolbar } from '@mui/x-data-grid';
 import "./DataTable.css";
 
 import LinearProgress from '@mui/material/LinearProgress';
@@ -10,64 +10,82 @@ import InstrumentPopop from '../InstrumentDetail/InstrumentPopup';
 import { CustomNoRowsOverlay } from './Customizing';
 import { InstrumentRow, SearchLocation } from '../../Api/Model';
 
-const columns : GridColumns = [
+interface RowModel {
+  id: string,
+  distance?: string,
+  institution?: string,
+  facility?: string,
+  location?: number,
+  type: string,
+  typeLabel: string,
+  name: string,
+  doi?: string,
+  city: string,
+  state: string,
+  award?: string,
+  status: string,
+  instrumentId: number,
+  manufacturer?: string,
+  model?: string,
+}
+
+const columns: GridColumns = [
   // ID (hidden)
   { field: 'id', type: 'number', hide: true },
 
   // INSTITUTION
   {
     field: 'institution', headerName: 'Institution', minWidth: 175, flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params?.value?.toString()} >
-        <span className="table-cell-trucate">{params?.value?.toString()}</span>
+    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+      <Tooltip title={value?.toString()} >
+        <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
   },
 
   // FACILITY
   {
     field: 'facility', headerName: 'Facility', minWidth: 100, flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params?.value?.toString()} >
-        <span className="table-cell-trucate">{params?.value?.toString()}</span>
+    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+      <Tooltip title={value?.toString()} >
+        <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
   },
 
-  // INSTRUMENT TYPE
   {
     field: 'type', headerName: 'Instrument Type', minWidth: 140, flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params?.value?.toString()} >
-        <span className="table-cell-trucate">{params?.value?.toString()}</span>
+    renderCell: ({value, row}: GridRenderCellParams<any, RowModel, any>) => (
+      <Tooltip title={row.typeLabel} >
+        <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
   },
 
   // INSTRUMENT NAME
   {
     field: 'name', headerName: 'Instrument Name', minWidth: 175, flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params?.value?.toString()} >
-        <span className="table-cell-trucate">{params?.value?.toString()}</span>
+    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+      <Tooltip title={value?.toString()} >
+        <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
   },
-  
+
   // MODEL
   {
     field: 'model', headerName: 'Model', minWidth: 160, flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params?.value?.toString()} >
-        <span className="table-cell-trucate">{params?.value?.toString()}</span>
+    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+      <Tooltip title={value?.toString()} >
+        <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
   },
 
   // DOI
-  {field: 'doi', headerName: 'DOI', minWidth: 160, flex: 1},
+  { field: 'doi', headerName: 'DOI', minWidth: 160, flex: 1 },
 
   // MANUFACTURER
   {
     field: 'manufacturer', headerName: 'Manufacturer', minWidth: 175, flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params?.value?.toString()} >
-        <span className="table-cell-trucate">{params?.value?.toString()}</span>
+    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+      <Tooltip title={value?.toString()} >
+        <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
   },
 
@@ -80,9 +98,9 @@ const columns : GridColumns = [
   // CITY
   {
     field: 'city', headerName: 'City', minWidth: 150, flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params?.value?.toString()} >
-        <span className="table-cell-trucate">{params?.value?.toString()}</span>
+    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+      <Tooltip title={value?.toString()} >
+        <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
   },
 
@@ -92,9 +110,9 @@ const columns : GridColumns = [
   // AWARD
   {
     field: 'award', headerName: 'Award', minWidth: 150, flex: 1,
-    renderCell: (params) => (
-      <Tooltip title={params?.value?.toString()} >
-        <span className="table-cell-trucate">{params?.value?.toString()}</span>
+    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+      <Tooltip title={value?.toString()} >
+        <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
   },
 
@@ -112,14 +130,14 @@ interface DataTableProps {
 }
 
 export default function DataTable(
-  { instruments, searchLocation, selectedLocation, loading, minimumTimeElapsed } : DataTableProps
+  { instruments, searchLocation, selectedLocation, loading, minimumTimeElapsed }: DataTableProps
 ) {
   const [doi, setDoi] = React.useState<string>('');
   const [isOpen, setOpen] = React.useState<boolean>(false);
   const [filterModel, setFilterModel] = React.useState<GridFilterModel>({ items: [] });
   const [visibilityModel, setVisibilityModel] = React.useState<GridColumnVisibilityModel>({ id: false, distance: false });
 
-  const searchResult = instruments ?
+  const searchResult: RowModel[] = instruments ?
     instruments.map(instrument => {
       return {
         id: instrument.label,
@@ -128,6 +146,7 @@ export default function DataTable(
         facility: instrument.facility,
         location: instrument.location,
         type: instrument.type,
+        typeLabel: instrument.typeLabel,
         name: instrument.name,
         doi: instrument.doi,
         city: instrument.city,
