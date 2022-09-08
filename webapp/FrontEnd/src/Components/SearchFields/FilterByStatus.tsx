@@ -17,7 +17,7 @@ export function FilterByStatus({ includeRetired, onIncludeRetiredrChanged, xlarg
     };
 
     return (
-        <Tooltip title="Also search for retired instruments">
+        // <Tooltip title="Also search for retired instruments">
             <div className={xlargeScreen ? "mt-4" : "mt-2"}>
                 <Form.Group className="mb-1" controlId="formIRI">
                     <FormControlLabel
@@ -33,6 +33,6 @@ export function FilterByStatus({ includeRetired, onIncludeRetiredrChanged, xlarg
                     />
                 </Form.Group>
             </div>
-        </Tooltip>
+        // </Tooltip>
     );
 }
