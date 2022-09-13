@@ -36,7 +36,7 @@ const columns: GridColumns = [
   // INSTITUTION
   {
     field: 'institution', headerName: 'Institution', minWidth: 175, flex: 1,
-    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+    renderCell: ({ value }: GridRenderCellParams<any, RowModel, any>) => (
       <Tooltip title={value?.toString()} >
         <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
@@ -45,7 +45,7 @@ const columns: GridColumns = [
   // FACILITY
   {
     field: 'facility', headerName: 'Facility', minWidth: 100, flex: 1,
-    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+    renderCell: ({ value }: GridRenderCellParams<any, RowModel, any>) => (
       <Tooltip title={value?.toString()} >
         <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
@@ -53,7 +53,7 @@ const columns: GridColumns = [
 
   {
     field: 'type', headerName: 'Instrument Type', minWidth: 140, flex: 1,
-    renderCell: ({value, row}: GridRenderCellParams<any, RowModel, any>) => (
+    renderCell: ({ value, row }: GridRenderCellParams<any, RowModel, any>) => (
       <Tooltip title={row.typeLabel} >
         <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
@@ -62,16 +62,7 @@ const columns: GridColumns = [
   // INSTRUMENT NAME
   {
     field: 'name', headerName: 'Instrument Name', minWidth: 175, flex: 1,
-    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
-      <Tooltip title={value?.toString()} >
-        <span className="table-cell-trucate">{value?.toString()}</span>
-      </Tooltip>)
-  },
-
-  // MODEL
-  {
-    field: 'model', headerName: 'Model', minWidth: 160, flex: 1,
-    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+    renderCell: ({ value }: GridRenderCellParams<any, RowModel, any>) => (
       <Tooltip title={value?.toString()} >
         <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
@@ -83,11 +74,21 @@ const columns: GridColumns = [
   // MANUFACTURER
   {
     field: 'manufacturer', headerName: 'Manufacturer', minWidth: 175, flex: 1,
-    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+    renderCell: ({ value }: GridRenderCellParams<any, RowModel, any>) => (
       <Tooltip title={value?.toString()} >
         <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
   },
+
+  // MODEL
+  {
+    field: 'model', headerName: 'Model', minWidth: 160, flex: 1,
+    renderCell: ({ value }: GridRenderCellParams<any, RowModel, any>) => (
+      <Tooltip title={value?.toString()} >
+        <span className="table-cell-trucate">{value?.toString()}</span>
+      </Tooltip>)
+  },
+
 
   // LOCATION ID (for filtering table through map)
   { field: 'location', headerName: 'Location ID', minWidth: 95, flex: 1 },
@@ -98,7 +99,7 @@ const columns: GridColumns = [
   // CITY
   {
     field: 'city', headerName: 'City', minWidth: 150, flex: 1,
-    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+    renderCell: ({ value }: GridRenderCellParams<any, RowModel, any>) => (
       <Tooltip title={value?.toString()} >
         <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)
@@ -110,7 +111,7 @@ const columns: GridColumns = [
   // AWARD
   {
     field: 'award', headerName: 'Award', minWidth: 150, flex: 1,
-    renderCell: ({value} : GridRenderCellParams<any, RowModel, any>) => (
+    renderCell: ({ value }: GridRenderCellParams<any, RowModel, any>) => (
       <Tooltip title={value?.toString()} >
         <span className="table-cell-trucate">{value?.toString()}</span>
       </Tooltip>)

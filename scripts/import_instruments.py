@@ -45,6 +45,8 @@ def create_json(row):
     for i in range(1, 3):
         value = row.get("Faculty Contact {}".format(i))
         if (value):
+            if not '@' in value:
+                value = value + '@psu.edu'
             contacts.append({
                 "eppn": value,
                 "role": "F"
@@ -52,6 +54,8 @@ def create_json(row):
     for i in range(1, 4):
         value = row.get("Technical Contact {}".format(i))
         if (value):
+            if not '@' in value:
+                value = value + '@psu.edu'
             contacts.append({
                 "eppn": value,
                 "role": "T"
@@ -66,7 +70,7 @@ headers = {
     'X-API-Key': instool.auth
 }
 
-with open('data/instruments.csv', encoding='utf-8-sig') as csvfile:
+with open('data/nanofab.csv', encoding='utf-8-sig') as csvfile:
     reader = csv.DictReader(csvfile, dialect='excel')
     for row in reader:
         data = create_json(row)

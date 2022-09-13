@@ -3,6 +3,7 @@
 ,,tem,TEM,Transmission Electron Microscopy
 ,,stem,STEM,Scanning Transmission Electron Microscope
 ,,sem,SEM,Scanning Electron Microscopy
+,,fesem,FESEM,Field Emission Scanning Electron Microscopy
 ,Mechanical ,,,
 ,,elec-test,,Electromechanical Test Systems
 ,,hard,,Hardness Test
@@ -74,6 +75,7 @@ Fabrication,,,,
 ,Etching,,,
 ,,w-etch,,Wet Etching
 ,,d-etch,,Dry Etching
+,,p-etch,,Polymer Etching
 ,,v-etch,,Vapor Etching
 ,Lithography,,,
 ,,contact-lit,,Contact
@@ -81,6 +83,8 @@ Fabrication,,,,
 ,,i-line,,I-Line Stepper
 ,,eb-lit,,Electron Beam
 ,,fib-lit,,Focused Ion Beam (FIB)
+,,3d-print,,3D Printer
+,,dw-lit,,Direct Write / Maskless
 ,Microfabrication / Microelectronics / Clean Room,,,
 ,,w-bind,,Wire Bonding
 ,,poly,,Polymer Processing
