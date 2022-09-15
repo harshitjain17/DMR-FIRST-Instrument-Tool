@@ -28,13 +28,13 @@ export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKe
         }
     }
 
-    // const handleBlur = () => {
-    //     if (inputValue) {
-    //         onKeywordsChanged([...keywords, inputValue])
-    //         setInputValue('');
-    //     }
-    //     setFocused(false)
-    // }
+    const handleBlur = () => {
+        if (inputValue) {
+            onKeywordsChanged([...keywords, inputValue])
+            setInputValue('');
+        }
+        // setFocused(false)
+    }
 
 
     const removeKeyword = (keyword: string) => {
@@ -63,7 +63,7 @@ export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKe
                         )) : undefined,
                     }}
                     // onFocus={() => { setFocused(true) }}
-                    // onBlur={handleBlur}
+                    onBlur={handleBlur}
                     onKeyDown={handleKeyDown}
                     // helperText={focused ? "Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number." : ""}
                 />
