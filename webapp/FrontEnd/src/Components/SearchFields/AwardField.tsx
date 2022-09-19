@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
+import { HtmlTooltip } from "./ToolTipHTMLStyling";
 import React from "react";
 
 interface IAwardNumberProps {
@@ -18,7 +18,13 @@ export function AwardField({ xlargeScreen, awardNumber, onAwardNumberChanged }: 
 
     return (
         <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-            <Tooltip title="Filter by NSF Award Number." placement="right">
+            <HtmlTooltip
+                title={
+                    <React.Fragment>
+                        {"Filter by NSF Award Number"}
+                    </React.Fragment>
+                }
+            >
                 <TextField
                     id="formAwardNumber"
                     fullWidth={true}
@@ -31,7 +37,7 @@ export function AwardField({ xlargeScreen, awardNumber, onAwardNumberChanged }: 
                     // onBlur={() => { setFocus(false) }}
                     // helperText={focused ? "Filter by NSF Award Number." : ""}
                 />
-            </Tooltip>
+            </HtmlTooltip>
         </div>
 
     );

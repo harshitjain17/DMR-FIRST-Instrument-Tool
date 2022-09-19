@@ -1,6 +1,6 @@
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
-import Tooltip from '@mui/material/Tooltip';
+import { HtmlTooltip } from "./ToolTipHTMLStyling";
 import React from "react";
 
 
@@ -27,7 +27,13 @@ export function SearchAddressField({ xlargeScreen, address: enteredAddress, onAd
 
     return (
         <div>
-            <Tooltip title="Location where you want to search for instruments." placement="right">
+            <HtmlTooltip
+                title={
+                    <React.Fragment>
+                        {"Location where you want to search for instruments"}
+                    </React.Fragment>
+                }
+            >
                 <TextField
                     id="formAddress"
                     fullWidth={true}
@@ -42,7 +48,7 @@ export function SearchAddressField({ xlargeScreen, address: enteredAddress, onAd
                     required={distance !== '0'}
                     data-error="Required when Maximum Distance is set"
                 />
-            </Tooltip>
+            </HtmlTooltip>
         </div>
     );
 }
@@ -55,7 +61,13 @@ export function DistanceField({ xlargeScreen, distance: enteredDistance, onDista
 
     return (
         <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-            <Tooltip title="Select the maximum distance from the entered location. 'US' shows all instruments in the US." placement="right">
+            <HtmlTooltip
+                title={
+                    <React.Fragment>
+                        {"Select the maximum distance from the entered location. 'US' shows all instruments in the US"}
+                    </React.Fragment>
+                }
+            >
                 <TextField
                     id="formDistance"
                     fullWidth={true}
@@ -76,7 +88,7 @@ export function DistanceField({ xlargeScreen, distance: enteredDistance, onDista
                     <MenuItem key="200" value="200">200 miles</MenuItem>
                     <MenuItem key="0" value="0">US</MenuItem>
                 </TextField>
-            </Tooltip>
+            </HtmlTooltip>
         </div>
     )
 }
