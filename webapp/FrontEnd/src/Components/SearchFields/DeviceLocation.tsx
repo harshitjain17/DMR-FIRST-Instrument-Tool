@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -9,6 +8,7 @@ import Snackbar, { SnackbarCloseReason } from '@mui/material/Snackbar';
 
 import { GetDeviceLocation } from '../../Utils/Helper';
 import LocationApi from "../../Api/LocationApi";
+
 
 interface DeviceLocationProps {
     onAddressFound: (address: string) => void

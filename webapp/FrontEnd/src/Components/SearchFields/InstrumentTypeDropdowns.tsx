@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InstrumentTypeApi from '../../Api/InstrumentTypeApi';
 import { InstrumentType, InstrumentTypeDropdownEntry } from '../../Api/Model';
 import { getInstrumentTypeLabel } from '../../Api/ModelUtils';
-import Tooltip from '@mui/material/Tooltip';
+import { HtmlTooltip } from "./ToolTipHTMLStyling";
 
 // We do need <null> here instead of <undefined>, the MUI autocompleted
 // only allows <null> set reset the field, whereas <undefined> would switch to uncontrolled mode,
@@ -57,7 +57,13 @@ export function InstrumentTypeDropDowns({
 
     return (
         <Fragment>
-            <Tooltip title="Select an instrument category, and show instrument types grouped by techniques in that category." placement="right">
+            <HtmlTooltip
+                title={
+                    <React.Fragment>
+                        {"Select an instrument category, and show instrument types grouped by techniques in that category"}
+                    </React.Fragment>
+                }
+            >
                 <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formInstrumentCategory">
                         <TextField
@@ -79,9 +85,15 @@ export function InstrumentTypeDropDowns({
                         </TextField>
                     </Form.Group>
                 </div>
-            </Tooltip>
-
-            <Tooltip title="Select an instrument type, i.e. the instrument technique." placement="right">
+            </HtmlTooltip>
+            
+            <HtmlTooltip
+                title={
+                    <React.Fragment>
+                        {"Select an instrument type, i.e. the instrument technique"}
+                    </React.Fragment>
+                }
+            >
                 <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formInstrumentType">
                         <Autocomplete
@@ -107,11 +119,10 @@ export function InstrumentTypeDropDowns({
                                     // onBlur={() => { setTypeFocused(false) }}
                                     // helperText={typeFocused ? "Select an instrument type, i.e. the instemnt technique." : ""}
                                 />}
-
                         />
                     </Form.Group>
                 </div>
-            </Tooltip>
+            </HtmlTooltip>
         </Fragment>
     )
 }
