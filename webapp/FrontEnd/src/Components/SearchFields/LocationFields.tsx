@@ -27,7 +27,7 @@ export function SearchAddressField({ xlargeScreen, address: enteredAddress, onAd
 
     return (
         <div>
-            <Tooltip title="Location where you want to search for instruments.">
+            <Tooltip title="Location where you want to search for instruments." placement="right">
                 <TextField
                     id="formAddress"
                     fullWidth={true}
@@ -55,7 +55,7 @@ export function DistanceField({ xlargeScreen, distance: enteredDistance, onDista
 
     return (
         <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-            <Tooltip title="Select the maximum distance from the entered location. 'US' shows all instruments in the US.">
+            <Tooltip title="Select the maximum distance from the entered location. 'US' shows all instruments in the US." placement="right">
                 <TextField
                     id="formDistance"
                     fullWidth={true}
