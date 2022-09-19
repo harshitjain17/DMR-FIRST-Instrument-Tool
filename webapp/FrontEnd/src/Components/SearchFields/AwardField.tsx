@@ -18,7 +18,7 @@ export function AwardField({ xlargeScreen, awardNumber, onAwardNumberChanged }: 
 
     return (
         <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-            <Tooltip title="Filter by NSF Award Number.">
+            <Tooltip title="Filter by NSF Award Number." placement="right">
                 <TextField
                     id="formAwardNumber"
                     fullWidth={true}

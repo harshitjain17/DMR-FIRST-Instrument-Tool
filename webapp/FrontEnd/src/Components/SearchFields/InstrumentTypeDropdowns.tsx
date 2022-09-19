@@ -57,7 +57,7 @@ export function InstrumentTypeDropDowns({
 
     return (
         <Fragment>
-            <Tooltip title="Select an instrument category, and show instrument types grouped by techniques in that category.">
+            <Tooltip title="Select an instrument category, and show instrument types grouped by techniques in that category." placement="right">
                 <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formInstrumentCategory">
                         <TextField
@@ -81,7 +81,7 @@ export function InstrumentTypeDropDowns({
                 </div>
             </Tooltip>
 
-            <Tooltip title="Select an instrument type, i.e. the instrument technique.">
+            <Tooltip title="Select an instrument type, i.e. the instrument technique." placement="right">
                 <div className={xlargeScreen ? "mt-4" : "mt-3"}>
                     <Form.Group controlId="formInstrumentType">
                         <Autocomplete
