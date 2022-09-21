@@ -1,9 +1,7 @@
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
-import React, { KeyboardEvent,  useState } from "react"
-
-
+import React, { KeyboardEvent,  useState } from "react";
+import { HtmlTooltip } from "./ToolTipHTMLStyling";
 interface IKeywordsFieldProps {
     xlargeScreen: boolean,
     keywords: string[],
@@ -42,11 +40,16 @@ export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKe
     }
 
 
-
     return (
         <div className={xlargeScreen ? "mt-4" : "mt-3"}>
-            <Tooltip title="Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number.">
-                <TextField
+            <HtmlTooltip
+                title={
+                    <React.Fragment>
+                        {"Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number"}
+                    </React.Fragment>
+                }
+            >
+            <TextField
                     id="formKeywords"
                     label="Keywords (capabilities, manufacturer, model)"
                     fullWidth={true}
@@ -67,7 +70,7 @@ export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKe
                     onKeyDown={handleKeyDown}
                     // helperText={focused ? "Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number." : ""}
                 />
-            </Tooltip>
+            </HtmlTooltip>
         </div>
     )
 }
