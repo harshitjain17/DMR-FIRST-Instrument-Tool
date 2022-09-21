@@ -18,9 +18,7 @@ interface ISearchDistanceProps {
     onDistanceChanged: (value: string) => void
 }
 
-export function SearchAddressField({ xlargeScreen, address: enteredAddress, onAddressChanged, distance }: ISearchAddressProps) {
-
-    // const [focused, setFocues] = useState(false);
+export function SearchAddressField({ xlargeScreen, address, onAddressChanged, distance }: ISearchAddressProps) {
     const addressChangeHandler = (event: any) => {
         onAddressChanged(event.target.value);
     };
@@ -30,7 +28,7 @@ export function SearchAddressField({ xlargeScreen, address: enteredAddress, onAd
             <HtmlTooltip
                 title={
                     <React.Fragment>
-                        {"Location where you want to search for instruments"}
+                        {"Location where you want to search for instruments. Required when a maxium distance ist set."}
                     </React.Fragment>
                 }
             >
@@ -39,12 +37,9 @@ export function SearchAddressField({ xlargeScreen, address: enteredAddress, onAd
                     fullWidth={true}
                     size={xlargeScreen ? "medium" : "small"}
                     onChange={addressChangeHandler}
-                    value={enteredAddress}
+                    value={address}
                     label="Find instruments near"
                     variant="outlined"
-                    // onFocus={() => { setFocues(true) }}
-                    // onBlur={() => { setFocues(false) }}
-                    // helperText={focused ? "Location where you want to search for instruments." : ""}
                     required={distance !== '0'}
                     data-error="Required when Maximum Distance is set"
                 />
@@ -54,7 +49,6 @@ export function SearchAddressField({ xlargeScreen, address: enteredAddress, onAd
 }
 
 export function DistanceField({ xlargeScreen, distance: enteredDistance, onDistanceChanged }: ISearchDistanceProps) {
-    // const [focused, setFocused] = useState(false);
     const distanceChangeHandler = (event: any) => {
         onDistanceChanged(event.target.value);
     };
@@ -64,7 +58,7 @@ export function DistanceField({ xlargeScreen, distance: enteredDistance, onDista
             <HtmlTooltip
                 title={
                     <React.Fragment>
-                        {"Select the maximum distance from the entered location. 'US' shows all instruments in the US"}
+                        {"Select the maximum distance from the entered location. 'US' shows all instruments in the US."}
                     </React.Fragment>
                 }
             >
@@ -76,9 +70,6 @@ export function DistanceField({ xlargeScreen, distance: enteredDistance, onDista
                     label="Maximum Distance"
                     value={enteredDistance}
                     onChange={distanceChangeHandler}
-                    // onFocus={() => { setFocused(true) }}
-                    // onBlur={() => { setFocused(false) }}
-                    // helperText={focused ? "Select the maximum distance from the entered location. 'US' shows all instruments in the US." : ""}
                 >
                     <MenuItem key="25" value="25">25 miles</MenuItem>
                     <MenuItem key="50" value="50">50 miles</MenuItem>
