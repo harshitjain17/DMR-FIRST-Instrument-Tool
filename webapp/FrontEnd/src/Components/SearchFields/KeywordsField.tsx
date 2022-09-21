@@ -10,15 +10,22 @@ interface IKeywordsFieldProps {
 
 
 export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKeywordsFieldProps) {
-    // const [focused, setFocused] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
+    /**
+     * Grab the entered text from the event and save it to a state.
+     * Whenever a user presses Enter or clicks elsewhere, the current input is added as a keyword.
+     * 
+     * @param event 
+     */
     const inputChange = (event: any) => {
         const entered = event.target.value;
         setInputValue(entered)
     };
 
-
+    /**
+     * Create a search keyword (displayed as chip) when Enter is pressed
+     */
     const handleKeyDown = (event: KeyboardEvent) => {
         if (event.key === 'Enter' && inputValue) {
             onKeywordsChanged([...keywords, inputValue])
@@ -26,15 +33,24 @@ export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKe
         }
     }
 
+    /**
+     * When the field losses focus, eg. the user clicks elsewhere or starts the search,
+     * we create a search keyword, too. Otherwise, the entered keyword would still be visible, but not taken into account,
+     * which would most certainly confuse users.
+     */ 
     const handleBlur = () => {
         if (inputValue) {
             onKeywordsChanged([...keywords, inputValue])
             setInputValue('');
         }
-        // setFocused(false)
     }
 
 
+    /**
+     * Chips show a remove button (x), we have to remove the keyword from our list when it is clicked.
+     * 
+     * @param keyword The keyword to remove
+     */
     const removeKeyword = (keyword: string) => {
         onKeywordsChanged(keywords.filter(k => k !== keyword));
     }
@@ -45,7 +61,9 @@ export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKe
             <HtmlTooltip
                 title={
                     <React.Fragment>
-                        {"Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number"}
+                        {"Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number. " + 
+                         "If several keywords are entered, all have to be present (connected with AND). " + 
+                         "Keywords may contain spaces, use Enter to seperate keywords. "}
                     </React.Fragment>
                 }
             >
@@ -65,10 +83,8 @@ export function KeywordsField({ xlargeScreen, keywords, onKeywordsChanged }: IKe
                                 onDelete={() => removeKeyword(item)} />
                         )) : undefined,
                     }}
-                    // onFocus={() => { setFocused(true) }}
                     onBlur={handleBlur}
                     onKeyDown={handleKeyDown}
-                    // helperText={focused ? "Search for keywords in the instrument name, capabilities, description, manufacturer, and the model number." : ""}
                 />
             </HtmlTooltip>
         </div>
