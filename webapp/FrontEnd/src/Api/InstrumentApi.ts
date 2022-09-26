@@ -11,6 +11,17 @@ export default class InstrumentApi {
     return response.data as InstrumentSearchResponse;
   }
 
+  static async lookup(criteria: InstrumentSearchCriteria): Promise<Instrument | undefined> {
+    try {
+      const response = await InstoolApi.post(`/instruments/lookup`, criteria);
+      log.debug(response.data);
+      return response.data as Instrument;
+    } catch (error) {
+      log.error(`Fetching instrument details failed: ${error}`);
+      return undefined;
+    }
+  }
+
   static async get(doi: string): Promise<Instrument | undefined> {
     try {
       const response = await InstoolApi.get(`/instruments/${doi}`)

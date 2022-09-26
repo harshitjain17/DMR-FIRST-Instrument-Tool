@@ -63,25 +63,19 @@ namespace Instool.API
             return Ok(InstrumentDTO.FromEntity(instrument));
         }
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
-        [HasPrivilege(PrivilegeEnum.Instrument)]
-        public async Task<ActionResult<InstrumentDTO>> GetInstrumentByDoi([FromQuery] string idOrDoi)
-        {
-            var decoded = DoiHelper.DecodeDoi(idOrDoi);
-            var instrument = decoded.IsDoi ?
-                                await _service.GetByDoi(decoded.Doi!) :
-                                await _service.GetById(decoded.NumericalId);
-            if (instrument == null)
-            {
-                return NotFound();
-            }
-            return Ok(InstrumentDTO.FromEntity(instrument));
-        }
-
+        /// <summary>
+        ///     Search instruments according to a variety of criteria.
+        ///     Returns a Instrument Row, with limited data for display in a table.
+        ///     
+        ///     Returns an empty array if nothing is found.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="sortColumn"></param>
+        /// <param name="sortOrder"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="draw"></param>
+        /// <returns></returns>
         [HttpPost("search")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
@@ -98,6 +92,43 @@ namespace Instool.API
             }
             var instruments = await _service.Search(request, sortColumn, sortOrder, start, length);
             return Ok(new InstrumentSearchResult(instruments, draw));
+        }
+        /// <summary>
+        ///     Lookup an instrument, using the same criteria as the search.
+        ///     Returns the full instrument data as Get would.
+        ///     
+        ///     Return 404 if nothing is found.
+        ///     Return 409 if more than one instrument is found. 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+
+        [HttpPost("lookup")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status409Conflict)]
+        [HasPrivilege(PrivilegeEnum.Instrument)]
+        public async Task<ActionResult<InstrumentDTO>> Lookup([FromBody] InstrumentSearchRequest request)
+        {
+            if (!string.IsNullOrWhiteSpace(request.InstrumentType))
+            {
+                request.InstrumentType = request.InstrumentType.Split("#")[0];
+            }
+            var instruments = await _service.Search(request, null, null, 0, 0);
+            if (!instruments.Any())
+            {
+                return NotFound();
+            }
+            if (instruments.Count() > 1)
+            {
+                return Conflict(new {
+                    Error = $"Found {instruments.Count()} matching instruments",
+                    Instruments = instruments.Select(i => new { id = i.Instrument.InstrumentId, doi = i.Instrument.Doi, name = i.Instrument.Name })
+                });
+            }
+            return await GetInstrument(instruments.First().Instrument.InstrumentId.ToString());
         }
 
         [HttpPut("{id}/doi/{*doi}")]
