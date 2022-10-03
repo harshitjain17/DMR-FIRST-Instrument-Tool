@@ -9,7 +9,7 @@ import config.instool as instool
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-def create_json(row):
+def create_json(row): # 'row' is a dictionary type here
     json_dict = {
         "name": row["Name"],
         "doi": row["doi"],
@@ -24,10 +24,14 @@ def create_json(row):
             "facility": row["Facility"]
         }
     }
+
+    # handling 'location' to add in the JSON
     if (row["Location"]):
         json_dict["location"] = {
             "building": row["Location"]
         }
+    
+    # handling 'awards' to add in the JSON
     awards = []
     for a in row["Award"].split(','):
         if a:
@@ -35,30 +39,34 @@ def create_json(row):
     if len(awards) > 0:
         json_dict["awards"] = awards        
 
+    # handling 'instrumentTypes' to add in the JSON
     instrumentTypes = []
     for t in row["Technique"].split(','):
         if t:
             instrumentTypes.append({"name": t})
     if len(instrumentTypes) > 0:
         json_dict["instrumentTypes"] = instrumentTypes
+    
+    # handling 'contacts' to add in the JSON
     contacts = []
-    for i in range(1, 3):
+    PSU_DOMAIN = '@psu.edu'
+    for i in range(1, 3): # NOTE: taking into account just 2 Faculty contacts as of now
         value = row.get("Faculty Contact {}".format(i))
         if (value):
             if not '@' in value:
-                value = value + '@psu.edu'
+                value = value + PSU_DOMAIN # NOTE: Considering just PSU contacts as of now
             contacts.append({
                 "eppn": value,
-                "role": "F"
+                "role": "F" # F = Faculty Role
             })
-    for i in range(1, 4):
+    for i in range(1, 4): # NOTE: taking into account just 3 Faculty contacts as of now
         value = row.get("Technical Contact {}".format(i))
         if (value):
             if not '@' in value:
-                value = value + '@psu.edu'
+                value = value + PSU_DOMAIN
             contacts.append({
                 "eppn": value,
-                "role": "T"
+                "role": "T" # T = Technical Role
             })
     if len(contacts) > 0:
         json_dict["contacts"] = contacts
@@ -73,7 +81,10 @@ headers = {
 with open('data/nanofab.csv', encoding='utf-8-sig') as csvfile:
     reader = csv.DictReader(csvfile, dialect='excel')
     for row in reader:
-        data = create_json(row)
+        data = create_json(row) # 'data' is the JSON type
+        
+
+
 
         result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False, timeout=60)
         if result.status_code == 201 or result.status_code == 200:
