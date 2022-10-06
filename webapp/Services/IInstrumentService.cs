@@ -18,6 +18,7 @@ namespace Instool.Services
 
         Task<PaginatedList<InstrumentWithDistance>> Search(InstrumentSearchRequest request,
             string? sortColumn, string? sortOrder, int start, int length);
+        Task<List<Instrument>> Lookup(InstrumentLookupRequest request);
         Task SetDoi(int id, string doi);
     }
 }

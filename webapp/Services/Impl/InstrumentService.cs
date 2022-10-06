@@ -171,6 +171,11 @@ namespace Instool.Services.Impl
             }
         }
 
+        public Task<List<Instrument>> Lookup(InstrumentLookupRequest request)
+        {
+            return _repo.List(request);
+        }
+
         private async Task<PaginatedList<InstrumentWithDistance>> FilterByDistance(InstrumentSearchRequest request, SearchByLocationRequest locationCriteria, string? sortColumn, string? sortOrder, int start, int length)
         {
             List<InstrumentWithDistance> instrumentsFound = new();

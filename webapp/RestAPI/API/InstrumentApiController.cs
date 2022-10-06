@@ -110,13 +110,13 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(void), StatusCodes.Status409Conflict)]
         [HasPrivilege(PrivilegeEnum.Instrument)]
-        public async Task<ActionResult<InstrumentDTO>> Lookup([FromBody] InstrumentSearchRequest request)
+        public async Task<ActionResult<InstrumentDTO>> Lookup([FromBody] InstrumentLookupRequest request)
         {
             if (!string.IsNullOrWhiteSpace(request.InstrumentType))
             {
                 request.InstrumentType = request.InstrumentType.Split("#")[0];
             }
-            var instruments = await _service.Search(request, null, null, 0, 0);
+            var instruments = await _service.Lookup(request);
             if (!instruments.Any())
             {
                 return NotFound();
@@ -125,10 +125,10 @@ namespace Instool.API
             {
                 return Conflict(new {
                     Error = $"Found {instruments.Count()} matching instruments",
-                    Instruments = instruments.Select(i => new { id = i.Instrument.InstrumentId, doi = i.Instrument.Doi, name = i.Instrument.Name })
+                    Instruments = instruments.Select(i => new { id = i.InstrumentId, doi = i.Doi, name = i.Name })
                 });
             }
-            return await GetInstrument(instruments.First().Instrument.InstrumentId.ToString());
+            return await GetInstrument(instruments.First().InstrumentId.ToString());
         }
 
         [HttpPut("{id}/doi/{*doi}")]
