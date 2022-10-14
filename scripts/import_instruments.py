@@ -1,6 +1,6 @@
 from asyncio.windows_events import NULL
 import csv
-import json
+import json # to parse or dump - not using yet
 from unicodedata import category
 from requests.auth import HTTPBasicAuth
 import requests
@@ -82,7 +82,7 @@ with open('data/nanofab.csv', encoding='utf-8-sig') as csvfile:
     reader = csv.DictReader(csvfile, dialect='excel')
     for row in reader:
         data = create_json(row) # 'data' is the JSON type
-        
+        requests.post(instool.url + '/instruments/lookup',  )
 
 
 
