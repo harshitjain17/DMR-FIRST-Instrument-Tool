@@ -95,14 +95,14 @@ def otherFieldsSame(data, response):
 
         # comparing and updating the list of Technique from Data with the list of instrumentTypes
         if set(data["Technique"].split(',')) != set(listOfInstrumentTypes):
-            print("Major Update") # NOTE: MAJOR UPDATE
+            print("Major Update") # NOTE: MAJOR UPDATE; BUG: HOw to notify the developer???
             response["instrumentTypes"] = data["Technique"].split(',') # NOTE: We need to generate more data like: abbreviation, label, category, etc.
     
     
     # Updating roomNumber - MAJOR UPDATE
     if data["Room"]:
         if data["Room"] != response["roomNumber"]:
-            print("Major Update") # NOTE: MAJOR UPDATE
+            print("Major Update") # NOTE: MAJOR UPDATE; BUG: HOw to notify the developer???
             response["roomNumber"] = data["Room"]
     
     
