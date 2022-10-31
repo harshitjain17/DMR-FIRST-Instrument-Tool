@@ -78,19 +78,57 @@ headers = {
     'X-API-Key': instool.auth
 }
 
+def otherFieldsSame(data, response):
+    # if data["doi"] != response["doi"]:
+    #     return f'DOI Conflict: Error {response.status_code} updating {data["Name"]}: {response.text}'
+    # if data["Serial Number"] != response["serialNumber"]:
+    #     return f'Serial Number: Error {response.status_code} updating {data["Name"]}: {response.text}'
+    
+    # Updating instrumentTypes - MAJOR UPDATE
+    if data["Technique"]:
+        
+        # constructing list of the instruments present in the server
+        if response["instrumentTypes"]:
+            listOfInstrumentTypes = []
+            for instrumentType in response["instrumentTypes"]:
+                listOfInstrumentTypes.append(instrumentType["name"])
+
+        # comparing and updating the list of Technique from Data with the list of instrumentTypes
+        if set(data["Technique"].split(',')) != set(listOfInstrumentTypes):
+            print("Major Update") # NOTE: MAJOR UPDATE
+            response["instrumentTypes"] = data["Technique"].split(',') # NOTE: We need to generate more data like: abbreviation, label, category, etc.
+    
+    
+    # Updating roomNumber - MAJOR UPDATE
+    if data["Room"]:
+        if data["Room"] != response["roomNumber"]:
+            print("Major Update") # NOTE: MAJOR UPDATE
+            response["roomNumber"] = data["Room"]
+    
+    
+    # Updating name
+    if data["Name"]:
+        if data["Name"] != response["name"]:
+            response["name"] = data["Name"]
+
+    # 
+
 with open('data/nanofab.csv', encoding='utf-8-sig') as csvfile:
     reader = csv.DictReader(csvfile, dialect='excel')
     for row in reader:
         data = create_json(row) # 'data' is the JSON type
-        requests.post(instool.url + '/instruments/lookup',  )
+        if data["doi"]:
+            response = requests.get(instool.url + f'/instruments/{data["doi"]}') # Looking up through DOI/ID
+            # if response.status_code == 201 or response.status_code == 200:
+            #     otherFieldsSame(data, response)
 
 
 
         result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False, timeout=60)
         if result.status_code == 201 or result.status_code == 200:
-                print('Sucessfully added {}'.format(row["Name"]))
+            print(f'Sucessfully added {row["Name"]}')
         else: 
-                print('Error {} inserting {}: {}'.format(result.status_code, row["Name"], result.text))
+            print(f'Error {result.status_code} inserting {row["Name"]}: {result.text}')
 
 
 
