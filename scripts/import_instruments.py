@@ -93,10 +93,15 @@ def otherFieldsSame(data, response):
             for instrumentType in response["instrumentTypes"]:
                 listOfInstrumentTypes.append(instrumentType["name"])
 
-        # comparing and updating the list of Technique from Data with the list of instrumentTypes
+        # comparing and updating the list of "Technique" from "Data" with the list of "instrumentTypes" from "Response"
         if set(data["Technique"].split(',')) != set(listOfInstrumentTypes):
-            print("Major Update") # NOTE: MAJOR UPDATE; BUG: HOw to notify the developer???
-            response["instrumentTypes"] = data["Technique"].split(',') # NOTE: We need to generate more data like: abbreviation, label, category, etc.
+            instrumentTypes=[]
+            print("Major Update") #BUG: HOw to notify the developer???
+            for technique in data["Technique"].split(','):
+                instrumentTypes.append({
+                    "name": technique,
+                })
+            response["instrumentTypes"] = instrumentTypes # NOTE: We need to generate more data like: abbreviation, label, category, etc.
     
     
     # Updating roomNumber - MAJOR UPDATE
@@ -111,7 +116,75 @@ def otherFieldsSame(data, response):
         if data["Name"] != response["name"]:
             response["name"] = data["Name"]
 
-    # 
+    # updating manufacturer
+    if data["Manufacturer"]:
+        if data["Manufacturer"] != response["manufacturer"]:
+            response["manufacturer"] = data["Manufacturer"]
+    
+    # updating modelNumber
+    if data["Model Number"]:
+        if data["Model Number"] != response["modelNumber"]:
+            response["modelNumber"] = data["Manufacturer"]
+    
+    # updating serialNumber
+    if data["Serial Number"]:
+        if data["Serial Number"] != response["serialNumber"]:
+            response["serialNumber"] = data["Serial Number"]
+    
+    # updating status
+    if data["Status"]:
+        if data["Status"] != response["status"]:
+            response["status"] = data["Status"]
+    
+    # updating acquisitionDate
+    if data["Acquisition Date"]:
+        if data["Acquisition Date"] != response["acquisitionDate"]:
+            response["acquisitionDate"] = data["Acquisition Date"]
+    
+    # updating completionDate
+    if data["Completion Date"]:
+        if data["Completion Date"] != response["completionDate"]:
+            response["completionDate"] = data["Completion Date"]
+    
+    # updating description
+    if data["Description"]:
+        if data["Description"] != response["description"]:
+            response["description"] = data["Description"]
+            
+    # updating capabilities
+    if data["Capabilities"]:
+        if data["Capabilities"] != response["capabilities"]:
+            response["capabilities"] = data["Capabilities"]
+   
+    # updating facility
+    if data["Facility"]:
+        if data["Facility"] != response["institution"]["facility"]:
+            response["institution"]["facility"] = data["Facility"]
+
+    # NOTE: Doubt in LOCATION!!!
+    
+    # updating awards
+    if data["Award"]:
+        
+        # constructing list of the awards present in the server
+        if response["awards"]:
+            listOfAwards = []
+            for award in response["awards"]:
+                listOfAwards.append(award["title"])
+
+        # comparing and updating the list of "Award" from "Data" with the list of "awards" from "Response"
+        if set(data["Award"].split(',')) != set(listOfAwards):
+            awards = []
+            for award in data["Award"].split(','):
+                awards.append({
+                    
+                })
+            
+            response["awards"] = data["Award"].split(',')
+
+
+
+
 
 with open('data/nanofab.csv', encoding='utf-8-sig') as csvfile:
     reader = csv.DictReader(csvfile, dialect='excel')
