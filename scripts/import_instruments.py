@@ -86,22 +86,26 @@ def otherFieldsSame(data, response):
     
     # Updating instrumentTypes - MAJOR UPDATE
     if data["Technique"]:
-        
-        # constructing list of the instruments present in the server
+
+        listOfInstrumentTypesInData = data["Technique"].split(',')
+
+        # it creates the List of the instrumentType "name" fetched from the server
+        # NOTE: other properties in the response such as "instrumentTypeId", "abbreviation", "label", etc. are not included here since we try to match just the names
         if response["instrumentTypes"]:
-            listOfInstrumentTypes = []
+            listOfInstrumentTypesInServer = []
             for instrumentType in response["instrumentTypes"]:
-                listOfInstrumentTypes.append(instrumentType["name"])
+                listOfInstrumentTypesInServer.append(instrumentType["name"])
 
         # comparing and updating the list of "Technique" from "Data" with the list of "instrumentTypes" from "Response"
-        if set(data["Technique"].split(',')) != set(listOfInstrumentTypes):
-            instrumentTypes=[]
+        # initialized a new variable (updatedInstrumentTypes) for the final list of updated instruments to be returned to the server
+        if set(listOfInstrumentTypesInData) != set(listOfInstrumentTypesInServer):
+            updatedInstrumentTypes = []
             print("Major Update") #BUG: HOw to notify the developer???
-            for technique in data["Technique"].split(','):
-                instrumentTypes.append({
-                    "name": technique,
+            for technique in listOfInstrumentTypesInData:
+                updatedInstrumentTypes.append({
+                    "name": technique, # NOTE: We could also update/add the "instrumentTypeId", "abbreviation", "label", etc. here, if known
                 })
-            response["instrumentTypes"] = instrumentTypes # NOTE: We need to generate more data like: abbreviation, label, category, etc.
+            response["instrumentTypes"] = updatedInstrumentTypes
     
     
     # Updating roomNumber - MAJOR UPDATE
@@ -166,22 +170,51 @@ def otherFieldsSame(data, response):
     # updating awards
     if data["Award"]:
         
-        # constructing list of the awards present in the server
+        listOfAwardsInData = data["Award"].split(',')
+
+        # it creates the List of the awards "awardNumber" fetched from the server
+        # NOTE: other properties in the response such as "awardId", "title", "startDate", "endDate", etc. are not included here since we try to match just the awardNumber
         if response["awards"]:
-            listOfAwards = []
+            listOfAwardsInServer = []
             for award in response["awards"]:
-                listOfAwards.append(award["title"])
+                listOfAwardsInServer.append(award["awardNumber"])
 
         # comparing and updating the list of "Award" from "Data" with the list of "awards" from "Response"
-        if set(data["Award"].split(',')) != set(listOfAwards):
-            awards = []
-            for award in data["Award"].split(','):
-                awards.append({
-                    
+        # initialized a new variable (updatedAwards) for the final list of updated awards to be returned to the server
+        if set(listOfAwardsInData) != set(listOfAwardsInServer):
+            updatedAwards = []
+            for award in listOfAwardsInData:
+                 updatedAwards.append({
+                    "awardNumber": award, # NOTE: We could also update/add the "awardId", "title", "startDate", "endDate", etc. here, if known
                 })
-            
-            response["awards"] = data["Award"].split(',')
+            response["awards"] = updatedAwards
 
+    # updating contacts
+    if (data["Faculty Contact 1"] or data["Faculty Contact 2"] or data["Technical Contact 1"] or data["Technical Contact 2"] or data["Technical Contact 3"]):
+
+        # it creates the list of contacts "email" fetched from the data  
+        listOfContactsInData = []
+        if data["Faculty Contact 1"]: listOfContactsInData.append(data["Faculty Contact 1"])
+        if data["Faculty Contact 2"]: listOfContactsInData.append(data["Faculty Contact 2"])
+        if data["Technical Contact 1"]: listOfContactsInData.append(data["Technical Contact 1"])
+        if data["Technical Contact 2"]: listOfContactsInData.append(data["Technical Contact 2"])
+        if data["Technical Contact 3"]: listOfContactsInData.append(data["Technical Contact 3"])
+
+        # it creates the List of the contacts "email" fetched from the server
+        if response["contacts"]:
+            listOfContactsInServer = []
+            for contact in response["contacts"]:
+                listOfContactsInServer.append(contact["email"])
+            
+            # comparing and updating the list of "contact" from "Data" with the list of "awards" from "Response"
+            # initialized a new variable (updatedContacts) for the final list of updated contacts to be returned to the server
+            if set(listOfContactsInData) != set(listOfContactsInServer):
+                updatedContacts = []
+                for contact in listOfContactsInData:
+                    updatedContacts.append({
+                        "email": contact # NOTE: We could also update/add the "eppn", "firstName", "middleName", "lastName", "role", etc. here, if known
+                    })
+            response["contacts"] = updatedContacts
 
 
 
@@ -192,8 +225,8 @@ with open('data/nanofab.csv', encoding='utf-8-sig') as csvfile:
         data = create_json(row) # 'data' is the JSON type
         if data["doi"]:
             response = requests.get(instool.url + f'/instruments/{data["doi"]}') # Looking up through DOI/ID
-            # if response.status_code == 201 or response.status_code == 200:
-            #     otherFieldsSame(data, response)
+            if response.status_code == 201 or response.status_code == 200:
+                otherFieldsSame(data, response)
 
 
 
