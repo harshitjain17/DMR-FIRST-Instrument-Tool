@@ -165,7 +165,10 @@ def otherFieldsSame(data, response):
         if data["Facility"] != response["institution"]["facility"]:
             response["institution"]["facility"] = data["Facility"]
 
-    # NOTE: Doubt in LOCATION!!!
+    # updating location
+    if data["Location"]:
+        if data["Location"] != response["location"]["building"]:
+            response["location"]["building"] = data["Location"]
     
     # updating awards
     if data["Award"]:
@@ -216,26 +219,85 @@ def otherFieldsSame(data, response):
                     })
             response["contacts"] = updatedContacts
 
-
+    return (data, response)
 
 
 with open('data/nanofab.csv', encoding='utf-8-sig') as csvfile:
     reader = csv.DictReader(csvfile, dialect='excel')
     for row in reader:
         data = create_json(row) # 'data' is the JSON type
+        
+
+
+        # Looking up through DOI/ID
         if data["doi"]:
-            response = requests.get(instool.url + f'/instruments/{data["doi"]}') # Looking up through DOI/ID
+            response = requests.get(instool.url + f'/instruments/{data["doi"]}')
             if response.status_code == 201 or response.status_code == 200:
-                otherFieldsSame(data, response)
+                
+                # checks for the similarity of rest of the fields
+                data, response = otherFieldsSame(data, response)
+                
+                # post the updated instrument to the server
+                result = requests.post(instool.url + '/instruments', json=response, headers=headers, verify=False, timeout=60)
+                if result.status_code == 201 or result.status_code == 200:
+                    print(f'Sucessfully added {row["Name"]}')
+                else: 
+                    print(f'Error {result.status_code} inserting {row["Name"]}: {result.text}')
+    
+        
 
 
+        # Looking up through Serial# and manufacturer
+        elif data["Serial Number"] and data["Manufacturer"]:
+            
+            # parameters
+            requestBody = { 
+                "serialNumber": data["Serial Number"],
+                "manufacturer": data["Manufacturer"]
+            }
+            response = requests.post(instool.url + f'/instruments/lookup', json = requestBody) 
+            if response.status_code == 201 or response.status_code == 200:
+                
+                # checks for the similarity of rest of the fields
+                data, response = otherFieldsSame(data, response)
 
-        result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False, timeout=60)
-        if result.status_code == 201 or result.status_code == 200:
-            print(f'Sucessfully added {row["Name"]}')
-        else: 
-            print(f'Error {result.status_code} inserting {row["Name"]}: {result.text}')
+                # post the updated instrument to the server
+                result = requests.post(instool.url + '/instruments', json=response, headers=headers, verify=False, timeout=60)
+                if result.status_code == 201 or result.status_code == 200:
+                    print(f'Sucessfully added {row["Name"]}')
+                else: 
+                    print(f'Error {result.status_code} inserting {row["Name"]}: {result.text}')
+        
+        
 
 
+        # Looking up through name and institution
+        elif data["Name"] and data["Institution"]:
+            
+            # parameters
+            requestBody = { 
+                "name": data["Name"],
+                "institution": data["Institution"]
+            }
+            response = requests.post(instool.url + f'/instruments/lookup', json = requestBody) 
+            if response.status_code == 201 or response.status_code == 200:
+                
+                # checks for the similarity of rest of the fields
+                data, response = otherFieldsSame(data, response)
 
+                # post the updated instrument to the server
+                result = requests.post(instool.url + '/instruments', json=response, headers=headers, verify=False, timeout=60)
+                if result.status_code == 201 or result.status_code == 200:
+                    print(f'Sucessfully added {row["Name"]}')
+                else: 
+                    print(f'Error {result.status_code} inserting {row["Name"]}: {result.text}')
 
+        
+        # not able to lookup through any field
+        # post the incoming data directly 
+        else:
+            result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False, timeout=60)
+            if result.status_code == 201 or result.status_code == 200:
+                print(f'Sucessfully added {row["Name"]}')
+            else: 
+                print(f'Error {result.status_code} inserting {row["Name"]}: {result.text}')
