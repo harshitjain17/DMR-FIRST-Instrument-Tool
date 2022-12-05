@@ -257,47 +257,87 @@ def otherFieldsSame(data, response):
         if data["location"]["building"] != response["location"]["building"]:
             response["location"]["building"] = data["location"]["building"]
 
-    return (data, response)
+    return response
+
+
+
+def lookup(data, response):
+    # Success - one response received.
+    if (response.status_code == 200):
+        
+        # checks for the similarity of rest of the fields.
+        updatedResponse = otherFieldsSame(response.json())
+
+        # if there is any update made, then post the new instrument details to the server.
+        if (response != updatedResponse):
+
+            # POST the updated instrument to the server.
+            result = requests.put(instool.url + '/instruments/' + updatedResponse["id"], json=updatedResponse, headers=headers, verify=False, timeout=60)
+            if result.status_code == 201 or result.status_code == 200:
+                print(f'Sucessfully added {data["name"]}')
+            else: 
+                print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
+
+        else:
+            # is DOI not in the source but in the server?
+            if (not data["doi"]) and (response["doi"]):
+                print("Communicate DOI to Source.") # NOTE: How to do that??
+
+    
+    # Multiple choices - more than one response received - Error should be raised
+    elif (response.status_code == 409): 
+        return (f'Error {result.status_code} inserting {data["name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
+
+    
+    # Anything else than NOT FOUND, is an error.
+    elif (response.status_code != 404):
+        return (f'Error {result.status_code} inserting {data["name"]}: {result.text}.')
+
+
+
 
 
 
 def import_instruments():
     with open('data/nanofab.csv', encoding='utf-8-sig') as csvfile:
+        
+        # Reading CSV and looping over rows
         reader = csv.DictReader(csvfile, dialect='excel')
         for row in reader:
-            data = create_json(row) # 'data' is the JSON type
 
+            # Converting one CSV row to instrument JSON (dictionary)
+            data = create_json(row)
 
             # LOOKING UP THROUGH DOI/ID
             if data["doi"]:
                 response = requests.get(instool.url + f'/instruments/{data["doi"]}')
                 
                 
-                # Success - one response received
-                if response.status_code == 201 or response.status_code == 200:
+                # # Success - one response received.
+                # if response.status_code == 200:
                     
-                    # checks for the similarity of rest of the fields
-                    data, updatedResponse = otherFieldsSame(data, response)
+                #     # checks for the similarity of rest of the fields.
+                #     updatedResponse = otherFieldsSame(response.json())
 
-                    # if there is any update made, then post the new instrument details to the server
-                    if (response != updatedResponse):
+                #     # if there is any update made, then post the new instrument details to the server.
+                #     if (response != updatedResponse):
 
-                        # POST the updated instrument to the server
-                        result = requests.post(instool.url + '/instruments', json=updatedResponse, headers=headers, verify=False, timeout=60)
-                        if result.status_code == 201 or result.status_code == 200:
-                            print(f'Sucessfully added {row["Name"]}')
-                        else: 
-                            print(f'Error {result.status_code} inserting {row["Name"]}: {result.text}')
+                #         # POST the updated instrument to the server.
+                #         result = requests.put(instool.url + '/instruments/' + updatedResponse["id"], json=updatedResponse, headers=headers, verify=False, timeout=60)
+                #         if result.status_code == 201 or result.status_code == 200:
+                #             print(f'Sucessfully {data["name"]}')
+                #         else: 
+                #             print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
 
 
-                # Multiple choices - more than one response received - Error should be raised
-                elif response.status_code == 300:
-                    return (f'Error {result.status_code} inserting {row["Name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
+                # # Anything else than NOT FOUND, is an error.
+                # elif response.status_code != 404: 
+                #     return (f'Error {result.status_code} inserting {data["name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
                     
 
 
             # LOOKING UP THROUGH SERIAL# AND MANUFACTURER
-            elif data["serialNumber"] and data["manufacturer"]:
+            if data["serialNumber"] and data["manufacturer"]:
                 
                 # parameters
                 requestBody = { 
@@ -306,33 +346,35 @@ def import_instruments():
                 }
                 response = requests.post(instool.url + f'/instruments/lookup', json = requestBody)
                 
-                # Success - one response received
-                if response.status_code == 201 or response.status_code == 200:
+                # # Success - one response received
+                # if response.status_code == 200:
                     
-                    # checks for the similarity of rest of the fields
-                    data, updatedResponse = otherFieldsSame(data, response)
+                #     # checks for the similarity of rest of the fields
+                #     updatedResponse = otherFieldsSame(response.json())
 
-                    # if there is any update made
-                    # then post the new instrument details to the server
-                    if (updatedResponse != response):
+                #     # if there is any update made
+                #     # then post the new instrument details to the server
+                #     if (updatedResponse != response):
                         
-                        # POST the updated instrument to the server
-                        result = requests.post(instool.url + '/instruments', json=updatedResponse, headers=headers, verify=False, timeout=60)
-                        if result.status_code == 201 or result.status_code == 200:
-                            print(f'Sucessfully added {row["Name"]}')
-                        else: 
-                            print(f'Error {result.status_code} inserting {row["Name"]}: {result.text}')
+                #         # POST the updated instrument to the server
+                #         result = requests.post(instool.url + '/instruments', json=updatedResponse, headers=headers, verify=False, timeout=60)
+                #         if result.status_code == 201 or result.status_code == 200:
+                #             print(f'Sucessfully added {data["name"]}')
+                #         else: 
+                #             print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
 
-                    else:
-                        # is DOI not in the source but in the server?
-                        if (not data["doi"]) and (response["doi"]):
-                            print("Communicate DOI to Source.") # NOTE: How to do that??
+                    # else:
+                    #     # is DOI not in the source but in the server?
+                    #     if (not data["doi"]) and (response["doi"]):
+                    #         print("Communicate DOI to Source.") # NOTE: How to do that??
 
                 
-                # Multiple choices - more than one response received - Error should be raised
-                elif response.status_code == 300:
-                    return (f'Error {result.status_code} inserting {row["Name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
+                # # Multiple choices - more than one response received - Error should be raised
+                # elif response.status_code == 409:
+                #     return (f'Error {result.status_code} inserting {data["name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
                 
+                # elif response.status_code != 404:
+                #     return (f'Error {result.status_code} inserting {data["name"]}: {result.text}.')
 
 
             # LOOKING UP THROUGH NAME AND INSTITUTION NAME
@@ -345,32 +387,32 @@ def import_instruments():
                 }
                 response = requests.post(instool.url + f'/instruments/lookup', json = requestBody) 
                 
-                # Success - one response received
-                if response.status_code == 201 or response.status_code == 200:
+                # # Success - one response received
+                # if response.status_code == 200:
                     
-                    # checks for the similarity of rest of the fields
-                    data, updatedResponse = otherFieldsSame(data, response)
+                #     # checks for the similarity of rest of the fields
+                #     updatedResponse = otherFieldsSame(response.json())
 
-                    # if there is any update made
-                    # then post the new instrument details to the server
-                    if (updatedResponse != response):
+                #     # if there is any update made
+                #     # then post the new instrument details to the server
+                #     if (updatedResponse != response):
 
-                        # POST the updated instrument to the server
-                        result = requests.post(instool.url + '/instruments', json=updatedResponse, headers=headers, verify=False, timeout=60)
-                        if result.status_code == 201 or result.status_code == 200:
-                            print(f'Sucessfully added {row["Name"]}')
-                        else: 
-                            print(f'Error {result.status_code} inserting {row["Name"]}: {result.text}')
+                #         # POST the updated instrument to the server
+                #         result = requests.post(instool.url + '/instruments', json=updatedResponse, headers=headers, verify=False, timeout=60)
+                #         if result.status_code == 201 or result.status_code == 200:
+                #             print(f'Sucessfully added {data["name"]}')
+                #         else: 
+                #             print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
 
-                    else:
-                        # is DOI not in the source but in the server?
-                        if (not data["doi"]) and (response["doi"]):
-                            print("Communicate DOI to Source.") # NOTE: How to do that??
+                #     else:
+                #         # is DOI not in the source but in the server?
+                #         if (not data["doi"]) and (response["doi"]):
+                #             print("Communicate DOI to Source.") # NOTE: How to do that??
 
 
-                # Multiple choices - more than one response received - Error should be raised
-                elif response.status_code == 300:
-                    return (f'Error {result.status_code} inserting {row["Name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
+                # # Multiple choices - more than one response received - Error should be raised
+                # elif response.status_code == 409:
+                #     return (f'Error {result.status_code} inserting {data["name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
                     
 
             # not able to lookup through any field
@@ -379,6 +421,6 @@ def import_instruments():
             else:
                 result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False, timeout=60)
                 if result.status_code == 201 or result.status_code == 200:
-                    print(f'Sucessfully added {row["Name"]}')
+                    print(f'Sucessfully added {data["name"]}')
                 else: 
-                    print(f'Error {result.status_code} inserting {row["Name"]}: {result.text}')
+                    print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
