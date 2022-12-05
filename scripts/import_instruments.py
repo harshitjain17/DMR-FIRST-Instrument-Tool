@@ -98,20 +98,25 @@ def create_json(row): # 'row' is a dictionary type here
 
 
 
-
-def otherFieldsSame(data, response):
+# this function compares each field from Source and Server
+# Input: Data - Source; Response - Server
+# Output: Updated Response
+def compareFields(data, response):
     # if data["doi"] != response["doi"]:
     #     return f'DOI Conflict: Error {response.status_code} updating {data["Name"]}: {response.text}'
     # if data["Serial Number"] != response["serialNumber"]:
     #     return f'Serial Number: Error {response.status_code} updating {data["Name"]}: {response.text}'
     
+    # initializing the new response
+    updatedResponse = response.copy()
+
     # Updating instrumentTypes - MAJOR UPDATE
     if data["instrumentTypes"]:
 
         # it creates the List of the instrumentTypes' "name" fetched from the source
         listOfInstrumentTypesInSource = []
         for instrumentType in data["instrumentTypes"]:
-            listOfInstrumentTypesInSource.append(instrumentType["name"])
+            listOfInstrumentTypesInSource.append(instrumentType["name"]) # NOTE: Instead of just Name, we can also compare the whole intrumentType JSON
 
         # it creates the List of the instrumentTypes' "name" fetched from the server
         # NOTE: other properties in the response such as "instrumentTypeId", "abbreviation", "label", etc. are not included here since we try to match just the names
@@ -124,12 +129,12 @@ def otherFieldsSame(data, response):
         # initialized a new variable (updatedInstrumentTypes) for the final list of updated instruments to be returned to the server
         if set(listOfInstrumentTypesInSource) != set(listOfInstrumentTypesInServer):
             updatedInstrumentTypes = []
-            print("Major Update") #BUG: HOw to notify the developer???
+            print("Major Update") #NOTE: How to notify the developer???
             for techniqueName in listOfInstrumentTypesInSource:
                 updatedInstrumentTypes.append({
                     "name": techniqueName, # NOTE: We could also update/add the "instrumentTypeId", "abbreviation", "label", etc. here, if known
                 })
-            response["instrumentTypes"] = updatedInstrumentTypes
+            updatedResponse["instrumentTypes"] = updatedInstrumentTypes
     
     
     # updating awards - MAJOR UPDATE
@@ -155,7 +160,7 @@ def otherFieldsSame(data, response):
                  updatedAwards.append({
                     "awardNumber": awardNumber, # NOTE: We could also update/add the "awardId", "title", "startDate", "endDate", etc. here, if known
                 })
-            response["awards"] = updatedAwards
+            updatedResponse["awards"] = updatedAwards
 
     
     # updating contacts
@@ -169,7 +174,7 @@ def otherFieldsSame(data, response):
             listOfContactsInServer = []
             for contact in response["contacts"]:
                 listOfContactsInServer.append({
-                    "eppn": contact["eppn"], # NOTE: We could have used "email" instead of "eppn". Ask supervisor.
+                    "eppn": contact["eppn"],
                     "role": contact["role"]
                 })
             
@@ -182,106 +187,108 @@ def otherFieldsSame(data, response):
                         "eppn": contact["eppn"], # NOTE: We could also update/add the "eppn", "firstName", "middleName", "lastName", "role", etc. here, if known
                         "role": contact["role"]
                     })
-            response["contacts"] = updatedContacts
+            updatedResponse["contacts"] = updatedContacts
 
 
     # Updating roomNumber - MAJOR UPDATE
     if data["roomNumber"]:
         if data["roomNumber"] != response["roomNumber"]:
             print("Major Update") # BUG: HOw to notify the developer???
-            response["roomNumber"] = data["roomNumber"]
+            updatedResponse["roomNumber"] = data["roomNumber"]
     
     
     # Updating name
     if data["name"]:
         if data["name"] != response["name"]:
-            response["name"] = data["name"]
+            updatedResponse["name"] = data["name"]
 
     
     # updating manufacturer
     if data["manufacturer"]:
         if data["manufacturer"] != response["manufacturer"]:
-            response["manufacturer"] = data["manufacturer"]
+            updatedResponse["manufacturer"] = data["manufacturer"]
     
     
     # updating modelNumber
     if data["modelNumber"]:
         if data["modelNumber"] != response["modelNumber"]:
-            response["modelNumber"] = data["modelNumber"]
+            updatedResponse["modelNumber"] = data["modelNumber"]
     
     
     # updating serialNumber
     if data["serialNumber"]:
         if data["serialNumber"] != response["serialNumber"]:
-            response["serialNumber"] = data["serialNumber"]
+            updatedResponse["serialNumber"] = data["serialNumber"]
     
     
     # updating status
     if data["status"]:
         if data["status"] != response["status"]:
-            response["status"] = data["status"]
+            updatedResponse["status"] = data["status"]
     
     
     # updating acquisitionDate
     if data["acquisitionDate"]:
         if data["acquisitionDate"] != response["acquisitionDate"]:
-            response["acquisitionDate"] = data["acquisitionDate"]
+            updatedResponse["acquisitionDate"] = data["acquisitionDate"]
     
     
     # updating completionDate
     if data["completionDate"]:
         if data["completionDate"] != response["completionDate"]:
-            response["completionDate"] = data["completionDate"]
+            updatedResponse["completionDate"] = data["completionDate"]
     
     
     # updating description
     if data["description"]:
         if data["description"] != response["description"]:
-            response["description"] = data["description"]
+            updatedResponse["description"] = data["description"]
             
     
     # updating capabilities
     if data["capabilities"]:
         if data["capabilities"] != response["capabilities"]:
-            response["capabilities"] = data["capabilities"]
+            updatedResponse["capabilities"] = data["capabilities"]
    
     
     # updating facility
     if data["institution"]["facility"]:
         if data["institution"]["facility"] != response["institution"]["facility"]:
-            response["institution"]["facility"] = data["institution"]["facility"]
+            updatedResponse["institution"]["facility"] = data["institution"]["facility"]
 
     
     # updating location
     if data["location"]["building"]:
         if data["location"]["building"] != response["location"]["building"]:
-            response["location"]["building"] = data["location"]["building"]
+            updatedResponse["location"]["building"] = data["location"]["building"]
 
-    return response
+    return updatedResponse
 
 
-
+# this function looks up for the instrument and update the server, if there is any update
+# Input: Data - Source; Response - Server
+# Output: Lookup Message
 def lookup(data, response):
-    # Success - one response received.
+    # Success - one response received
     if (response.status_code == 200):
         
-        # checks for the similarity of rest of the fields.
-        updatedResponse = otherFieldsSame(response.json())
+        # checks for the similarity of rest of the fields
+        updatedResponse = compareFields(response.json())
 
-        # if there is any update made, then post the new instrument details to the server.
-        if (response != updatedResponse):
+        # if there is any update made, then post the new instrument details to the server
+        if (updatedResponse):
 
-            # POST the updated instrument to the server.
-            result = requests.put(instool.url + '/instruments/' + updatedResponse["id"], json=updatedResponse, headers=headers, verify=False, timeout=60)
+            # POST the updated instrument to the server
+            result = requests.put(instool.url + '/instruments/' + updatedResponse["id"], data=updatedResponse, headers=headers, verify=False, timeout=60)
             if result.status_code == 201 or result.status_code == 200:
-                print(f'Sucessfully added {data["name"]}')
+                return (f'Sucessfully added {data["name"]}')
             else: 
-                print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
+                return (f'Error {result.status_code} inserting {data["name"]}: {result.text}')
 
         else:
             # is DOI not in the source but in the server?
             if (not data["doi"]) and (response["doi"]):
-                print("Communicate DOI to Source.") # NOTE: How to do that??
+                return ("Communicate DOI to Source.") # NOTE: How to do that??
 
     
     # Multiple choices - more than one response received - Error should be raised
@@ -289,15 +296,15 @@ def lookup(data, response):
         return (f'Error {result.status_code} inserting {data["name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
 
     
-    # Anything else than NOT FOUND, is an error.
+    # Anything else than NOT FOUND, is an error
     elif (response.status_code != 404):
         return (f'Error {result.status_code} inserting {data["name"]}: {result.text}.')
 
 
 
 
-
-
+# this function is the Main function
+# it reads the CSV of source, check each row (instrument), and try to lookup for that instrument in the server
 def import_instruments():
     with open('data/nanofab.csv', encoding='utf-8-sig') as csvfile:
         
@@ -311,33 +318,11 @@ def import_instruments():
             # LOOKING UP THROUGH DOI/ID
             if data["doi"]:
                 response = requests.get(instool.url + f'/instruments/{data["doi"]}')
-                
-                
-                # # Success - one response received.
-                # if response.status_code == 200:
-                    
-                #     # checks for the similarity of rest of the fields.
-                #     updatedResponse = otherFieldsSame(response.json())
+                lookup_result = lookup(data, response)
 
-                #     # if there is any update made, then post the new instrument details to the server.
-                #     if (response != updatedResponse):
-
-                #         # POST the updated instrument to the server.
-                #         result = requests.put(instool.url + '/instruments/' + updatedResponse["id"], json=updatedResponse, headers=headers, verify=False, timeout=60)
-                #         if result.status_code == 201 or result.status_code == 200:
-                #             print(f'Sucessfully {data["name"]}')
-                #         else: 
-                #             print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
-
-
-                # # Anything else than NOT FOUND, is an error.
-                # elif response.status_code != 404: 
-                #     return (f'Error {result.status_code} inserting {data["name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
-                    
-
-
+            
             # LOOKING UP THROUGH SERIAL# AND MANUFACTURER
-            if data["serialNumber"] and data["manufacturer"]:
+            elif data["serialNumber"] and data["manufacturer"]:
                 
                 # parameters
                 requestBody = { 
@@ -345,37 +330,8 @@ def import_instruments():
                     "manufacturer": data["manufacturer"]
                 }
                 response = requests.post(instool.url + f'/instruments/lookup', json = requestBody)
+                lookup_result = lookup(data, response)
                 
-                # # Success - one response received
-                # if response.status_code == 200:
-                    
-                #     # checks for the similarity of rest of the fields
-                #     updatedResponse = otherFieldsSame(response.json())
-
-                #     # if there is any update made
-                #     # then post the new instrument details to the server
-                #     if (updatedResponse != response):
-                        
-                #         # POST the updated instrument to the server
-                #         result = requests.post(instool.url + '/instruments', json=updatedResponse, headers=headers, verify=False, timeout=60)
-                #         if result.status_code == 201 or result.status_code == 200:
-                #             print(f'Sucessfully added {data["name"]}')
-                #         else: 
-                #             print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
-
-                    # else:
-                    #     # is DOI not in the source but in the server?
-                    #     if (not data["doi"]) and (response["doi"]):
-                    #         print("Communicate DOI to Source.") # NOTE: How to do that??
-
-                
-                # # Multiple choices - more than one response received - Error should be raised
-                # elif response.status_code == 409:
-                #     return (f'Error {result.status_code} inserting {data["name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
-                
-                # elif response.status_code != 404:
-                #     return (f'Error {result.status_code} inserting {data["name"]}: {result.text}.')
-
 
             # LOOKING UP THROUGH NAME AND INSTITUTION NAME
             elif data["name"] and data["institution"]["name"]:
@@ -386,41 +342,18 @@ def import_instruments():
                     "institution": data["institution"]["name"]
                 }
                 response = requests.post(instool.url + f'/instruments/lookup', json = requestBody) 
+                lookup_result = lookup(data, response)
                 
-                # # Success - one response received
-                # if response.status_code == 200:
-                    
-                #     # checks for the similarity of rest of the fields
-                #     updatedResponse = otherFieldsSame(response.json())
 
-                #     # if there is any update made
-                #     # then post the new instrument details to the server
-                #     if (updatedResponse != response):
-
-                #         # POST the updated instrument to the server
-                #         result = requests.post(instool.url + '/instruments', json=updatedResponse, headers=headers, verify=False, timeout=60)
-                #         if result.status_code == 201 or result.status_code == 200:
-                #             print(f'Sucessfully added {data["name"]}')
-                #         else: 
-                #             print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
-
-                #     else:
-                #         # is DOI not in the source but in the server?
-                #         if (not data["doi"]) and (response["doi"]):
-                #             print("Communicate DOI to Source.") # NOTE: How to do that??
-
-
-                # # Multiple choices - more than one response received - Error should be raised
-                # elif response.status_code == 409:
-                #     return (f'Error {result.status_code} inserting {data["name"]}: {result.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
-                    
-
-            # not able to lookup through any field
+            # NOT ABLE TO LOOKUP THROUGH ANY FIELD
             # POST the incoming data directly
             # create an instrument in the server
             else:
                 result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False, timeout=60)
-                if result.status_code == 201 or result.status_code == 200:
+                if (result.status_code == 201) or (result.status_code == 200):
                     print(f'Sucessfully added {data["name"]}')
                 else: 
                     print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
+                continue
+            
+            print(lookup_result)
