@@ -3,12 +3,13 @@ using Instool.Authorization.Privileges;
 using Instool.DAL.Models.Auth;
 using Instool.DAL.Repositories;
 using Instool.Dtos;
-using Instool.RestAPI.Exceptions;
+using Instool.Exceptions;
+using Instool.Mapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Instool.Controllers.API
+namespace Instool.API
 {
     [ApiController]
     [ApiVersion("1")]
@@ -30,17 +31,17 @@ namespace Instool.Controllers.API
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<RoleDTO>> GetRole(string idOrName)
+        public async Task<ActionResult<RoleDto>> GetRole(string idOrName)
         {
             var role = await LoadRole(idOrName);
-            return Ok(RoleDTO.FromEntity(role, withPrivileges: true));
+            return Ok(role.ConvertToDto(withPrivileges: true));
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<IEnumerable<RoleDTO>>> GetRoles([FromQuery] bool customizing = false)
+        public async Task<ActionResult<IEnumerable<RoleDto>>> GetRoles([FromQuery] bool customizing = false)
         {
             if (customizing)
             {
@@ -50,16 +51,13 @@ namespace Instool.Controllers.API
                 }
 
                 var roles = await _roleRepository.ListWithUsage();
-                var dtos = roles.Select(r => RoleDTO.FromEntity(
-                    r.Item1,
-                    withPrivileges: true,
-                    used: r.Item2));
+                var dtos = roles.Select(r => r.Item1.ConvertToDto(withPrivileges: true, used: r.Item2));
                 return Ok(dtos);
             }
             else
             {
                 var roles = await _roleRepository.List();
-                var dtos = roles.Select(r => RoleDTO.FromEntity(r));
+                var dtos = roles.Select(r => r.ConvertToDto());
                 return Ok(dtos);
             }
         }
@@ -68,11 +66,11 @@ namespace Instool.Controllers.API
         [HasPrivilege(PrivilegeEnum.Role, OperationEnum.Create)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<RoleDTO>> Create([FromBody] RoleDTO role)
+        public async Task<ActionResult<RoleDto>> Create([FromBody] RoleDto role)
         {
-            var entity = role.GetEntity();
+            var entity = role.ConvertToEntity();
             await _roleRepository.Create(entity);
-            return Ok(RoleDTO.FromEntity(entity, true));
+            return Ok(entity.ConvertToDto(true));
         }
 
         [HttpPut("{idOrName}")]
@@ -80,19 +78,20 @@ namespace Instool.Controllers.API
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> Update([FromBody] RoleDTO role, [FromRoute] string idOrName)
+        public async Task<IActionResult> Update([FromBody] RoleDto role, [FromRoute] string idOrName)
         {
             if (role is null) { return BadRequest(); }
             var existing = await LoadRole(idOrName);
-            if ((role.ID > 0 && role.ID != existing.RoleId) ||
-               (role.Name != existing.Name)) {
+            if (role.ID > 0 && role.ID != existing.RoleId ||
+               role.Name != existing.Name)
+            {
                 return BadRequest();
             }
 
-            var entity = role.GetEntity();
+            var entity = role.ConvertToEntity();
 
             await _roleRepository.Update(entity);
-            return Ok(RoleDTO.FromEntity(entity));
+            return Ok(entity.ConvertToDto());
         }
 
         [HttpDelete("{idOrName}")]

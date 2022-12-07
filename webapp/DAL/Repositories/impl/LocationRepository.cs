@@ -12,6 +12,14 @@ namespace Instool.DAL.Repositories.Impl
             _context = context;
 
         }
+
+        public async Task<Location> Create(Location location)
+        {
+            _context.Locations.Add(location);
+            await _context.SaveChangesAsync();
+            return location;
+        }
+
         public async Task<Location?> Lookup(string building)
         {
             var found = await _context.Locations.Where(l => l.Building == building).Take(2).ToListAsync();

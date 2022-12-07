@@ -223,5 +223,13 @@ namespace Instool.Services.Impl
             return (int)distMiles;
         }
 
+        public Task<Instrument> UpdateInstrument(
+            Instrument entity, 
+            IEnumerable<InstrumentContact> contacts, 
+            IEnumerable<InstrumentType> types, 
+            IEnumerable<Award> awards)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

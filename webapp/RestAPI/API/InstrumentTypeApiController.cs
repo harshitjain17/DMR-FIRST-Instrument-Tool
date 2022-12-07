@@ -5,7 +5,8 @@ using Instool.DAL.Repositories;
 using Instool.DAL.Requests;
 using Instool.DAL.Results;
 using Instool.Dtos;
-using Instool.RestAPI.Exceptions;
+using Instool.Exceptions;
+using Instool.Mapper;
 using Instool.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -34,10 +35,10 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [HasPrivilege(PrivilegeEnum.InstrumentType)]
-        public async Task<ActionResult<InstrumentTypeDTO>> GetInstrumentType(string idOrShortName)
+        public async Task<ActionResult<InstrumentTypeDto>> GetInstrumentType(string idOrShortName)
         {
             var type = await LoadType(idOrShortName);
-            return Ok(InstrumentTypeDTO.WithCategory(type));
+            return Ok(type.ConvertToDtoWithCategory());
         }
 
 
@@ -46,7 +47,7 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [HasPrivilege(PrivilegeEnum.InstrumentType, OperationEnum.Delete)]
-        public async Task<ActionResult<InstrumentTypeDTO>> DeleteType(string idOrShortName)
+        public async Task<ActionResult<InstrumentTypeDto>> DeleteType(string idOrShortName)
         {
             var type = await LoadType(idOrShortName);
             var instruments = await _instrumentService.Search(
@@ -69,12 +70,12 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [HasPrivilege(PrivilegeEnum.InstrumentType, OperationEnum.Update)]
-        public async Task<ActionResult<InstrumentTypeDTO>> Rename(string idOrShortName, string label)
+        public async Task<ActionResult<InstrumentTypeDto>> Rename(string idOrShortName, string label)
         {
             var type = await LoadType(idOrShortName);
             type.Label = label;
             await _repo.Update(type);
-            return Ok(InstrumentTypeDTO.WithCategory(type));
+            return Ok(type.ConvertToDtoWithCategory());
         }
 
         [HttpPost]
@@ -82,13 +83,13 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [HasPrivilege(PrivilegeEnum.InstrumentType, OperationEnum.Create)]
-        public async Task<ActionResult<InstrumentTypeDTO>> CreateInstrumentType([FromBody] InstrumentTypeDTO dto)
+        public async Task<ActionResult<InstrumentTypeDto>> CreateInstrumentType([FromBody] InstrumentTypeDto dto)
         {
             if (dto.InstrumentTypeId != null)
             {
                 return BadRequest("InstrumentTypeID is set automatically and has to be empty");
             }
-            var entity = dto.GetEntity();
+            var entity = dto.ConvertToEntity();
             if (dto.Category != null && dto.Category.InstrumentTypeId == null)
             {
                 var category = await LoadType(dto.Category.Name);
@@ -97,7 +98,7 @@ namespace Instool.API
 
             await _repo.Create(entity);
 
-            return InstrumentTypeDTO.WithCategory(entity);
+            return entity.ConvertToDtoWithCategory();
         }
 
 
@@ -129,11 +130,11 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [HasPrivilege(PrivilegeEnum.InstrumentType)]
-        public async Task<ActionResult<ICollection<InstrumentDTO>>> GetSubtypes(string idOrShortName)
+        public async Task<ActionResult<ICollection<InstrumentDto>>> GetSubtypes(string idOrShortName)
         {
             var type = await LoadType(idOrShortName);
             var types = await _repo.GetTypes(type.InstrumentTypeId);
-            return Ok(types.Select(i => InstrumentTypeDTO.WithSubTypes(i)));
+            return Ok(types.Select(i => i.ConvertToDtoWithSubTypes()));
         }
 
         [HttpGet("{idOrShortName}/dropdown")]
@@ -147,9 +148,8 @@ namespace Instool.API
             var types = await _repo.LoadHierarchie(type.InstrumentTypeId);
             return Ok(
                     ToHierarchie(types, category: type.InstrumentTypeId)
-                    .Select((t, index) => InstrumentTypeDropdownEntry.FromEntity(
-                        t, 
-                        t.Category.InstrumentType, 
+                    .Select((t, index) => t.ConvertToEntity(
+                        t.Category.InstrumentType,
                         index)
                     )
             );
@@ -165,9 +165,8 @@ namespace Instool.API
             var types = await _repo.LoadHierarchie();
             var withCategory = ToHierarchie(types, category: null);
             var dtos = withCategory.Where(t => t.Category.Category != null)
-                                   .Select((t, index) => 
-                                        InstrumentTypeDropdownEntry.FromEntity(
-                                            t,
+                                   .Select((t, index) =>
+                                            t.ConvertToEntity(
                                             t.Category.Category.InstrumentType,
                                             t.Category.InstrumentType,
                                             index));
@@ -179,10 +178,10 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [HasPrivilege(PrivilegeEnum.InstrumentType)]
-        public async Task<ActionResult<ICollection<InstrumentTypeDTO>>> GetInstrumentTypes()
+        public async Task<ActionResult<ICollection<InstrumentTypeDto>>> GetInstrumentTypes()
         {
             var types = await _repo.GetTypes();
-            return Ok(types.Select(i => InstrumentTypeDTO.WithCategory(i)));
+            return Ok(types.Select(i => i.ConvertToDtoWithCategory()));
         }
 
 

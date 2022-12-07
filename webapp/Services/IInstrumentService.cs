@@ -13,6 +13,13 @@ namespace Instool.Services
             IEnumerable<InstrumentContact> contacts, 
             IEnumerable<InstrumentType> types,
             IEnumerable<Award> awards);
+
+        Task<Instrument> UpdateInstrument(
+            Instrument entity,
+            IEnumerable<InstrumentContact> contacts,
+            IEnumerable<InstrumentType> types,
+            IEnumerable<Award> awards);
+
         Task<Instrument?> GetByDoi(string v);
         Task<Instrument?> GetById(int numericalId);
 
