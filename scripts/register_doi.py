@@ -42,7 +42,7 @@ def get_instruments():
         quit(-1)
 
 def update_instrument_set_doi(instrument_id, doi):
-    result = requests.put("{}/instruments/{}/doi/{}".format(instool.url, instrument_id, doi), headers=headers, verify=False)
+    result = requests.patch("{}/instruments/{}/doi/{}".format(instool.url, instrument_id, doi), headers=headers, verify=False)
     if result.status_code == 200 or result.status_code == 204:
         print('Successfully updated instrument')
     else: 
