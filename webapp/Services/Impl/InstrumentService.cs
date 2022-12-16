@@ -171,6 +171,11 @@ namespace Instool.Services.Impl
             }
         }
 
+        public Task<List<Instrument>> Lookup(InstrumentLookupRequest request)
+        {
+            return _repo.List(request);
+        }
+
         private async Task<PaginatedList<InstrumentWithDistance>> FilterByDistance(InstrumentSearchRequest request, SearchByLocationRequest locationCriteria, string? sortColumn, string? sortOrder, int start, int length)
         {
             List<InstrumentWithDistance> instrumentsFound = new();
@@ -218,5 +223,13 @@ namespace Instool.Services.Impl
             return (int)distMiles;
         }
 
+        public Task<Instrument> UpdateInstrument(
+            Instrument entity, 
+            IEnumerable<InstrumentContact> contacts, 
+            IEnumerable<InstrumentType> types, 
+            IEnumerable<Award> awards)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

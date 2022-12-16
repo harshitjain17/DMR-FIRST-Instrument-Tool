@@ -89,6 +89,16 @@ namespace Instool.DAL.Repositories.Impl
             return new PaginatedList<Instrument>(data, countAll, count);
         }
 
+        public async Task<List<Instrument>> List(InstrumentLookupRequest request)
+        {
+            IQueryable<Instrument> queryAll = _context.Instruments;
+
+            var query = ApplyCriteria(queryAll, request);
+            query = ApplyIncludes(query);
+            var data = await query.AsSplitQuery().AsNoTracking().ToListAsync();
+            return data;
+        }
+
         private IQueryable<Instrument> ApplyCriteria(IQueryable<Instrument> query, InstrumentSearchRequest criteria)
         {
             if (criteria.IncludeRetired != true)
@@ -137,24 +147,44 @@ namespace Instool.DAL.Repositories.Impl
             {
                 query = query.Where(i => i.SerialNumber == criteria.SerialNumber);
             }
-#pragma warning disable CS0618 // Type or member is obsolete
-            var manufacturerOrModel = criteria.ManufacturerOrModel;
-#pragma warning restore CS0618 // Type or member is obsolete
-            if (!string.IsNullOrWhiteSpace(manufacturerOrModel))
-            {
-                var keywords = manufacturerOrModel
-                                .Split(new char[] { ' ', '-' })
-                                .Select(k => k.Trim())
-                                .Where(k => !string.IsNullOrWhiteSpace(k));
+            return query;
+        }
 
-                var keywordFilter = PredicateBuilder.New<Instrument>();
-                foreach (var keyword in keywords)
-                {
-                    keywordFilter = keywordFilter.And(i => i.ModelNumber!.Contains(keyword)
-                                                       || i.Manufacturer!.Contains(keyword)
-                    );
-                }
-                query = query.Where(keywordFilter);
+        private IQueryable<Instrument> ApplyCriteria(IQueryable<Instrument> query, InstrumentLookupRequest criteria)
+        {
+            if (!string.IsNullOrWhiteSpace(criteria.InstrumentType))
+            {
+                query = query.Where(i =>
+                    i.InstrumentTypes.Any(t => t.ShortName == criteria.InstrumentType || t.Uri == criteria.InstrumentType ||
+                                              t!.Category!.ShortName == criteria.InstrumentType || t.Category.Uri == criteria.InstrumentType ||
+                                              t!.Category!.Category!.ShortName == criteria.InstrumentType || t.Category.Category.Uri == criteria.InstrumentType));
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.AwardNumber))
+            {
+                query = query.Where(i => i.Awards.Any(a => a.AwardNumber == criteria.AwardNumber));
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.SerialNumber))
+            {
+                query = query.Where(i => i.SerialNumber == criteria.SerialNumber);
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.Model))
+            {
+                query = query.Where(i => i.ModelNumber == criteria.Model);
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.Manufacturer))
+            {
+                query = query.Where(i => i.Manufacturer == criteria.Manufacturer);
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.Name))
+            {
+                query = query.Where(i => i.Name == criteria.Name);
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.Institution)) {
+                query = query.Where(i => i.Institution.Name == criteria.Institution);
+            }
+            if (!string.IsNullOrWhiteSpace(criteria.Facility))
+            {
+                query = query.Where(i => i.Institution.Facility == criteria.Facility);
             }
             return query;
         }

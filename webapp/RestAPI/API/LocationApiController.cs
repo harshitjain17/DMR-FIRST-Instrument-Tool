@@ -1,19 +1,19 @@
 ﻿using Geocoding;
 using Geocoding.Google;
 using Instool.Dtos;
-using Instool.RestAPI.Exceptions;
+using Instool.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
-namespace Instool.RestAPI.API
+namespace Instool.API
 {
     [ApiController]
     [ApiVersion("1")]
     [Route("api/v{version:apiVersion}/locate")]
     public class LocationApiController : ControllerBase
     {
-        private GoogleGeocoder geocoder;
+        private readonly GoogleGeocoder geocoder;
 
         public LocationApiController(IConfiguration config)
         {
@@ -27,7 +27,7 @@ namespace Instool.RestAPI.API
         [ApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<LocationDTO>> Locate([FromQuery] string address)
+        public async Task<ActionResult<LocationDto>> Locate([FromQuery] string address)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Instool.RestAPI.API
                 {
                     return NotFound();
                 }
-                return Ok(new LocationDTO
+                return Ok(new LocationDto
                 {
                     Latitude = first.Coordinates.Latitude,
                     Longitude = first.Coordinates.Longitude,

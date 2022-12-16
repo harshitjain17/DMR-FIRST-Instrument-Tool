@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
 
-namespace Instool.RestAPI.Exceptions
+namespace Instool.Exceptions
 {
     public class HttpResponseException : Exception
     {
