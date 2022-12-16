@@ -6,16 +6,14 @@ from requests.auth import HTTPBasicAuth
 import requests
 import config.instool as instool
 import urllib3
+import logging
+from register_doi import main
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
 
 headers = {
     'Content-Type': 'application/json',
     'X-API-Key': instool.auth
 }
-
-
 
 def create_json(row): # 'row' is a dictionary type here
     
@@ -97,18 +95,58 @@ def create_json(row): # 'row' is a dictionary type here
     return json_dict
 
 
+def handling_DOI_discrepancy(data, response, updatedResponse):
+    
+    # DOIs are not same in Server and Source - DOI Conflict
+    if (data["doi"]) and (response["doi"]) and (data["doi"] != response["doi"]):
+        return f'DOI Conflict: Error {response.status_code} updating {data["Name"]}: {response.text}'
+    
+    # DOI not present in the Server - Update it
+    elif (data["doi"]) and (not response["doi"]):
+        updatedResponse["doi"] = data["doi"]
+    
+    # DOI not present in the Source - Notify to the Source
+    elif (not data["doi"]) and (response["doi"]):
+        logging.info("Communicate DOI to Source.") # NOTE: How to do that??
+    
+    # Server and Source do not have DOI - Register DOI
+    elif (not data["doi"]) and (not response["doi"]):
+        main()
+    
+
+def handling_serialNumber_discrepancy(data, response, updatedResponse):
+    
+    # Serial Numbers are not same in Server and Source - Serial Number Conflict
+    if (data["serialNumber"]) and (response["serialNumber"]) and (data["serialNumber"] != response["serialNumber"]):
+        return f'Serial Number Conflict: Error {response.status_code} updating {data["Name"]}: {response.text}'
+    
+    # Serial Number not present in the Server - Update it
+    elif (data["serialNumber"]) and (not response["serialNumber"]):
+        updatedResponse["serialNumber"] = data["serialNumber"]
+    
+    # Serial Number not present in the Source - Notify to the Source
+    elif (not data["serialNumber"]) and (response["serialNumber"]):
+        logging.info("Communicate Serial Number to Source.") # NOTE: How to do that??
+
+
 
 # this function compares each field from Source and Server
 # Input: Data - Source; Response - Server
 # Output: Updated Response
 def compareFields(data, response):
-    # if data["doi"] != response["doi"]:
-    #     return f'DOI Conflict: Error {response.status_code} updating {data["Name"]}: {response.text}'
-    # if data["Serial Number"] != response["serialNumber"]:
-    #     return f'Serial Number: Error {response.status_code} updating {data["Name"]}: {response.text}'
-    
+
     # initializing the new response
     updatedResponse = response.copy()
+
+    # handling DOI discrepancy
+    conflict_message = handling_DOI_discrepancy(data, response, updatedResponse)
+    if conflict_message:
+        return conflict_message
+
+    # handling Serial Number discrepancy
+    conflict_message = handling_serialNumber_discrepancy(data, response, updatedResponse)
+    if conflict_message:
+        return conflict_message
 
     # Updating instrumentTypes - MAJOR UPDATE
     if data["instrumentTypes"]:
@@ -265,20 +303,6 @@ def compareFields(data, response):
     return updatedResponse
 
 
-# this function looks up for the instrument and update the server, if there is any update
-# Input: Data - Source; Response - Server
-# Output: Lookup Message
-def update(data):
-
-    # PUT the updated instrument to the server
-    result = requests.put(instool.url + '/instruments/' + data["id"], data=data, headers=headers, verify=False, timeout=60)
-    if result.status_code != 201 and result.status_code != 200:
-        logError (f'Error {result.status_code} inserting {data["name"]}: {result.text}')
-        return
-
-    LogInfo (f'Sucessfully updated {data["name"]}')
-    return
-
 
 # this function handles all errors except Error 404 (Not Found)
 # INPUT: data - source (Dictionary); response - server (Dictionary)
@@ -287,12 +311,30 @@ def handle_errors(data, response):
     
     # Multiple choices - more than one response received - Error should be raised
     if (response.status_code == 409):
-        return (f'Error {response.status_code} inserting {data["name"]}: {response.text}. Duplicate (multiple) instruments fetched from the server with the same "Name" and "Institution Name".')
+        return (f'Error {response.status_code} inserting {data["name"]}: {response.text}. Duplicate (multiple) instruments fetched from the server.')
     
+    # Handling Server Errors
+    if (response.status_code >= 500):
+        return (f'Server Error {response.status_code} inserting {data["name"]}: {response.text}.')
+
     # Anything else than NOT FOUND, is an error
     if (response.status_code != 404):
         return (f'Error {response.status_code} inserting {data["name"]}: {response.text}.')
 
+    
+
+# this function looks up for the instrument and update the server, if there is any update
+# Input: Data - Source; Response - Server
+# Output: Lookup Message
+def update(updated_result):
+
+    # PUT the updated instrument to the server
+    result = requests.put(instool.url + '/instruments/' + updated_result["doi"], data=updated_result, headers=headers, verify=False, timeout=60)
+    if result.status_code != 201 and result.status_code != 200:
+        return handle_errors(updated_result, result)
+
+    logging.info(f'Sucessfully updated {updated_result["name"]}')
+    return result.json()
 
 
 # this function looks up for the instrument in the server
@@ -300,92 +342,90 @@ def handle_errors(data, response):
 # OUTPUT: response - server (Dictionary) / Error message (String)
 def lookup(data):
     
-    # LOOKING UP THROUGH DOI
-    if data["doi"]:
-        response = requests.get(instool.url + f'/instruments/{data["doi"]}')
-        if (response.status_code == 200):
-            return response.json()
-        if (response.status_code == 409) or (response.status_code != 404):
-            return handle_errors(data, response)
-    
-    # LOOKING UP THROUGH SERIAL# AND MANUFACTURER
-    if data["serialNumber"] and data["manufacturer"]:
+    try:
+        # LOOKING UP THROUGH DOI
+        if data["doi"]:
+            response = requests.get(instool.url + f'/instruments/{data["doi"]}')
+            if (response.status_code == 200):
+                return response.json()
+            if (response.status_code == 409) or (response.status_code != 404):
+                return handle_errors(data, response)
         
-        # parameters
-        requestBody = { 
-            "serialNumber": data["serialNumber"],
-            "manufacturer": data["manufacturer"]
-        }
-        response = requests.post(instool.url + f'/instruments/lookup', json = requestBody)
-        if (response.status_code == 200):
-            return response.json()
-        if (response.status_code == 409) or (response.status_code != 404):
-            return handle_errors(data, response)
+        # LOOKING UP THROUGH SERIAL# AND MANUFACTURER
+        if data["serialNumber"] and data["manufacturer"]:
+            
+            # parameters
+            requestBody = { 
+                "serialNumber": data["serialNumber"],
+                "manufacturer": data["manufacturer"]
+            }
+            response = requests.post(instool.url + f'/instruments/lookup', json = requestBody)
+            if (response.status_code == 200):
+                return response.json()
+            if (response.status_code == 409) or (response.status_code != 404):
+                return handle_errors(data, response)
 
-    # LOOKING UP THROUGH NAME AND INSTITUTION NAME
-    if data["name"] and data["institution"]["name"]:
+        # LOOKING UP THROUGH NAME AND INSTITUTION NAME
+        if data["name"] and data["institution"]["name"]:
+            
+            # parameters
+            requestBody = { 
+                "name": data["Name"],
+                "institution": data["institution"]["name"]
+            }
+            response = requests.post(instool.url + f'/instruments/lookup', json = requestBody) 
+            if (response.status_code == 200):
+                return response.json()
+            if (response.status_code == 409) or (response.status_code != 404):
+                return handle_errors(data, response)
         
-        # parameters
-        requestBody = { 
-            "name": data["Name"],
-            "institution": data["institution"]["name"]
-        }
-        response = requests.post(instool.url + f'/instruments/lookup', json = requestBody) 
-        if (response.status_code == 200):
-            return response.json()
-        if (response.status_code == 409) or (response.status_code != 404):
-            return handle_errors(data, response)
-    
-    # # NOT ABLE TO LOOKUP THROUGH ANY FIELD - POST the incoming data directly, i.e., create an instrument in the server
-    result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False, timeout=60)
-    if (result.status_code == 201) or (result.status_code == 200):
-        server_data = result.json()
-        
-        # is DOI not in the source but in the server?
-        if (not data["doi"]) and (server_data["doi"]):
-            LogInfo ("Communicate DOI to Source.") # NOTE: How to do that??
-        
-        return (f'Sucessfully added {data["name"]}')
-    else: 
-        return (f'Error {result.status_code} inserting {data["name"]}: {result.text}')
+        # NOT ABLE TO LOOKUP THROUGH ANY FIELD - POST the incoming data directly, i.e., create an instrument in the server
+        result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False, timeout=60)
+        if (result.status_code == 201) or (result.status_code == 200):
+            server_data = result.json()
+            
+            # is DOI not in the source but in the server?
+            if (not data["doi"]) and (server_data["doi"]):
+                logging.info(f'Communicate DOI {server_data["doi"]} of {server_data["name"]} to Source')
+            
+            return (f'Sucessfully added {data["name"]}')
+        else: 
+            return (f'Error {result.status_code} inserting {data["name"]}: {result.text}')
 
-
+    except:
+        # Deal with 409 and 500 (server) error
+        handle_errors(data, response)
 
 
 def process_instrument(data):
-    try:
-        lookup_result = lookup(data)
+    lookup_result = lookup(data)
 
-        # handling the error message returned
-        if (type(lookup_result) == str):
-            logError(lookup_result)
+    # handling the error message returned
+    if (type(lookup_result) == str):
+        logging.info(lookup_result)
 
-        # handling the response JSON
-        elif (type(lookup_result) == dict):
-            updated_result = compareFields(data, lookup_result)
-            if (updated_result):
-                result = update(updated_result)
-            # is DOI not in the source but in the server?
-            if (not data["doi"]) and (server_data["doi"]):
-                LogInfo ("Communicate DOI to Source.") # NOTE: How to do that??
+    # handling the response JSON
+    elif (type(lookup_result) == dict):
+        updated_result = compareFields(data, lookup_result)
+        
+        # handling if there is an update
+        if (type(updated_result) == dict):
+            if (updated_result != lookup_result):
+                result = update(updated_result) # posted (PUT) the updates in the server
             
+                if (type(result) == dict):
 
-        # NOT ABLE TO LOOKUP THROUGH ANY FIELD
-        # POST the incoming data directly
-        # create an instrument in the server
-        # else:
-        #     result = requests.post(instool.url + '/instruments', json=data, headers=headers, verify=False, timeout=60)
-        #     if (result.status_code == 201) or (result.status_code == 200):
-        #         print(f'Sucessfully added {data["name"]}')
-        #     else: 
-        #         print(f'Error {result.status_code} inserting {data["name"]}: {result.text}')
-            # server_data = result.json()
-            # is DOI not in the source but in the server?
-    #         if (not data["doi"]) and (server_data["doi"]):
-    #             LogInfo ("Communicate DOI to Source.") # NOTE: How to do that??
-    # except:
-    #     # Deal with 409 and 500
-    #     handle_errors(data, response)
+                    # is DOI not in the source but in the server?
+                    if (not data["doi"]) and (result["doi"]):
+                        logging.info("Communicate DOI to Source.") # NOTE: How to do that??
+                
+                # handling the error message returned
+                elif (type(result) == str):
+                    logging.error(result)
+        
+        # handling conflicts
+        elif (type(updated_result) == str):
+            logging.error(updated_result)
 
 
 # this function is the Main function
