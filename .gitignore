@@ -5,3 +5,4 @@ etc
 **/instool.zip
 **/Release
 **/.vs/**
+webapp/Main/Properties/launchSettings.json
