@@ -131,8 +131,8 @@ def handling_serial_number_discrepancy(data, response, updated_response):
 
 
 # this function compares each field from Source and Server
-# Input: Data - Source; Response - Server
-# Output: Updated Response
+# INPUT: data - Source; Response - Server
+# OUTPUT: Updated Response
 def compare_fields(data, response):
 
     # initializing the updated response
@@ -324,9 +324,9 @@ def handle_errors(data, response):
     
 
 # this function looks up for the instrument and update the server, if there is any update
-# Input: Data - Source; Response - Server
-# Output: Lookup Message
-def update(updated_result):
+# INPUT: Data - Source; Response - Server
+# OUTPUT: Lookup Message
+def update_in_server(updated_result):
 
     # PUT the updated instrument to the server
     result = requests.put(instool.url + '/instruments/' + updated_result["doi"], data=updated_result, headers=headers, verify=False, timeout=60)
@@ -397,6 +397,9 @@ def lookup(data):
         return handle_errors(data, response)
 
 
+# this function process the incoming data by calling functions for
+# lookup through the server, comparing it with the response, updating in the server
+# INPUT: data - Source
 def process_instrument(data):
     lookup_result = lookup(data)
 
@@ -411,7 +414,7 @@ def process_instrument(data):
         # handling if there is an update
         if (type(updated_result) == dict):
             if (updated_result != lookup_result):
-                result = update(updated_result) # posted (PUT) the updates in the server
+                result = update_in_server(updated_result) # posted (PUT) the updates in the server
             
                 if (type(result) == dict):
 
