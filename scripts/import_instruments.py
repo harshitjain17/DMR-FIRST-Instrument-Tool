@@ -45,24 +45,24 @@ def create_json(row): # 'row' is a dictionary type here
     
     # handling 'awards' to add in the JSON
     awards = []
-    for awardNumber in row["Award"].split(','):
-        if awardNumber:
+    for award_number in row["Award"].split(','):
+        if award_number:
             awards.append({
-                "awardNumber": awardNumber
+                "awardNumber": award_number
             })
     if len(awards) > 0:
         json_dict["awards"] = awards        
 
     
     # handling 'instrumentTypes' to add in the JSON
-    instrumentTypes = []
-    for techniqueName in row["Technique"].split(','):
-        if techniqueName:
-            instrumentTypes.append({
-                "name": techniqueName
+    instrument_types = []
+    for technique_name in row["Technique"].split(','):
+        if technique_name:
+            instrument_types.append({
+                "name": technique_name
             })
-    if len(instrumentTypes) > 0:
-        json_dict["instrumentTypes"] = instrumentTypes
+    if len(instrument_types) > 0:
+        json_dict["instrumentTypes"] = instrument_types
     
     
     # handling 'contacts' to add in the JSON
@@ -95,7 +95,7 @@ def create_json(row): # 'row' is a dictionary type here
     return json_dict
 
 
-def handling_DOI_discrepancy(data, response, updatedResponse):
+def handling_DOI_discrepancy(data, response, updated_response):
     
     # DOIs are not same in Server and Source - DOI Conflict
     if (data["doi"]) and (response["doi"]) and (data["doi"] != response["doi"]):
@@ -103,7 +103,7 @@ def handling_DOI_discrepancy(data, response, updatedResponse):
     
     # DOI not present in the Server - Update it
     elif (data["doi"]) and (not response["doi"]):
-        updatedResponse["doi"] = data["doi"]
+        updated_response["doi"] = data["doi"]
     
     # DOI not present in the Source - Notify to the Source
     elif (not data["doi"]) and (response["doi"]):
@@ -114,7 +114,7 @@ def handling_DOI_discrepancy(data, response, updatedResponse):
         main()
     
 
-def handling_serialNumber_discrepancy(data, response, updatedResponse):
+def handling_serial_number_discrepancy(data, response, updated_response):
     
     # Serial Numbers are not same in Server and Source - Serial Number Conflict
     if (data["serialNumber"]) and (response["serialNumber"]) and (data["serialNumber"] != response["serialNumber"]):
@@ -122,7 +122,7 @@ def handling_serialNumber_discrepancy(data, response, updatedResponse):
     
     # Serial Number not present in the Server - Update it
     elif (data["serialNumber"]) and (not response["serialNumber"]):
-        updatedResponse["serialNumber"] = data["serialNumber"]
+        updated_response["serialNumber"] = data["serialNumber"]
     
     # Serial Number not present in the Source - Notify to the Source
     elif (not data["serialNumber"]) and (response["serialNumber"]):
@@ -133,18 +133,18 @@ def handling_serialNumber_discrepancy(data, response, updatedResponse):
 # this function compares each field from Source and Server
 # Input: Data - Source; Response - Server
 # Output: Updated Response
-def compareFields(data, response):
+def compare_fields(data, response):
 
-    # initializing the new response
-    updatedResponse = response.copy()
+    # initializing the updated response
+    updated_response = response.copy()
 
     # handling DOI discrepancy
-    conflict_message = handling_DOI_discrepancy(data, response, updatedResponse)
+    conflict_message = handling_DOI_discrepancy(data, response, updated_response)
     if conflict_message:
         return conflict_message
 
     # handling Serial Number discrepancy
-    conflict_message = handling_serialNumber_discrepancy(data, response, updatedResponse)
+    conflict_message = handling_serial_number_discrepancy(data, response, updated_response)
     if conflict_message:
         return conflict_message
 
@@ -152,155 +152,155 @@ def compareFields(data, response):
     if data["instrumentTypes"]:
 
         # it creates the List of the instrumentTypes' "name" fetched from the source
-        listOfInstrumentTypesInSource = []
-        for instrumentType in data["instrumentTypes"]:
-            listOfInstrumentTypesInSource.append(instrumentType["name"]) # NOTE: Instead of just Name, we can also compare the whole intrumentType JSON
+        list_of_instrument_types_in_source = []
+        for instrument_type in data["instrumentTypes"]:
+            list_of_instrument_types_in_source.append(instrument_type["name"]) # NOTE: Instead of just Name, we can also compare the whole intrumentType JSON
 
         # it creates the List of the instrumentTypes' "name" fetched from the server
         # NOTE: other properties in the response such as "instrumentTypeId", "abbreviation", "label", etc. are not included here since we try to match just the names
         if response["instrumentTypes"]:
-            listOfInstrumentTypesInServer = []
-            for instrumentType in response["instrumentTypes"]:
-                listOfInstrumentTypesInServer.append(instrumentType["name"])
+            list_of_instrument_types_in_server = []
+            for instrument_type in response["instrumentTypes"]:
+                list_of_instrument_types_in_server.append(instrument_type["name"])
 
         # comparing and updating the list of "Technique" from "Data" with the list of "instrumentTypes" from "Response"
-        # initialized a new variable (updatedInstrumentTypes) for the final list of updated instruments to be returned to the server
-        if set(listOfInstrumentTypesInSource) != set(listOfInstrumentTypesInServer):
-            updatedInstrumentTypes = []
-            print("Major Update") #NOTE: How to notify the developer???
-            for techniqueName in listOfInstrumentTypesInSource:
-                updatedInstrumentTypes.append({
-                    "name": techniqueName, # NOTE: We could also update/add the "instrumentTypeId", "abbreviation", "label", etc. here, if known
+        # initialized a new variable (updated_instrument_types) for the final list of updated instruments to be returned to the server
+        if set(list_of_instrument_types_in_source) != set(list_of_instrument_types_in_server):
+            updated_instrument_types = []
+            logging.info("Major Update") #NOTE: How to notify the developer???
+            for technique_name in list_of_instrument_types_in_source:
+                updated_instrument_types.append({
+                    "name": technique_name, # NOTE: We could also update/add the "instrumentTypeId", "abbreviation", "label", etc. here, if known
                 })
-            updatedResponse["instrumentTypes"] = updatedInstrumentTypes
+            updated_response["instrumentTypes"] = updated_instrument_types
     
     
     # updating awards - MAJOR UPDATE
     if data["awards"]:
         
         # it creates the List of the awards' "awardNumber" fetched from the source
-        listOfAwardsInSource = []
+        list_of_awards_in_source = []
         for award in data["awards"]:
-            listOfAwardsInSource.append(award["awardNumber"])
+            list_of_awards_in_source.append(award["awardNumber"])
 
         # it creates the List of the awards' "awardNumber" fetched from the server
         # NOTE: other properties in the response such as "awardId", "title", "startDate", "endDate", etc. are not included here since we try to match just the awardNumber
         if response["awards"]:
-            listOfAwardsInServer = []
+            list_of_awards_in_server = []
             for award in response["awards"]:
-                listOfAwardsInServer.append(award["awardNumber"])
+                list_of_awards_in_server.append(award["awardNumber"])
 
         # comparing and updating the list of "Award" from "Data" with the list of "awards" from "Response"
         # initialized a new variable (updatedAwards) for the final list of updated awards to be returned to the server
-        if set(listOfAwardsInSource) != set(listOfAwardsInServer):
-            updatedAwards = []
-            for awardNumber in listOfAwardsInSource:
-                 updatedAwards.append({
-                    "awardNumber": awardNumber, # NOTE: We could also update/add the "awardId", "title", "startDate", "endDate", etc. here, if known
+        if set(list_of_awards_in_source) != set(list_of_awards_in_server):
+            updated_awards = []
+            for award_number in list_of_awards_in_source:
+                 updated_awards.append({
+                    "awardNumber": award_number, # NOTE: We could also update/add the "awardId", "title", "startDate", "endDate", etc. here, if known
                 })
-            updatedResponse["awards"] = updatedAwards
+            updated_response["awards"] = updated_awards
 
     
     # updating contacts
     if (data["contacts"]):
 
         # it creates the list of contacts' "eppn" and "role" fetched from the source 
-        listOfContactsInSource = data["contacts"] # It only contains "eppn" and "role"
+        list_of_contacts_in_source = data["contacts"] # It only contains "eppn" and "role"
             
         # it creates the List of the contacts' "eppn" and "role" fetched from the server
         if response["contacts"]:
-            listOfContactsInServer = []
+            list_of_contacts_in_server = []
             for contact in response["contacts"]:
-                listOfContactsInServer.append({
+                list_of_contacts_in_server.append({
                     "eppn": contact["eppn"],
                     "role": contact["role"]
                 })
             
             # comparing and updating the list of "contact" from "Data" with the list of "awards" from "Response"
             # initialized a new variable (updatedContacts) for the final list of updated contacts to be returned to the server
-            if set(listOfContactsInSource) != set(listOfContactsInServer):
-                updatedContacts = []
-                for contact in listOfContactsInSource:
-                    updatedContacts.append({
+            if set(list_of_contacts_in_source) != set(list_of_contacts_in_server):
+                updated_contacts = []
+                for contact in list_of_contacts_in_source:
+                    updated_contacts.append({
                         "eppn": contact["eppn"], # NOTE: We could also update/add the "eppn", "firstName", "middleName", "lastName", "role", etc. here, if known
                         "role": contact["role"]
                     })
-            updatedResponse["contacts"] = updatedContacts
+            updated_response["contacts"] = updated_contacts
 
 
     # Updating roomNumber - MAJOR UPDATE
     if data["roomNumber"]:
         if data["roomNumber"] != response["roomNumber"]:
-            print("Major Update") # BUG: HOw to notify the developer???
-            updatedResponse["roomNumber"] = data["roomNumber"]
+            logging.info("Major Update") # BUG: HOw to notify the developer???
+            updated_response["roomNumber"] = data["roomNumber"]
     
     
     # Updating name
     if data["name"]:
         if data["name"] != response["name"]:
-            updatedResponse["name"] = data["name"]
+            updated_response["name"] = data["name"]
 
     
     # updating manufacturer
     if data["manufacturer"]:
         if data["manufacturer"] != response["manufacturer"]:
-            updatedResponse["manufacturer"] = data["manufacturer"]
+            updated_response["manufacturer"] = data["manufacturer"]
     
     
     # updating modelNumber
     if data["modelNumber"]:
         if data["modelNumber"] != response["modelNumber"]:
-            updatedResponse["modelNumber"] = data["modelNumber"]
+            updated_response["modelNumber"] = data["modelNumber"]
     
     
     # updating serialNumber
     if data["serialNumber"]:
         if data["serialNumber"] != response["serialNumber"]:
-            updatedResponse["serialNumber"] = data["serialNumber"]
+            updated_response["serialNumber"] = data["serialNumber"]
     
     
     # updating status
     if data["status"]:
         if data["status"] != response["status"]:
-            updatedResponse["status"] = data["status"]
+            updated_response["status"] = data["status"]
     
     
     # updating acquisitionDate
     if data["acquisitionDate"]:
         if data["acquisitionDate"] != response["acquisitionDate"]:
-            updatedResponse["acquisitionDate"] = data["acquisitionDate"]
+            updated_response["acquisitionDate"] = data["acquisitionDate"]
     
     
     # updating completionDate
     if data["completionDate"]:
         if data["completionDate"] != response["completionDate"]:
-            updatedResponse["completionDate"] = data["completionDate"]
+            updated_response["completionDate"] = data["completionDate"]
     
     
     # updating description
     if data["description"]:
         if data["description"] != response["description"]:
-            updatedResponse["description"] = data["description"]
+            updated_response["description"] = data["description"]
             
     
     # updating capabilities
     if data["capabilities"]:
         if data["capabilities"] != response["capabilities"]:
-            updatedResponse["capabilities"] = data["capabilities"]
+            updated_response["capabilities"] = data["capabilities"]
    
     
     # updating facility
     if data["institution"]["facility"]:
         if data["institution"]["facility"] != response["institution"]["facility"]:
-            updatedResponse["institution"]["facility"] = data["institution"]["facility"]
+            updated_response["institution"]["facility"] = data["institution"]["facility"]
 
     
     # updating location
     if data["location"]["building"]:
         if data["location"]["building"] != response["location"]["building"]:
-            updatedResponse["location"]["building"] = data["location"]["building"]
+            updated_response["location"]["building"] = data["location"]["building"]
 
-    return updatedResponse
+    return updated_response
 
 
 
@@ -394,7 +394,7 @@ def lookup(data):
 
     except:
         # Deal with 409 and 500 (server) error
-        handle_errors(data, response)
+        return handle_errors(data, response)
 
 
 def process_instrument(data):
@@ -406,7 +406,7 @@ def process_instrument(data):
 
     # handling the response JSON
     elif (type(lookup_result) == dict):
-        updated_result = compareFields(data, lookup_result)
+        updated_result = compare_fields(data, lookup_result)
         
         # handling if there is an update
         if (type(updated_result) == dict):
