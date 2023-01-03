@@ -2,19 +2,19 @@ def create_json(row): # 'row' is a dictionary type here
     
     json_dict = {
         'name': row['Name'],
-        'doi': row['doi'],
-        'description': row['Description'],
-        'capabilities': row['Capabilities'],
-        'manufacturer': row['Manufacturer'],
-        'modelNumber': row['Model Number'],
-        'serialNumber': row['Serial Number'],
-        'acquisitionDate': row['Acquisition Date'],
-        'completionDate': row['Completion Date'],
+        'doi': row['doi']or None,
+        'description': row['Description']or None,
+        'capabilities': row['Capabilities']or None,
+        'manufacturer': row['Manufacturer']or None,
+        'modelNumber': row['Model Number'] or None,
+        'serialNumber': row['Serial Number'] or None,
+        'acquisitionDate': row['Acquisition Date'] or None,
+        'completionDate': row['Completion Date'] or None,
         'roomNumber': row['Room'].strip(),
         'status': 'A',
         'institution' : {
             'facility': row['Facility'],
-            'name': 'The Pennsylvania State University' # row['Institution Name'] # NOTE: We currently do not have this field in the 'row' in CSV, but we need to have it for lookup purposes
+            'name': 'Penn State' # row['Institution Name'] # NOTE: We currently do not have this field in the 'row' in CSV, but we need to have it for lookup purposes
         }
     }
 
@@ -59,7 +59,7 @@ def create_json(row): # 'row' is a dictionary type here
                 value = value + PSU_DOMAIN # NOTE: Considering just PSU contacts as of now
             contacts.append({
                 'eppn': value,
-                'role': 'F' # F = Faculty Role
+                'role': 'Faculty' # F = Faculty Role
             })
     
     for i in range(1, 4): # NOTE: taking into account atmost 3 Technical contacts as of now
@@ -69,7 +69,7 @@ def create_json(row): # 'row' is a dictionary type here
                 value = value + PSU_DOMAIN # NOTE: Considering just PSU contacts as of now
             contacts.append({
                 'eppn': value,
-                'role': 'T' # T = Technical Role
+                'role': 'Technical' # T = Technical Role
             })
 
     if len(contacts) > 0:

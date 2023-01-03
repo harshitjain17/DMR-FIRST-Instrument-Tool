@@ -37,7 +37,7 @@ class Api:
 
     def update_instrument(self, doi: str, data: dict) -> dict:
         if (self.test_mode):
-            logging.info(f"Test mode, not executing update for {doi}")
+            logging.warning(f"Test mode, not executing update for {data['name']} ({doi})")
             return data
         response = requests.put(instool.url + f"/instruments/{doi}", json=data, headers=headers, verify=False, timeout=60)
         if response.status_code != 201 and response.status_code != 200:
@@ -56,7 +56,7 @@ class Api:
     
     def create_instrument(self, data: dict) -> dict:
         if (self.test_mode):
-            logging.info(f"Test mode, not executing update for {data['name']}")
+            logging.warning(f"Test mode, not creating instrument {data['name']}")
             return data
         response = requests.post(instool.url + f"/instruments", json=data, headers=headers, verify=False, timeout=60)
         if (response.status_code == 201) or (response.status_code == 200):
