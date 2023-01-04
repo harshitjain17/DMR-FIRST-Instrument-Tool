@@ -3,21 +3,50 @@ import csv
 
 import logging
 import sys
-
+import requests
 import data_converter.csv_data_source as csv_data_source
-import server_api
+import apis.server_api as server_api
+import apis.datacite_api as datacite_api
 import data_converter.instrument_comparator as instrument_comparator
+import data_converter.json_ld_reader as json_ld_reader
 
-from register_doi import main
+class DoiRegistration:
+    what_if: False
 
+    def __init__(self, server_api: server_api.Api, datacite_api: datacite_api.Api, what_if: bool):
+        self.what_if = what_if
+        self.server_api = server_api
+        self.datacite_api = datacite_api
+
+    def register_all(self):
+        instrument_table = self.server_api.get_instrument_table()
+        without_doi = [i for i in instrument_table if not i.get('doi')]
+        print('Found {} instruments without DOI'.format(len(without_doi)))
+        for i in without_doi:
+            instrument = self.server_api.get_instrument(i['instrumentId'])
+            self.register_doi(instrument)
+
+    def register_doi(self, instrument: dict):
+        if instrument.get('doi'):
+            logging.debug(f"{instrument['name']} already has DOI {instrument['doi']}")
+        else:
+            logging.info(f"Registring DOI for {instrument['name']} ({instrument['instrumentId']})")
+            if not self.what_if:
+                doi = self.datacite_api.register_doi(instrument)   
+                self.server_api.set_doi(instrument['instrumentId'], doi)
+                self.datacite_api.update_doi_set_url(doi)
+                logging.info(f"Done, got DOI {doi} for {instrument['name']} ({instrument['instrumentId']})")
+            else:
+                logging.info("Registring DOI skipped because of --what-if")
 
 class SpiderTool:
-    test_mode = False
+    what_if = False
 
-    def __init__(self, comparator: instrument_comparator.InstrumentComparator, api: server_api.Api, test_mode: bool):
-        self.test_mode = test_mode
+    def __init__(self, comparator: instrument_comparator.InstrumentComparator, doi_registration: DoiRegistration, api: server_api.Api, what_if: bool):
+        self.what_if = what_if
         self.api = api
         self.comparator = comparator
+        self.doi_registration = doi_registration
 
     def handle_errors(self, error: server_api.ServerError) -> None:
         """ this handles unexpected errors returned by the server (other than not found)
@@ -29,7 +58,7 @@ class SpiderTool:
             logging.error(f"Conflict found while processing {error.data.get('name')}: Duplicate (multiple) instruments found on the server. {error.message}.")
 
         # Unprocessable Entity - data is incomplete/invalid/corrupt and declided by the server
-        if error.status_code == 412:
+        if error.status_code == 412 or error.status_code == 400:
             logging.error(f"Data for {error.data.get('name')} was invalid and could not be processed by the server: {error.message}.")
 
         # Handling Server Errors - log and stop further processing. Something is wrong on the server.
@@ -98,7 +127,7 @@ class SpiderTool:
 
                 # is DOI not in the source but in the server?
                 if not existing['doi']:
-                    doi = self.register_doi(existing)       
+                    doi = doi_registration.register_doi(existing)       
                     self.communicate_doi(existing, doi)
 
             else:
@@ -113,30 +142,21 @@ class SpiderTool:
                     logging.info(f"Nothing to do for {data['name']} ({data.get('doi')})")
 
                 if comparisonResult.register_doi:
-                    doi = self.register_doi(existing)                  
+                    doi = doi_registration.register_doi(existing)       
                     self.communicate_doi(existing, doi)
 
                 elif comparisonResult.notify_doi:
                     self.communicate_doi(existing, data['doi'])
-
-
 
         except server_api.ServerError as e:
             self.handle_errors(e)
         except instrument_comparator.InstrumentConflict as e:
             logging.error(e.message)
 
-    def register_doi(self, data: dict) -> str: 
-        """Register a DOI with DataCite, and update that on the server
-        """
-        if self.test_mode:
-            logging.info(f"{data['name']} needs a DOI, but no updates are pocessed in test mode.")
-        else:
-            logging.error(f"{data['name']} needs a DOI, not yet implemeted.")
-            return "N/A"
-
     def communicate_doi(self, data: dict, doi: str) -> None:
-        if not self.test_mode:
+        if self.what_if:
+            logging.info(f"Skipped communication DOI to source")
+        else:
             logging.error(f"{data['name']} has DOI {doi}, communication that to source is not yet implemented.") 
 
     def import_from_csv(self, file: str) -> None:
@@ -156,14 +176,13 @@ class SpiderTool:
     def import_from_json_ld(self, url: str) -> None:
         """Import from a web page containing JSON LD (Drupal web page for example)
         """
+        json_ld = json_ld_reader.get_instrument_data(url)
         raise Exception("Not implemented yet")
 
     def spider_web_site(self, url: str) -> None:
         """Check a web site for instrument web pages, and process them one by one
         """
         raise Exception("Not implemented yet")
-
-
 
 def init_logging(loglevel: str):
     """Initialize logging system, settign a filter by loglevel
@@ -178,28 +197,53 @@ def init_logging(loglevel: str):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-t', '--test', action='store_true',
-                        help='Test mode, only get data from website, do not send updates')
-    parser.add_argument('--version', action='version', version='%(prog)s 0.1')
-    parser.add_argument('--log') # TODO: Add allowed params
+    parser.add_argument('--version', action='version', version='%(prog)s 0.5')
 
-    group = parser.add_mutually_exclusive_group(required=True)
+    subparsers = parser.add_subparsers(dest='cmd')
+
+    spider = subparsers.add_parser('import', aliases=['i'])
+    spider.add_argument('--log', choices=['ERROR', 'WARNING', 'INFO', 'DEBUG'])
+    spider.add_argument('-w', '--what-if', action='store_true', help='Only compare and show what would need to be done')
+    spider.add_argument('-n', '--no-doi', action='store_true', help='Do no register DOIs')
+    spider.add_argument('-t', '--test-account', default=True, action='store_true', help="Use DataCite test account")
+
+    group = spider.add_mutually_exclusive_group(required=True)
     group.add_argument('-c', '--csv', help='A CSV file containing (initial) instrument data')
     group.add_argument('-u', '--url', help='A url of an instrument web page containing JSON LD instrument data')
     group.add_argument('-s', '--site', help='A web site containing several instrument web pages')
+
+    register = subparsers.add_parser('doi', aliases='d')
+    register.add_argument('-i', '--instrument', help='the numerical ID of an instrument')
+    register.add_argument('--log', choices=['ERROR', 'WARNING', 'INFO', 'DEBUG'])
+    register.add_argument('-w', '--what-if', action='store_true', help='Only compare and show what would need to be done')
+    register.add_argument('-t', '--test-account', default=True, action='store_true', help="Use DataCite test account")
     
-    # This calls processed the command line, and creates an object with the options used (or raises an exception if options are invalid)
+    # This call processed the command line, and creates an object with the options used (or raises an exception if options are invalid)
     args = parser.parse_args()
     
     init_logging(args.log or 'INFO')
 
     # Initialize the API with the test mode. If test mode is set, no updates will be performed
-    api = server_api.Api(args.test)
-    comparator = instrument_comparator.InstrumentComparator()
-    tool = SpiderTool(comparator, api, args.test)
-    if args.csv:
-        tool.import_from_csv(args.csv)
-    elif args.url:
-        tool.import_from_json_ld(args.url)
-    elif args.site:
-        tool.spider_web_site(args.site)
+    server = server_api.Api(args.what_if)
+    datacite = datacite_api.Api(args.test_account)
+    doi_registration = DoiRegistration(server, datacite, args.what_if or args.no_doi)
+
+    if args.cmd == 'import':
+        comparator = instrument_comparator.InstrumentComparator()
+        spider = SpiderTool(comparator, doi_registration, server, args.what_if)
+        if args.csv:
+            spider.import_from_csv(args.csv)
+        elif args.url:
+            spider.import_from_json_ld(args.url)
+        elif args.site:
+            spider.spider_web_site(args.site)
+
+    elif args.cmd == 'doi':
+        if args.instrument:
+            instrument = server.get_instrument(args.instrument)
+            if instrument:
+                doi_registration.register_doi(instrument)
+            else:
+                logging.warning(f"No instrument found with id {args.instrument}")
+        else:
+            doi_registration.register_all()

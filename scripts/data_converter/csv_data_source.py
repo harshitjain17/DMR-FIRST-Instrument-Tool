@@ -52,7 +52,7 @@ def create_json(row): # 'row' is a dictionary type here
     contacts = []
     PSU_DOMAIN = '@psu.edu'
     
-    for i in range(1, 4): # NOTE: taking into account atmost 3 Faculty contacts as of now
+    for i in range(1, 4): # NOTE: taking into account at most 3 Faculty contacts as of now
         value = row.get('Faculty Contact {}'.format(i))
         if (value):
             if not '@' in value:
@@ -62,7 +62,7 @@ def create_json(row): # 'row' is a dictionary type here
                 'role': 'Faculty' # F = Faculty Role
             })
     
-    for i in range(1, 4): # NOTE: taking into account atmost 3 Technical contacts as of now
+    for i in range(1, 4): # NOTE: taking into account at most 3 Technical contacts as of now
         value = row.get('Technical Contact {}'.format(i))
         if (value):
             if not '@' in value:

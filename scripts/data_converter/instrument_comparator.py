@@ -102,7 +102,9 @@ class InstrumentComparator:
 
         # comparing and updating the list of 'Technique' from 'Data' with the list of 'instrumentTypes' from 'Response'
         if set(list_of_instrument_types_in_source) != set(list_of_instrument_types_in_server):
-            result.modify('instrumentTypes', list_of_instrument_types_in_source, major_update=True)
+            names = list(map(lambda n: {"name": n}, list_of_instrument_types_in_source))
+
+            result.modify('instrumentTypes', names, major_update=True)
 
         # updating awards - MAJOR UPDATE
         list_of_awards_in_source = []
