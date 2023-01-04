@@ -13,8 +13,14 @@ class InstrumentConflict(Exception):
 
 
 class InstrumentComparisonResult:
+    """ Container for updated data (json == dict) and the following flags
+        * is_modified - true if any modification was detected and an update should be sent to the server
+        * is_major_update - true if the modification might require a new DOI. 
+        * notify_doi - a doi is present on the server, but not the source. Source should be notified
+        * register_doi - instrument has no DOI. DOI should be registered (and send to the source).
+    """
     is_modified = False
-    major_update = False
+    is_major_update = False
     notify_doi = False
     register_doi = False
 
@@ -34,6 +40,11 @@ class InstrumentComparisonResult:
 class InstrumentComparator:
 
     def compare_doi(self, source: dict, existing: dict, comparisonResult: InstrumentComparisonResult) -> InstrumentComparisonResult:
+        """Compare DOIs. Possible outcomes are 
+           * conflicts (source and server have different DOIs)
+           * DOI needs to be registered
+           * DOI present on the server, has to be communicated back to the source
+           """
 
         # DOIs are not same in Server and Source - DOI Conflict
         if source.get('doi') and existing.get('doi') and source['doi'] != existing['doi']:
@@ -54,6 +65,8 @@ class InstrumentComparator:
         return comparisonResult
 
     def handle_serial_number(self, source: dict, existing: dict, comparisonResult: InstrumentComparisonResult) -> InstrumentComparisonResult:
+        """Compare the serial numbers. Those can be added, but source and server should never have different number. That will be reported as a conflict.
+           """
 
         # Serial Numbers are not same in Server and Source - Serial Number Conflict
         if source['serialNumber'] and existing['serialNumber'] and source['serialNumber'] != existing['serialNumber']:
@@ -66,11 +79,11 @@ class InstrumentComparator:
 
         return comparisonResult
 
-    # this function compares each field from Source and Server
-    # INPUT: data - Source; Response - Server
-    # OUTPUT: Updated Response
-
     def compare_instruments(self, source: dict, existing: dict) -> InstrumentComparisonResult:
+        """ This function compares each field from Source and Server
+            The output contains the updated json (dict), if updates are required,
+            as well as flags indicating which differences were found
+        """
 
         result = InstrumentComparisonResult(existing)
 

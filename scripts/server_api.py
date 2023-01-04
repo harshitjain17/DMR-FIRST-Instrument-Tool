@@ -22,6 +22,9 @@ class ServerError(Exception):
 
 
 class Api:
+    """Wrapper for the Instool API.
+       Test mode is passed to the api, and all updates are skipped in test mode
+    """
     test_mode = False
 
     def __init__(self, test_mode: bool):
