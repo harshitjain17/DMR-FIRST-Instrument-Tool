@@ -159,24 +159,20 @@ namespace Instool.API
             var instrument = dto.ConvertToEntity();
             await AuthHelper.Check(_authService.AuthorizeAsync(User, instrument, Operation.Create));
 
-            if (dto.Location?.IsReference() == true)
-            {
+            if (dto.Location != null) { 
                 instrument.LocationId = await GetOrCreateLocation(dto.Location);
             }
-            // else create location
-            if (dto.Institution?.IsReference() == true)
-            {
-                instrument.InstitutionId = await LookupInstitution(dto.Institution);
-            }
-            // else create institution
+
+            instrument.InstitutionId = await LookupInstitution(dto.Institution);
+            // Create institution if not found
 
             var contacts = dto.Contacts.Select(c => new InstrumentContact
             {
                 InvestigatorId = c.InvestigatorId ?? 0,
                 Eppn = c.Eppn,
                 Investigator = c.AreDataComplete() ? c.ConvertToEntity() : null,
-                Role = c.Role ?? InvestigatorRole.Technical.ID
-            });
+                Role = InvestigatorRole.GetEnum(c.Role)?.ID ?? InvestigatorRole.Technical.ID 
+            });;
             var types = dto.InstrumentTypes.Select(t => t.ConvertToEntity());
             var awards = dto.Awards.Select(a => a.ConvertToEntity());
             try
@@ -310,6 +306,10 @@ namespace Instool.API
                 throw new HttpResponseException(StatusCodes.Status400BadRequest, "Need Institution ID or facility for lookup");
             }
             var found = await _institutionRepo.Lookup(institution.Facility);
+            if (found == null)
+            {
+                found = await _institutionRepo.Lookup(institution.Facility.Split(" ").First());
+            }
             return found?.InstitutionId ?? throw new HttpResponseException(
                          StatusCodes.Status412PreconditionFailed, "Facility does not exist"
             );

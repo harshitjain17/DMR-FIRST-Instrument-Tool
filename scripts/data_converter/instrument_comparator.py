@@ -27,15 +27,16 @@ class InstrumentComparisonResult:
     def __init__(self, data: dict):
         self.data = data.copy()
 
-    def modify(self, key: str, data, major_update=False):
+    def modify(self, key: str, data, major_update=False, msg = ''):
         self.is_modified = True
         self.data[key] = data
+        logging.debug(f"Modification of {key} detected: " + msg or " -> {data}: ")
 
     def check(self, key: str, source: dict, existing: dict, major_update=False):
         # Negating turns it into a bool, so None and '' considered to be equal.
         # We don't want to update Null to '' or the other way round.
         if (not source.get(key)) != (not existing.get(key)) and source.get(key) != existing.get(key):
-            self.modify(key, source.get(key), major_update)
+            self.modify(key, source.get(key), major_update, f"{existing.get(key)} => {source.get(key)}")
 
 class InstrumentComparator:
 
@@ -93,7 +94,7 @@ class InstrumentComparator:
         # Updating instrumentTypes - MAJOR UPDATE
         # We can assume that the instrument types are immutable in DMR First - if the name matches, it's the same type. We do not compare further fields.
         list_of_instrument_types_in_source = []
-        for instrument_type in source.get('instrumentTypes', []):
+        for instrument_type in source.get('instrumentTypes', {}):
             list_of_instrument_types_in_source.append(instrument_type['name'])
 
         list_of_instrument_types_in_server = []
@@ -104,7 +105,7 @@ class InstrumentComparator:
         if set(list_of_instrument_types_in_source) != set(list_of_instrument_types_in_server):
             names = list(map(lambda n: {"name": n}, list_of_instrument_types_in_source))
 
-            result.modify('instrumentTypes', names, major_update=True)
+            result.modify('instrumentTypes', names, major_update=True, msg=f"{list_of_instrument_types_in_server} => {list_of_instrument_types_in_source}")
 
         # updating awards - MAJOR UPDATE
         list_of_awards_in_source = []
@@ -132,7 +133,7 @@ class InstrumentComparator:
 
         # comparing and updating the list of contacts from source with those from the server
         if set(list_of_contacts_in_source) != set(list_of_contacts_in_server):
-            result.modify('contacts', source.get('contacts', []))
+            result.modify('contacts', source.get('contacts', []), msg=f"{list_of_contacts_in_server} => {list_of_contacts_in_source}")
 
         result.check('roomNumber', source, existing, major_update=True)
         result.check('name', source, existing)
@@ -150,10 +151,15 @@ class InstrumentComparator:
             result.modify('institution', source['institution'])
 
         # Checking Location - make sure this does not cause errors if there is no location.
-        if source.get('location', []).get('building') != existing.get('location', []).get('building'):
+        if source.get('location', {}).get('building') != existing.get('location', {}).get('building'):
             result.is_modified = True
             if not result.data.get('location'):
                 result.modify('location', [])
-            result.data['location']['building'] = source['location']['building']
+            result.data['location']['building'] = source.get('location', {}).get('building')
+            result.data['location']['street'] = source.get('location', {}).get('street')
+            result.data['location']['city'] = source.get('location', {}).get('city')
+            result.data['location']['zip'] = source.get('location', {}).get('zip')
+            result.data['location']['state'] = source.get('location', {}).get('state')
+            result.data['location']['country'] = source.get('location', {}).get('country')
 
         return result

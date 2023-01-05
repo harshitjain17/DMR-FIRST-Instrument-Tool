@@ -63,6 +63,9 @@ class Api:
     def create_instrument(self, data: dict) -> dict:
         if (self.test_mode):
             logging.warning(f"Test mode, not creating instrument {data['name']}")
+            # Subsequent functions will assume an instrument has an ID after beeing created on the server ...
+            # They will skip due to --what-if anyway, but might raise an exception if its None
+            data['instrumentId'] = 123456789
             return data
         response = requests.post(instool.url + f"/instruments", json=data, headers=headers, verify=False, timeout=60)
         if (response.status_code == 201) or (response.status_code == 200):

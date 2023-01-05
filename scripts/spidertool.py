@@ -3,12 +3,11 @@ import csv
 
 import logging
 import sys
-import requests
 import data_converter.csv_data_source as csv_data_source
 import apis.server_api as server_api
 import apis.datacite_api as datacite_api
 import data_converter.instrument_comparator as instrument_comparator
-import data_converter.json_ld_reader as json_ld_reader
+import data_converter.json_ld_source as json_ld_source
 
 class DoiRegistration:
     what_if: False
@@ -176,8 +175,8 @@ class SpiderTool:
     def import_from_json_ld(self, url: str) -> None:
         """Import from a web page containing JSON LD (Drupal web page for example)
         """
-        json_ld = json_ld_reader.get_instrument_data(url)
-        raise Exception("Not implemented yet")
+        data = json_ld_source.get_instrument_data(url)
+        self.process_instrument(data)
 
     def spider_web_site(self, url: str) -> None:
         """Check a web site for instrument web pages, and process them one by one
