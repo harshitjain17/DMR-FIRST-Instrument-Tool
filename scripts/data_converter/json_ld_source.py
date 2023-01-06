@@ -42,7 +42,6 @@ def get_instrument_data(url: str):
 def map_to_instool_json(json_ld: dict) -> dict:
     json_dict = {
         'name': json_ld.get('name'),
-        'doi': json_ld.get('identifier') or None,
         'description': json_ld.get('description') or "",
         'capabilities': json_ld.get('capabilities') or None,
         'manufacturer': (json_ld.get('manufacturer') or {}).get('name'),
@@ -57,6 +56,8 @@ def map_to_instool_json(json_ld: dict) -> dict:
             'name': 'Penn State'
         }
     }
+    doi = json_ld['identifier'].split(".org/")[-1] if json_ld.get('identifier') else None            
+    json_dict['doi'] = doi
 
     funding = json_ld.get('funding')
     if funding:

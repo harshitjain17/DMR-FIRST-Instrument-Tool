@@ -55,7 +55,7 @@ class InstrumentComparator:
 
         # DOI not present in the Server - Update it
         elif (source.get('doi')) and (not existing.get('doi')):
-            comparisonResult.modify('doi', source['doi'])
+            comparisonResult.modify('doi', source['doi'], msg=f"{existing.get('doi')} => {source['doi']}")
 
         # DOI not present in the Source - Notify to the Source
         elif (not source.get('doi')) and (existing.get('doi')):
