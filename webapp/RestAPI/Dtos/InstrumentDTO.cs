@@ -25,5 +25,5 @@ public class InstrumentDto
 
     public ICollection<InvestigatorDto> Contacts { get; set; } = new List<InvestigatorDto>();
 
-    public ICollection<string> Images { get; set; } = new List<string>();
+    public ICollection<FileDTO> Images { get; set; } = new List<FileDTO>();
 }

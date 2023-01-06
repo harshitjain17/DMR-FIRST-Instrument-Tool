@@ -27,7 +27,7 @@ class InstrumentComparisonResult:
     def __init__(self, data: dict):
         self.data = data.copy()
 
-    def modify(self, key: str, data, major_update=False, msg = ''):
+    def modify(self, key: str, data, major_update=False, msg=''):
         self.is_modified = True
         self.data[key] = data
         logging.debug(f"Modification of {key} detected: " + msg or " -> {data}: ")
@@ -37,6 +37,7 @@ class InstrumentComparisonResult:
         # We don't want to update Null to '' or the other way round.
         if (not source.get(key)) != (not existing.get(key)) and source.get(key) != existing.get(key):
             self.modify(key, source.get(key), major_update, f"{existing.get(key)} => {source.get(key)}")
+
 
 class InstrumentComparator:
 
@@ -65,7 +66,7 @@ class InstrumentComparator:
             comparisonResult.register_doi = True
         return comparisonResult
 
-    def handle_serial_number(self, source: dict, existing: dict, comparisonResult: InstrumentComparisonResult) -> InstrumentComparisonResult:
+    def compare_serial_number(self, source: dict, existing: dict, comparisonResult: InstrumentComparisonResult) -> InstrumentComparisonResult:
         """Compare the serial numbers. Those can be added, but source and server should never have different number. That will be reported as a conflict.
            """
 
@@ -80,18 +81,10 @@ class InstrumentComparator:
 
         return comparisonResult
 
-    def compare_instruments(self, source: dict, existing: dict) -> InstrumentComparisonResult:
-        """ This function compares each field from Source and Server
-            The output contains the updated json (dict), if updates are required,
-            as well as flags indicating which differences were found
+    def compare_instrument_types(self, source: dict, existing: dict, result: InstrumentComparisonResult):
         """
-
-        result = InstrumentComparisonResult(existing)
-
-        result = self.compare_doi(source, existing, result)
-        result = self.handle_serial_number(source, existing, result)
-
-        # Updating instrumentTypes - MAJOR UPDATE
+            Updating instrumentTypes - It would be a major update if there is something to update
+        """
         # We can assume that the instrument types are immutable in DMR First - if the name matches, it's the same type. We do not compare further fields.
         list_of_instrument_types_in_source = []
         for instrument_type in source.get('instrumentTypes', {}):
@@ -105,9 +98,14 @@ class InstrumentComparator:
         if set(list_of_instrument_types_in_source) != set(list_of_instrument_types_in_server):
             names = list(map(lambda n: {"name": n}, list_of_instrument_types_in_source))
 
-            result.modify('instrumentTypes', names, major_update=True, msg=f"{list_of_instrument_types_in_server} => {list_of_instrument_types_in_source}")
+            result.modify('instrumentTypes', names, major_update=True,
+                          msg=f"{list_of_instrument_types_in_server} => {list_of_instrument_types_in_source}")
 
-        # updating awards - MAJOR UPDATE
+        return result
+
+    def compare_awards(self, source: dict, existing: dict, result: InstrumentComparisonResult):
+        """ Updating NSF awards - it would be a major update if there is something to update
+        """
         list_of_awards_in_source = []
         for award in source.get('awards', []):
             list_of_awards_in_source.append(award['awardNumber'])
@@ -120,9 +118,12 @@ class InstrumentComparator:
         # comparing and updating the list of 'Award' from 'Data' with the list of 'awards' from 'Response'
         if set(list_of_awards_in_source) != set(list_of_awards_in_server):
             result.modify('awards', list_of_awards_in_source, major_update=True)
+        return result
 
-        # updating contacts
-        # Create lists of only eppn and role. That's all we need to decide if there is a modification
+    def compare_contacts(self, source: dict, existing: dict, result: InstrumentComparisonResult):
+        """ Updating contacts
+        Comparison is based on eppn and role. That's all we need to decide if there is a modification
+        """
         list_of_contacts_in_source = []
         for contact in source.get('contacts', []):
             list_of_contacts_in_source.append(f"{contact['role']}-{contact['eppn']}")
@@ -133,7 +134,50 @@ class InstrumentComparator:
 
         # comparing and updating the list of contacts from source with those from the server
         if set(list_of_contacts_in_source) != set(list_of_contacts_in_server):
-            result.modify('contacts', source.get('contacts', []), msg=f"{list_of_contacts_in_server} => {list_of_contacts_in_source}")
+            result.modify('contacts', source.get('contacts', []),
+                          msg=f"{list_of_contacts_in_server} => {list_of_contacts_in_source}")
+        return result
+
+    def compare_location(self, source: dict, existing: dict, result: InstrumentComparisonResult):
+        # Checking Location - make sure this does not cause errors if there is no location.
+        if source.get('location', {}).get('building') != existing.get('location', {}).get('building'):
+            result.is_modified = True
+            if not result.data.get('location'):
+                result.modify('location', [])
+            result.data['location']['building'] = source.get('location', {}).get('building')
+            result.data['location']['street'] = source.get('location', {}).get('street')
+            result.data['location']['city'] = source.get('location', {}).get('city')
+            result.data['location']['zip'] = source.get('location', {}).get('zip')
+            result.data['location']['state'] = source.get('location', {}).get('state')
+            result.data['location']['country'] = source.get('location', {}).get('country')
+        return result
+
+    def compare_images(self, source: dict, existing: dict, result: InstrumentComparisonResult):
+        new_images = []
+        existing_images = list(map(lambda f: f['name'], existing.get('images') or []))
+        for image in (source.get('images_to_upload') or {}):
+            if not image['filename'] in existing_images:
+                new_images.append(image)
+        
+        if new_images:
+            result.data['images_to_upload'] = new_images
+        return result
+
+
+    def compare_instruments(self, source: dict, existing: dict) -> InstrumentComparisonResult:
+        """ This function compares each field from Source and Server
+            The output contains the updated json (dict), if updates are required,
+            as well as flags indicating which differences were found
+        """
+
+        result = InstrumentComparisonResult(existing)
+
+        result = self.compare_doi(source, existing, result)
+        result = self.compare_serial_number(source, existing, result)
+        result = self.compare_instrument_types(source, existing, result)
+        result = self.compare_awards(source, existing, result)
+        result = self.compare_contacts(source, existing, result)
+        result = self.compare_location(source, existing, result)
 
         result.check('roomNumber', source, existing, major_update=True)
         result.check('name', source, existing)
@@ -146,20 +190,12 @@ class InstrumentComparator:
         result.check('description', source, existing)
         result.check('capabilities', source, existing)
 
-        # updating facility - Institutions do have to exist.
-        if source['institution'].get('facility') != existing['institution'].get('facility'):
+        # updating facility - Institutions do have to exist, since normally we would query for instruments by Institution
+        sourceFacility = source['institution'].get('facility') 
+        existingFacility = existing['institution'].get('facility')
+        if sourceFacility != existingFacility and sourceFacility.split(' ')[0] != existingFacility:
             result.modify('institution', source['institution'])
 
-        # Checking Location - make sure this does not cause errors if there is no location.
-        if source.get('location', {}).get('building') != existing.get('location', {}).get('building'):
-            result.is_modified = True
-            if not result.data.get('location'):
-                result.modify('location', [])
-            result.data['location']['building'] = source.get('location', {}).get('building')
-            result.data['location']['street'] = source.get('location', {}).get('street')
-            result.data['location']['city'] = source.get('location', {}).get('city')
-            result.data['location']['zip'] = source.get('location', {}).get('zip')
-            result.data['location']['state'] = source.get('location', {}).get('state')
-            result.data['location']['country'] = source.get('location', {}).get('country')
+        result = self.compare_images(source, existing, result)
 
         return result

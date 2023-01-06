@@ -4,6 +4,8 @@ import requests
 import extruct
 from w3lib.html import get_base_url
 
+from apis.server_error import ServerError
+
 
 def get_html(url):
     """Get raw HTML from a URL."""
@@ -15,6 +17,8 @@ def get_html(url):
         'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
     }
     req = requests.get(url, headers=headers)
+    if req.status_code != 200:
+        raise ServerError({}, req.status_code, req.text)
     return req.text
 
 
@@ -59,7 +63,7 @@ def map_to_instool_json(json_ld: dict) -> dict:
         if funding.get('@type') != 'Grant' or funding.get('funder').get('name') != 'National Science Foundation':
             raise Exception(f"Only NSF grants can be handled so far.", json_ld)
 
-        award_number =  funding.get('identifier')
+        award_number = funding.get('identifier')
         if award_number:
             json_dict['awards'] = [{
                 'awardNumber': award_number
@@ -74,10 +78,10 @@ def map_to_instool_json(json_ld: dict) -> dict:
     contacts = []
 
     research_experts = json_ld.get('research_experts')
-    for contact in research_experts:    
+    for contact in research_experts:
         if contact.get('@type') != 'Person':
             raise Exception(f"source data is no valid instrument type json-ld", json_ld)
-        
+
         eppn = contact.get('identifier')
         if not eppn:
             eppn = contact['url'].split('/')[-1] + '@psu.edu'
@@ -88,15 +92,15 @@ def map_to_instool_json(json_ld: dict) -> dict:
             'lastName': contact.get('familyName'),
             'jobTitle': contact.get('jobTitle'),
             'email':  contact.get('email') or eppn,
-            'role': 'Technical' # T = Technical Role
+            'role': 'Technical'  # T = Technical Role
         })
 
     if len(contacts) > 0:
         json_dict['contacts'] = contacts
-    
+
     place = json_ld['location']
     if place.get('@type') != 'Place':
-            raise Exception(f"source data is no valid instrument type json-ld", json_ld)
+        raise Exception(f"source data is no valid instrument type json-ld", json_ld)
     json_dict['location'] = {
         'building': place['name'],
         'street': place['address'].get('streetAddress'),
@@ -106,6 +110,19 @@ def map_to_instool_json(json_ld: dict) -> dict:
         'country': place['address'].get('addressCountry'),
     }
 
+    images = []
+    for image in json_ld.get('image') or []:
+        if image.get('@type') != 'ImageObject':
+            raise Exception(f"source data is no valid instrument type json-ld", json_ld)
+        filename = image.get('url').split('/')[-1]
+        images.append(
+            {
+                'url': image['url'],
+                'filename': filename
+            }
+        )
 
+    if images:
+        json_dict['images_to_upload'] = images
 
     return json_dict

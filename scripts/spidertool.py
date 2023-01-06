@@ -1,13 +1,18 @@
 import argparse
 import csv
+import io
 
 import logging
+import logging.config
+import requests
 import sys
+from urllib import request
 import data_converter.csv_data_source as csv_data_source
 import apis.server_api as server_api
 import apis.datacite_api as datacite_api
 import data_converter.instrument_comparator as instrument_comparator
 import data_converter.json_ld_source as json_ld_source
+
 
 class DoiRegistration:
     what_if: False
@@ -31,12 +36,13 @@ class DoiRegistration:
         else:
             logging.info(f"Registring DOI for {instrument['name']} ({instrument['instrumentId']})")
             if not self.what_if:
-                doi = self.datacite_api.register_doi(instrument)   
+                doi = self.datacite_api.register_doi(instrument)
                 self.server_api.set_doi(instrument['instrumentId'], doi)
                 self.datacite_api.update_doi_set_url(doi)
                 logging.info(f"Done, got DOI {doi} for {instrument['name']} ({instrument['instrumentId']})")
             else:
                 logging.info("Registring DOI skipped because of --what-if")
+
 
 class SpiderTool:
     what_if = False
@@ -54,27 +60,31 @@ class SpiderTool:
 
         # Multiple choices - more than one instrument found
         if error.status_code == 409:
-            logging.error(f"Conflict found while processing {error.data.get('name')}: Duplicate (multiple) instruments found on the server. {error.message}.")
+            logging.error(
+                f"Conflict found while processing {error.data.get('name')}: Duplicate (multiple) instruments found on the server. {error.message}.")
 
         # Unprocessable Entity - data is incomplete/invalid/corrupt and declided by the server
         if error.status_code == 412 or error.status_code == 400:
-            logging.error(f"Data for {error.data.get('name')} was invalid and could not be processed by the server: {error.message}.")
+            logging.error(
+                f"Data for {error.data.get('name')} was invalid and could not be processed by the server: {error.message}.")
 
         # Handling Server Errors - log and stop further processing. Something is wrong on the server.
         elif error.status_code >= 500:
-            logging.fatal(f"Server Error {error.status_code} while processing {error.data.get('name')}: {error.message}.")
+            logging.fatal(
+                f"Server Error {error.status_code} while processing {error.data.get('name')}: {error.message}.")
             logging.fatal("Aborting now, please check the server and restart once the problem is resolved.")
             sys.exit(1)
 
         # Anything else than NOT FOUND, is an error
         elif error.status_code != 404:
-            logging.error(f"Unexpected HTTP error {error.status_code} occured while processing {error.data.get('name')}: {error.message}.")
+            logging.error(
+                f"Unexpected HTTP error {error.status_code} occured while processing {error.data.get('name')}: {error.message}.")
 
     def update(self, data: dict) -> dict:
         """this function updates an instrument on the server
         """
 
-        response = self.api.update_instrument(data['doi'] or data.get('instrumentId'), data)
+        response = self.api.update_instrument(data.get('doi') or data.get('instrumentId'), data)
         return response
 
     def lookup(self, data: dict) -> dict:
@@ -112,6 +122,18 @@ class SpiderTool:
             existing = self.api.lookup_instrument(criteria)
         return existing
 
+    def upload_image(self, instrument: dict, image: dict):
+        if (image.get('file')):
+            with open('data/'+image['image'], "rb") as file:
+                try:
+                    self.api.upload_image(instrument['instrumentId'], file, image['filename'])
+                finally:
+                    file.close()
+        else:
+            file = requests.get(image.get('url'));
+            content = io.BytesIO(file.content)
+            self.api.upload_image(instrument['instrumentId'], content, image['filename'])
+
     def process_instrument(self, data: dict):
         """ This function process the incoming data by 
             * lookup up the data on the server
@@ -123,10 +145,12 @@ class SpiderTool:
             existing = self.lookup(data)
             if not existing:
                 existing = self.api.create_instrument(data)
+                for image in data.get('images_to_upload') or {}:
+                    self.upload_image(existing, image)
 
                 # is DOI not in the source but in the server?
-                if not existing['doi']:
-                    doi = doi_registration.register_doi(existing)       
+                if not existing.get('doi'):
+                    doi = doi_registration.register_doi(existing)
                     self.communicate_doi(existing, doi)
 
             else:
@@ -140,8 +164,11 @@ class SpiderTool:
                 else:
                     logging.info(f"Nothing to do for {data['name']} ({data.get('doi')})")
 
+                for image in comparisonResult.data.get('images_to_upload') or {}:
+                    self.upload_image(comparisonResult.data, image)
+
                 if comparisonResult.register_doi:
-                    doi = doi_registration.register_doi(existing)       
+                    doi = doi_registration.register_doi(existing)
                     self.communicate_doi(existing, doi)
 
                 elif comparisonResult.notify_doi:
@@ -156,7 +183,7 @@ class SpiderTool:
         if self.what_if:
             logging.info(f"Skipped communication DOI to source")
         else:
-            logging.error(f"{data['name']} has DOI {doi}, communication that to source is not yet implemented.") 
+            logging.error(f"{data['name']} has DOI {doi}, communication that to source is not yet implemented.")
 
     def import_from_csv(self, file: str) -> None:
         """Import from a csv file, convert each row to an instrument json, and process that instrument
@@ -183,6 +210,7 @@ class SpiderTool:
         """
         raise Exception("Not implemented yet")
 
+
 def init_logging(loglevel: str):
     """Initialize logging system, settign a filter by loglevel
 
@@ -191,8 +219,8 @@ def init_logging(loglevel: str):
     numeric_level = getattr(logging, loglevel.upper(), None)
     if not isinstance(numeric_level, int):
         raise ValueError('Invalid log level: %s' % loglevel)
-    logging.basicConfig(level=numeric_level)
-
+    logging.config.fileConfig('logging.conf')
+    logging.getLogger().setLevel(numeric_level)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -214,12 +242,13 @@ if __name__ == '__main__':
     register = subparsers.add_parser('doi', aliases='d')
     register.add_argument('-i', '--instrument', help='the numerical ID of an instrument')
     register.add_argument('--log', choices=['ERROR', 'WARNING', 'INFO', 'DEBUG'])
-    register.add_argument('-w', '--what-if', action='store_true', help='Only compare and show what would need to be done')
+    register.add_argument('-w', '--what-if', action='store_true',
+                          help='Only compare and show what would need to be done')
     register.add_argument('-t', '--test-account', default=True, action='store_true', help="Use DataCite test account")
-    
+
     # This call processed the command line, and creates an object with the options used (or raises an exception if options are invalid)
     args = parser.parse_args()
-    
+
     init_logging(args.log or 'INFO')
 
     # Initialize the API with the test mode. If test mode is set, no updates will be performed

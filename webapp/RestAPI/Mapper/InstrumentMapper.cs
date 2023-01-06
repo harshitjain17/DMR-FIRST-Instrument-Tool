@@ -24,7 +24,11 @@ internal static class InstrumentMapper
         SerialNumber = i.SerialNumber,
         Location = i.Location.ConvertToDto(),
         Institution = i.Institution.ConvertToDto(),
-        Images = i.Images.Select(i => $"/api/v1/instruments/{i.InstrumentId}/files/{i.FileId}").ToList()
+        Images = i.Images.Select(i => new FileDTO
+        {
+            Url = $"/api/v1/instruments/{i.InstrumentId}/files/{i.FileId}",
+            Name = i.Filename
+        }).ToList()
     };
 
     public static Instrument ConvertToEntity(this InstrumentDto dto) => new()

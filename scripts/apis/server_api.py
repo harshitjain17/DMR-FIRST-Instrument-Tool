@@ -1,3 +1,4 @@
+from io import BufferedReader
 import json
 import urllib3
 import logging
@@ -7,6 +8,10 @@ import config.instool as instool
 from apis.server_error import ServerError
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+auth_headers = {
+    'X-API-Key': instool.auth
+}
 
 headers = {
     'Content-Type': 'application/json',
@@ -24,7 +29,7 @@ class Api:
         self.test_mode = test_mode
 
     def get_instrument(self, id_or_doi: str | int) -> dict:
-        response = requests.get(instool.url + f"/instruments/{id_or_doi}")
+        response = requests.get(instool.url + f"/instruments/{id_or_doi}", headers=headers, verify=False, timeout=60)
         if (response.status_code == 200):
             return response.json()
         elif (response.status_code == 404):
@@ -32,7 +37,8 @@ class Api:
         raise ServerError(None, response.status_code, response.text)
 
     def get_instrument_table(self) -> dict:
-        response = requests.post(instool.url + f"/instruments/search", json={})
+        response = requests.post(instool.url + f"/instruments/search", json={},
+                                 headers=headers, verify=False, timeout=60)
         if (response.status_code == 200):
             return json.loads(response.text)['instruments']
         elif (response.status_code == 404):
@@ -82,10 +88,16 @@ class Api:
         else:
             raise ServerError({"instrumentId": instrument_id, "doi": doi}, response.status_code, response.text)
 
-    def upload_image(self, instrument_id: int, file: str):
-        response = requests.post(instool.url + f'/instruments/{instrument_id}/images',
-                               headers=headers, verify=False, files={"form_field_name": file})
-        if response.status_code == 204:
-            logging.debug(f'Sucessfully uploaded {file}')
+    def upload_image(self, instrument_id: int, file: BufferedReader, filename: str):
+        if (self.test_mode):
+            logging.warning(f"Test mode, not uploading any images")
         else:
-           raise ServerError({"instrumentId": instrument_id, "file": file}, response.status_code, response.text)
+            response = requests.post(
+                instool.url + f'/instruments/{instrument_id}/images',
+                files={"upload_file": (filename, file, 'image/png')},
+                headers=auth_headers,
+                verify=False)
+            if response.status_code == 204:
+                logging.debug(f'Sucessfully uploaded {filename}')
+            else:
+                raise ServerError({"instrumentId": instrument_id, "file": filename}, response.status_code, response.text)
