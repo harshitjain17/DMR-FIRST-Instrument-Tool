@@ -168,11 +168,12 @@ class SpiderTool:
                     self.upload_image(comparisonResult.data, image)
 
                 if comparisonResult.register_doi:
+                    existing = self.api.get_instrument(existing['instrumentId'])
                     doi = doi_registration.register_doi(existing)
                     self.communicate_doi(existing, doi)
 
                 elif comparisonResult.notify_doi:
-                    self.communicate_doi(existing, data['doi'])
+                    self.communicate_doi(existing, existing['doi'])
 
         except server_api.ServerError as e:
             self.handle_errors(e)

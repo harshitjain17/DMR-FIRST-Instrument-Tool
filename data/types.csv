@@ -1,29 +1,44 @@
 ﻿Characterization,,,,
-,Electron Microscopy,,,
+,Microscopy,,,
 ,,tem,TEM,Transmission Electron Microscopy
 ,,stem,STEM,Scanning Transmission Electron Microscope
 ,,sem,SEM,Scanning Electron Microscopy
 ,,fesem,FESEM,Field Emission Scanning Electron Microscopy
-,Mechanical ,,,
-,,elec-test,,Electromechanical Test Systems
-,,hard,,Hardness Test
-,,th-mec,,Thermo Mechanical
-,Molecular Spectroscopy,,,
-,,mol-afm,AFM,Atomic Force Microscopy
-,,ftir,FT-IR,Fourier-transform infrared spectroscopy
-,,raman,,Raman
-,,spe-photo,,Spectrophotometry
-,,arpes,ARPES,Angle-resolved photoemission spectroscopy
-,,icp-aes,ICP-AES,Inductively Coupled Plasma Atomic Emission Spectroscopy
-,Optical Microscopy,,,
 ,,c-micro,,Compound Microscope
 ,,d-micro,,Digital Microscope
+,Spectroscopy,,,
+,,ftir,FT-IR,Fourier-transform infrared spectroscopy
+,,raman,,Raman
+,,uv-vis,,UV-Vis spectrophotometry
+,,arpes,ARPES,Angle-resolved photoemission spectroscopy
+,,,,Nanoscale Infrared spectroscopy
+,,,,Tip enhanced Raman spectroscopy
+,,,,Electron energy loss spectroscopy
+,,,,Time-of-flight secondary ion mass spectroscopy
+,,,,X-ray photoelectron spectroscopy
+,,,,Angle-resolved photoelectron spectroscopy
+,,,,Ultraviolet Photoelectron Spectroscopy
+,,,,Auger Electron Spectroscopy
+,,icp-aes,ICP-AES,Inductively Coupled Plasma Atomic Emission Spectroscopy
+,Spectrometry,,,
+,,,,X-ray fluorescence spectrometry
+,,,,Energy dispersive spectrometry
+,,,,Wavelength dispersive spectrometry
+,Surface Metrology,,,
+,,afm,AFM,Atomic Force Microscopy
+,,profilo,,White Light Interferometry Profilometer
+,,,,Laser Scanning Confocal Surface Profilometer
+,Mechanical ,,,
+,,elec-test,,Electromechanical Test Systems
+,,nanoind,,Nano-indentation
+,,microind,,Micro-indentation
+,,,,Dynamic Mechanical Assessment
+,,,,Thermomechanical Assessment
 ,Particle Analysis,,,
 ,,porosity,,Porosimeter
 ,,pycno,,Pycnometer
-,,o-micro,,Optical Microscope
-,,s-analysis,,Surface Analysis
-,,l-scatt,,Light Scattering
+,,dlscatt,,Dynamic Light Scattering
+,,zeta,,Zeta Potential
 ,Surface Analysis,,,
 ,,s-energy,,Surface Energy
 ,,s-compo,,Surface Composition
@@ -35,19 +50,19 @@
 ,,th-dsc,DSC,Differential Scanning Calorimeter
 ,,th-tga,TGA,Thermo Gravimmetric Analysis
 ,,th-spectro,,Mass Spectrometer
-,X-Ray Scattering,,,
+,Scattering and Diffraction,,,
 ,,saxs,SAXS,Small Angle X-Ray Scattering
 ,,waxs,WAXS,Wide Angle X-Ray Scattering
 ,,xrd,,X-ray Diffraction
 ,,laue,,Back Reflection Laue
-,,e-analysis,,Elemental Analysis
+,,ebd,,Electron Backscattered Diffraction
 ,Magnetic Characterization,,,
 ,,squid,SQUID,Superconducting Quantum Interference Device Magnetometry
 ,,st-fmr,ST-FMR,Spin-Torque Ferromagnetic Resonance
-Computing / Simulation,,,,
-,Image Analysis and Processing,image,,
-Synthesis,,,,
-,Bulk Crystal Growth,,,
+,,,,
+Computing / Simulation,Image Analysis and Processing,image,,
+,,,,
+Synthesis,Bulk Crystal Growth,,,
 ,,cvt,CVT,Chemical Vapor Transport
 ,,brm,,Bridgman
 ,,melt-flux,,Melt/Flux Growth
@@ -71,8 +86,8 @@ Synthesis,,,,
 ,,pvd,PVD,Physical vapor deposition
 ,,sol,,Sol-Gel
 ,,sput,,Sputtering
-Fabrication,,,,
-,Etching,,,
+,,,,
+Fabrication,Etching,,,
 ,,w-etch,,Wet Etching
 ,,d-etch,,Dry Etching
 ,,p-etch,,Polymer Etching

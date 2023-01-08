@@ -48,7 +48,7 @@ def get_location(instrument):
             'geoLocationPoint': {
                 "pointLongitude": instrument['location']['longitude'],
                 "pointLatitude": instrument['location']['latitude']
-            }
+            } if instrument['location'].get('longitude') else None
         })
     return result
 
