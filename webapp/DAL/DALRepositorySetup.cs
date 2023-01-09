@@ -22,10 +22,11 @@ namespace Instool.DAL
             var section = config.GetSection("Database");
 
             var enableSensitiveDataLogging = section.GetValue("EnableSensitiveDataLogging", false);
-            if (section.GetConnectionString("Database") != null)
+            var connectionString = section.GetConnectionString("Database");
+            if (connectionString != null)
             {
 
-                var dbConfig = section.GetConnectionString("Database").Split(";");
+                var dbConfig = connectionString.Split(";");
                 Console.WriteLine("Using sqlserver " +
                     dbConfig.FirstOrDefault(conf => conf.StartsWith("Server")) + ", " +
                     dbConfig.FirstOrDefault(conf => conf.StartsWith("Database")));

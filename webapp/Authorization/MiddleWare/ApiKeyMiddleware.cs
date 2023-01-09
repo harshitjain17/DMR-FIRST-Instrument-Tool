@@ -54,8 +54,11 @@ namespace Instool.Authorization.MiddleWare
         }
 
 
-        private static Task<ApiKey?> Lookup(HttpContext context, string extractedApiKey)
+        private static Task<ApiKey?> Lookup(HttpContext context, string? extractedApiKey)
         {
+            if (string.IsNullOrWhiteSpace(extractedApiKey)) {
+                return Task.FromResult<ApiKey?>(null);
+            }
             var service = context.RequestServices.GetRequiredService<IApiKeyRepository>();
             return service.Lookup(extractedApiKey);
 
