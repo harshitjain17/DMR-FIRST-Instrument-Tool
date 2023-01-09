@@ -9,7 +9,7 @@ public class InstrumentDto
     public DateTime? AcquisitionDate { get; set; }
     public DateTime? CompletionDate { get; set; }
     public string Status { get; set; } = null!;
-    public string Description { get; set; } = null!;
+    public string? Description { get; set; }
 
     public string? Capabilities { get; set; }
     public string? RoomNumber { get; set; }

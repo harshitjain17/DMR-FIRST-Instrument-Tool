@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         
         {
             "name": "Launch Edge",
@@ -40,7 +41,7 @@
             "type": "python",
             "request": "launch",
             "program": "scripts/spidertool.py",
-            "args": ["import", "--csv", "data/instruments.csv", "--no-doi", "--log", "DEBUG", "--what-if"],
+            "args": ["import", "--csv", "data/instruments.csv", "--no-doi", "--log", "INFO"],
             "console": "integratedTerminal",
             "justMyCode": true
         }

@@ -34,8 +34,8 @@ with open('data/types.csv', encoding='utf-8-sig') as csvfile:
     for row in reader:
         level, name = next((x, val) for x, val in enumerate(row) if val)
         currentCategories[level] = name
-        abbreviation = row[level + 1]
-        label = row[level + 2] or name
+        abbreviation = row[3]
+        label = row[4] or name
         print("{level}: {name} - {label}".format(level=level, name=name, label=label))
 
         data = create_json(name, abbreviation, label, currentCategories[level-1] )

@@ -35,7 +35,7 @@ internal static class InstrumentMapper
     {
         AcquisitionDate = dto.AcquisitionDate,
         CompletionDate = dto.CompletionDate,
-        Description = dto.Description,
+        Description = dto.Description ?? "...",
         Capabilities = dto.Capabilities,
         Doi = dto.Doi,
         InstrumentId = dto.InstrumentId ?? 0,

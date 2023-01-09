@@ -3,49 +3,49 @@
 ,,tem,TEM,Transmission Electron Microscopy
 ,,stem,STEM,Scanning Transmission Electron Microscope
 ,,sem,SEM,Scanning Electron Microscopy
+,,fib,FIB,Focused Ion Beam
 ,,fesem,FESEM,Field Emission Scanning Electron Microscopy
 ,,c-micro,,Compound Microscope
 ,,d-micro,,Digital Microscope
+,,o-micro,,Optical Microsope
 ,Spectroscopy,,,
-,,ftir,FT-IR,Fourier-transform infrared spectroscopy
+,,ftir,FTIR,Fourier-transform infrared spectroscopy
 ,,raman,,Raman
 ,,uv-vis,,UV-Vis spectrophotometry
 ,,arpes,ARPES,Angle-resolved photoemission spectroscopy
-,,,,Nanoscale Infrared spectroscopy
-,,,,Tip enhanced Raman spectroscopy
-,,,,Electron energy loss spectroscopy
-,,,,Time-of-flight secondary ion mass spectroscopy
-,,,,X-ray photoelectron spectroscopy
-,,,,Angle-resolved photoelectron spectroscopy
-,,,,Ultraviolet Photoelectron Spectroscopy
-,,,,Auger Electron Spectroscopy
+,,n-infra,,Nanoscale Infrared spectroscopy
+,,t-raman,,Tip enhanced Raman spectroscopy
+,,eels,EELS,Electron energy loss spectroscopy
+,,tof-sims,ToF-SIMS,Time-of-flight secondary ion mass spectroscopy
+,,xps,XPS,X-ray photoelectron spectroscopy
+,,arpels,,Angle-resolved photoelectron spectroscopy
+,,uvpes,,Ultraviolet Photoelectron Spectroscopy
+,,aes,AES,Auger Electron Spectroscopy
 ,,icp-aes,ICP-AES,Inductively Coupled Plasma Atomic Emission Spectroscopy
 ,Spectrometry,,,
-,,,,X-ray fluorescence spectrometry
-,,,,Energy dispersive spectrometry
-,,,,Wavelength dispersive spectrometry
+,,x-fluor,,X-ray fluorescence spectrometry
+,,eds,EDS,Energy dispersive spectrometry
+,,wave,,Wavelength dispersive spectrometry
 ,Surface Metrology,,,
 ,,afm,AFM,Atomic Force Microscopy
-,,profilo,,White Light Interferometry Profilometer
-,,,,Laser Scanning Confocal Surface Profilometer
+,,wl-profilo,,White Light Interferometry Profilometer
+,,profilo,,Profilometer
+,,l-confo,,Laser Scanning Confocal Surface Profilometer
+,,stm,,Scanning Tunnel Microscopy
 ,Mechanical ,,,
 ,,elec-test,,Electromechanical Test Systems
-,,nanoind,,Nano-indentation
-,,microind,,Micro-indentation
-,,,,Dynamic Mechanical Assessment
-,,,,Thermomechanical Assessment
+,,n-indent,,Nano-indentation
+,,m-indent,,Micro-indentation
+,,dma,DMA,Dynamic Mechanical Assessment
+,,tma,TMA,Thermomechanical Assessment
 ,Particle Analysis,,,
 ,,porosity,,Porosimeter
 ,,pycno,,Pycnometer
-,,dlscatt,,Dynamic Light Scattering
+,,dyn-light,,Dynamic Light Scattering
 ,,zeta,,Zeta Potential
 ,Surface Analysis,,,
 ,,s-energy,,Surface Energy
 ,,s-compo,,Surface Composition
-,Surface Metrology,,,
-,,surface-afm,AFM,Atomic Force Microscopy
-,,profilo,,Profilometer
-,,stm,,Scanning Tunnel Microscopy
 ,Thermal Analysis,,,
 ,,th-dsc,DSC,Differential Scanning Calorimeter
 ,,th-tga,TGA,Thermo Gravimmetric Analysis
@@ -55,14 +55,14 @@
 ,,waxs,WAXS,Wide Angle X-Ray Scattering
 ,,xrd,,X-ray Diffraction
 ,,laue,,Back Reflection Laue
-,,ebd,,Electron Backscattered Diffraction
+,,ebsd,EBSD,Electron Backscattered Diffraction
 ,Magnetic Characterization,,,
-,,squid,SQUID,Superconducting Quantum Interference Device Magnetometry
+,,squid,SQUID,Superconducting Quantum Interference Device Magnetometry
 ,,st-fmr,ST-FMR,Spin-Torque Ferromagnetic Resonance
-,,,,
-Computing / Simulation,Image Analysis and Processing,image,,
-,,,,
-Synthesis,Bulk Crystal Growth,,,
+Computing / Simulation,,,,
+,Image Analysis and Processing,image,,
+Synthesis,,,,
+,Bulk Crystal Growth,bulk,,
 ,,cvt,CVT,Chemical Vapor Transport
 ,,brm,,Bridgman
 ,,melt-flux,,Melt/Flux Growth
@@ -86,8 +86,8 @@ Synthesis,Bulk Crystal Growth,,,
 ,,pvd,PVD,Physical vapor deposition
 ,,sol,,Sol-Gel
 ,,sput,,Sputtering
-,,,,
-Fabrication,Etching,,,
+Fabrication,,,,
+,Etching,,,
 ,,w-etch,,Wet Etching
 ,,d-etch,,Dry Etching
 ,,p-etch,,Polymer Etching
@@ -97,9 +97,14 @@ Fabrication,Etching,,,
 ,,las-lit,,Laser
 ,,i-line,,I-Line Stepper
 ,,eb-lit,,Electron Beam
-,,fib-lit,,Focused Ion Beam (FIB)
-,,3d-print,,3D Printer
+,,fib-lit,,Focused Ion Beam
+,,"3d-print",,"3D Printer"
 ,,dw-lit,,Direct Write / Maskless
-,Microfabrication / Microelectronics / Clean Room,,,
+,Microfabrication / Microelectronics / Clean Room,cleanroom,,
 ,,w-bind,,Wire Bonding
 ,,poly,,Polymer Processing
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,

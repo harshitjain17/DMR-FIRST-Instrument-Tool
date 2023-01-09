@@ -64,9 +64,13 @@ class SpiderTool:
                 f"Conflict found while processing {error.data.get('name')}: Duplicate (multiple) instruments found on the server. {error.message}.")
 
         # Unprocessable Entity - data is incomplete/invalid/corrupt and declided by the server
-        if error.status_code == 412 or error.status_code == 400:
+        elif error.status_code == 412 or error.status_code == 400:
             logging.error(
                 f"Data for {error.data.get('name')} was invalid and could not be processed by the server: {error.message}.")
+
+        elif error.status_code == 501:
+            logging.error(
+                f"That operation is not yet implemented {error.data.get('name')}.")
 
         # Handling Server Errors - log and stop further processing. Something is wrong on the server.
         elif error.status_code >= 500:
@@ -84,7 +88,7 @@ class SpiderTool:
         """this function updates an instrument on the server
         """
 
-        response = self.api.update_instrument(data.get('doi') or data.get('instrumentId'), data)
+        response = self.api.update_instrument(data.get('instrumentId'), data)
         return response
 
     def lookup(self, data: dict) -> dict:
@@ -124,7 +128,7 @@ class SpiderTool:
 
     def upload_image(self, instrument: dict, image: dict):
         if (image.get('file')):
-            with open('data/'+image['image'], "rb") as file:
+            with open('data/'+image['file'], "rb") as file:
                 try:
                     self.api.upload_image(instrument['instrumentId'], file, image['filename'])
                 finally:
@@ -230,7 +234,7 @@ if __name__ == '__main__':
     subparsers = parser.add_subparsers(dest='cmd')
 
     spider = subparsers.add_parser('import', aliases=['i'])
-    spider.add_argument('--log', choices=['ERROR', 'WARNING', 'INFO', 'DEBUG'])
+    spider.add_argument('-l', '--log', choices=['ERROR', 'WARNING', 'INFO', 'DEBUG'], default='INFO')
     spider.add_argument('-w', '--what-if', action='store_true', help='Only compare and show what would need to be done')
     spider.add_argument('-n', '--no-doi', action='store_true', help='Do no register DOIs')
     spider.add_argument('-t', '--test-account', default=True, action='store_true', help="Use DataCite test account")
@@ -250,7 +254,7 @@ if __name__ == '__main__':
     # This call processed the command line, and creates an object with the options used (or raises an exception if options are invalid)
     args = parser.parse_args()
 
-    init_logging(args.log or 'INFO')
+    init_logging(args.log if args.log else 'INFO')
 
     # Initialize the API with the test mode. If test mode is set, no updates will be performed
     server = server_api.Api(args.what_if)

@@ -59,25 +59,7 @@ const columns: GridColumns = [
       </Tooltip>)
   },
 
-  // INSTRUMENT NAME
-  {
-    field: 'name', headerName: 'Instrument Name', minWidth: 175, flex: 1,
-    renderCell: ({ value }: GridRenderCellParams<any, RowModel, any>) => (
-      <Tooltip title={value?.toString()} >
-        <span className="table-cell-trucate">{value?.toString()}</span>
-      </Tooltip>)
-  },
-
-  // MODEL
-  {
-    field: 'model', headerName: 'Model', minWidth: 160, flex: 1,
-    renderCell: ({ value }: GridRenderCellParams<any, RowModel, any>) => (
-      <Tooltip title={value?.toString()} >
-        <span className="table-cell-trucate">{value?.toString()}</span>
-      </Tooltip>)
-  },
-
-  // DOI
+   // DOI
   { field: 'doi', headerName: 'DOI', minWidth: 160, flex: 1 },
 
   // MANUFACTURER
@@ -98,6 +80,14 @@ const columns: GridColumns = [
       </Tooltip>)
   },
 
+   // INSTRUMENT NAME
+   {
+    field: 'name', headerName: 'Instrument Name', minWidth: 175, flex: 1,
+    renderCell: ({ value }: GridRenderCellParams<any, RowModel, any>) => (
+      <Tooltip title={value?.toString()} >
+        <span className="table-cell-trucate">{value?.toString()}</span>
+      </Tooltip>)
+  },
 
   // LOCATION ID (for filtering table through map)
   { field: 'location', headerName: 'Location ID', minWidth: 95, flex: 1 },

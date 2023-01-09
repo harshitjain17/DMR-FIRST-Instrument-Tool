@@ -233,6 +233,10 @@ namespace Instool.API
             {
                 throw new HttpResponseException(StatusCodes.Status412PreconditionFailed, e.Message);
             }
+            catch (NotImplementedException e)
+            {
+                throw new HttpResponseException(StatusCodes.Status501NotImplemented, e.Message);
+            }
         }
 
         [HttpPost("{instrumentId}/images"), DisableRequestSizeLimit]
