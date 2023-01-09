@@ -17,6 +17,8 @@ namespace Instool.DAL.Repositories
             InstrumentSearchRequest request,
             string? sortColumn, string? sortOrder, int start, int length);
 
+        Task<List<Instrument>> List(InstrumentLookupRequest request);
+
         Task<PaginatedList<Instrument>> ListWithinFrame(
             InstrumentSearchRequest request,
             string? sortColumn, string? sortOrder, LocationFrame frame);

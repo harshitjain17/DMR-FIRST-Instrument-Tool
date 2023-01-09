@@ -21,11 +21,11 @@
             "justMyCode": true
         },
         {
-            "name": "Python: Export instruments",
+            "name": "Python: Import from URL",
             "type": "python",
             "request": "launch",
-            "program": "scripts/export_instruments.py",
-            "args": ["-i", "831", "-e", "DataCite"],
+            "program": "scripts/spidertool.py",
+            "args": ["import", "--url", "https://dev.mri.psu.edu/research_instruments/2dcc-2d-crystal-consortium/multi-module-uhv-mbe-mbe-1", "--log", "DEBUG"],
             "console": "integratedTerminal",
             "justMyCode": true
         }, {
@@ -33,6 +33,14 @@
             "type": "python",
             "request": "launch",
             "program": "scripts/register_doi.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }, {
+            "name": "Python: Import from CSV",
+            "type": "python",
+            "request": "launch",
+            "program": "scripts/spidertool.py",
+            "args": ["import", "--csv", "data/instruments.csv", "--no-doi", "--log", "DEBUG", "--what-if"],
             "console": "integratedTerminal",
             "justMyCode": true
         }

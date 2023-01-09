@@ -33,6 +33,11 @@ export enum InstrumentStatus {
     InProgress = 'P'
 }
 
+export interface File {
+    name: string,
+    url: string
+}
+
 export interface Instrument {
     instrumentId: number,
     doi: string,
@@ -51,7 +56,7 @@ export interface Instrument {
     awards: Award[],
     instrumentTypes: InstrumentType[],
     contacts: Investigator[],
-    images: string[]
+    images: File[]
 }
 
 

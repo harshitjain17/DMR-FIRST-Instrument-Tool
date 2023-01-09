@@ -1,18 +1,17 @@
-using Authorization;
 using Instool.Authorization.PolicyCode;
 using Instool.Authorization.Privileges;
 using Instool.DAL.Models;
-using Instool.DAL.Requests;
-using Instool.DAL.Results;
 using Instool.DAL.Repositories;
+using Instool.DAL.Requests;
 using Instool.Dtos;
 using Instool.Enums;
+using Instool.Exceptions;
+using Instool.Mapper;
 using Instool.Services;
 using Instool.Tools.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Instool.RestAPI.Exceptions;
 using System.Net.Http.Headers;
 
 namespace Instool.API
@@ -50,7 +49,7 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
         [HasPrivilege(PrivilegeEnum.Instrument)]
-        public async Task<ActionResult<InstrumentDTO>> GetInstrument(string idOrDoi)
+        public async Task<ActionResult<InstrumentDto>> GetInstrument(string idOrDoi)
         {
             var decoded = DoiHelper.DecodeDoi(idOrDoi);
             var instrument = decoded.IsDoi ?
@@ -60,7 +59,7 @@ namespace Instool.API
             {
                 return NotFound();
             }
-            return Ok(InstrumentDTO.FromEntity(instrument));
+            return Ok(instrument.ConvertToDto());
         }
 
         /// <summary>
@@ -110,28 +109,29 @@ namespace Instool.API
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(void), StatusCodes.Status409Conflict)]
         [HasPrivilege(PrivilegeEnum.Instrument)]
-        public async Task<ActionResult<InstrumentDTO>> Lookup([FromBody] InstrumentSearchRequest request)
+        public async Task<ActionResult<InstrumentDto>> Lookup([FromBody] InstrumentLookupRequest request)
         {
             if (!string.IsNullOrWhiteSpace(request.InstrumentType))
             {
                 request.InstrumentType = request.InstrumentType.Split("#")[0];
             }
-            var instruments = await _service.Search(request, null, null, 0, 0);
+            var instruments = await _service.Lookup(request);
             if (!instruments.Any())
             {
                 return NotFound();
             }
             if (instruments.Count() > 1)
             {
-                return Conflict(new {
+                return Conflict(new
+                {
                     Error = $"Found {instruments.Count()} matching instruments",
-                    Instruments = instruments.Select(i => new { id = i.Instrument.InstrumentId, doi = i.Instrument.Doi, name = i.Instrument.Name })
+                    Instruments = instruments.Select(i => new { id = i.InstrumentId, doi = i.Doi, name = i.Name })
                 });
             }
-            return await GetInstrument(instruments.First().Instrument.InstrumentId.ToString());
+            return await GetInstrument(instruments.First().InstrumentId.ToString());
         }
 
-        [HttpPut("{id}/doi/{*doi}")]
+        [HttpPatch("{id}/doi/{*doi}")]
         [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
@@ -150,18 +150,63 @@ namespace Instool.API
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<InstrumentDTO>> CreateInstrument([FromBody] InstrumentDTO dto)
+        public async Task<ActionResult<InstrumentDto>> CreateInstrument([FromBody] InstrumentDto dto)
         {
             if (dto.InstrumentId != null)
             {
                 return BadRequest("InstrumentID is set automatically and has to be empty");
             }
-            var instrument = dto.GetEntity();
+            var instrument = dto.ConvertToEntity();
             await AuthHelper.Check(_authService.AuthorizeAsync(User, instrument, Operation.Create));
+
+            if (dto.Location != null) { 
+                instrument.LocationId = await GetOrCreateLocation(dto.Location);
+            }
+
+            instrument.InstitutionId = await LookupInstitution(dto.Institution);
+            // Create institution if not found
+
+            var contacts = dto.Contacts.Select(c => new InstrumentContact
+            {
+                InvestigatorId = c.InvestigatorId ?? 0,
+                Eppn = c.Eppn,
+                Investigator = c.AreDataComplete() ? c.ConvertToEntity() : null,
+                Role = InvestigatorRole.GetEnum(c.Role)?.ID ?? InvestigatorRole.Technical.ID 
+            });;
+            var types = dto.InstrumentTypes.Select(t => t.ConvertToEntity());
+            var awards = dto.Awards.Select(a => a.ConvertToEntity());
+            try
+            {
+                var created = await _service.CreateInstrument(instrument, contacts, types, awards);
+                return created.ConvertToDto();
+            }
+            catch (IncompleteDataException e)
+            {
+                throw new HttpResponseException(StatusCodes.Status412PreconditionFailed, e.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<InstrumentDto>> Update([FromRoute] int id, [FromBody] InstrumentDto dto)
+        {
+            var instrument = await _service.GetById(id);
+            if (instrument == null)
+            {
+                return await this.CreateInstrument(dto);
+            }
+            await AuthHelper.Check(_authService.AuthorizeAsync(User, instrument, Operation.Update));
+            var newEntity = dto.ConvertToEntity();
+            // Check again - if the user is not authorized to modify the version they are sending, 
+            // we'll throw 403, too. Eg. a technical contact might modify their instrument, but they cannot remove themselves.
+            // nor move their instrument into another institution
+            await AuthHelper.Check(_authService.AuthorizeAsync(User, instrument, Operation.Update));
 
             if (dto.Location?.IsReference() == true)
             {
-                instrument.LocationId = await LookupLocation(dto.Location);
+                instrument.LocationId = await GetOrCreateLocation(dto.Location);
             }
             // else create location
             if (dto.Institution?.IsReference() == true)
@@ -174,15 +219,15 @@ namespace Instool.API
             {
                 InvestigatorId = c.InvestigatorId ?? 0,
                 Eppn = c.Eppn,
-                Investigator = c.AreDataComplete() ? c.GetEntity() : null,
+                Investigator = c.AreDataComplete() ? c.ConvertToEntity() : null,
                 Role = c.Role ?? InvestigatorRole.Technical.ID
             });
-            var types = dto.InstrumentTypes.Select(t => t.GetEntity());
-            var awards = dto.Awards.Select(a => a.GetEntity());
+            var types = dto.InstrumentTypes.Select(t => t.ConvertToEntity());
+            var awards = dto.Awards.Select(a => a.ConvertToEntity());
             try
             {
-                var created = await _service.CreateInstrument(instrument, contacts, types, awards);
-                return InstrumentDTO.FromEntity(created);
+                var created = await _service.UpdateInstrument(instrument, contacts, types, awards);
+                return created.ConvertToDto();
             }
             catch (IncompleteDataException e)
             {
@@ -198,7 +243,7 @@ namespace Instool.API
                 var file = Request.Form.Files[0];
                 if (file.Length > 0)
                 {
-                    using (MemoryStream stream = new MemoryStream())
+                    using (MemoryStream stream = new())
                     {
                         file.CopyTo(stream);
                         var bytes = stream.ToArray();
@@ -250,7 +295,7 @@ namespace Instool.API
             }
         }
 
-        private async Task<int> LookupInstitution(InstitutionDTO institution)
+        private async Task<int> LookupInstitution(InstitutionDto institution)
         {
             if (institution.InstitutionId != null)
             {
@@ -261,12 +306,16 @@ namespace Instool.API
                 throw new HttpResponseException(StatusCodes.Status400BadRequest, "Need Institution ID or facility for lookup");
             }
             var found = await _institutionRepo.Lookup(institution.Facility);
+            if (found == null)
+            {
+                found = await _institutionRepo.Lookup(institution.Facility.Split(" ").First());
+            }
             return found?.InstitutionId ?? throw new HttpResponseException(
                          StatusCodes.Status412PreconditionFailed, "Facility does not exist"
             );
         }
 
-        private async Task<int> LookupLocation(LocationDTO location)
+        private async Task<int> GetOrCreateLocation(LocationDto location)
         {
             if (location.LocationId != null)
             {
@@ -277,9 +326,19 @@ namespace Instool.API
                 throw new HttpResponseException(StatusCodes.Status400BadRequest, "Need Location ID or Building for lookup");
             }
             var found = await _locationRepo.Lookup(location.Building);
-            return found?.LocationId ?? throw new HttpResponseException(
-                         StatusCodes.Status412PreconditionFailed, "Location does not exist"
-            );
+            if (found != null)
+            {
+                return found.LocationId;
+            }
+            if (location.IsReference())
+            {
+                throw new HttpResponseException(
+                    StatusCodes.Status412PreconditionFailed, $"Location {location.Building} does not exist"
+                );
+            }
+            var created = await _locationRepo.Create(location.ConvertToEntity());
+            return created.LocationId;
         }
+
     }
 }

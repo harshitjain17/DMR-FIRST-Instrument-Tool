@@ -13,13 +13,17 @@ namespace Instool.Enums
             {
                 return null;
             }
-            return id switch
+            return id.ToLower() switch
             {
-                "F" => Faculty,
-                "T" => Technical,
-                "P" => PI,
+                "f" => Faculty,
+                "faculty" => Faculty,
+                "t" => Technical,
+                "technical" => Technical,
+                "pi" => PI,
+                "p" => PI,
                 "c" => coPI,
-                _ => throw new System.Exception("Unknown Project Category " + id),
+                "copi" => coPI,
+                _ => throw new Exception("Unknown Project Category " + id),
             };
         }
 
@@ -27,11 +31,11 @@ namespace Instool.Enums
         {
             return new List<BaseEnum>() { Faculty, Technical, PI, coPI};
         }
-        public static readonly InvestigatorRole Faculty = new InvestigatorRole("F", "Faculty");
-        public static readonly InvestigatorRole Technical = new InvestigatorRole("T", "Technical");
+        public static readonly InvestigatorRole Faculty = new("F", "Faculty");
+        public static readonly InvestigatorRole Technical = new("T", "Technical");
 
-        public static readonly InvestigatorRole PI = new InvestigatorRole("P", "PI");
+        public static readonly InvestigatorRole PI = new("P", "PI");
 
-        public static readonly InvestigatorRole coPI = new InvestigatorRole("c", "co-PI");
+        public static readonly InvestigatorRole coPI = new("c", "co-PI");
     }
 }

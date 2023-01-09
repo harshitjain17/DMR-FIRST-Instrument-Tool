@@ -1,0 +1,544 @@
+Name,doi,Technique,Manufacturer,Model Number,Serial Number,Room,Status,Acquisition Date,Completion Date,Description,Capabilities,Facility,Location,Award,Faculty Contact 1,Faculty Contact 2,Technical Contact 1,Technical Contact 2,Technical Contact 3,Image,,
+AMAT P5000 PECVD,,pecvd,Applied Materials,P-5000 PECVD,,,A,,,"The Applied Materials P-5000 is a four Chamber cluster tool capable of handling small pieces through 200mm (8 inch) wafers. Three of the four chambers are dedicated to Plasma Enhanced Chemical Vapor Deposition (PECVD). Additional Equipment Details
+The system can be run in either manual or automatic mode depending on the number of samples being run.
+
+ Chamber A (liquid source oxides and nitride barriers)
+
+Organic based liquids via
+vaporizing injector with helium (He) carrier
+vapor drawl
+bubbler
+Chamber B (silane based oxides and nitrides)
+
+Silane (SiH4)
+Ammonia (NH3)
+Nitrous Oxide (N2O)
+Argon (Ar)
+Hydrogen (H2)
+Nitrogen (N2)
+Hexafluoroethane (C2F6) 1150 sccm
+Chamber D (amorphous silicon and germanium)
+
+Silane (SiH4)
+Nitrogen (N2)
+Argone (Ar)
+Hydrogen (H2)
+Helium (He)
+Phosphine (PH3)
+Diborane (B2H6)
+Trimethylborane (B(CH3)3)
+Germane (GeH4)
+
+The fourth chamber on the cluster tool is a Magnetically Enhanced Reactive Ion Etch (MERIE) used for etching silicon oxide, silicon nitride and some polymers.","The Applied Materials P-5000 is a four Chamber cluster tool capable of handling small pieces through 200mm (8 inch) wafers. Three of the four chambers are dedicated to Plasma Enhanced Chemical Vapor Deposition (PECVD).
+
+The fourth chamber on the cluster tool is a Magnetically Enhanced Reactive Ion Etch (MERIE) used for etching silicon oxide, silicon nitride and some polymers.",Nanofab,Millenium Science Complex,,,,wjm122,,,P5000.jpg,,
+AML Bonder (model?),,?,,,,,A,,,,,Nanofab,Millenium Science Complex,,,,,,,,,
+EVG 520 Bonder,,?,,,,,A,,,,,Nanofab,Millenium Science Complex,,,,,,,,,
+Heidelberg DWL66+,,dw-lit,Heidelberg,,,,A,,,"This laser-writer is a high-resolution pattern generator for mask making and direct writing on any flat surface coated with photoresist. The most recent upgrade adds Grey Scale patterning. Both Laser-writers can print down to 800 nm with overlay accuracy of 500 nm.
+
+Substrates up to 9&quot; x 9&quot;
+Features down to 600 nm
+Address grid down to 10 nm
+Real-time autofocus
+Vector and raster exposure modes
+Exchangeable write modes
+Camera system for metrology and alignment
+Front to backside alignment
+Climate controlled chamber
+Multiple data input formats
+The laser-writer is a High Resolution pattern generator (PG) for mask making and direct writing on any flat surface coated with photoresist. A digital pattern file, created by the user with Computer Aided Design (CAD) software, direct the laser to areas on the substrate to expose the photoresist.  This technique is often referred to as &quot;maskless or direct write&quot; lithography.",,Nanofab,Millenium Science Complex,,,,mil102,kag31,,,,
+Heidelberg MLA150,,dw-lit,Heidelberg,,,,A,,,"Exposes patterns directly without prior fabrication of a mask resulting in significantly shorter prototyping cycles. The MLA 150 provides for flexible change of pattern, distortion compensation and other software corrections. The unique Draw-Mode allows the user to use the overhead camera to directly draw structures on the image, then directly write the structures.
+
+Substrate sizes 3 mm x 3 mm to 150 mm x 150 mm
+Exposure area 150 mm x 150 mm
+Wavelength 405 nm
+Minimum feature size 600 nm
+Write-speed approximately 35 minutes for 100 mm full wafer
+Realtime autofocus
+Overview camera for inspection
+Front and backside alignment: 0.5 �m for global and 0.25 �m for local alignment errors
+Temperature controlled environmental chamber
+User-friendly software",,Nanofab,Millenium Science Complex,,,,mil102,kag31,,MLA150-Heidelberg.png,,
+Kurt Lesker ALD 150LE,,ald,Kurt Lesker,ALD 150LE,,,A,,,"KJ Lesker ALD 150LE is a perpendicular flow independent substrate heating thermal ALD system. The unique vacuum and flow dynamics design enables the growth of high quality oxides, excellent for device applications.","Materials Deposited:
+- Aluminum Oxide (Al<sub>2</sub>O<sub>3</sub>)
+- Hafnium Oxide (HfO<sub>2</sub>)
+- Titanium Oxide (TiO<sub>2</sub>)
+- Tantalum Oxide (Ta<sub>2</sub>O<sub>5</sub>)
+- Zircomium Oxide (ZrO<sub>2</sub>)
+
+Substrate size:
+- 6&quot; wafer
+
+Substrate heating:
+- Up to 500&deg;C",Nanofab,Millenium Science Complex,,,,bul2,wuz14,,ALD-150LE.png,,
+Kurt Lesker ALD 150LX,,ald,Kurt Lesker,ALD 150LX,,,A,,,The ALD150LX Cluster Tool is an integrated system that incorporates a plasma ALD system with a substrate preparation chamber linked by a UHV transfer chamber . This unique combination of chambers and their capabilities enables researchers to create/prepare/modify surfaces prior deposition. In situ ellipsometry and REED enable characterization and control of surfaces as well as interfaces.,"Materials Deposited:
+- Titanium Nitride (TiN)
+- Aluminum Nitride (AlN)
+- Aluminum Oxinitride (AlO<sub>x</sub>N<sub>1-x</sub>)
+- Silicon Oxide (SiO<sub>2</sub>)
+- Aluminum Oxide (Al<sub>2</sub>O<sub>3</sub>
+- Hafnium Oxide (HfO<sub>2</sub>)
+- Boron Nitride (BN)
+- Platinum (Pt)
+
+Substrate size:
+- 6&quot; wafer
+
+Substrate heating:
+- up to 500&deg;C",Nanofab,Millenium Science Complex,,,,bul2,wuz14,,ALD150lx.jpg,,
+Kurt Lesker CMS-18 #1,,sput,Kurt Lesker,CMS-18,,,A,,,"The CMS-18 is an extremely flexible three target reactive sputtering system with a load lock capable of small parts through 6&quot; wafers.  It has 2 RF sources and one DC source with pulse functions. The system is capable of depositing multilayer film stacks, alloys, and reactively sputtered oxides and nitrides. The system is also setup for substrate heating as well as RF biasing and sample pre-cleaning.","Dilute oxygen in argon
+- Nitrogen (N<sub>2</sub>)
+
+Deposited Films
+- Aluminum (Al)
+- Alumina (AlxOy)
+- Barium Titanate (BaTiO3)
+- Bismuth (Bi)
+- Chromium (Cr)
+- Copper (Cu)
+- Gadolinium (Gd)
+- Gadolinium Nitride (GdN)
+- Germanium (Ge)
+- Germanium Oxide (GeO2)
+- Gold (Au)
+- Indium (In)
+- Indium tin oxide (ITO)
+- Iridium (Ir)
+- Iron/Manganese (Fe/Mn)
+- Lithium Cobalt Oxide (LCO)
+- Magnesium (Mg)
+- Magnesium oxide (MgO)
+- Molybdenum (Mo)
+- Nickel (Ni)
+- Nickel Iron (NiFe)
+- Nickel/Chromium (NiCr, Nichrome)
+- Nickel Oxide (NiO2)
+- Niobium (Nb)
+- Niobium/Iron (Nb/Fe)",Nanofab,Millenium Science Complex,,,,wjm122,wuz14,,Sputter-KJL-CMS18.png,,
+Kurt Lesker CMS-18 #2,,sput,Kurt Lesker,CMS-18,,,A,,,The CMS-18 is an extremely flexible two target reactive sputtering system with a load lock capable of small parts through 6&quot; wafers. The system is capable of depositing multilayer film stacks as well as alloys. The system is also setup for substrate heating as well as RF biasing and sample pre-cleaning. ,"Configuration:
+- Computer controlled & recipe driven
+- Small parts through 6 inch substrates
+- Two cathode (target) system
+- 2 DC
+- Substrate bias 100 Watts RF for pre-cleaning and ionization of reactive gases oxygen & nitrogen.
+- Substrate heating to 750 &deg;C
+- Source gases
+- Argon (Ar)
+- Oxygen (O2)
+- Dilute oxygen in argon
+- Nitrogen (N2)
+
+Films Deposited
+- Titanium
+- Platinum
+- Iridium
+- Gold
+- Chrome",Nanofab,Millenium Science Complex,,,,wjm122,wuz14,,,,
+Kurt Lesker CMS-18 #3,,sput,Kurt Lesker,CMS-18,,,A,,,"The CMS-18 is an extremely flexible four target reactive sputtering system with a load lock capable of small parts through 6&quot; wafers. The system is capable of depositing multilayer film stacks, alloys, and complex oxides such as PZT (lead zirconate titanate). The system is also setup for substrate heating as well as RF biasing and sample pre-cleaning.","Configuration
+- Computer controlled & recipe driven
+- Small parts through 6 inch substrates
+- Four cathode (target) system
+- 2 RF
+- 2 DC
+- Substrate bias 100 Watts RF for pre-cleaning and ionization of reactive gases oxygen & nitrogen.
+- Substrate heating to 750C
+- Source gases
+- Argon (Ar)
+- Oxygen (O2)
+- Dilute oxygen in argon
+- Nitrogen (N2)
+
+Films Deposited
+- Lanthanum Nickelate (LNO)
+- Lead Zirconate Titanate (PZT)
+- Lead Lanthanum Zirconate Titanate (PLZT)
+- Lead Magnesium Niobate - Lead Titanate (PMN-PT)
+- Manganese (Mn) doped PZT
+- Niobium (Nb) doped PZT
+- Platinum",Nanofab,Millenium Science Complex,,,,wjm122,wuz14,,,,
+Kurt Lesker CMS-18 #4,,sput,Kurt Lesker,CMS-18,,,A,,,,,Nanofab,Millenium Science Complex,,,,wjm122,wuz14,,,,
+Kurt Lesker Lab18,,eva,Kurt Lesker,Lab 18,,,A,,,"The Lab-18 evaporator is computer controlled, recipe-driven, dual-thermal and 4-pocket e-beam deposition system.  The system employs a load lock design that supports substrates up to 6&quot; in diameter and substrate cooling down to -20&deg;C with rotation capabilities.  A Kaufman-Robinson ion source is also available on the system.","Materials Available:
+
+Alumina (Al2O3)
+Aluminum (Al)
+Chromium (Cr)
+Cobalt (C0)
+Copper (Cu)
+Germanium (Ge)
+Gold (Au)
+Iron (Fe)
+Molybdenum (Mo)
+Nichrome (NiCr)
+Nicel (Ni)
+ 
+
+Palladium (Pd)
+Platinum (Pt)
+Silicon (Si)
+Silcon Dioxide (SiO2)
+Silver (Ag)
+Tatalum (Ta)
+Titanium (Ti)
+Titanium Dioxide (TiO2)
+Tungsten (W)",Nanofab,Millenium Science Complex,,,,wjm122,,,K.Lesker.SY-LAB18_0.jpg,,
+Nanoscribe 3D printer (model?),,3d-print,Nanoscribe,Photonic Professional GT3D Printer,,,A,,,"The world�s highest resolution 3D printer, based on two-photon polymerization (2PP)
+Sub-micrometer resolution printing, with feature sizes down to 200 nm
+Two powerful writing modes move the laser focus with respect to the photoresist, a piezo-mode for arbitrary 3D trajectories and a galvo-mode for ultra-fast structuring in layer-by-layer
+This versatile system covers the broad demands encountered in nano, micro, and mesoscale fabrication
+The Nanoscribe is the world�s highest resolution 3D printer, based on two-photon polymerization (2PP). It can achieve submicrometer resolution printing, with feature sizes down to 200nm.
+
+These 3D printed samples (seen on the right of this page) mimic the exact geometry of focused ion beam (FIB) prepared specimen (20x7x1 ?m) and can be used to help master ex situ and in situ lift-out micromanipulation methods.
+
+These 3D printed specimens can be used for practice and training. 3D printed FIB teaching aids can help new FIB users learn lift-out steps in a timely and cost-effective manner, easily repeating lift-out steps without the need for creating expensive FIB specimens. FIB 3D printed",,Nanofab,Millenium Science Complex,,,,kag31,,,nanoscribe-3dprint1.png,AM-3d.Printing.png,nanoscribe.png
+Plasma Therm Dual Etch Versalock,,d-etch,,,,,A,,,"The Plasma-Therm Versalock 700 is a dual chamber high-density inductively coupled plasma (ICP) etcher. The system has chlorine and fluorine chemistries plumbed to both chambers, but processes are segregated with one chlorine-based chamber and the other fluorine-based. This is a fully computer controlled system that can handle small parts through 150mm (6 inch) wafers.","This is a partial list of materials etched. If you do not see your material listed here please ask the staff, Guy Lavallee or Shane Miller for guidance.
+
+Ceramics
+Lanthanum Calcium Manganese Oxide - LCMO
+Lanthanum Strontium Manganite - LSM or Lanthanum Strontium Manganese Oxide - LSMO
+Lithium Niobate (LiNbO3)
+Dielectrics
+Alumina (Al2O3)
+Hafnium Oxide (HfO2)
+Gorilla Glass
+Iridium Oxide (IrO2)
+Lanthanum Oixde (La2O3)
+Quartz
+Sapphire
+Silicon Dioxide (SiO2)
+Silicon Nitride (Si3N4)
+Tantalum Oxide (Ta2O5)
+Titanium Dioxide (TiO2)
+Ferromagnetic
+Gadolinium Nitride (GdN)
+Metals
+Aluminum (Al)
+Antimony (Sb)
+Chromium (Cr)
+Gadolinium
+Gold (Au)
+Iron (Fe)
+Molybdenum (Mo)
+Palladium (Pd) (under development)
+Platinum (Pt)
+Tantalum (Ta)
+Titanium (Ti)
+Titanium Aluminum (TiAl)
+Titanium Nitride (TiN)
+Titanium Tungsten (TiW)
+Tungsten (W)
+Semiconductors
+Aluminum Antimonide (AlSb)
+Aluminum Gallium Arsenide (AlGaAs)
+Aluminum Indium Arsenide (AlInAs)
+Gallium Arsenide (GaAs)
+Gallium Nitride (GaN)
+Germanium (Ge)
+Indium Arsenide (InAs)
+Indium Gallium Arsenide (InGaAs)
+Indium Phosphide (InP)
+Silicon (Si)
+Silicon Carbide (SiC)
+Silicon Germanium (SiGe)
+Polymers
+BARLi anti-reflective coating (resist)
+Carbon Nanotubes
+poly(dioctyl-bithiophene) - PDOT
+Others
+Graphene
+Graphene fluorination
+Magnesium Arsenide (Mg3As2)
+Transparent Conductive Oxides
+Indium Tin Oxide - ITO (under development)
+Zinc Tin Oxide -- ZTO",Nanofab,Millenium Science Complex,,,,gpl107,spm145,,versalock700.jpg,,
+QuaZar Ion Beam Etching System,,d-etch,PlasmaTherm IBE,,,,A,,,"High Vacuum Load Locked System
+Processing of small samples up to 200mm wafers
+Wafer Stage rotation, high speed tilt, and temperature control
+Ion Source
+RF ICP 3 Grid Ion Optics
+Dual PBN
+Auxiliary Electrode
+Redeposition Breaker
+Hiden Analytical SIMS Endpoint Control","Low Damage Etching
+Control of Ion Flux in the range of 0.1 to 1 mA/cm2
+Ion energies from 75 to 900eV
+Narrow energy distribution
+Low operation pressures (<2X10-4 Torr)
+Precise Incident Angle Control
+Increased Profile Control
+Enhanced Surface Smoothing
+Better redeposition control
+Applications
+
+MRAM
+SAW, BAW, and FBAR filters
+Optical Gratings
+Failure Analysis
+Piezoelectric MEMS
+Micro Structuring",Nanofab,Millenium Science Complex,,,,gpl107,spm145,,etch-QuaZarIBE.png,,
+Raith EBPG5200,,eb-lit,,,,,A,,,"The Raith EBPG5200 system is used to directly write fine nanometer features in resist. Features as small as 14nm have been achieved. The system has a custom stage with 10mm of Z-height travel for writing curved surfaces as well as parts with extreme topography. The system can handle small parts through 150mm (6 inch) wafers and 5&quot; x 5&quot; mask plates.
+
+The Raith EBPG5200 has been paired with the data (pattern) preparation software Layout Beamer which is easy to use as well as having advanced features such as proximity effect correction.","System:
+
+Additional Equipment Details
+Resolution:
+
+8nm line width @100kV
+10nm lines within a 100mm field size �3nm @100kV
+15nm lines within a 250mm field size �3nm @100kV
+20nm lines within a 500mm field size �3nm @100kV
+Stitching Accuracy:
+
+�15 nm for 100�m main field @100kV
+�20 nm for 250�m main field @100kV
+�25 nm for 500�m main field @100kV
+�25 nm for 500�m main field @50kV
+Overlay Accuracy:
+
+�15 nm for 100�m main field @100kV
+�20 nm for 250�m main field @100kV
+�30 nm for 500�m main field @100kV
+�25 nm for 500�m main field @50kV
+Direcct Write Accuracy:
+
+�15 nm for 100�m main field @100kV
+�20 nm for 250�m main field @100kV
+�25 nm for 500�m main field @100kV
+�25 nm for 500�m main field @50kV
+
+50 & 100kV beam energy
+Thermal field emission source for a stable high current beam
+2nm Gaussian beam size
+1mm deflection field size
+Proximity correction
+0.125nm main field resolution
+100Mhz beam stepping frequency
+Stage has 210mm X-Y travel and 10mm Z travel
+6� accuracy on stage location
+Flexible 2D marker recognition for multi-layer direct write
+External alignment microscope with height meter
+Substrates:
+
+Small parts
+3&quot; wafers (on small parts holders)
+100mm (4 inch) wafers
+150mm (6 inch) wafers
+5&quot; x 5&quot; mask plates
+Electron Beam Resists Typically Used:
+
+PMMA: high resolution positive resist used for liftoff and sometimes for etching
+ZEP 520A: high resolution positive resist good for etching and can be used for liftoff of thin metals
+ZEP 7000-22: moderate resolution, but fast positive resist used primarily for making photomasks
+MMA-MAA: copolymer for use under PMMA as for the bi-layer liftoff process
+NEB-31 high resolution, fast negative resist used mostly for etching
+XR1541/HSQ: ultimate resolution negative resist used for etching mask or as part of device
+Processes
+Lift-off:
+
+Single layer liftoff with PMMA
+Single layer liftoff with ZEP520
+Bi-Layer liftoff with PMMA & P(MMA/MAA) (co-polymer)
+Bi-Layer liftoff with XR1541 (HSQ) & PMMA
+Pattern for Etch:
+
+ZEP520
+NEB31
+HSQ",Nanofab,Millenium Science Complex,,,,mil102,cme133,,RAITH-EBPG5200.png,,
+Raith EBPG5200Plus,,eb-lit,,,,,A,,,,,Nanofab,Millenium Science Complex,,,,,,,,,
+Samco AQ2000,,?,,,,,A,,,,,Nanofab,Millenium Science Complex,,,,,,,,,
+Suss MABA6 Gen 2,,contact-lit,Karl Suss,,,,A,,,"Double objective optical microscope
+Wafer sizes from pieces to 6 inch
+Unfiltered Hg lamp exposure 8 mW/cm2 @ 365 nm Hg I-line
+Top and Bottom side optical alignment
+Mask sizes of 4, 5, and 7 inches
+Vacuum, hard, proximity, and soft contact modes
+Resolution <1 �m, Overlay <1 �m",,Nanofab,Millenium Science Complex,,,,kag31,mil102,,KarlSussMABA6-Gen2.png,,
+Suss MABA6 Gen 4,,contact-lit,Karl Suss,,,,A,,,"Double objective optical microscope
+Wafer sizes from pieces to 6 inch
+Unfiltered Hg lamp exposure 8 mW/cm2 @ 365 nm Hg I-line
+Top and Bottom side optical alignment
+Mask sizes of 4, 5, and 7 inches
+Vacuum, hard, proximity, and soft contact modes
+Resolution <1 �m, Overlay <1 �m",,Nanofab,Millenium Science Complex,,,,kag31,mil102,,KARLSussMABA6-Gen4.png,,
+Temescal #2,,eva,Temescal,,,,A,,,,,Nanofab,Millenium Science Complex,,,,,,,,,
+Temescal FC2000,,eva,Temescal,FC2000,,,A,,,"Multiple fixture options available:?
+
+Precision lift-off deposition fixtures (TP-8 & HULA fixtures) ?
+Sample mounting area for up to five 150mm dia. substrates?
+Batch conformal coating fixture (HSP Fixture)?
+Sample mounting area for up to:?
+Six 150mm dia. substrates and?
+Twelve 100mm substrates and?
+Twelve 50mm substrates?
+Fast thick film deposition?
+Up to 1 micron in 5 min (40A/sec)?
+Variable angle coating fixture ?
+Sample mounting area for up to:?
+One 150mm dia. substrate?
+Auto flipping fixture for double-sided coating.?
+Sample mounting area for up to:?
+Two 200mm dia. substrate?","MFC controlled gas inlet ?
+
+For O2 bleeding to improve quality of deposited oxides.?
+3 Quartz Heat Lamps?
+
+For chamber heating up to 300&deg;C?
+8 pocket e-gun source:?
+10 kW power supply?
+Strong permanent magnet design reduces BSE and electron damage to photoresists?
+Single resistive (thermal) source?
+
+2 kW power supply?
+Fully integrated, recipe-driven process and vacuum control user interface?
+
+Datalog /Historical log?
+captures over 200 variables? ?
+Materials Processed
+
+Alumina (Al2O3)?
+Aluminum (Al)?
+Chromium (Cr)?
+Cobalt (Co)?
+Copper (Cu)?
+Germanium (Ge)?
+Gold (Au)?
+Iron (Fe)?
+Molybdenum (Mo)?
+Nichrome (NiCr)?
+Nickel (Ni)?
+Palladium (Pd)?
+Permalloy (80% Ni/20% Fe)?
+Platinum (Pt)?
+Rhenium (Re)?
+Silicon (Si)?
+Silicon Dioxide (SiO2)?
+Silver (Ag)?
+Tantalum (Ta)?
+Titanium (Ti)?
+Titanium Dioxide (TiO2)?
+Tungsten (W)?
+Ytterbium Oxide (Yb2O3)?",Nanofab,Millenium Science Complex,,,,wjm122,,,,,
+ULVAC NE-550,,d-etch,ULVAC,NE-550,,,A,,,The ULVAC NE-550 ICP System has allowed us to process a wider range of materials (i.e. InP based III-V materials) due to its wider operating temperature ranges (-15&deg;C to 180&deg;C). The system also offers our users the flexibility of processing either 4&quot; or 6&quot; wafer sizes.,"Low pressure, High density plasma, Good uniformity - ISM (Inductively Super Magnetron) Plasma Source* ULVAC Patent
+Good repeatability and stability - STAR Electrode* ULVAC Patent
+Precise wafer temperature control - Mechanical wafer clamp with He cooling
+Easy maintenance - Simple maintenance mechanism
+FILMS
+Electronic Devices (HEMT, HBT, MMIC, etc.)
+III-V materials: Selective etching - GaAs, AlGaAs, InGaAs, InGaP, InP
+Insulating Layers: High speed or damage-free etching - SiO2, SiN, Low-K materials, GaAs VIA, InP VIA, SiC VIA
+Organics: Polyimide, BCB
+Metals and Ceramics: W, WSi, TiW, Mo, PZT, STO, BST, SBT, Ir, IrO2, Au, Pt, Ti, TiN, Ta Optical Devices (Laser Diodes, LED, etc.)
+Non-selective etching - GaAs, AlGaAs, AlGaInP, InAlAs, InP, GaN, AlGaN, InGaN, AlN
+ITO, Sapphire Other Devices (MEMS, Stamper for DVD, etc.)
+Si, SiC, Glass, Quartz, Sapphire, C, Diamond-like Carbon, Al, Cr, Mo
+MATERIALS PROCESSED
+Electronic Devices (HEMT, HBT, MMIC, etc.)
+Optical Devices (Laser Diodes, LED, etc.)",Nanofab,Millenium Science Complex,,,,gpl107,spm145,,ulvac-ne550.jpg,,
+Vision 320 RIE,,p-etch,Vision RIE,,,,A,,,"305mm diameter electrode
+Mechanical Clamp with He backside cooling for better temperature control during etching
+Temperature compensated capacitance manometer
+Digital control Mass flow controllers for faster response
+Gases: O2, SF6, Ar, CF4
+Uniformity ring surrounding electrode to improve etch uniformity
+SQL server for recipe and data-logging storage
+Pendulum valve with closed loop pressure control for precise pressure control Tool Cost of Ownership
+<1m2 system foot print (extremely compact)
+Fully DeviceNet driven (digital communication with MFCs, gauges, pneumatics, turbo molecular pump, RF power supply, matching network)
+System can send e-mails to tech support to report on potential issues (ToolMail�)
+Extensive remote support capabilities
+Monitor turbo pump key parameters (temperature, current, speed, etc.)
+Monitor MFC calibration data
+Monitor pressure gauge calibration data
+Monitor bus voltages etc.
+ANSI ISA 88 compliant (traceability)",,Nanofab,Millenium Science Complex,,,,gpl107,,,VisionRIE-PolymerEtch.png,,
+Woollam M2000X,,Ellipsometer,Woollam,M-2000XF-193,,,A,,,"Woolllam M-2000XF-193 is a focused beam fixed angle ellipsometer. Specs are as follows:
+
+Fixed incident angle: 65&deg;
+Spot size of 25�m x 60 �m
+Spectral range: 193-1000nm
+Automated mapping stage: 200mmX200mm
+Typical applications
+
+Thin film thickness measurements including a variety of materials, including dielectrics, organics, semiconductors, and even metal layers;
+Measure film as thin as a fraction of a nanometer;
+Measure film thickness upto 50 �m for dielectrics, upto 50 nm for absorbing films like metal;
+Measure film with multilayer of different materials;
+Measure refractive index;
+Mapping thickness uniformity on wafers upto 8&quot;;
+Measure film thickness on patterned samples.",,Nanofab,Millenium Science Complex,,,,bul2,,,WoollamM-2000F.png,,
+Zeiss G500,,fesem,Zeiss,Gemini 500,,,A,,,"Nanofab owns two Zeiss FESEMs, Merlin and Gemini 500. Both can image features down to 1 nm resolution. FESEM stage can handle samples from small pieces upto 8&quot; wafer. The maximum sample height can be 2&quot; tall. Both FESEMs are equipped with 3&quot; loadlocks. It takes only 1-2 mins to transfer in and out when the sample is less than 3&quot; in size.
+
+Zeiss FESEM is known for its excellent usability and very easy to learn. It has excellent low KV resolution, and sees no difference when imaging conductive materials, magnetic materials, and cross sectional samples due to its unique design of Gemini column ( in-column beam deacceleration, electrostatic final lens, etc).
+
+Zeiss improved the design of Gemini I column on G500 FESEM by adding an additional lens at the end of the column which can resolve 1 nm feature at 0.5KV. Therefore, G500 is designed for imaging 2D materials. It is also equipped with VP and nanoVP imaging modes, offering additional ways to leverage when imaging insulating materials.
+
+Other than imaging, Merlin is also configured for EDS measurement with Oxford UltimMax 100 sensor. Merlin is equipped with Gemini II column, which allows user to change beam current continuously between 10pA and 300nA without compromising resolution significantly, making switching between high resolution imaging and EDS analysis an ease.
+
+Advantage
+Loadlock sample transfer (sample loading/unloading less than 2 min)
+Large samples (upto 8&quot; wide, 2&quot; tall)
+Great in imaging insulating, magnetic, and cross sectional samples
+In-situ sample cleaning
+Typical Applications
+Low voltage high resolution imaging (excellent for 2D materials)
+Insulating material imaging (quartz, sapphire, glass, fiber, etc)
+Cross-sectional view imaging
+BSE imaging
+Cathodoluminescence imaging
+EDS analysis",,Nanofab,Millenium Science Complex,,,,bul2,,,zeiss-G500.png,,
+Zeiss Merlin,,fesem,Zeiss,Merlin,,,A,,,"Nanofab owns two Zeiss FESEMs, Merlin and Gemini 500. Both can image features down to 1 nm resolution. FESEM stage can handle samples from small pieces upto 8&quot; wafer. The maximum sample height can be 2&quot; tall. Both FESEMs are equipped with 3&quot; loadlocks. It takes only 1-2 mins to transfer in and out when the sample is less than 3&quot; in size.
+
+Zeiss FESEM is known for its excellent usability and very easy to learn. It has excellent low KV resolution, and sees no difference when imaging conductive materials, magnetic materials, and cross sectional samples due to its unique design of Gemini column ( in-column beam deacceleration, electrostatic final lens, etc).
+
+Zeiss improved the design of Gemini I column on G500 FESEM by adding an additional lens at the end of the column which can resolve 1 nm feature at 0.5KV. Therefore, G500 is designed for imaging 2D materials. It is also equipped with VP and nanoVP imaging modes, offering additional ways to leverage when imaging insulating materials.
+
+Other than imaging, Merlin is also configured for EDS measurement with Oxford UltimMax 100 sensor. Merlin is equipped with Gemini II column, which allows user to change beam current continuously between 10pA and 300nA without compromising resolution significantly, making switching between high resolution imaging and EDS analysis an ease.
+
+Advantage
+Loadlock sample transfer (sample loading/unloading less than 2 min)
+Large samples (upto 8&quot; wide, 2&quot; tall)
+Great in imaging insulating, magnetic, and cross sectional samples
+In-situ sample cleaning
+Typical Applications
+Low voltage high resolution imaging (excellent for 2D materials)
+Insulating material imaging (quartz, sapphire, glass, fiber, etc)
+Cross-sectional view imaging
+BSE imaging
+Cathodoluminescence imaging
+EDS analysis",,Nanofab,Millenium Science Complex,,,,bul2,,,zeiss-merlin.png,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,

@@ -1,12 +1,13 @@
 ﻿using Instool.Authorization.PolicyCode;
 using Instool.Authorization.Privileges;
 using Instool.DAL.Repositories;
-using Instool.RestAPI.Dtos;
+using Instool.Dtos;
+using Instool.Mapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PasswordGenerator;
 
-namespace Instool.RestAPI.API
+namespace Instool.API
 {
     [ApiController]
     [ApiVersion("1")]
@@ -25,10 +26,10 @@ namespace Instool.RestAPI.API
         [ApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<IEnumerable<ApiKeyDTO>>> List([FromQuery] bool includeExpired)
+        public async Task<ActionResult<IEnumerable<ApiKeyDto>>> List([FromQuery] bool includeExpired)
         {
             var elements = await _repo.List(includeExpired);
-            var dtos = elements.Select(entity => ApiKeyDTO.FromEntity(entity));
+            var dtos = elements.Select(entity => entity.ConvertToDto());
             return Ok(dtos);
 
         }
@@ -39,14 +40,14 @@ namespace Instool.RestAPI.API
         [ApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
-        public async Task<ActionResult<ApiKeyDTO>> Create([FromBody] ApiKeyDTO key)
+        public async Task<ActionResult<ApiKeyDto>> Create([FromBody] ApiKeyDto key)
         {
             var data = new Password().LengthRequired(40).Next();
-            var id  = await _repo.Create(key.GetEntity(), data);
+            var id = await _repo.Create(key.ConvertToEntity(), data);
             var saved = await _repo.GetById(id);
             // We just created it, so it won't be null (or we would have got an exception)
-            var dto = ApiKeyDTO.FromEntity(saved!);
-            dto.Key = data;
+            var dto = saved!.ConvertToDto();
+            dto!.Key = data;
             return Ok(dto);
         }
 
@@ -57,7 +58,7 @@ namespace Instool.RestAPI.API
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(void), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ApiKeyDTO>> Update([FromBody] ApiKeyDTO key, [FromRoute] int id)
+        public async Task<ActionResult<ApiKeyDto>> Update([FromBody] ApiKeyDto key, [FromRoute] int id)
         {
             if (await _repo.GetById(id) == null)
             {
@@ -67,16 +68,16 @@ namespace Instool.RestAPI.API
             {
                 return BadRequest();
             }
-            var entity = key.GetEntity();
+            var entity = key.ConvertToEntity();
 
 
             await _repo.Update(
-                entity.ApiKeyId, 
-                entity.ValidTo, 
-                entity.RoleId, 
+                entity.ApiKeyId,
+                entity.ValidTo,
+                entity.RoleId,
                 entity.AllowInternalApi);
             var reloaded = await _repo.GetById(key.ID);
-            var dto = ApiKeyDTO.FromEntity(reloaded!);
+            var dto = reloaded!.ConvertToDto();
             return Ok(dto);
 
         }

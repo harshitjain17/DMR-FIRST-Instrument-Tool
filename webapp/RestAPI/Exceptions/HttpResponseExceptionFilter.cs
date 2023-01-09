@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Instool.RestAPI.Exceptions
+namespace Instool.Exceptions
 {
     public class HttpResponseExceptionFilter : IActionFilter, IOrderedFilter
     {

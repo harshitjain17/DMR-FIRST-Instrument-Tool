@@ -10,6 +10,7 @@ import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
 import { config } from '../../config/config';
+import { File } from '../../Api/Model';
 
 const Img = styled('img')({
     margin: 'auto',
@@ -21,7 +22,7 @@ const Img = styled('img')({
 interface DescriptionTabProps {
     description?: string;
     capabilities?: string,
-    image: string
+    image: File
 }
 
 export default function Description({ description, capabilities, image }: DescriptionTabProps) {
@@ -41,7 +42,7 @@ export default function Description({ description, capabilities, image }: Descri
                     {image &&
                         <Grid item xs={4} md={4} lg={4}>
                             <ButtonBase sx={{ width: '100%', height: '45vh' }}>
-                                <Img alt="Image Not Found" src={`${config.url}${image}`} />
+                                <Img alt={image.name} src={`${config.url}${image.url}`} />
                             </ButtonBase>
                         </Grid>}
                     <Grid item xs={image ? 8 : 12} md={image ? 8 : 12} lg={image ? 8 : 12} sm container>

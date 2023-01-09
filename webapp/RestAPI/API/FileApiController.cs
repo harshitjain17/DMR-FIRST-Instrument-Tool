@@ -1,12 +1,7 @@
 ﻿using Instool.DAL.Repositories;
-using Instool.RestAPI.Exceptions;
+using Instool.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Instool.API
 {
@@ -35,7 +30,7 @@ namespace Instool.API
             {
 
                 byte[] imageBytes = Convert.FromBase64String(file.Content);
-                MemoryStream stream = new MemoryStream(imageBytes, 0,
+                MemoryStream stream = new(imageBytes, 0,
                   imageBytes.Length);
 
                 // Convert byte[] to Image
@@ -43,7 +38,8 @@ namespace Instool.API
                 stream.Position = 0;
 
                 return File(stream, "image/jpeg", file.Filename);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 throw new HttpResponseException(StatusCodes.Status500InternalServerError, e.Message);
             }
