@@ -25,7 +25,7 @@
             "type": "python",
             "request": "launch",
             "program": "scripts/spidertool.py",
-            "args": ["import", "--url", "https://dev.mri.psu.edu/research_instruments/2dcc-2d-crystal-consortium/hybrid-mbe-mbe-2", "--no-doi", "--log", "DEBUG"],
+            "args": ["import", "--url", "https://dev.mri.psu.edu/research_instruments/2dcc-2d-crystal-consortium/multi-module-uhv-mbe-mbe-1", "--log", "DEBUG"],
             "console": "integratedTerminal",
             "justMyCode": true
         }, {
