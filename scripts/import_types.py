@@ -45,7 +45,3 @@ with open('data/types.csv', encoding='utf-8-sig') as csvfile:
                 print('Sucessful')
         else: 
                 print('Error {}: {}'.format(result.status_code, result.text))
-
-
-
-

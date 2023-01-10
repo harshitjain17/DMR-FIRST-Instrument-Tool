@@ -26,7 +26,8 @@
             "type": "python",
             "request": "launch",
             "program": "scripts/spidertool.py",
-            "args": ["import", "--url", "https://dev.mri.psu.edu/research_instruments/2dcc-2d-crystal-consortium/multi-module-uhv-mbe-mbe-1", "--log", "DEBUG"],
+            "args": ["import", "--url", "https://dev.mri.psu.edu/2d-crystal-consortium/user-facilities/thin-films/hybrid-mbe-mbe-2", "--log", "DEBUG", "--what-if"],
+            "argsz": ["import", "--url", "https://dev.mri.psu.edu/research_instruments/2dcc-2d-crystal-consortium/double-crucible-vertical-bridgman", "--log", "DEBUG", "--what-if"],
             "console": "integratedTerminal",
             "justMyCode": true
         }, {

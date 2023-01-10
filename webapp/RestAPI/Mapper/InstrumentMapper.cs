@@ -24,6 +24,7 @@ internal static class InstrumentMapper
         SerialNumber = i.SerialNumber,
         Location = i.Location.ConvertToDto(),
         Institution = i.Institution.ConvertToDto(),
+        Publications = i.Publications.Select(p => p.ConvertToDto()).ToList(),
         Images = i.Images.Select(i => new FileDTO
         {
             Url = $"/api/v1/instruments/{i.InstrumentId}/files/{i.FileId}",

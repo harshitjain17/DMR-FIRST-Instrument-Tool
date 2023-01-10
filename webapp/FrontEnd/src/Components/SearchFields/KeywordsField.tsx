@@ -2,7 +2,9 @@ import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import React, { KeyboardEvent,  useState } from "react";
 import { HtmlTooltip } from "./ToolTipHTMLStyling";
+
 interface IKeywordsFieldProps {
+
     xlargeScreen: boolean,
     keywords: string[],
     onKeywordsChanged: (value: string[]) => void

@@ -7,6 +7,7 @@ import { ContactsTab } from './ContactsTab';
 import { QuickSpec } from './QuickSpecTab';
 import { LocationTab } from './LocationTab';
 import { AwardsTab } from './AwardTab';
+import { PublicationsTab } from './PublicationsTab';
 import { Instrument } from '../../Api/Model';
 
 interface TabPanelProps {
@@ -69,6 +70,7 @@ export default function Tabination({ instrument }: TabinationProps) {
         <Tab label="Research Experts" {...a11yProps(2)} />
         <Tab label="Awards" {...a11yProps(3)} />
         <Tab label="Important Dates" {...a11yProps(4)} />
+        <Tab label="Publications" {...a11yProps(5)} />
       </Tabs>
 
       <TabPanel selectedIndex={selectedIndex} index={0}>
@@ -88,8 +90,12 @@ export default function Tabination({ instrument }: TabinationProps) {
       </TabPanel>
 
       <TabPanel selectedIndex={selectedIndex} index={4}>
-        <Typography variant="subtitle2" gutterBottom component="div">Acquisition Date: </Typography>{instrument.acquisitionDate}
-        <Typography variant="subtitle2" gutterBottom component="div">Completion Date: </Typography>{instrument.completionDate}
+        <Typography variant="subtitle2" gutterBottom component="div">Acquired: </Typography>{instrument.acquisitionDate}
+        <Typography variant="subtitle2" gutterBottom component="div">Commissioned: </Typography>{instrument.completionDate}
+      </TabPanel>
+
+      <TabPanel selectedIndex={selectedIndex} index={5}>
+        <PublicationsTab publications={instrument.publications} />
       </TabPanel>
 
     </Box>

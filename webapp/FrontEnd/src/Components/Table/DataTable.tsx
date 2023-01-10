@@ -165,7 +165,7 @@ export default function DataTable(
     // so any user set filter will be removed unfortunately.
     setFilterModel({
       items: selectedLocation ? [
-        { id: 0, columnField: 'location', operatorValue: 'equals', value: selectedLocation }
+        { id: 0, columnField: 'location', operatorValue: 'startsWith', value: `${selectedLocation} -`}
       ] : []
     });
   }, [selectedLocation])

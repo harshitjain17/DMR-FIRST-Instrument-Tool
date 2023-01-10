@@ -38,6 +38,15 @@ export interface File {
     url: string
 }
 
+export interface Publication {
+    publicationId: number,
+    doi: string,
+    title: string,
+    authors: string,
+    journal: string,
+    year: number
+}
+
 export interface Instrument {
     instrumentId: number,
     doi: string,
@@ -56,7 +65,9 @@ export interface Instrument {
     awards: Award[],
     instrumentTypes: InstrumentType[],
     contacts: Investigator[],
-    images: File[]
+    images: File[],
+    publications: Publication[]
+    url: string
 }
 
 
@@ -78,6 +89,7 @@ export interface Investigator {
     email: string,
     phone: string,
     role: string
+    url: string
 }
 
 /**

@@ -188,7 +188,7 @@ class SpiderTool:
         if self.what_if:
             logging.info(f"Skipped communication DOI to source")
         else:
-            logging.error(f"{data['name']} has DOI {doi}, communication that to source is not yet implemented.")
+            logging.error(f"{data['name']} has DOI {doi}, communicating that to source is not yet implemented.")
 
     def import_from_csv(self, file: str) -> None:
         """Import from a csv file, convert each row to an instrument json, and process that instrument

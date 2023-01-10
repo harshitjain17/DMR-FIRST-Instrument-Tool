@@ -26,13 +26,6 @@ export function QuickSpec({ instrument }: QuickSpecTabProps) {
                 <Grid item xs="auto">{instrument.doi && <Typography variant="body2" gutterBottom>{instrument.doi}</Typography>}</Grid>
             </Grid>
 
-            {/* Citation
-            <Grid container spacing={1}>
-                <Grid item xs="auto">{instrumentDetails?.doi && <Typography variant="subtitle2" gutterBottom component="div">Cited as: </Typography>}</Grid>
-                <Grid item xs="auto">{instrumentDetails?.doi && <Typography variant="body2" gutterBottom> https://dmr-first.org/{instrumentDetails?.doi} </Typography>}</Grid>
-            </Grid>
-             */}
-
             {/* Instrument Category */}
             <Grid container spacing={1}>
                 <Grid item xs="auto">{categoryAvailable && <Typography variant="subtitle2" gutterBottom component="div">Instrument Category: </Typography>}</Grid>

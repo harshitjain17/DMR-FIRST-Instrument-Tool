@@ -24,7 +24,7 @@ public class InstrumentSearchResult
             new InstrumentRow(
                 row.Instrument,
                 i + 1,
-                Locations.SingleOrDefault(l => l.DbId == row.Instrument.LocationId)?.Id,
+                Locations.SingleOrDefault(l => l.DbId == row.Instrument.LocationId),
                 row.Distance)
         );
         RecordsTotal = data.RecordsTotal;
@@ -52,7 +52,7 @@ public class InstrumentRow
     public string Facility { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
 
-    public int? Location { get; set; }
+    public string? Location { get; set; }
     public int? Distance { get; set; }
     public string State { get; set; } = string.Empty;
 
@@ -62,7 +62,7 @@ public class InstrumentRow
 
     public string? Model { get; set; }
 
-    public InstrumentRow(Instrument i, int label, int? location, int? distance)
+    public InstrumentRow(Instrument i, int label, LocationRow? location, int? distance)
     {
         var types = i.InstrumentTypes;
         var mostSpecific = types.Where(t => !types.Any(sub => sub.CategoryId == t.InstrumentTypeId)).ToList();
@@ -74,7 +74,7 @@ public class InstrumentRow
         Status = i.StatusEnum.Label;
         Institution = i.Institution?.Name ?? string.Empty;
         Facility = i.Institution?.Facility ?? string.Empty;
-        Location = location;
+        Location = location != null ? $"{location.Id} - {location.Building ?? location.Institution}" : null;
         City = i.Location?.City ?? string.Empty;
         State = i.Location?.State ?? string.Empty;
         Manufacturer = i.Manufacturer;
