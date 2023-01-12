@@ -246,10 +246,11 @@ if __name__ == '__main__':
 
     register = subparsers.add_parser('doi', aliases='d')
     register.add_argument('-i', '--instrument', help='the numerical ID of an instrument')
-    register.add_argument('--log', choices=['ERROR', 'WARNING', 'INFO', 'DEBUG'])
+    register.add_argument('-l', '--log', choices=['ERROR', 'WARNING', 'INFO', 'DEBUG'], default='INFO')
     register.add_argument('-w', '--what-if', action='store_true',
                           help='Only compare and show what would need to be done')
     register.add_argument('-t', '--test-account', default=True, action='store_true', help="Use DataCite test account")
+    register.add_argument('-n', '--no-doi', default=False, action='store_true', help='Do no register DOIs')
 
     # This call processed the command line, and creates an object with the options used (or raises an exception if options are invalid)
     args = parser.parse_args()

@@ -40,7 +40,7 @@ export function AwardsTab({ awards }: AwardTabProps) {
                         >
                             <TableCell align="center" component="th" scope="row">
                                 <Typography variant="body2" gutterBottom component="div">
-                                    <a href={award.link} target="_blank">{award.number}</a>
+                                    <a href={award.link} target="_blank" rel="noopener noreferrer">{award.number}</a>
                                 </Typography>
                             </TableCell>
                             <TableCell align="center" component="th" scope="row">

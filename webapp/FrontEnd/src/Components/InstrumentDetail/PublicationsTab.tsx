@@ -36,7 +36,7 @@ export function PublicationsTab({ publications }: PublicationTabProps) {
                         >
                             <TableCell align="center" component="th" scope="row">
                                 <Typography variant="body2" gutterBottom component="div">
-                                    <a href={"https://doi.org/" + publication.doi} target="_blank">{publication.doi}</a>
+                                    <a href={"https://doi.org/" + publication.doi} target="_blank" rel="noopener noreferrer">{publication.doi}</a>
                                 </Typography>
                             </TableCell>
                             <TableCell align="center" component="th" scope="row">
