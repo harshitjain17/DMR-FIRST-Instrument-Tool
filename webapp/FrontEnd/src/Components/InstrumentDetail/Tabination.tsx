@@ -68,9 +68,9 @@ export default function Tabination({ instrument }: TabinationProps) {
         <Tab label="Quick Specifications" {...a11yProps(0)} />
         <Tab label="Location" {...a11yProps(1)} />
         <Tab label="Research Experts" {...a11yProps(2)} />
-        <Tab label="Awards" {...a11yProps(3)} />
+        {instrument.awards?.length > 0 ?? <Tab label="Awards" {...a11yProps(3)} />}
         <Tab label="Important Dates" {...a11yProps(4)} />
-        <Tab label="Publications" {...a11yProps(5)} />
+        {instrument.publications?.length > 0 ?? <Tab label="Publications" {...a11yProps(5)} />}
       </Tabs>
 
       <TabPanel selectedIndex={selectedIndex} index={0}>

@@ -5,7 +5,6 @@ import "./DataTable.css";
 
 import LinearProgress from '@mui/material/LinearProgress';
 import Tooltip from '@mui/material/Tooltip';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import InstrumentPopop from '../InstrumentDetail/InstrumentPopup';
 import { CustomNoRowsOverlay } from './Customizing';
 import { InstrumentRow, SearchLocation } from '../../Api/Model';
@@ -187,9 +186,6 @@ export default function DataTable(
     setOpen(false)
   };
 
-  // breakpoints for responsiveness
-  const xlargeScreen = useMediaQuery('(min-width:2560px)');
-
   return (
     <div className='instrument-table'>
 
@@ -198,8 +194,7 @@ export default function DataTable(
         <DataGrid
           rows={[]}
           columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
+          autoPageSize={true}
           loading
           components={{
             Toolbar: GridToolbar,
@@ -219,8 +214,8 @@ export default function DataTable(
           rows={searchResult}
           columns={columns}
           density="compact"
-          pageSize={xlargeScreen ? 15 : 5}
-          rowsPerPageOptions={xlargeScreen ? [15] : [5]}
+          autoPageSize={true}
+          pagination
           components={{
             Toolbar: GridToolbar,
             NoRowsOverlay: CustomNoRowsOverlay
