@@ -68,9 +68,9 @@ export default function Tabination({ instrument }: TabinationProps) {
         <Tab label="Quick Specifications" {...a11yProps(0)} />
         <Tab label="Location" {...a11yProps(1)} />
         <Tab label="Research Experts" {...a11yProps(2)} />
-        {instrument.awards?.length > 0 ?? <Tab label="Awards" {...a11yProps(3)} />}
+        <Tab label="Awards" {...a11yProps(3)} />
         <Tab label="Important Dates" {...a11yProps(4)} />
-        {instrument.publications?.length > 0 ?? <Tab label="Publications" {...a11yProps(5)} />}
+        {instrument.publications?.length > 0 && <Tab label="Publications" {...a11yProps(5)} />}
       </Tabs>
 
       <TabPanel selectedIndex={selectedIndex} index={0}>
@@ -94,9 +94,11 @@ export default function Tabination({ instrument }: TabinationProps) {
         <Typography variant="subtitle2" gutterBottom component="div">Commissioned: </Typography>{instrument.completionDate}
       </TabPanel>
 
-      <TabPanel selectedIndex={selectedIndex} index={5}>
-        <PublicationsTab publications={instrument.publications} />
-      </TabPanel>
+      {instrument.publications?.length > 0 && 
+        <TabPanel selectedIndex={selectedIndex} index={5}>
+          <PublicationsTab publications={instrument.publications} />
+        </TabPanel>
+      }
 
     </Box>
   );
