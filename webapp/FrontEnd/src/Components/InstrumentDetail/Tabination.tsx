@@ -90,8 +90,10 @@ export default function Tabination({ instrument }: TabinationProps) {
       </TabPanel>
 
       <TabPanel selectedIndex={selectedIndex} index={4}>
-        <Typography variant="subtitle2" gutterBottom component="div">Acquired: </Typography>{instrument.acquisitionDate}
-        <Typography variant="subtitle2" gutterBottom component="div">Commissioned: </Typography>{instrument.completionDate}
+        <Typography variant="subtitle2" gutterBottom component="div">Acquired: </Typography>
+        {instrument.acquisitionDate ? new Date(instrument.acquisitionDate).toLocaleDateString() : ""}
+        <Typography variant="subtitle2" gutterBottom component="div">Commissioned: </Typography>
+        {instrument.completionDate ? new Date(instrument.completionDate).toLocaleDateString() : ""}
       </TabPanel>
 
       {instrument.publications?.length > 0 && 
