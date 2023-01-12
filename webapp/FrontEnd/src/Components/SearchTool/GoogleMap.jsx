@@ -3,7 +3,7 @@ import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
 import { config } from '../../config/config';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-export function GoogleMap({locations, onSelectLocation, google}) {
+export function GoogleMap({ locations, onSelectLocation, google }) {
 
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const [activeMarker, setActiveMarker] = useState();
@@ -21,12 +21,12 @@ export function GoogleMap({locations, onSelectLocation, google}) {
       setBounds(undefined);
       setCenter({ lat: 37, lng: -95 });
       setZoom(4);
-    // Center if only one location, zoom in
+      // Center if only one location, zoom in
     } else if (locations.length === 1) {
       setBounds(undefined);
       setCenter({ lat: locations[0].latitude, lng: locations[0].longitude });
       setZoom(8);
-    // And only set bounds to show all markers if there are more than 2
+      // And only set bounds to show all markers if there are more than 2
     } else {
       // Gather all locations, and let google determine which part of the map to show
       // so we see all of them.
@@ -39,9 +39,9 @@ export function GoogleMap({locations, onSelectLocation, google}) {
       }
       setBounds(boundsCalc);
     }
-  // For some reason, eslint is complaining about the dependency on google.maps.LatLngBounds.
-  // That is a class we use here, it won't change
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // For some reason, eslint is complaining about the dependency on google.maps.LatLngBounds.
+    // That is a class we use here, it won't change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locations]);
 
   // Show an info window, and filter the table for instruments at that location
@@ -71,7 +71,7 @@ export function GoogleMap({locations, onSelectLocation, google}) {
         key={index}
         id={index}
         label={location.id.toString()}
-        title={`${location.building ? location.building + " @ ":""}${location.institution}, ${location.count} instrument(s)`}
+        title={`${location.building ? location.building + " @ " : ""}${location.institution}, ${location.count} instrument(s)`}
         position={{
           lat: location.latitude,
           lng: location.longitude
@@ -82,12 +82,26 @@ export function GoogleMap({locations, onSelectLocation, google}) {
   };
 
   // breakpoints for responsiveness
-  const xlargeScreen = useMediaQuery('(min-width:2560px)');
+  const xlargeScreen = useMediaQuery('(min-width:1920)');
+
+  // Get rid of points of interest - we don't need the restaurants ...
+  const mapLoaded = (mapProps, map) => {
+    map.setOptions({
+      styles:  [
+        { featureType: "poi", stylers: [{ visibility: "off", }] },
+        //{ featureType: "transit", elementType: "labels.icon", stylers: [{ visibility: "off" }] }
+      ]
+    })
+    setMap(map)
+  };
 
   return (
     <Map
       google={google}
-      style={{ width: '100%', height: '100%', position: "static", boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)', border: xlargeScreen ? '8px solid white':'5px solid white' }}
+      style={{
+        width: '100%', height: '100%', position: "static", boxShadow: '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)',
+        border: xlargeScreen ? '8px solid white' : '5px solid white',
+      }}
       containerStyle={{ width: "45vw", height: xlargeScreen ? '40vh' : '40vh' }}
       bounds={bounds}
       center={center}
@@ -103,7 +117,7 @@ export function GoogleMap({locations, onSelectLocation, google}) {
         setZoom(event.zoom);
         setCenter(event.center);
       }}
-      onReady={(mapPropse, map) => setMap(map)}
+      onReady={(mapProps, map) => mapLoaded(mapProps, map)}
     >
       {map && displayMarkers()}
       {map && <InfoWindow

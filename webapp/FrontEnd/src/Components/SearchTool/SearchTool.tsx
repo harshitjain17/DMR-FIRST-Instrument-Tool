@@ -24,12 +24,12 @@ export default function SearchTool() {
 
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-             
+
             {/* navigation Bar */}
             <AppBar position="fixed">
                 <Toolbar sx={{ pr: '24px' }} variant="dense">
                     <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                    <ExploreIcon/> DMR-FIRST Instrument Tool 
+                        <ExploreIcon /> DMR-FIRST Instrument Tool
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -57,7 +57,7 @@ export default function SearchTool() {
                 }}
             >
                 <Toolbar />
-                <Container maxWidth="lg" sx={{ mb: 2 }}>
+                <Container maxWidth={false} sx={{ mb: 2 }}>
                     <Grid container justifyContent="center" spacing={2}>
 
                         {/* Datatable */}
@@ -84,7 +84,7 @@ export default function SearchTool() {
 
                         {/* Google Maps */}
                         <Grid item xs={8} md={8} lg={8}>
-                            <GoogleMap locations={response?.locations ?? []} onSelectLocation={(locationId?: string ) => selectLocation(locationId)} />
+                            <GoogleMap locations={response?.locations ?? []} onSelectLocation={(locationId?: string) => selectLocation(locationId)} />
                         </Grid>
                     </Grid>
                     {/* <Copyright sx={{ pt: 4 }} /> */}
