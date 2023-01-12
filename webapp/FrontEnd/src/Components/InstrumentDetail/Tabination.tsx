@@ -8,6 +8,7 @@ import { QuickSpec } from './QuickSpecTab';
 import { LocationTab } from './LocationTab';
 import { AwardsTab } from './AwardTab';
 import { PublicationsTab } from './PublicationsTab';
+import { DateTab } from './DateTab';
 import { Instrument } from '../../Api/Model';
 
 interface TabPanelProps {
@@ -90,10 +91,7 @@ export default function Tabination({ instrument }: TabinationProps) {
       </TabPanel>
 
       <TabPanel selectedIndex={selectedIndex} index={4}>
-        <Typography variant="subtitle2" gutterBottom component="div">Acquired: </Typography>
-        {instrument.acquisitionDate ? new Date(instrument.acquisitionDate).toLocaleDateString() : ""}
-        <Typography variant="subtitle2" gutterBottom component="div">Commissioned: </Typography>
-        {instrument.completionDate ? new Date(instrument.completionDate).toLocaleDateString() : ""}
+        <DateTab instrument={instrument} />
       </TabPanel>
 
       {instrument.publications?.length > 0 && 
