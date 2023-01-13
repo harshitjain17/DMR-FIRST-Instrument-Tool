@@ -17,14 +17,14 @@ interface PublicationTabProps {
 export function PublicationsTab({ publications }: PublicationTabProps) {
     return (
         <TableContainer style={{ maxHeight: '35vh' }}>
-            <Table stickyHeader sx={{ minWidth: '35vw' }} aria-label="simple table">
+            <Table stickyHeader sx={{ minWidth: '35vw' }} aria-label="Publications" size="small" >
                 <TableHead>
                     <TableRow>
+                        <TableCell align="center"><Typography variant="subtitle2">DOI</Typography></TableCell>
                         <TableCell align="center"><Typography variant="subtitle2">Title</Typography></TableCell>
                         <TableCell align="center"><Typography variant="subtitle2">Authors</Typography></TableCell>
                         <TableCell align="center"><Typography variant="subtitle2">Journal</Typography></TableCell>
                         <TableCell align="center"><Typography variant="subtitle2">Year</Typography></TableCell>
-                        <TableCell align="center"><Typography variant="subtitle2">DOI</Typography></TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
