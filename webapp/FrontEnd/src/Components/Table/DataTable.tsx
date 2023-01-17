@@ -50,6 +50,7 @@ const columns: GridColumns = [
       </Tooltip>)
   },
 
+  // INSTRUMENT TYPE
   {
     field: 'type', headerName: 'Instrument Type', minWidth: 140, flex: 1,
     renderCell: ({ value, row }: GridRenderCellParams<any, RowModel, any>) => (
@@ -135,6 +136,7 @@ export default function DataTable(
   const [isOpen, setOpen] = React.useState<boolean>(false);
   const [filterModel, setFilterModel] = React.useState<GridFilterModel>({ items: [] });
   const [visibilityModel, setVisibilityModel] = React.useState<GridColumnVisibilityModel>({ id: false, distance: false });
+  const [pageSize, setPageSize] = React.useState<number>(15);
 
   const searchResult: RowModel[] = instruments ?
     instruments.map(instrument => {
@@ -214,7 +216,10 @@ export default function DataTable(
           rows={searchResult}
           columns={columns}
           density="compact"
-          autoPageSize={true}
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[10, 15, 20, 50, 100]}
+          // autoPageSize={true}
           pagination
           components={{
             Toolbar: GridToolbar,
